@@ -1,0 +1,44 @@
+cat > .gitignore << 'EOF'
+# ============================================
+# Signal / Rhythm OS — Canonical .gitignore
+# ============================================
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+.installed.cfg
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE / editor
+.idea/
+.vscode/
+.spyderproject
+.spyproject
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Cursor / tooling
+.ruff_cache/
+.cursorignore
+.cursorindexingignore
+EOF
