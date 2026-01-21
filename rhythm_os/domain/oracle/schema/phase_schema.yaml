@@ -1,0 +1,53 @@
+# Oracle Phase Output Schema (Canonical)
+# This schema defines shape only.
+# No logic, thresholds, or permissions are implied.
+
+oracle_phase:
+  phase_label:
+    type: string
+    required: false
+    allowed_values:
+      - STILL
+      - REFLECT
+      - PREPARE
+      - TEND
+      - BUILD
+      - HARVEST
+      - HOLD
+      - RECOVER
+      - TRANSITION
+    description: >
+      Discrete phase classification emitted by Oracle.
+      Absence of phase is valid and meaningful.
+
+  phase_confidence:
+    type: float
+    required: false
+    range: [0.0, 1.0]
+    description: >
+      Informational confidence only.
+      Must not be used to grant authority or trigger action.
+
+  emitted_at:
+    type: string
+    format: iso8601
+    required: true
+    description: >
+      Timestamp of Oracle emission.
+
+  source_run_id:
+    type: string
+    required: true
+    description: >
+      Runtime identifier for traceability only.
+
+rules:
+  - Oracle may emit at most one phase_label.
+  - Oracle may emit no phase_label.
+  - Oracle output grants no permission.
+  - Schema changes require a new seal.
+
+status:
+  canonical: true
+  mutable: false
+  authority: none

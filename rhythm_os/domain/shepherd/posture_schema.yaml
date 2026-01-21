@@ -1,0 +1,57 @@
+# Shepherd Posture Output Schema (Canonical)
+# Defines shape only. No logic, thresholds, or execution.
+
+shepherd_posture:
+  posture:
+    type: string
+    required: true
+    allowed_values:
+      - SILENT
+      - ALLOW
+      - REFUSE
+    description: >
+      Governing posture emitted by Shepherd.
+      SILENT is the default and armored state.
+      ALLOW permits action to exist (bounded elsewhere).
+      REFUSE explicitly disallows action.
+
+  posture_confidence:
+    type: float
+    required: false
+    range: [0.0, 1.0]
+    description: >
+      Informational confidence only.
+      Must not be used to grant authority or trigger action.
+
+  reasons:
+    type: list
+    required: false
+    items:
+      type: string
+    description: >
+      Optional human-readable annotations for audit and reflection.
+      Reasons carry no executable authority.
+
+  emitted_at:
+    type: string
+    format: iso8601
+    required: true
+    description: >
+      Timestamp of Shepherd emission.
+
+  source_run_id:
+    type: string
+    required: true
+    description: >
+      Runtime identifier for traceability only.
+
+rules:
+  - Exactly one posture must be emitted.
+  - SILENT is lawful default on uncertainty.
+  - Schema grants no execution authority.
+  - Changes require a new seal.
+
+status:
+  canonical: true
+  mutable: false
+  authority: none

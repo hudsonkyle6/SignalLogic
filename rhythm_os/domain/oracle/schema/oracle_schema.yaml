@@ -1,0 +1,154 @@
+# =========================================================
+# ORACLE ALIGNMENT OUTPUT SCHEMA (CANONICAL)
+#
+# Oracle describes geometric alignment only.
+# No narrative. No permission. No posture.
+# =========================================================
+
+oracle_alignment_descriptor:
+  description: >
+    Descriptive alignment record emitted by Oracle.
+    Represents geometric relationship between a domain oscillator
+    and a sovereign field cycle at a specific time.
+    Grants no authority and implies no action.
+
+  fields:
+    t:
+      type: float
+      required: true
+      description: >
+        Unix timestamp (seconds since epoch) of the observation.
+
+    field_cycle:
+      type: string
+      required: true
+      allowed_examples:
+        - diurnal
+        - semi_diurnal
+        - seasonal
+        - longwave
+      description: >
+        Name of the sovereign field cycle used for comparison.
+
+    domain:
+      type: string
+      required: true
+      description: >
+        Domain identifier (e.g. tides, weather, demo).
+
+    channel:
+      type: string
+      required: true
+      description: >
+        Channel or source identifier within the domain.
+
+    phase_diff_rad:
+      type: float
+      required: true
+      range: [-3.1416, 3.1416]
+      description: >
+        Wrapped phase difference (external minus field) in radians.
+        Pure geometry. No interpretation.
+
+    phase_diff_deg:
+      type: float
+      required: true
+      range: [-180.0, 180.0]
+      description: >
+        Phase difference expressed in degrees for readability.
+
+    coherence_ext:
+      type: float
+      required: false
+      range: [0.0, 1.0]
+      description: >
+        Descriptive coherence of the external oscillator relative to the field.
+        Informational only. Must not be used to trigger action.
+
+    pattern:
+      type: string
+      required: true
+      allowed_values:
+        - noisy
+        - near_lock
+        - partial_alignment
+        - phase_lagging
+        - phase_leading
+      description: >
+        Qualitative bucket describing phase geometry.
+        Labels only. Not evaluative.
+
+# ---------------------------------------------------------
+
+oracle_convergence_summary:
+  description: >
+    Aggregate descriptive summary across multiple alignment descriptors.
+    Used to detect convergence or dispersion across domains.
+    Grants no authority.
+
+  fields:
+    t:
+      type: float
+      required: true
+      description: >
+        Reference timestamp for the summary.
+
+    active:
+      type: integer
+      required: true
+      description: >
+        Number of active alignment descriptors considered.
+
+    within_deg:
+      type: float
+      required: true
+      description: >
+        Angular window (degrees) used to assess convergence.
+
+    within_count:
+      type: integer
+      required: true
+      description: >
+        Count of descriptors whose phase difference lies within the window.
+
+    mean_coherence:
+      type: float
+      required: false
+      range: [0.0, 1.0]
+      description: >
+        Mean coherence across descriptors, if available.
+
+    convergence:
+      type: string
+      required: true
+      allowed_values:
+        - none
+        - low
+        - moderate
+        - high
+      description: >
+        Descriptive convergence level based on geometric clustering only.
+
+    note:
+      type: string
+      required: true
+      description: >
+        Human-readable clarification of the convergence calculation.
+        Informational only.
+
+# ---------------------------------------------------------
+# GOVERNING RULES
+# ---------------------------------------------------------
+
+rules:
+  - Oracle outputs describe geometry only.
+  - Oracle outputs grant no permission.
+  - Oracle outputs must not reference action, readiness, or timing.
+  - Oracle outputs must not reference raw external data.
+  - Oracle outputs may be empty.
+  - Schema changes require a new seal.
+
+status:
+  canonical: true
+  mutable: false
+  authority: none
