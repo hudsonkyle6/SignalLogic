@@ -178,3 +178,27 @@ No changes may be made to Course I or Course II-B without a new seal.
 
 
 
+---
+
+## SYSTEM CARTOGRAPHY BINDING
+
+The document:
+
+codex/canon/RHYTHM_OS_SYSTEM_CARTOGRAPHY.md
+
+is hereby designated as the **authoritative structural map** of Rhythm OS.
+
+It defines:
+- Plane separation
+- Authority flow
+- Mutation boundaries
+- Observability vs governance distinctions
+
+This document is descriptive, not executable.
+No implementation may contradict it.
+
+Integrity Hash (SHA-256):
+<PASTE_HASH_HERE>
+
+Status:
+SEALED · REFERENTIAL · NON-EXECUTABLE
