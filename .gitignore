@@ -37,9 +37,10 @@ Thumbs.db
 **/posture_report_*.md
 
 # ----------------------------
-# Legacy / Deprecated (kept but not versioned)
+# Legacy / Deprecated (kept locally, never versioned)
 # ----------------------------
 archive/data_legacy/**
+archive/deprecated_environment/**
 archive/depracated_environment/**
 archive/legacy_engine/**
 archive/legacy_data_pipeline/**
@@ -51,11 +52,12 @@ archive/resources/
 # Models / ML
 # ----------------------------
 **/models/**
-------------------------------
+
 # ----------------------------
 # Runtime / Demo Exhaust
 # ----------------------------
 **/*.log
 **/*.jsonl
 **/*.ndjson
+
 
