@@ -1,44 +1,53 @@
-cat > .gitignore << 'EOF'
-# ============================================
-# Signal / Rhythm OS — Canonical .gitignore
-# ============================================
-
-# Python bytecode
+# ----------------------------
+# Python
+# ----------------------------
 __pycache__/
-*.py[cod]
-
-# Virtual environments
+*.pyc
+*.pyo
+*.pyd
 .env
-.venv
-env/
+.venv/
 venv/
 
-# Packaging / build artifacts
-build/
-dist/
-*.egg-info/
-.installed.cfg
-
-# Test / coverage
-.pytest_cache/
-.coverage
-htmlcov/
-
-# IDE / editor
-.idea/
-.vscode/
-.spyderproject
-.spyproject
-
-# OS junk
+# ----------------------------
+# OS / Editor
+# ----------------------------
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
 
-# Logs
-*.log
+# ----------------------------
+# Runtime / Generated Data
+# ----------------------------
+**/storage/**
+**/snapshots/**
+**/receipts/**
+**/*.ndjson
+**/*.joblib
+**/*.csv
+**/*.json
+**/*.pub
 
-# Cursor / tooling
-.ruff_cache/
-.cursorignore
-.cursorindexingignore
-EOF
+# ----------------------------
+# Logs / Reports
+# ----------------------------
+**/fieldnotes/logs/**
+**/reports/**
+**/posture_report_*.md
+
+# ----------------------------
+# Legacy / Deprecated (kept but not versioned)
+# ----------------------------
+archive/data_legacy/**
+archive/depracated_environment/**
+archive/legacy_engine/**
+archive/legacy_data_pipeline/**
+archive/lottery_legacy/**
+archive/results/**
+archive/resources/
+
+# ----------------------------
+# Models / ML
+# ----------------------------
+**/models/**
