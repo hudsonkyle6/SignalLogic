@@ -1,0 +1,21 @@
+Hybrid Cycle Test - 2026-01-16
+Status: PASS - Full round-trip integrity (100% match on preserved fields)
+Original: test_doctrine_cycle.osc.json
+Exported: test_doctrine_cycle.txt
+Re-imported: test_doctrine_reimported.osc.json
+Notes: Timestamp differs (expected). All other fields identical.
+Tests confirm: oscillatory memory survives export/re-import without loss.
+
+
+{
+  "phase": 0.0,
+  "frequency": 1.0,
+  "amplitude": 1.0,
+  "afterglow_decay": 0.5,
+  "timestamp": "2026-01-16T21:40:29.619597+00:00",
+  "couplings": {
+    "identity": 0.9,
+    "intelligence": 0.8
+  },
+  "text_content": "Preserve by default. Detect before destroying. When detection is impossible without exposure, allow provisional entanglement under constraint. Destroy only in service of what has proven itself."
+}
