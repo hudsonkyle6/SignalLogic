@@ -1,0 +1,68 @@
+# CONTRACT FILE — SOURCE OF TRUTH (NORMATIVE)
+# AMENDMENT AUTHORITY: Signal Light Press (Kernel) only
+# ENGINE ROLE: Shepherd OS (Providing)
+# EXECUTION AUTHORITY: NONE
+
+version: 1.0
+contract: SHEPHERD_INPUT
+direction: (ORACLE | SAGE | LEDGER | HUMAN) -> SHEPHERD
+purpose: "Define the only permissible inputs Shepherd may consider."
+
+deny_by_default: true
+
+required_common_fields:
+  - timestamp
+  - source_id
+
+allowed_inputs:
+
+  oracle_state:
+    source: ORACLE
+    schema_ref: oracle_to_shepherd_contract.yaml
+    required: true
+    description: "Observed external conditions only."
+
+  boundary_field_flags:
+    source: SAGE
+    required: true
+    fields:
+      - doctrine_violation
+      - boundary_breach
+      - constraint_active
+    description: "Canonical boundary and doctrine enforcement signals."
+
+  ledger_buffers:
+    source: LEDGER
+    required: true
+    fields:
+      - capital_reserve_status
+      - energy_buffer_status
+      - recovery_margin
+    description: "Current survivability buffers."
+
+allowed_human_requests:
+  - REQUEST_STATE_REPORT
+  - REQUEST_HOLD
+  - REQUEST_EASE
+  - REQUEST_PROCEED
+  - REQUEST_BOUNDED_ALLOCATION
+
+forbidden_inputs:
+  - narrative_text
+  - optimization_scores
+  - predicted_outcomes
+  - strategic_rationale
+  - performance_targets
+  - success_probability
+  - alignment_score
+  - urgency_indicator
+
+failure_behavior:
+  on_missing_required_input: HOLD_AND_LOG
+  on_forbidden_input_detected: HOLD_AND_LOG
+  on_unknown_field_detected: REJECT_AND_LOG
+  on_schema_violation: HOLD_AND_LOG
+
+enforcement:
+  any_execution_semantics_detected: REJECT_AND_LOG
+  repeated_violation_threshold: ESCALATE_TO_SAGE

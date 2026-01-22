@@ -1,0 +1,5 @@
+engine: shepherd
+state: dormant
+activation: forbidden
+reason: helmsman_not_present
+timestamp: 2025-12

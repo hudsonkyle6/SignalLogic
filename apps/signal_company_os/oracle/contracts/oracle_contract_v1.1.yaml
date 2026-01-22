@@ -1,0 +1,234 @@
+# ============================================================
+# ORACLE CONTRACT v1.1 (FINAL)
+# ============================================================
+# Purpose:
+#   Canonical boundary between physical signal truth (merged_signal)
+#   and governed decision layers (Oracle L1–L4).
+#
+# Core Change (v1.1):
+#   Resonance is now split into:
+#     • ResonanceRaw   — physical Z-score (unbounded, truth)
+#     • ResonanceValue — governed, normalized [0,1] (action-safe)
+#
+# This preserves physics while enforcing control discipline.
+#
+# Status:
+#   ✅ Stable
+#   ✅ Oracle-safe
+#   ✅ Sage-ready
+# ============================================================
+
+OracleContract:
+  SchemaVersion: "1.1.0"
+  OracleVersion: "L1-L4"
+  Supersedes: "1.0.0"
+
+  Notes:
+    - "Merged data is canonical physical truth."
+    - "Oracle must never silently alter physical semantics."
+    - "Governed fields are derived, bounded, and contract-enforced."
+    - "Truth and control are explicitly separated."
+
+  # ----------------------------------------------------------
+  # A) REQUIRED INPUTS (merged_signal.csv)
+  # ----------------------------------------------------------
+  Inputs:
+
+    Identity:
+      required:
+        - Date
+        - Season
+      types:
+        Date: "date"
+        Season: "string"
+
+    CoreSignals:
+      required:
+        - Amplitude
+        - ResonanceRaw
+        - ResonanceValue
+      types:
+        Amplitude: "float"
+        ResonanceRaw: "float"
+        ResonanceValue: "float"
+      ranges:
+        Amplitude: [0.0, 1.0]
+        ResonanceValue: [0.0, 1.0]
+      notes:
+        - "ResonanceRaw is unbounded (Z-score)."
+        - "ResonanceValue is logistic-normalized for governance."
+
+    HSTCore:
+      required:
+        - A_t
+        - C_t
+        - E_t
+        - H_t
+      optional:
+        - H_t_base
+        - phi_h
+        - phi_e
+        - HSTResDrift
+        - HSTPhaseDiv
+      types:
+        A_t: "float"
+        C_t: "float"
+        E_t: "float"
+        H_t: "float"
+        H_t_base: "float"
+        phi_h: "float"
+        phi_e: "float"
+        HSTResDrift: "float"
+        HSTPhaseDiv: "float"
+      ranges:
+        A_t: [-1.0, 1.0]
+        C_t: [-1.0, 1.0]
+        E_t: [-1.0, 1.0]
+        H_t: [-1.0, 1.0]
+        HSTPhaseDiv: [0.0, 6.2832]
+
+    MemoryLayer:
+      required:
+        - MemoryCharge
+        - Afterglow
+        - MemoryDrift
+      optional:
+        - MemoryPhase
+        - MemoryPhaseCoherence
+      types:
+        MemoryCharge: "float"
+        Afterglow: "float"
+        MemoryDrift: "float"
+        MemoryPhase: "float"
+        MemoryPhaseCoherence: "float"
+      ranges:
+        MemoryCharge: [0.0, 1.0]
+        Afterglow: [0.0, 1.0]
+        MemoryPhaseCoherence: [-1.0, 1.0]
+
+    GhostLayer:
+      required:
+        - GhostStabilityIndex
+      optional:
+        - GhostLevel
+        - GhostShadow
+        - GhostInstabilitySmooth
+        - GhostMemoryPressure
+      types:
+        GhostStabilityIndex: "float"
+        GhostLevel: "float"
+        GhostShadow: "string"
+        GhostInstabilitySmooth: "float"
+        GhostMemoryPressure: "float"
+      ranges:
+        GhostStabilityIndex: [0.0, 1.0]
+
+    EnvironmentLayer:
+      required:
+        - WVI
+        - EnvFactor
+      optional:
+        - EnvPressure
+      types:
+        WVI: "float"
+        EnvFactor: "float"
+        EnvPressure: "float"
+      ranges:
+        WVI: [0.0, 1.0]
+        EnvFactor: [0.0, 1.0]
+        EnvPressure: [0.0, 1.0]
+
+  # ----------------------------------------------------------
+  # B) ORACLE OUTPUTS (governed fields)
+  # ----------------------------------------------------------
+  Outputs:
+
+    Layer1_OCI:
+      required:
+        - OCI
+        - RiskIndex
+        - OracleBand
+        - OracleBias
+      types:
+        OCI: "float"
+        RiskIndex: "float"
+        OracleBand: "string"
+        OracleBias: "string"
+      ranges:
+        OCI: [0.0, 1.0]
+        RiskIndex: [0.0, 1.0]
+
+    Layer2_HCF:
+      required:
+        - HCFIndex
+        - AlignmentBand
+        - AlignmentBias
+        - WorldField
+        - HumanField
+        - EnvField
+        - GhostField
+        - MemoryField
+        - MacroTide
+        - G_t
+      types:
+        HCFIndex: "float"
+        WorldField: "float"
+        HumanField: "float"
+        EnvField: "float"
+        GhostField: "float"
+        MemoryField: "float"
+        MacroTide: "float"
+        G_t: "float"
+      ranges:
+        HCFIndex: [0.0, 1.0]
+        WorldField: [0.0, 1.0]
+        HumanField: [0.0, 1.0]
+        EnvField: [0.0, 1.0]
+        GhostField: [0.0, 1.0]
+        MemoryField: [0.0, 1.0]
+        MacroTide: [0.0, 1.0]
+        G_t: [0.5, 1.5]
+
+    Layer3_Horizon:
+      required:
+        - HorizonIndex
+        - HorizonBand
+        - HorizonBias
+        - ShortWindow
+        - LongWindow
+        - MacroState
+      types:
+        HorizonIndex: "float"
+        HorizonBand: "string"
+        HorizonBias: "string"
+        ShortWindow: "string"
+        LongWindow: "string"
+        MacroState: "string"
+      ranges:
+        HorizonIndex: [0.0, 1.0]
+
+    Layer4_DarkField:
+      required:
+        - D_t
+        - DarkFieldBand
+      optional:
+        - H_t_Stability
+        - Drift_Stability
+        - MemoryField_Component
+        - GhostField_Component
+        - EnvField_Component
+      types:
+        D_t: "float"
+        DarkFieldBand: "string"
+      ranges:
+        D_t: [0.0, 1.0]
+
+  # ----------------------------------------------------------
+  # C) GLOBAL INVARIANTS
+  # ----------------------------------------------------------
+  Invariants:
+    - "Date must be unique and monotonic increasing."
+    - "ResonanceRaw may exceed [0,1]; ResonanceValue must not."
+    - "All governed Oracle outputs must remain within declared ranges."
+    - "No Oracle layer may overwrite physical truth columns."
+    - "Violations must fail fast with explicit errors."

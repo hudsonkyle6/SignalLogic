@@ -1,0 +1,203 @@
+# STATE FILE — GOVERNING STATE MACHINE (RUNTIME LAW)
+# SOURCE OF AUTHORITY: Signal Light Press (Kernel)
+# AMENDMENT AUTHORITY: Signal Light Press ONLY
+# ENGINE ROLE: Shepherd OS — Providing (Non-Executive)
+# PURPOSE: Define allowed states, transitions, and collapse behavior
+# NOTE: This file defines LAW. Live posture appears in shepherd_posture_snapshot.yaml
+
+state_version: 1.1
+engine: SHEPHERD_OS
+classification: PROTECTED_INTERNAL
+
+# -------------------------------------------------
+# INVARIANTS (NON-NEGOTIABLE)
+# -------------------------------------------------
+invariants:
+  - id: FAILS_TO_HOLD
+    rule: "Any fault, uncertainty, boundary breach, contradiction, or ambiguity collapses state to HOLD."
+
+  - id: DEFAULT_DORMANT
+    rule: "Absent explicit activation criteria, Shepherd remains in DORMANT."
+
+  - id: NO_DIRECT_ESCALATION
+    rule: "HOLD may not transition directly to PROCEED."
+
+  - id: NO_SCALING
+    rule: "PROCEED authorizes one bounded objective only; never scaling."
+
+  - id: DENY_BY_DEFAULT
+    rule: "Any action not explicitly permitted by contract and state is denied."
+
+  - id: NON_EXECUTIVE
+    rule: "Shepherd may allocate, gate, and buffer, but never execute."
+
+  - id: DREAMING_SUPREMACY
+    rule: "When Dreaming is active, all permissions collapse to HOLD regardless of prior state."
+
+# -------------------------------------------------
+# ALLOWED STATES
+# -------------------------------------------------
+states:
+
+  DORMANT:
+    description: >
+      No provisioning activity. Shepherd observes but does not allocate.
+    allowed_outputs:
+      - STATE_REPORT
+    forbidden_outputs:
+      - CAPITAL_RELEASE
+      - RESOURCE_ALLOCATION
+      - PROCUREMENT
+      - EXECUTION_DIRECTIVE
+
+  HOLD:
+    description: >
+      Safety posture. Freeze discretionary allocation. Preserve buffers.
+    allowed_outputs:
+      - STATE_REPORT
+      - CONSTRAINT_TIGHTEN
+      - PERMISSION_DENY
+      - RECOVERY_PLAN_REQUEST
+    forbidden_outputs:
+      - CAPITAL_RELEASE
+      - RESOURCE_ALLOCATION
+      - PROCUREMENT
+      - EXECUTION_DIRECTIVE
+
+  EASE:
+    description: >
+      Controlled thaw. Limited, reversible movement within tight constraints.
+    allowed_outputs:
+      - STATE_REPORT
+      - LIMITED_ALLOCATION
+      - BUFFER_REBUILD
+      - PERMISSION_GRANT_LIMITED
+    forbidden_outputs:
+      - UNBOUNDED_ALLOCATION
+      - SCALE_INITIATIVE
+      - EXECUTION_DIRECTIVE
+
+  PROCEED:
+    description: >
+      Bounded provisioning for a single objective with explicit buffers and exit criteria.
+    allowed_outputs:
+      - BOUNDED_ALLOCATION
+      - TIMEBOXED_RELEASE
+      - STATE_REPORT
+      - POST_ACTION_REVIEW_REQUEST
+    forbidden_outputs:
+      - SCALE_INITIATIVE
+      - NEW_DOMAIN_CREATION
+      - DOCTRINE_MODIFICATION
+      - EXECUTION_DIRECTIVE
+
+# -------------------------------------------------
+# DREAMING (POSTURE OVERRIDE — NON-STATE)
+# -------------------------------------------------
+dreaming:
+  description: >
+    Non-operational maintenance posture. Dreaming is not a state transition,
+    but a posture override that forces HOLD behavior system-wide.
+  effects:
+    - collapse_permissions_to: HOLD
+    - disable_learning: true
+    - disable_ingestion: true
+    - disable_recommendation: true
+    - enforce_buffer_rebuild: true
+  entry_conditions:
+    - recovery_buffers_below_minimum == true
+    - sustained_drift_without_pressure == true
+    - consolidation_phase_complete == true
+    - seasonal_cycle_complete == true
+    - success_intensity_exceeds_margin == true
+  exit_conditions:
+    - buffers_restored == true
+    - drift_stable_or_declining == true
+    - afterglow_dampened == true
+    - identity_confidence_stable == true
+    - no_urgency_signals == true
+  enforcement:
+    - no_upward_override: true
+    - duration_unbounded: true
+
+# -------------------------------------------------
+# TRANSITIONS
+# -------------------------------------------------
+transitions:
+
+  - from: DORMANT
+    to: HOLD
+    conditions:
+      - activation_criteria_met == true
+    rationale: "All activation begins in HOLD to prevent premature movement."
+
+  - from: HOLD
+    to: EASE
+    conditions:
+      - buffers_restored == true
+      - critical_risk_resolved == true
+      - sage_allows_ease == true
+      - dreaming_active == false
+    rationale: "EASE requires recovered buffers, Sage approval, and wakefulness."
+
+  - from: EASE
+    to: PROCEED
+    conditions:
+      - bounded_objective_defined == true
+      - exit_criteria_defined == true
+      - timebox_defined == true
+      - sage_allows_proceed == true
+      - dreaming_active == false
+    rationale: "PROCEED requires explicit bounds, doctrinal approval, and full wake state."
+
+  - from: PROCEED
+    to: EASE
+    conditions:
+      - objective_complete == true
+      - cooldown_required == true
+    rationale: "Return to EASE for stabilization after action."
+
+  - from: ANY
+    to: HOLD
+    conditions:
+      - fault_detected == true
+      - boundary_breach == true
+      - uncertainty_spike == true
+      - oracle_confidence_below_floor == true
+      - sage_denial == true
+      - human_override_hold == true
+      - dreaming_active == true
+    rationale: "Universal collapse rule — recoverability overrides momentum."
+
+# -------------------------------------------------
+# OUTPUT DEFINITIONS (STATE-BOUND)
+# -------------------------------------------------
+outputs:
+
+  STATE_REPORT:
+    fields: [state, rationale, active_constraints, timestamp]
+
+  CONSTRAINT_TIGHTEN:
+    fields: [constraint_id, change, reason, timestamp]
+
+  PERMISSION_DENY:
+    fields: [request_id, reason, timestamp]
+
+  PERMISSION_GRANT_LIMITED:
+    fields: [request_id, limits, expiry, timestamp]
+
+  LIMITED_ALLOCATION:
+    fields: [resource_type, cap, timebox, timestamp]
+
+  BOUNDED_ALLOCATION:
+    fields: [objective_id, resource_caps, required_buffers, timebox, timestamp]
+
+  TIMEBOXED_RELEASE:
+    fields: [capital_cap, expiry, timestamp]
+
+  RECOVERY_PLAN_REQUEST:
+    fields: [missing_buffers, target_levels, timestamp]
+
+  POST_ACTION_REVIEW_REQUEST:
+    fields: [objective_id, required_evidence, timestamp]
+

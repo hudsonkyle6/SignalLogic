@@ -1,0 +1,83 @@
+# -------------------------------------------------
+# SHEPHERD CONDITION REPORT — SCHEMA
+# -------------------------------------------------
+# Authority: Signal Light Press (Kernel)
+# Classification: Protected Internal
+# Status: CANONICAL
+# Amendment Rule: Signal Light Press only
+#
+# Purpose:
+# Define the ONLY lawful output Shepherd may emit.
+# This is a descriptive condition snapshot, not guidance.
+
+version: 1.0
+engine: shepherd
+artifact: condition_report
+schema_type: output
+
+# -------------------------------------------------
+# REQUIRED METADATA
+# -------------------------------------------------
+metadata:
+  report_id: string          # unique, non-semantic identifier
+  timestamp: iso8601         # time of observation
+  posture: enum              # DORMANT | HOLD | EASE | PROCEED
+  upstream_sources:
+    oracle_snapshot: string  # reference only (path or hash)
+    sage_snapshot: string    # reference only (path or hash)
+
+# -------------------------------------------------
+# CONDITION PAYLOAD (VOCABULARY-BOUND)
+# -------------------------------------------------
+conditions:
+
+  capital:
+    liquidity_state: enum
+    capital_pressure: enum
+    reserve_health: enum
+
+  resources:
+    material_availability: enum
+    supply_chain_friction: enum
+    lead_time_state: enum
+
+  risk:
+    exposure_surface: enum
+    volatility_context: enum
+    downside_asymmetry: enum
+
+  time:
+    season_alignment: enum
+    window_state: enum
+    recovery_margin: enum
+
+  structure:
+    dependency_density: enum
+    reversibility: enum
+    optionality_state: enum
+
+# -------------------------------------------------
+# INTEGRITY FLAGS (DESCRIPTIVE ONLY)
+# -------------------------------------------------
+integrity:
+  boundary_breach_detected: boolean
+  data_completeness: enum      # complete | partial | degraded
+  confidence_band: enum        # low | medium | high
+
+# -------------------------------------------------
+# EXPLICIT CONSTRAINTS
+# -------------------------------------------------
+constraints:
+  contains_recommendations: false
+  contains_prioritization: false
+  contains_strategy: false
+  contains_timing_instruction: false
+
+# -------------------------------------------------
+# OPTIONAL NOTES (NON-NARRATIVE)
+# -------------------------------------------------
+notes:
+  allowed: true
+  content_rule: >
+    Notes may only describe anomalies or absences in input data.
+    No interpretation, inference, or implication is permitted.

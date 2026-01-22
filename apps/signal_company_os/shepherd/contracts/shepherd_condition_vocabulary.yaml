@@ -1,0 +1,140 @@
+# -------------------------------------------------
+# SHEPHERD CONDITION VOCABULARY
+# -------------------------------------------------
+# Authority: Signal Light Press (Kernel)
+# Classification: Protected Internal
+# Status: CANONICAL
+# Amendment Rule: Signal Light Press only
+#
+# Purpose:
+# Define the ONLY conditions Shepherd is permitted
+# to observe, name, and surface — without action.
+
+version: 1.0
+engine: shepherd
+type: condition_vocabulary
+
+# -------------------------------------------------
+# CAPITAL CONDITIONS
+# -------------------------------------------------
+capital:
+  liquidity_state:
+    - ample
+    - sufficient
+    - tightening
+    - constrained
+
+  capital_pressure:
+    - stable
+    - rising
+    - elevated
+    - critical
+
+  reserve_health:
+    - strong
+    - adequate
+    - thinning
+    - fragile
+
+# -------------------------------------------------
+# RESOURCE CONDITIONS
+# -------------------------------------------------
+resources:
+  material_availability:
+    - abundant
+    - normal
+    - tightening
+    - scarce
+
+  supply_chain_friction:
+    - low
+    - moderate
+    - high
+    - disrupted
+
+  lead_time_state:
+    - short
+    - normal
+    - extended
+    - uncertain
+
+# -------------------------------------------------
+# RISK CONDITIONS
+# -------------------------------------------------
+risk:
+  exposure_surface:
+    - contained
+    - expanding
+    - elevated
+    - unstable
+
+  volatility_context:
+    - low
+    - mixed
+    - elevated
+    - erratic
+
+  downside_asymmetry:
+    - limited
+    - present
+    - material
+    - severe
+
+# -------------------------------------------------
+# TEMPORAL CONDITIONS
+# -------------------------------------------------
+time:
+  season_alignment:
+    - aligned
+    - neutral
+    - misaligned
+
+  window_state:
+    - closed
+    - narrow
+    - conditional
+    - open
+
+  recovery_margin:
+    - ample
+    - sufficient
+    - thin
+    - exhausted
+
+# -------------------------------------------------
+# STRUCTURAL CONDITIONS
+# -------------------------------------------------
+structure:
+  dependency_density:
+    - low
+    - moderate
+    - high
+    - entangled
+
+  reversibility:
+    - high
+    - moderate
+    - low
+    - irreversible
+
+  optionality_state:
+    - preserved
+    - narrowing
+    - limited
+    - exhausted
+
+# -------------------------------------------------
+# META-CONSTRAINT
+# -------------------------------------------------
+constraints:
+  shepherd_may_only:
+    - label_conditions
+    - surface_presence
+    - report_state
+
+  shepherd_may_not:
+    - recommend_action
+    - rank_conditions
+    - assign_priority
+    - infer intent
+    - justify movement

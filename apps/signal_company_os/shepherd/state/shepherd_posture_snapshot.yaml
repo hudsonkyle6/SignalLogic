@@ -1,0 +1,78 @@
+# -------------------------------------------------
+# SHEPHERD RUNTIME POSTURE — DEFAULTS (LOCKED)
+# -------------------------------------------------
+# Authority: Signal Light Press
+# Classification: Protected Internal
+# Status: CANONICAL — LOCKED
+# Amendment Rule: Signal Light Press only
+
+state_version: 1.1
+engine: shepherd
+posture_class: runtime_default
+
+timestamp: null
+
+# -------------------------------------------------
+# DEFAULT POSTURE
+# -------------------------------------------------
+posture:
+  mode: HOLD                 # HOLD | ALLOW | RESTRICT
+  confidence: low             # informational only
+  reason_code: canonical_default
+
+# -------------------------------------------------
+# PERMISSION ENVELOPE (DEFAULT)
+# -------------------------------------------------
+permissions:
+  action_allowed: false
+  learning_allowed: false
+  execution_allowed: false
+
+  scope:
+    capital: locked
+    procurement: locked
+    deployment: locked
+    experimentation: locked
+    partnerships: locked
+    scale: locked
+
+# -------------------------------------------------
+# INSIGHT BOUNDARIES
+# -------------------------------------------------
+insight:
+  allowed:
+    - condition_detection
+    - price_signal_awareness
+    - scarcity_flagging
+    - risk_surface_mapping
+  forbidden:
+    - prioritization
+    - optimization
+    - pursuit
+    - strategy_definition
+    - narrative_justification
+
+# -------------------------------------------------
+# SAFETY FLAGS (DEFAULT)
+# -------------------------------------------------
+safety:
+  boundary_alert: false
+  drift_alert: false
+  volatility_alert: false
+  buffer_alert: false
+
+# -------------------------------------------------
+# HUMAN AUTHORITY
+# -------------------------------------------------
+human:
+  override_active: false
+  override_reason: null
+  override_timestamp: null
+
+# -------------------------------------------------
+# LOCK STATEMENT
+# -------------------------------------------------
+lock:
+  posture_mutable: false
+  permissions_mutable: false
+  insight_scope_mutable: false

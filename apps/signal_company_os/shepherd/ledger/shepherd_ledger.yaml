@@ -1,0 +1,79 @@
+# SHEPHERD LEDGER
+# Slow-moving survivability memory
+# Authority: Signal Light Press
+# Classification: Protected Internal
+# Status: Canonical
+# Enforcement: Binding
+
+ledger_version: 1.0
+engine: shepherd
+role: providing
+
+# -------------------------------------------------
+# PURPOSE
+# -------------------------------------------------
+# The Shepherd Ledger records ONLY:
+# - buffers
+# - margins
+# - recovery capacity
+# - exposure levels
+#
+# It does NOT store:
+# - events
+# - narratives
+# - signals
+# - interpretations
+# - predictions
+
+# -------------------------------------------------
+# CORE BUFFERS
+# -------------------------------------------------
+buffers:
+  capital:
+    status: unknown
+    minimum_required: defined_elsewhere
+    trend: flat
+
+  time:
+    recovery_window_hours: unknown
+    fatigue_margin: unknown
+
+  thermal:
+    cold_storage_headroom: unknown
+    energy_reserve: unknown
+
+  ecological:
+    extraction_pressure: low
+    regeneration_state: stable
+
+# -------------------------------------------------
+# RISK ENVELOPE
+# -------------------------------------------------
+risk_envelope:
+  boundary_margin:
+    thickness: unknown     # thick | medium | thin
+    trend: stable          # improving | stable | degrading
+
+  drift_level:
+    value: unknown         # numeric or ordinal
+    trend: stable
+
+  volatility_exposure:
+    external: moderate
+    internal: low
+
+# -------------------------------------------------
+# LEARNING PERMISSION
+# -------------------------------------------------
+learning:
+  allowed: false
+  reason: "default_hold"
+  last_change: null
+
+# -------------------------------------------------
+# POSTURE HISTORY (NO NARRATIVE)
+# -------------------------------------------------
+posture_log:
+  - date: 2026-01-02
+    posture: HOLD
+    cause: initialization

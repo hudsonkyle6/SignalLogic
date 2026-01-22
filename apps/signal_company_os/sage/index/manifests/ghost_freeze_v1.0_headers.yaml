@@ -1,0 +1,12 @@
+version: "ghost_freeze_v1.0_headers"
+date: "2025-12-30"
+description: "Ghost freeze after documentation headers added (no logic change)."
+
+modules:
+  - name: "ghost"
+    path: "rhythm_os/core/memory/ghost.py"
+    sha256: "71aa95bbf503e24ab24e0bbc3130836929fd6f4d9306f6c40c49262a6b60e4b9"
+
+  - name: "afterglow"
+    path: "rhythm_os/core/memory/afterglow.py"
+    sha256: "c636438ee0b8e43f714253a90ab3df2468b0e996e59cddadf42011bd19586cfa"

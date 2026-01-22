@@ -1,0 +1,18 @@
+contract: shepherd_input
+version: 0.1
+status: dormant
+
+inputs:
+  oracle:
+    - regime_classification
+    - uncertainty_band
+    - drift_index
+  sage:
+    - posture
+    - season
+    - narrative_constraints
+
+rules:
+  - no execution permitted
+  - read-only consumption
+  - no persistence allowed

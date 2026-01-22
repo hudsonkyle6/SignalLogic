@@ -1,0 +1,8 @@
+freeze_id: FREEZE-2026-01-12
+authority: Signal Light Press
+scope:
+  - shepherd
+  - dreaming
+  - harmonic_memory_architecture
+status: frozen
+amendment_rule: signal_light_press_only

@@ -1,0 +1,96 @@
+# SIGNAL COMPANY OS — BOUNDARY LAW
+# Authority: Signal Light Press
+# Classification: Protected Internal
+# Status: Canonical
+
+boundary_version: 1.1
+
+# --------------------------------------------------
+# READ BOUNDARIES
+# --------------------------------------------------
+
+allowed_reads:
+  - rhythm_os/oracle_link/*
+  - rhythm_os/sage/state/*
+  - rhythm_os/shepherd/state/*
+  - rhythm_os/apps/signal_company/snapshots/*
+
+forbidden_reads:
+  - rhythm_os/core/*
+  - rhythm_os/antifragile/*
+  - rhythm_os/lighthouse/*
+  - rhythm_os/memory/*
+  - rhythm_os/journal/*
+  - rhythm_os/hst/*
+  - rhythm_os/processes/*
+
+# --------------------------------------------------
+# WRITE BOUNDARIES
+# --------------------------------------------------
+
+allowed_writes:
+  - NONE
+
+# --------------------------------------------------
+# EXECUTION & LEARNING
+# --------------------------------------------------
+
+execution:
+  permitted: false
+
+learning:
+  permitted: false
+
+# --------------------------------------------------
+# POSTURE MODES (NON-EXECUTABLE)
+# --------------------------------------------------
+
+posture_mode:
+  default: custodial_silence
+
+  resonance:
+    definition: >
+      Resonance is an observed alignment between independent upstream signals.
+      It is not prediction, optimization, intent, or opportunity.
+
+    allowed_when:
+      - upstream_resonance_observed == true
+      - shepherd_posture in [ALLOW, HOLD_WITH_RECOVERABILITY]
+      - confidence >= minimum_floor
+
+    authorizes:
+      - posture_rendering
+      - constrained_contact_visibility
+
+    forbids:
+      - execution
+      - optimization
+      - prioritization
+      - strategy
+      - narrative_projection
+      - momentum_assumption
+
+# --------------------------------------------------
+# AUTOMATIC REVERSION RULES
+# --------------------------------------------------
+
+reversion:
+  on_loss_of_resonance: automatic
+  on_engine_conflict: automatic
+  on_confidence_drop: automatic
+  on_shepherd_hold_or_dormant: automatic
+
+# --------------------------------------------------
+# CANONICAL NOTE
+# --------------------------------------------------
+
+interpretive_guard:
+  statement: >
+    This Boundary Law governs access and posture only.
+    It does not grant authority, initiate motion,
+    or substitute for human judgment.
+
+  precedence:
+    - silence_over_resonance
+    - recoverability_over_motion
+    - legibility_over_speed

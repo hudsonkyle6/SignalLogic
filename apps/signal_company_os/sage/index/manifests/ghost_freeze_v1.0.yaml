@@ -1,0 +1,31 @@
+version: "ghost_freeze_v1.0"
+date: "2025-12-30"
+description: "Frozen physics layer for Ghost + Afterglow. Assist Under Discipline enforced."
+
+modules:
+  - name: "ghost"
+    path: "rhythm_os/core/memory/ghost.py"
+    sha256: "0f467ae2fcf0acba1996f297640f8d9692361256d825bceeae33d65f9daef861"
+    role: "Stability mass, anomaly damping, non-authoritative"
+
+  - name: "afterglow"
+    path: "rhythm_os/core/memory/afterglow.py"
+    sha256: "2b387d1be5a299fc808f0c2dd71ec9d2e979882281a62c2cb8d25bb85077a5ee"
+    role: "Temporal inertia, decay, memory persistence"
+
+constraints:
+  - "No module may initiate action"
+  - "No module may escalate urgency"
+  - "No module may override human or oracle authority"
+  - "No optimization targets allowed"
+
+allowed_changes:
+  - "Documentation only"
+  - "Performance-only refactors (must not alter outputs)"
+  - "Bugfixes that preserve historical outputs exactly"
+
+change_requirements:
+  - "New semantic version (v1.x)"
+  - "Full historical backtest"
+  - "Updated freeze manifest"
+  - "Oracle contract update"

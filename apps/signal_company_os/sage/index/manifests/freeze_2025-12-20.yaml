@@ -1,0 +1,27 @@
+FreezeRecord:
+  Date: "2025-12-20"
+  System: "SageOS"
+  Source:
+    System: "Rhythm OS / Oracle"
+    PipelineVersion: "V2.8 — SIGNAL CANONICAL"
+    Snapshot:
+      Path: "data/merged/daily_2025-12-20.csv"
+      GeneratedAt: "2025-12-20"
+  Mirror:
+    Path: "sage/rhythms/mirrors/oracle_snapshot_2025-12-20.csv"
+    Mutability: "READ-ONLY"
+    Hash:
+      Algorithm: "SHA256"
+      Value: "a7da32849912db750ed3908e8d2a9237e3b70bd93dba3c9f4b45f27d125a44a8"
+  Purpose: >
+    This snapshot represents the authoritative world-state
+    as observed by Oracle OS for the given date.
+    It is frozen for SageOS interpretive work.
+  Constraints:
+    - "SageOS may not modify this data"
+    - "SageOS may not recompute Oracle fields"
+    - "Interpretation must cite this snapshot explicitly"
+  Notes: >
+    Oracle continues to operate independently.
+    This freeze establishes a stable temporal reference
+    for meaning, posture attribution, and narrative record.

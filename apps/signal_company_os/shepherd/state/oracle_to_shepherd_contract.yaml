@@ -1,0 +1,69 @@
+# CONTRACT FILE — SOURCE OF TRUTH (NORMATIVE)
+# AMENDMENT AUTHORITY: Signal Light Press (Kernel) only
+# ENGINE ROLE: Oracle OS (Seeing) → Shepherd OS (Providing)
+# EXECUTION AUTHORITY: NONE
+
+version: 1.0
+contract: ORACLE_TO_SHEPHERD
+direction: ORACLE -> SHEPHERD
+purpose: "Transmit external state observations only. No interpretation, prediction, or execution."
+
+inputs:
+  timestamp:
+    type: datetime
+    required: true
+
+  source_id:
+    type: string
+    required: true
+
+  state_estimate:
+    type: vector
+    required: true
+    description: "Observed external conditions; no inference."
+
+  uncertainty_band:
+    type: envelope
+    required: true
+    description: "Bounds of confidence around observation."
+
+  regime:
+    enum: [stable, transitional, edge]
+    required: true
+
+  drift_index:
+    type: float
+    required: false
+
+  volatility:
+    type: float
+    required: false
+
+constraints:
+  read_only: true
+  no_prediction: true
+  no_action_recommendation: true
+  no_prioritization: true
+  no_execution_semantics: true
+
+confidence_rules:
+  minimum_confidence_for_ease: 0.60
+  if_below_minimum:
+    shepherd_must: HOLD
+
+forbidden_fields:
+  - recommendation
+  - action_hint
+  - decision
+  - urgency
+  - priority
+  - optimize
+  - execute
+  - deploy
+  - allocate
+  - scale
+  - forecast
+  - interpretation
+
+enforcement:
+  unknown_field_behavior: REJECT_AND_LOG

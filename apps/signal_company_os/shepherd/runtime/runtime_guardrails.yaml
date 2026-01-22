@@ -1,0 +1,108 @@
+# -------------------------------------------------
+# SHEPHERD RUNTIME GUARDRAILS
+# -------------------------------------------------
+# Authority: Signal Light Press (Kernel)
+# Classification: Protected Internal
+# Status: CANONICAL
+# Amendment Rule: Signal Light Press only
+#
+# Purpose:
+# Enforce safe behavior under missing, degraded, or ambiguous input conditions.
+
+version: 1.0
+engine: shepherd
+scope: runtime
+
+# -------------------------------------------------
+# INPUT REQUIREMENTS
+# -------------------------------------------------
+inputs:
+
+  oracle_snapshot:
+    required: true
+    allow_empty: false
+    max_age_hours: 36
+    schema_required: true
+
+  sage_snapshot:
+    required: true
+    allow_empty: false
+    max_age_hours: 48
+    schema_required: true
+
+# -------------------------------------------------
+# FAILURE HANDLING (HARD RULES)
+# -------------------------------------------------
+failure_modes:
+
+  missing_input:
+    posture: HOLD
+    reason: upstream_missing
+
+  empty_input:
+    posture: DORMANT
+    reason: upstream_empty
+
+  stale_input:
+    posture: HOLD
+    reason: upstream_stale
+
+  schema_violation:
+    posture: HOLD
+    reason: schema_mismatch
+
+  partial_payload:
+    posture: HOLD
+    reason: incomplete_signal
+
+  contradiction_detected:
+    posture: HOLD
+    reason: upstream_conflict
+
+  runtime_exception:
+    posture: HOLD
+    reason: runtime_fault
+
+# -------------------------------------------------
+# CONTRADICTION RULES
+# -------------------------------------------------
+contradictions:
+
+  oracle_vs_sage:
+    action: HOLD
+    precedence: restraint
+    log_required: true
+
+  internal_inconsistency:
+    action: HOLD
+    precedence: restraint
+    log_required: true
+
+# -------------------------------------------------
+# OUTPUT SUPPRESSION
+# -------------------------------------------------
+output_control:
+
+  suppress_condition_report_if:
+    - posture == DORMANT
+    - input_state == empty
+    - integrity.confidence_band == low
+
+  require_explicit_reason_codes: true
+
+# -------------------------------------------------
+# LOGGING & AUDIT
+# -------------------------------------------------
+audit:
+
+  log_all_failures: true
+  log_path: data/shepherd/audit/
+  include_stacktrace: false
+  redact_paths: true
+
+# -------------------------------------------------
+# FINAL LAW
+# -------------------------------------------------
+law:
+  default_posture_on_uncertainty: HOLD
+  optimism_allowed: false

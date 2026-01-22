@@ -1,0 +1,88 @@
+# -------------------------------------------------
+# DREAMING GOVERNANCE — SHEPHERD CONTROLLED
+# -------------------------------------------------
+# Authority: Signal Light Press (Kernel)
+# Classification: Protected Internal
+# Status: CANONICAL
+# Amendment Rule: Signal Light Press only
+#
+# Purpose:
+# Define lawful entry, behavior, and exit from Dreaming state.
+
+version: 1.0
+engine: shepherd
+scope: dreaming
+
+# -------------------------------------------------
+# ENTRY CONDITIONS
+# -------------------------------------------------
+entry_conditions:
+
+  - id: POST_ACTION_COOLDOWN
+    trigger: action_completed == true
+    min_cooldown_hours: 24
+
+  - id: STABILITY_PLATEAU
+    trigger: volatility < low_threshold
+    duration_hours: 72
+
+  - id: DRIFT_WITHOUT_PRESSURE
+    trigger: memory_drift > drift_threshold
+    env_pressure < low_threshold
+
+  - id: BUFFER_THIN
+    trigger: buffer_margin < minimum_safe
+
+  - id: SEASONAL_CLOSE
+    trigger: seasonal_cycle_complete == true
+
+# -------------------------------------------------
+# DREAMING BEHAVIOR
+# -------------------------------------------------
+behavior:
+
+  ingestion: disabled
+  learning: disabled
+  prediction: disabled
+  optimization: disabled
+  execution: disabled
+
+  allowed_operations:
+    - memory_decay
+    - drift_damping
+    - ghost_compression
+    - afterglow_reweight
+    - confidence_band_reset
+
+# -------------------------------------------------
+# EXIT CONDITIONS
+# -------------------------------------------------
+exit_conditions:
+
+  required:
+    - buffers_restored == true
+    - drift_resolved == true
+    - integrity_confidence >= minimum
+
+  authority_required:
+    - shepherd_allows_exit == true
+
+# -------------------------------------------------
+# FAILURE & SAFETY
+# -------------------------------------------------
+safety:
+
+  violation_response:
+    any_forbidden_operation: HOLD
+
+  override:
+    human_override_allowed: true
+    override_effect: HOLD_ONLY
+
+# -------------------------------------------------
+# FINAL LAW
+# -------------------------------------------------
+law:
+  dreaming_is_non_optional: true
+  dreaming_extensible: true
+  dreaming_skippable: false

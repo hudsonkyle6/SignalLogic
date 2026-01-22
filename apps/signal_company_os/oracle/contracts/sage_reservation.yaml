@@ -1,0 +1,23 @@
+# SAGE RESERVATION CONTRACT v1
+# Purpose: Reserve Sage's role before it exists.
+
+SageContract:
+  Status: dormant
+
+  ActivationCriteria:
+    MinimumDaysObserved: 30
+    MinimumPhaseChanges: 3
+    OracleStable: true
+
+  AllowedRoles:
+    - interpretation
+    - narrative_summary
+    - pattern_annotation
+
+  ForbiddenRoles:
+    - control
+    - override
+    - decision_execution
+
+  Invariants:
+    - "Sage may advise, not command."

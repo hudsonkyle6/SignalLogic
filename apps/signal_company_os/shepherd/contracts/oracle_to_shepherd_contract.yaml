@@ -1,0 +1,126 @@
+# ============================================================
+# ORACLE → SHEPHERD INPUT CONTRACT
+# ============================================================
+
+authority: Signal Light Press (Kernel)
+engine: Shepherd OS — The Provider
+classification: Protected Internal
+status: Binding Contract
+effective: 2026-01-02
+
+seal: >
+  Shepherd receives estimates, not truth.
+  Shepherd enforces survivability, not prediction.
+
+# ------------------------------------------------------------
+# 1. CONTRACT SCOPE
+# ------------------------------------------------------------
+scope:
+  direction: oracle_to_shepherd
+  access: read_only
+  execution: prohibited
+  learning: prohibited
+
+# ------------------------------------------------------------
+# 2. REQUIRED INPUTS
+# ------------------------------------------------------------
+inputs:
+
+  state_estimate:
+    description: Estimated system state
+    type: structured_vector
+    required: true
+
+  uncertainty_band:
+    description: Confidence / uncertainty envelope
+    type: covariance_or_band
+    required: true
+
+  regime_classification:
+    description: Operating regime classification
+    allowed_values:
+      - stable
+      - transitional
+      - unstable
+      - edge
+    required: true
+
+  drift_index:
+    description: Accumulated deviation from baseline
+    type: scalar
+    required: true
+
+  buffer_depth:
+    description: Remaining recovery buffer
+    type: scalar
+    required: true
+
+  oracle_timestamp:
+    description: Time of oracle observation
+    type: iso8601
+    required: true
+
+# ------------------------------------------------------------
+# 3. OPTIONAL INPUTS (NON-CRITICAL)
+# ------------------------------------------------------------
+optional_inputs:
+
+  volatility_index:
+    description: Short-term instability indicator
+    type: scalar
+    required: false
+
+  ghost_flag:
+    description: Historical resonance or echo detection
+    type: boolean
+    required: false
+
+# ------------------------------------------------------------
+# 4. FORBIDDEN CONTENT
+# ------------------------------------------------------------
+forbidden:
+  - action_recommendations
+  - optimization_targets
+  - forecasts
+  - predictions
+  - narrative_explanations
+  - policy_suggestions
+
+# ------------------------------------------------------------
+# 5. TIMELINESS RULES
+# ------------------------------------------------------------
+freshness:
+  max_age_seconds: 86400
+  stale_behavior: degrade_to_hold
+
+# ------------------------------------------------------------
+# 6. FAILURE HANDLING
+# ------------------------------------------------------------
+on_missing_required_input: hold
+on_uncertainty_exceeds_threshold: tighten_constraints
+on_regime_edge: freeze_learning
+on_timestamp_stale: hold
+
+# ------------------------------------------------------------
+# 7. INTERPRETATION LIMITS
+# ------------------------------------------------------------
+interpretation:
+  shepherd_may:
+    - translate inputs into permission bounds
+    - tighten or relax constraints
+    - adjust pacing
+
+  shepherd_may_not:
+    - infer intent
+    - infer causality
+    - reconstruct oracle models
+    - substitute estimation
+    - smooth oracle uncertainty
+
+# ------------------------------------------------------------
+# 8. AUDITABILITY
+# ------------------------------------------------------------
+audit:
+  logging_required: true
+  mutation_allowed: false
+  contract_version_lock: true

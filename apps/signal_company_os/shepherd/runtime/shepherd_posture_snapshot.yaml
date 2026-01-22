@@ -1,0 +1,14 @@
+authority: Signal Light Press
+engine: SHEPHERD OS
+classification: Protected Internal
+status: CANONICAL
+
+posture:
+  mode: HOLD
+  reason: Upstream Oracle-to-Shepherd handoff not yet wired
+
+permissions:
+  action_allowed: false
+  scope: {}
+
+generated_utc: 2026-01-13T20:10:00Z

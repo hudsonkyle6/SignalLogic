@@ -1,0 +1,85 @@
+# STABILITY CONTRACT v1
+# Purpose: Prevent overreaction, authority creep, and autonomous escalation.
+
+# ------------------------------------------------------------------
+# AUD Doctrine (NON-EXECUTABLE — documentation only)
+# ------------------------------------------------------------------
+assist_under_discipline:
+  description: >
+    Enforces Assist Under Discipline (AUD).
+    No system component may initiate, escalate, or compel action
+    without explicit human authority.
+
+  forbidden:
+    - lighthouse_prediction_changes_decision
+    - ghost_triggers_push
+    - resonance_optimization_targets
+    - autonomous_state_escalation
+    - memory_field_overrides_human_gate
+
+  required_human_gates:
+    - human_ledger_decision_present
+    - oracle_contract_valid
+    - stability_threshold_met
+
+  enforcement:
+    on_violation: invalidate_decision
+    severity: critical
+
+
+# ------------------------------------------------------------------
+# EXECUTABLE STABILITY CONTRACT (ENFORCED)
+# ------------------------------------------------------------------
+StabilityContract:
+  Version: "1.0.0"
+
+  AssistUnderDiscipline:
+    Enabled: true
+
+    Authority:
+      Mode: "assist_only"          # assist_only | recommend | execute
+      EscalationAllowed: false
+      OverrideHumanJudgment: false
+
+    OutputLimits:
+      AllowRecommendations: true
+      AllowActions: false
+      AllowTriggers: false
+
+    HumanGates:
+      RequireLedgerDecision: true
+      RequireValidOracleContract: true
+      RequireStabilityThreshold: true
+
+    Enforcement:
+      OnViolation: invalidate_decision
+      Severity: critical
+
+  LearningPhase:
+    Enabled: true
+    ObservationWindowDays: 21
+
+  DriftPolicy:
+    Allowed:
+      - phase_shift
+      - streak_reset
+      - confidence_drop
+    Forbidden:
+      - silent_schema_change
+      - metric_redefinition
+      - weight_rebalancing
+
+  Alerts:
+    StreakReset:
+      Severity: info
+      Action: log_only
+    ConfidenceDrop:
+      Severity: info
+      Action: log_only
+
+  Invariants:
+    - "System may observe without acting."
+    - "Assistance never implies authority."
+    - "Escalation requires explicit human intent."
+
+ 

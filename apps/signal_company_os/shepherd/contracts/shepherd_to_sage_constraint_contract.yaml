@@ -1,0 +1,133 @@
+# ============================================================
+# SHEPHERD → SAGE CONSTRAINT FEEDBACK CONTRACT
+# ============================================================
+
+authority: Signal Light Press (Kernel)
+engine: Shepherd OS — The Provider
+recipient: Sage OS — The Interpreter
+classification: Protected Internal
+status: Binding Contract
+effective: 2026-01-02
+
+seal: >
+  Shepherd communicates limits, not meaning.
+  Sage interprets meaning, not action.
+
+# ------------------------------------------------------------
+# 1. CONTRACT SCOPE
+# ------------------------------------------------------------
+scope:
+  direction: shepherd_to_sage
+  access: read_only
+  execution: prohibited
+  learning: prohibited
+
+# ------------------------------------------------------------
+# 2. ALLOWED OUTPUTS
+# ------------------------------------------------------------
+outputs:
+
+  posture:
+    description: Operating posture signal
+    allowed_values:
+      - hold
+      - ease
+      - proceed
+    required: true
+
+  constraint_tightness:
+    description: Relative constraint severity
+    allowed_values:
+      - relaxed
+      - nominal
+      - tightened
+      - restrictive
+    required: true
+
+  pacing_limit:
+    description: Maximum allowed rate of change
+    type: scalar_or_band
+    required: true
+
+  buffer_floor:
+    description: Minimum recovery buffer to maintain
+    type: scalar
+    required: true
+
+  learning_gate:
+    description: Whether learning is permitted
+    allowed_values:
+      - enabled
+      - frozen
+    required: true
+
+  shepherd_timestamp:
+    description: Time of constraint issuance
+    type: iso8601
+    required: true
+
+# ------------------------------------------------------------
+# 3. OPTIONAL CONTEXT FLAGS
+# ------------------------------------------------------------
+optional_outputs:
+
+  edge_proximity_flag:
+    description: Proximity to known failure envelope
+    type: boolean
+    required: false
+
+  uncertainty_pressure:
+    description: Whether uncertainty is driving restriction
+    type: boolean
+    required: false
+
+# ------------------------------------------------------------
+# 4. FORBIDDEN OUTPUTS
+# ------------------------------------------------------------
+forbidden:
+  - action_recommendations
+  - narratives
+  - explanations
+  - forecasts
+  - objectives
+  - optimization_targets
+  - emotional framing
+
+# ------------------------------------------------------------
+# 5. TIMELINESS RULES
+# ------------------------------------------------------------
+freshness:
+  max_age_seconds: 86400
+  stale_behavior: interpret_as_hold
+
+# ------------------------------------------------------------
+# 6. FAILURE HANDLING
+# ------------------------------------------------------------
+on_missing_required_output: interpret_as_hold
+on_learning_gate_frozen: prohibit_reflection_expansion
+on_posture_hold: prioritize_conservation_language
+
+# ------------------------------------------------------------
+# 7. INTERPRETATION LIMITS
+# ------------------------------------------------------------
+interpretation:
+  sage_may:
+    - reflect on meaning of limits
+    - adjust narrative tone
+    - recommend human attention
+    - log interpretive notes
+
+  sage_may_not:
+    - infer causes
+    - infer future outcomes
+    - suggest control actions
+    - override constraints
+    - reinterpret limits as goals
+
+# ------------------------------------------------------------
+# 8. AUDITABILITY
+# ------------------------------------------------------------
+audit:
+  logging_required: true
+  mutation_allowed: false
+  contract_version_lock: true

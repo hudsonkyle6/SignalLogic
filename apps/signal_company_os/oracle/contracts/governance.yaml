@@ -1,0 +1,48 @@
+# GOVERNANCE CONTRACT v1
+# Purpose: Declare authority, intent, and limits of action.
+# This is a CONTRACT, not tuning.
+
+GovernanceContract:
+  Version: "1.0.0"
+  Mode: assist_under_discipline
+
+  Authority:
+    RhythmOS: observe
+    Oracle: interpret
+    AntifragileEngine: reflect
+    ARI: recommend
+    Lighthouse: predict
+    Sage: dormant
+    Helmsman: not_present
+    Human: decide
+
+  ActionLimits:
+    AutonomousControl: false
+    WriteBackAllowed:
+      - signal_journal
+      - oracle_state
+    Forbidden:
+      - actuator_commands
+      - physical_control
+      - financial_execution
+      - irreversible_actions
+
+  ConfidenceGating:
+    Enabled: true
+    Thresholds:
+      High: 0.70
+      Medium: 0.50
+      Low: 0.35
+
+    Behavior:
+      HighConfidence:
+        Action: recommend_normally
+      MediumConfidence:
+        Action: recommend_with_caution
+      LowConfidence:
+        Action: observe_only
+
+  Invariants:
+    - "No layer may escalate authority without a contract version change."
+    - "Human decision authority is final."
+

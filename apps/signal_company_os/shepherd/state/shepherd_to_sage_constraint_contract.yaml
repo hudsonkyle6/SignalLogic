@@ -1,0 +1,129 @@
+# CONTRACT FILE — SOURCE OF TRUTH (NORMATIVE)
+# AUTHORITY: Signal Light Press (Kernel)
+# AMENDMENT AUTHORITY: Signal Light Press ONLY
+# ENGINE ROLES:
+#   - SHEPHERD OS: Providing (Non-Executive)
+#   - SAGE OS: Knowing (Canonical Enforcer)
+# EXECUTION AUTHORITY: NONE
+
+version: 1.0
+contract: SHEPHERD_TO_SAGE_CONSTRAINT
+direction: SHEPHERD -> SAGE
+classification: PROTECTED_INTERNAL
+
+purpose: >
+  Define the only permissible requests Shepherd may make of Sage.
+  Sage remains the sole interpreter and enforcer of doctrine, canon,
+  and boundary conditions.
+
+# -------------------------------------------------
+# GENERAL RULES
+# -------------------------------------------------
+rules:
+  - Shepherd may REQUEST permission or interpretation.
+  - Sage may APPROVE or DENY based on canon and posture.
+  - Sage decisions are FINAL.
+  - Any denial forces Shepherd to HOLD.
+  - Shepherd may not retry a denied request without changed conditions.
+  - Shepherd may not argue, persuade, or escalate.
+
+deny_by_default: true
+
+# -------------------------------------------------
+# ALLOWED REQUEST TYPES (FROM SHEPHERD)
+# -------------------------------------------------
+allowed_requests:
+
+  - type: REQUEST_CONSTRAINT_INTERPRETATION
+    description: "Clarify whether a proposed action violates doctrine or boundaries."
+    required_fields:
+      - timestamp
+      - request_id
+      - current_state
+      - proposed_action_summary
+      - relevant_domain
+    forbidden_fields:
+      - narrative_justification
+      - optimization_argument
+      - urgency_claim
+
+  - type: REQUEST_EASE_APPROVAL
+    description: "Request permission to move from HOLD to EASE."
+    required_fields:
+      - timestamp
+      - request_id
+      - current_state
+      - buffer_status
+      - risk_summary
+    forbidden_fields:
+      - performance_targets
+      - success_probability
+
+  - type: REQUEST_PROCEED_APPROVAL
+    description: "Request permission to move from EASE to PROCEED for one bounded objective."
+    required_fields:
+      - timestamp
+      - request_id
+      - current_state
+      - objective_id
+      - timebox
+      - exit_criteria
+      - required_buffers
+    forbidden_fields:
+      - scaling_language
+      - strategic_expansion
+      - future_opportunities
+
+# -------------------------------------------------
+# FORBIDDEN REQUEST TYPES
+# -------------------------------------------------
+forbidden_requests:
+  - REQUEST_DOCTRINE_CHANGE
+  - REQUEST_STRATEGY_DEFINITION
+  - REQUEST_PUBLIC_NARRATIVE
+  - REQUEST_DOMAIN_REDEFINITION
+  - REQUEST_EXECUTION_AUTHORITY
+  - REQUEST_CAPITAL_RAISE
+  - REQUEST_SCALING_PERMISSION
+
+# -------------------------------------------------
+# SAGE RESPONSE CONTRACT
+# -------------------------------------------------
+sage_response:
+
+  allowed_outcomes:
+    - APPROVE
+    - DENY
+
+  required_fields:
+    - timestamp
+    - request_id
+    - outcome
+    - rationale_reference
+
+  rationale_reference:
+    description: "Must cite a specific doctrine or canonical document filename."
+
+  approval_fields:
+    - constraints
+    - limits
+    - expiry
+
+  denial_rules:
+    - On DENY: Shepherd MUST transition to HOLD.
+    - On DENY: Denial must be logged in shepherd_ledger.yaml.
+    - On DENY: No retry unless buffer state or external conditions materially change.
+
+# -------------------------------------------------
+# FAILURE & ENFORCEMENT
+# -------------------------------------------------
+failure_behavior:
+  on_unknown_request_type: REJECT_AND_LOG
+  on_missing_required_field: REJECT_AND_LOG
+  on_forbidden_field_detected: HOLD_AND_LOG
+  on_schema_violation: HOLD_AND_LOG
+
+enforcement:
+  escalation_allowed: false
+  override_allowed: false
+  silence_equals_denial: true
