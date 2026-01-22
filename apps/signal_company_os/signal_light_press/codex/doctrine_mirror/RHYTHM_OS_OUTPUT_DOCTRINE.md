@@ -1,6 +1,30 @@
-📜 RHYTHM OS — SYSTEM OUTPUT \& SIGNAL DOCTRINE
+📜 RHYTHM OS OUTPUT DOCTRINE
 
+DOCTRINAL MIRROR NOTICE
 
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/RHYTHM_OS_OUTPUT_DOCTRINE.md
+
+Mirror Location:
+codex/doctrine_mirror/RHYTHM_OS_OUTPUT_DOCTRINE.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+This file may not be edited independently.
+All changes must originate from the Canonical Source.
+
+Enforcement Role:
+This mirror exists solely to support enforcement,
+interpretation limits, and runtime integrity.
+
+Violation Notice:
+Any divergence from the Canonical Source
+constitutes a canonical breach.
 
 Signal Light Press — Canonical Interpretive Law
 
@@ -657,4 +681,3 @@ Seal: Signal Light Press
 Canonical Doctrine Register
 
 Authority Preserved
-

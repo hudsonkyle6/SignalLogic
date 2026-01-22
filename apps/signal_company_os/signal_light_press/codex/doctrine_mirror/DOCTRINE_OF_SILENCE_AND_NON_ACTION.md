@@ -1,4 +1,30 @@
-DOCTRINE OF SILENCE \& NON-ACTION
+📜 DOCTRINE OF SILENCE AND NON ACTION
+
+DOCTRINAL MIRROR NOTICE
+
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Mirror Location:
+codex/doctrine_mirror/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+This file may not be edited independently.
+All changes must originate from the Canonical Source.
+
+Enforcement Role:
+This mirror exists solely to support enforcement,
+interpretation limits, and runtime integrity.
+
+Violation Notice:
+Any divergence from the Canonical Source
+constitutes a canonical breach.
 
 Authority: Signal Light Press
 
@@ -155,4 +181,3 @@ This doctrine is binding.
 
 
 — Sealed under Signal Light Press, December 2025
-

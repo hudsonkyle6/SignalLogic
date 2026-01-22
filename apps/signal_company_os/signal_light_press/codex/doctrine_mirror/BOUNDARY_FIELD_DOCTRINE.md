@@ -78,6 +78,32 @@ Violation Notice:
 Any divergence from the Canonical Source
 constitutes a canonical breach.
 
+DOCTRINAL MIRROR NOTICE
+
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/BOUNDARY_FIELD_DOCTRINE.md
+
+Mirror Location:
+codex/doctrine_mirror/BOUNDARY_FIELD_DOCTRINE.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+This file may not be edited independently.
+All changes must originate from the Canonical Source.
+
+Enforcement Role:
+This mirror exists solely to support enforcement,
+interpretation limits, and runtime integrity.
+
+Violation Notice:
+Any divergence from the Canonical Source
+constitutes a canonical breach.
+
 
 DOCTRINAL MIRROR NOTICE
 

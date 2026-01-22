@@ -1,9 +1,30 @@
-HUMAN AUTHORITY \& RESPONSIBILITY DOCTRINE
-Authority: Signal Light Press
-Classification: Crown Jewel
-Status: Canonical
+📜 HUMAN AUTHORITY AND RESPONSIBILITY DOCTRINE
 
+DOCTRINAL MIRROR NOTICE
 
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+
+Mirror Location:
+codex/doctrine_mirror/HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+This file may not be edited independently.
+All changes must originate from the Canonical Source.
+
+Enforcement Role:
+This mirror exists solely to support enforcement,
+interpretation limits, and runtime integrity.
+
+Violation Notice:
+Any divergence from the Canonical Source
+constitutes a canonical breach.
 
 DOCTRINAL MIRROR NOTICE
 
@@ -128,4 +149,3 @@ Responsibility cannot be automated.
 This doctrine is binding.
 
 — Sealed under Signal Light Press, December 2025
-
