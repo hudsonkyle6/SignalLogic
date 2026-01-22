@@ -13,7 +13,11 @@ Posture = Literal["SILENT", "REFUSE", "ALLOW"]
 class ShepherdPosture:
     """
     Shepherd governs whether action may exist at all.
-    Emits posture only. No tasks. No prescriptions.
+
+    Emits posture only.
+    - No tasks
+    - No prescriptions
+    - No execution authority
     """
     posture: Posture
     posture_confidence: Optional[float] = None
@@ -34,10 +38,14 @@ def run_shepherd(
 
     Rule 1:
     - If any convergence is MODERATE or HIGH,
-      ALLOW continued observation.
+      ALLOW continued observation (not execution).
 
     Default:
     - SILENT
+
+    NOTE:
+    - sage_context is intentionally unused.
+    - Shepherd does not interpret context, narrative, or meaning.
     """
 
     # -------------------------------------------------
@@ -68,23 +76,8 @@ def run_shepherd(
             )
 
     # -------------------------------------------------
-    # Default — armored silence
+    # Default — Armored silence
     # -------------------------------------------------
-    return ShepherdPosture(
-        posture="SILENT",
-        posture_confidence=None,
-        reason=None,
-    )
-
-
-    for summary in oracle_convergence:
-        if summary.convergence in ("moderate", "high"):
-            return ShepherdPosture(
-                posture="ALLOW",
-                posture_confidence=None,
-                reason="plural convergence detected; observation permitted",
-            )
-
     return ShepherdPosture(
         posture="SILENT",
         posture_confidence=None,
