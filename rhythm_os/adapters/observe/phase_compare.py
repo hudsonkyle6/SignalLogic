@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 import math
-from pathlib import Path
 from typing import Optional
 
 from rhythm_os.core.field import compute_field
 from rhythm_os.domain.domain_wave import DomainWave
-from rhythm_os.domain.write import append_domain_wave
+
+
+# Rhythm OS rule:
+# Domain functions describe waves. They never emit them.
 
 
 # ---------------------------------------------------------
@@ -19,10 +23,10 @@ def wrap_phase(delta: float) -> float:
 
 
 # ---------------------------------------------------------
-# DomainWave assembly
+# Pure DomainWave construction
 # ---------------------------------------------------------
 
-def build_domain_wave(
+def compute_domain_wave(
     *,
     t: float,
     domain: str,
@@ -31,10 +35,17 @@ def build_domain_wave(
     field_component: str,
     coherence: Optional[float],
     extractor_meta: dict,
-    output_path: Path,
 ) -> DomainWave:
     """
-    Compare external phase to sovereign field and append DomainWave.
+    Compare an external phase to the sovereign field and
+    return a DomainWave.
+
+    Rules:
+    - Pure computation only
+    - No IO
+    - No persistence
+    - No filesystem access
+    - No authority
     """
 
     field = compute_field(t)
@@ -48,7 +59,7 @@ def build_domain_wave(
     phase_field = field.phases[field_component]
     phase_diff = wrap_phase(phase_external - phase_field)
 
-    wave = DomainWave(
+    return DomainWave(
         t=t,
         domain=domain,
         channel=channel,
@@ -58,6 +69,3 @@ def build_domain_wave(
         coherence=coherence,
         extractor=extractor_meta,
     )
-
-    append_domain_wave(output_path, wave)
-    return wave
