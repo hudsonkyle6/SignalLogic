@@ -1,4 +1,12 @@
-EXPLORATION \& MARGINS — CANON (OBSERVATION-ONLY)
+📜 EXPLORATION AND MARGINS CANON
+
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Authority: Signal Light Press
 
@@ -97,4 +105,3 @@ Any component violating this canon auto-collapses to silence or HOLD posture. No
 Authority: Signal Light Press
 
 Amendment Rule: Signal Light Press only
-

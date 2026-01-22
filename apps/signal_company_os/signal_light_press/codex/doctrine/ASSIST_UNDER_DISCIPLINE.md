@@ -1,6 +1,28 @@
-\# ASSIST UNDER DISCIPLINE (AUD) — CANONICAL DOCTRINE
+📜 ASSIST UNDER DISCIPLINE
 
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
+
+Authority: Signal Light Press
+Classification: Crown Jewel
+Status: CANONICAL
+Domain: System Law
+Applies To: All Engines and Domains
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Assist Under Discipline (AUD) is the governing design law of Rhythm OS.
 
@@ -99,6 +121,3 @@ regardless of performance improvements or optimization gains.
 Restraint is not a limitation.
 
 Restraint is the system.
-
-
-

@@ -1,4 +1,12 @@
-FAILURE MODES \& DEGRADATION DOCTRINE
+📜 FAILURE MODES AND DEGRADATION DOCTRINE
+
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Authority: Signal Light Press
 
@@ -203,4 +211,3 @@ Violation invalidates system output.
 
 
 — Sealed under Signal Light Press, December 2025
-

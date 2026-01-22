@@ -1,6 +1,12 @@
-\# GHOST FREEZE PROTOCOL — v1.0
+📜 GHOST FREEZE PROTOCOL
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Ghost and Memory modules are treated as “physics.”
 
@@ -43,4 +49,3 @@ Any functional change requires:
 3\) explicit changelog
 
 4\) contract update in oracle/contracts/stability.yaml
-

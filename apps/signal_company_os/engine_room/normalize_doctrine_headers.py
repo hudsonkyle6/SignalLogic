@@ -7,7 +7,7 @@ Signal Light Press
 - Preserves body verbatim
 - Requires explicit metadata
 - Fails if header/body boundary is unclear
-- Operates only within Signal Light Press scope
+- Enforces Signal Light Press scope without path rewriting
 """
 
 from pathlib import Path
@@ -69,9 +69,7 @@ def split_header_body(text: str) -> tuple[str, str]:
     lines = text.splitlines()
     for i, line in enumerate(lines):
         if line.strip() == "":
-            header = "\n".join(lines[:i])
-            body = "\n".join(lines[i + 1 :])
-            return header, body
+            return "\n".join(lines[:i]), "\n".join(lines[i + 1 :])
     raise ValueError("No blank line separating header and body")
 
 
@@ -109,44 +107,50 @@ def normalize_file(
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: normalize_doctrine_headers.py <mirror|canon> <relative_file_path>")
+        print("Usage: normalize_doctrine_headers.py <mirror|canon> <file_path>")
         sys.exit(1)
 
     mode = sys.argv[1]
-    relative_path = sys.argv[2]
+    raw_path = Path(sys.argv[2])
 
     # ---------------------------------
-    # PATH RESOLUTION (NON-NEGOTIABLE)
+    # PATH RESOLUTION (AUTHORITATIVE)
     # ---------------------------------
 
-    REPO_ROOT = Path(__file__).resolve().parents[3]
-    SLP_ROOT = REPO_ROOT / "apps" / "signal_company_os" / "signal_light_press"
-
-    file_path = (SLP_ROOT / relative_path).resolve()
+    file_path = raw_path.resolve()
 
     if not file_path.exists():
         raise FileNotFoundError(file_path)
 
-    if SLP_ROOT not in file_path.parents:
-        raise PermissionError("File is outside Signal Light Press scope")
+    # ---------------------------------
+    # SCOPE ENFORCEMENT (NON-MUTATING)
+    # ---------------------------------
+
+    repo_root = Path(__file__).resolve().parents[3]
+    slp_root = repo_root / "apps" / "signal_company_os" / "signal_light_press"
+
+    if slp_root not in file_path.parents:
+        raise PermissionError(
+            f"File is outside Signal Light Press scope: {file_path}"
+        )
 
     # ---------------------------------
-    # EXPLICIT METADATA (PER FILE ONLY)
+    # EXPLICIT METADATA (PER FILE)
     # ---------------------------------
 
     if mode == "mirror":
         metadata = dict(
-            title="BOUNDARY FIELD DOCTRINE",
-            canonical_source="signal_light_press/doctrine/BOUNDARY_FIELD_DOCTRINE.md",
+            title=file_path.stem.replace("_", " ").upper(),
+            canonical_source=f"signal_light_press/doctrine/{file_path.name}",
             mirror_path=f"codex/doctrine_mirror/{file_path.name}",
         )
 
     elif mode == "canon":
         metadata = dict(
-            title="ASSIST UNDER DISCIPLINE",
-            classification="Crown Jewel",
-            domain="System Law",
-            applies_to="All Engines and Domains",
+            title=file_path.stem.replace("_", " ").upper(),
+            classification="CROWN JEWEL",
+            domain="Doctrine",
+            applies_to="Signal Company System",
         )
 
     else:

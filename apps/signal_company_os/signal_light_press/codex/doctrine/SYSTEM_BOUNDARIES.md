@@ -1,4 +1,12 @@
-📜 SYSTEM\_BOUNDARIES.md
+📜 SYSTEM BOUNDARIES
+
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Signal Light Press — Canonical Boundary Doctrine
 
@@ -667,4 +675,3 @@ SEAL
 Signal Light Press
 
 January 2026
-

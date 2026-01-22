@@ -1,6 +1,12 @@
-\# TRIADIC INSTANTIATION PROTOCOL — SHEPHERD (CORPORATE vs PRIVATE)
+📜 TRIADIC INSTANTIATION PROTOCOL SHEPHERD
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Authority: Signal Light Press (Kernel)  
 
@@ -59,6 +65,5 @@ Corporate cleanliness and personal sovereignty are preserved by separation, not 
 
 
 Status: SEALED
-
 
 

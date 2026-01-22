@@ -1,6 +1,12 @@
-Doctrine Only · No Logic · No Authority
+📜 ORACLE CONFIDENCE AND ABSENCE DOCTRINE
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 This course formalizes what it means when Oracle speaks softly—or not at all.
 
@@ -307,4 +313,3 @@ optimism under uncertainty
 
 
 The system fails closed by design.
-

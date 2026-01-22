@@ -1,6 +1,12 @@
 📜 DOCTRINAL MIRROR HEADER STANDARD
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Signal Light Press
 
@@ -241,4 +247,3 @@ Authority preserved.
 
 
 — Signal Light Press
-

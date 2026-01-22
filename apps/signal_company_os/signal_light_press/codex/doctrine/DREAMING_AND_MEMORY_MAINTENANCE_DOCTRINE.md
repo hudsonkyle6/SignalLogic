@@ -1,6 +1,12 @@
-\# DREAMING \& MEMORY MAINTENANCE DOCTRINE
+📜 DREAMING AND MEMORY MAINTENANCE DOCTRINE
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Authority: Signal Light Press (Kernel)  
 
@@ -307,6 +313,5 @@ or confidence for truth.
 
 
 Status: SEALED
-
 
 

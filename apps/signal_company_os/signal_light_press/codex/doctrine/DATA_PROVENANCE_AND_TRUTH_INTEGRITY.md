@@ -1,9 +1,12 @@
-DATA PROVENANCE \& TRUTH INTEGRITY DOCTRINE
+📜 DATA PROVENANCE AND TRUTH INTEGRITY
+
 Authority: Signal Light Press
-Classification: Crown Jewel
-Status: Canonical
-
-
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 PURPOSE
 
@@ -52,4 +55,3 @@ Truth integrity is more important than continuity.
 This doctrine is binding.
 
 — Sealed under Signal Light Press, December 2025
-

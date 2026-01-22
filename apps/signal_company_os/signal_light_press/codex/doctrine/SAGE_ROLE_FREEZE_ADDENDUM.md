@@ -1,6 +1,12 @@
-\# SAGE ROLE FREEZE ADDENDUM — v1.0 (SEALED)
+📜 SAGE ROLE FREEZE ADDENDUM
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Authority: Signal Light Press (Kernel)  
 
@@ -221,6 +227,5 @@ This addendum is binding and overrides any prior informal interpretation of Sage
 Status: SEALED — CANONICAL  
 
 Authority: Signal Light Press
-
 
 

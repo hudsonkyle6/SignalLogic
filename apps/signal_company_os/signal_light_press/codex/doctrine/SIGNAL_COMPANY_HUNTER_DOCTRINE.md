@@ -1,6 +1,12 @@
-📜 SIGNAL COMPANY — HUNTER DOCTRINE
+📜 SIGNAL COMPANY HUNTER DOCTRINE
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Version: v1.0
 
@@ -379,4 +385,3 @@ Authority: Signal Light Press
 Date: 2026-01-16
 
 Seal Type: CANONICAL SEAL
-

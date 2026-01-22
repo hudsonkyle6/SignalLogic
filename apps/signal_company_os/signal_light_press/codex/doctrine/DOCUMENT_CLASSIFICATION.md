@@ -1,4 +1,12 @@
-# DOCUMENT CLASSIFICATION — SIGNAL LIGHT PRESS
+📜 DOCUMENT CLASSIFICATION
+
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 Status: CANONICAL  
 Authority: Signal Light Press  
@@ -178,4 +186,3 @@ This classification exists to protect truth, safety, and longevity.
 State of New Hampshire  
 Business ID 1011389 · Filing No. 7347041  
 All Rights Reserved.
-

@@ -1,6 +1,12 @@
-\# ORACLE — Phase Recognition Doctrine (Canonical)
+📜 ORACLE PHASE DOCTRINE
 
-
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System
+Amendment Rule: Signal Light Press only
+Executable: No
 
 \## Role
 
@@ -117,6 +123,5 @@ Canonical. Protected. Read-only.
 
 
 Date: 2026-01-18
-
 
 
