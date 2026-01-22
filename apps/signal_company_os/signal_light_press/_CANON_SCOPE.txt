@@ -1,0 +1,16 @@
+codex
+seals
+chronicles
+fieldnotes
+publications
+contracts
+manifests
+navigator
+editions
+evidence
+registers
+CANONICAL_ROOTS.md
+KERNEL_NAVIGATOR.md
+HEADER_TEMPLATES.md
+IP_ENFORCEMENT_CHECKLIST.md
+KERNEL_TO_OS_BRIDGE.md
