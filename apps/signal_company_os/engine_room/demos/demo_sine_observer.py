@@ -7,15 +7,35 @@ Purpose:
 - Explicit persistence owned by caller
 """
 
+from __future__ import annotations
+
 import time
 import math
 import numpy as np
 from pathlib import Path
 
+# ---------------------------------------------------------
+# External observation buffer (caller-owned)
+# ---------------------------------------------------------
+
+observed_waves = []
+
+# ---------------------------------------------------------
+# Rhythm OS imports (pure + bounded)
+# ---------------------------------------------------------
+
 from rhythm_os.adapters.observe.phase_extractor import extract_external_phase
-from rhythm_os.domain.phase_compare import compute_domain_wave
+from rhythm_os.domain.domain_wave import DomainWave
+from rhythm_os.domain.oracle.phase import describe_alignment
 from rhythm_os.domain.write import append_domain_wave
 from rhythm_os.core.field import compute_field
+
+# ---------------------------------------------------------
+# Engine room (read-only instrumentation)
+# ---------------------------------------------------------
+
+from engine_room.signal_scope import render_scope
+from engine_room.wave_view_adapter import WaveViewAdapter
 
 
 # ---------------------------------------------------------
@@ -26,7 +46,7 @@ DOMAIN = "demo"
 CHANNEL = "synthetic_sine"
 FIELD_COMPONENT = "semi_diurnal"
 
-PERIOD_S = 43200.0
+PERIOD_S = 43200.0           # 12 hours
 OFFSET_DEG = 22.0
 WINDOW_HOURS = 6
 DT = 60.0
@@ -63,8 +83,10 @@ def generate_sine_samples(t_now: float):
 if __name__ == "__main__":
     t_now = time.time()
 
+    # Generate synthetic samples
     samples = generate_sine_samples(t_now)
 
+    # Extract external phase (pure)
     phase_external, extractor_meta = extract_external_phase(
         samples,
         method="hilbert",
@@ -77,7 +99,10 @@ if __name__ == "__main__":
         "window_hours": WINDOW_HOURS,
     }
 
-    # PURE domain computation
+    # -----------------------------------------------------
+    # PURE domain computation (no side effects)
+    # -----------------------------------------------------
+
     wave = compute_domain_wave(
         t=t_now,
         domain=DOMAIN,
@@ -88,16 +113,32 @@ if __name__ == "__main__":
         extractor_meta=extractor_meta,
     )
 
-    # EXPLICIT persistence (external authority)
+    # -----------------------------------------------------
+    # Observation only (caller-owned memory)
+    # -----------------------------------------------------
+
+    observed_waves.append(wave)
+
+    # -----------------------------------------------------
+    # Explicit persistence (external authority)
+    # -----------------------------------------------------
+
     append_domain_wave(OUTPUT_PATH, wave)
 
+    # Field computation (read-only context)
     field = compute_field(t_now)
 
     print("\n— DOMAIN WAVE PERSISTED (EXTERNAL) —")
     print(wave)
 
+    # -----------------------------------------------------
+    # Signal Scope (read-only rendering)
+    # -----------------------------------------------------
+
+    views = [WaveViewAdapter(w) for w in observed_waves]
+    render_scope(views, window=120)
+
     print("\nProof complete.")
     print(
         "Expected Δϕ ≈ +{:.1f}° (wrapped).".format(OFFSET_DEG)
     )
-

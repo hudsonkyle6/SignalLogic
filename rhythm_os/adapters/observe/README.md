@@ -1,16 +1,30 @@
-This directory contains all external signal adapters.
+Rules
 
 
 
-Rules:
-
-\- External signals are guests, never authorities.
-
-\- Only phase may be extracted.
-
-\- Only DomainWaves may be emitted.
-
-\- No posture, no thresholds, no advice.
+External signals are guests, never authorities.
 
 
+
+Adapters may extract phase only.
+
+
+
+Adapters may emit DomainWave records only.
+
+
+
+No posture evaluation.
+
+
+
+No thresholds.
+
+
+
+No advice, recommendation, or actuation.
+
+
+
+Any violation of these rules constitutes an architectural breach.
 
