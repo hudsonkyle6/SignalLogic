@@ -1,3 +1,6 @@
+Authority: Signal Light Press
+Status: DRAFT
+
 🔗 HST / HAL CROSS-REFERENCE MAP
 
 

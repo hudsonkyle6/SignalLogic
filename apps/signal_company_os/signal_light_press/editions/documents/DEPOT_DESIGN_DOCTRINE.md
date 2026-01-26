@@ -1,48 +1,8 @@
-📜 DEPOT\_DESIGN\_DOCTRINE.md
-
-
-
-Signal Light Press — Canonical Infrastructure Doctrine
-
-
-
-DOCUMENT METADATA
-
-
-
 Authority: Signal Light Press
-
-
-
-Classification: CROWN JEWEL
-
-
-
-Domain: Applied Geometry / Infrastructure
-
-
-
-Status: Canonical
-
-
-
-Applies To: All Arcs, Lines, Emergency Systems, Provisions, Guild Infrastructure
-
-
-
-Amendment Rule: Signal Light Press only
-
-
-
-> \*\*Status:\*\* Non-Executable Doctrine  
-
-> \*\*Authority:\*\* Interpretive guidance only  
-
-> \*\*Enforcement:\*\* None (informational, not binding)
-
-
-
-
+Classification: DOCTRINE
+Scope: Physical Infrastructure — Depot Design
+Status: SEALED
+Header Contract: signal_light_press/HEADER_CONTRACT.md
 
 I. GOVERNING PRINCIPLE
 

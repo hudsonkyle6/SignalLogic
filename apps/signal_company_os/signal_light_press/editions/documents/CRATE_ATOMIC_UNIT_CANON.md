@@ -1,45 +1,10 @@
-📜 CRATE\_ATOMIC\_UNIT\_CANON.md
-
-
-
-Signal Light Press — Canonical Physical Primitive
-
-
-
-DOCUMENT METADATA
-
-
-
 Authority: Signal Light Press
-
-
-
-Classification: CROWN JEWEL
-
-
-
-Domain: Applied Geometry / Atomic Units
-
-
-
-Status: Canonical
-
-
-
-Applies To: All Depots, Arcs, Lines, Emergency Systems, Provisions
-
-
-
+Classification: CANON
+Scope: Logistics Architecture — Atomic Crate Unit
+Status: SEALED — CANONICAL
 Amendment Rule: Signal Light Press only
-
-
-
-> \*\*Status:\*\* Non-Executable Doctrine  
-
-> \*\*Authority:\*\* Interpretive guidance only  
-
-> \*\*Enforcement:\*\* None (informational, not binding)
-
+Effective Date: 2026-01-17
+Header Contract: signal_light_press/HEADER_CONTRACT.md
 
 
 

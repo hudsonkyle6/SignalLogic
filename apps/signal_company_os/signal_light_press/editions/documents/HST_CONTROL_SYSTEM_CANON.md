@@ -1,25 +1,10 @@
-HST Control system
-
-Canonical Scope Notice
-
-This document defines the permitted structure of control within Signal systems.
-
-All control architectures described herein operate within the constraints imposed by the Boundary Field Doctrine.
-
-No control mechanism, optimizer, actuator, or learning system may override, bypass, or reinterpret Boundary Field constraints.
-
-The control system defined herein is subordinate to the Boundary Field Doctrine, which defines irreversibility limits, learning gates, and survivability envelopes external to all agentive systems.
-
-
-
-> \*\*Status:\*\* Non-Executable Doctrine  
-
-> \*\*Authority:\*\* Interpretive guidance only  
-
-> \*\*Enforcement:\*\* None (informational, not binding)
-
-
-
+Authority: Signal Light Press
+Classification: CANON
+Scope: Harmonic Systems Theory — Control Architecture
+Status: SEALED — CANONICAL
+Amendment Rule: Signal Light Press only
+Effective Date: 2026-01-17
+Header Contract: signal_light_press/HEADER_CONTRACT.md
 
 
 A “complete control system” (in your canon) looks like a governor-first, bounded actuator stack where control is a service inside the Pasture, never an authority over the Forest.

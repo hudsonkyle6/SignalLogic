@@ -1,37 +1,10 @@
-DOCUMENT METADATA
-
-
-
 Authority: Signal Light Press
-
-
-
-Classification: CROWN JEWEL
-
-
-
-Domain: Applied Geometry / Infrastructure
-
-
-
-Status: Canonical
-
-
-
-Applies To: Signal Lines™, Signal Emergency™, Depots, Provisions
-
-
-
+Classification: CANON
+Scope: Physical Architecture — Arc Design
+Status: SEALED — CANONICAL
 Amendment Rule: Signal Light Press only
-
-
-
-> \*\*Status:\*\* Non-Executable Doctrine  
-
-> \*\*Authority:\*\* Interpretive guidance only  
-
-> \*\*Enforcement:\*\* None (informational, not binding)
-
+Effective Date: 2026-01-17
+Header Contract: signal_light_press/HEADER_CONTRACT.md
 
 
 
