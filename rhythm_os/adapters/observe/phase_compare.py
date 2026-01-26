@@ -4,7 +4,7 @@ import math
 from typing import Optional
 
 from rhythm_os.core.field import compute_field
-from rhythm_os.domain.domain_wave import DomainWave
+from rhythm_os.psr.domain_wave import DomainWave
 
 
 # Rhythm OS rule:

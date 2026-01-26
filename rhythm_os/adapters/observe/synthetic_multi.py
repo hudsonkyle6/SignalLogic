@@ -9,7 +9,7 @@ import numpy as np
 from scipy.signal import hilbert
 
 from rhythm_os.core.field import compute_field
-from rhythm_os.domain.domain_wave import DomainWave
+from rhythm_os.psr.domain_wave import DomainWave
 
 
 TAU = 2 * math.pi

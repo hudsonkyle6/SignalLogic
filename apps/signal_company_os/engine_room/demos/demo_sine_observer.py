@@ -25,7 +25,7 @@ observed_waves = []
 # ---------------------------------------------------------
 
 from rhythm_os.adapters.observe.phase_extractor import extract_external_phase
-from rhythm_os.domain.domain_wave import DomainWave
+from rhythm_os.psr.domain_wave import DomainWave
 from rhythm_os.domain.oracle.phase import describe_alignment
 from rhythm_os.domain.write import append_domain_wave
 from rhythm_os.core.field import compute_field
