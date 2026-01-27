@@ -1,3 +1,4 @@
+#proposal_schema.py
 from typing import List, TypedDict
 
 
