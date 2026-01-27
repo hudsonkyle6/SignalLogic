@@ -16,3 +16,4 @@ Historical seals remain valid and are not rewritten.
 ## Inventory
 Generated manually (initial), then updated on every new seal.
 
+2026-01-26 | ARCHAEOLOGY_AND_PATTERN_EXCAVATION_DOCTRINE | SEALED | CROWN JEWEL
