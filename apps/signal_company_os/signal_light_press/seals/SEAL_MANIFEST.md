@@ -17,3 +17,4 @@ Historical seals remain valid and are not rewritten.
 Generated manually (initial), then updated on every new seal.
 
 2026-01-26 | ARCHAEOLOGY_AND_PATTERN_EXCAVATION_DOCTRINE | SEALED | CROWN JEWEL
+2026-01-26 | DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE | SEALED | CROWN JEWEL

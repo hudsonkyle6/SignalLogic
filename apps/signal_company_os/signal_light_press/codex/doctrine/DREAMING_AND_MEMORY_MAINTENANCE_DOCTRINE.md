@@ -1,317 +1,446 @@
 📜 DREAMING AND MEMORY MAINTENANCE DOCTRINE
 
+
+
 Authority: Signal Light Press
+
 Classification: CROWN JEWEL
+
 Status: CANONICAL
+
 Domain: Doctrine
-Applies To: Signal Company System
+
+Applies To: Signal Company System (All Domains, All Instantiations)
+
 Amendment Rule: Signal Light Press only
+
 Executable: No
 
-Authority: Signal Light Press (Kernel)  
 
-Classification: Protected Internal  
 
-Status: SEALED — CANONICAL  
-
-Applies To: Rhythm OS (All Instantiations)
+Doctrine First · No Authority · Memory Without Belief
 
 
 
----
+I. PURPOSE
 
 
 
-\## I. PURPOSE
+Dreaming exists to preserve truthful intelligence over time.
 
 
 
-Dreaming is a \*\*non-operational system posture\*\* used to preserve coherence, recover capacity, and prevent false intelligence.
+Its purpose is not forgetting.
+
+Its purpose is preventing false certainty.
 
 
 
-Dreaming exists to ensure:
-
-\- Memory does not harden into bias
-
-\- Success does not accelerate recklessly
-
-\- Learning does not occur under fatigue
-
-\- Silence remains a valid state
+Dreaming ensures that:
 
 
 
-Dreaming is not inactivity.
-
-Dreaming is \*\*maintenance under discipline\*\*.
+memory does not harden into belief
 
 
 
----
+patterns do not become authority
 
 
 
-\## II. WHAT DREAMING IS
+success does not compound into confidence
 
 
 
-During Dreaming:
-
-\- No ingestion occurs
-
-\- No permissions expand
-
-\- No learning occurs
-
-\- No execution occurs
-
-\- No optimization occurs
+intelligence remains updateable against change
 
 
 
-The system is removed from the action loop.
+Dreaming is how the system stays capable of learning without becoming self-authorizing.
 
 
 
-Dreaming mirrors biological sleep:
-
-sensing quiets, action ceases, internal recalibration occurs.
+II. WHAT DREAMING IS
 
 
 
----
+Dreaming is a non-operational posture in which:
 
 
 
-\## III. WHAT DREAMING IS NOT
+action authority is suspended
+
+
+
+custody collapses
+
+
+
+intelligence reorganizes its memory substrate
+
+
+
+Dreaming is not a reset of knowledge.
+
+It is a reset of claim.
+
+
+
+The system does not forget what happened.
+
+It forgets what it thought it knew.
+
+
+
+III. WHAT DREAMING IS NOT
 
 
 
 Dreaming is not:
 
-\- Training
 
-\- Simulation
 
-\- Rehearsal
-
-\- Forecasting
-
-\- Optimization
-
-\- Narrative justification
+training
 
 
 
-Any system that “learns while acting” is unstable.
-
-Dreaming prevents that failure mode.
+optimization
 
 
 
----
+policy refinement
 
 
 
-\## IV. PERMITTED OPERATIONS DURING DREAMING
+rehearsal
 
 
 
-Only the following operations are permitted:
+forecasting
 
 
 
-\### 1. Memory Decay \& Pruning
-
-\- Weak memories decay faster
-
-\- Redundant correlations dissolve
-
-\- Low-utility patterns fade
-
-\- No new memory is added
+belief updating
 
 
 
-\### 2. Drift Recalculation
-
-\- Long-wave drift is reassessed
-
-\- Confidence bands are widened where certainty is false
-
-\- Phase coherence is observed, not extrapolated
+Dreaming does not make the system better at acting.
 
 
 
-\### 3. Ghost Recompression
-
-\- Long-term identity is compressed
-
-\- Details dissolve
-
-\- Only structural character remains
-
-\- Ghost never issues guidance
+It makes the system harder to deceive.
 
 
 
-\### 4. Afterglow Damping
-
-\- Recent intensity loses weight
-
-\- Success and failure both soften
-
-\- Emotional dominance is removed
+IV. PERMITTED OPERATIONS DURING DREAMING
 
 
 
----
+Only operations that increase epistemic humility are permitted.
 
 
 
-\## V. FORBIDDEN OPERATIONS DURING DREAMING
+1\. Memory Decay (Relevance-Based)
+
+
+
+Low-cost instances lose weight
+
+
+
+Unreinforced correlations soften
+
+
+
+One-off alignments dissolve
+
+
+
+High-cost scars persist
+
+
+
+Nothing is deleted.
+
+Weight is redistributed.
+
+
+
+2. Scar Preservation (Non-Constructive)
+
+During Dreaming:
+
+- Existing scars may be reweighted
+- Narrative density may be compressed
+- Structural character may be retained
+- No new correlations are computed
+
+PSR is not replayed for discovery.
+
+No new structure may emerge.
+
+Dreaming preserves memory without producing insight.
+
+
+3\. Drift Reassessment
+
+
+
+Long-wave drift is recalculated from record
+
+
+
+Confidence bands widen where variance increased
+
+
+
+Certainty decays faster than evidence
+
+
+
+Drift is observed.
+
+Drift is never corrected automatically.
+
+
+
+4\. Ghost Compression
+
+
+
+Identity memory is compressed
+
+
+
+Narrative thins
+
+
+
+Structural residue remains
+
+
+
+Ghost preserves character, not conclusion.
+
+
+
+5\. Afterglow Reweighting
+
+
+
+Recent intensity loses dominance
+
+
+
+Success and failure equalize
+
+
+
+Emotional salience is neutralized
+
+
+
+Momentum is explicitly destroyed.
+
+
+
+V. FORBIDDEN OPERATIONS DURING DREAMING
 
 
 
 During Dreaming, the system may not:
 
-\- Predict future regimes
 
-\- Refine policies
 
-\- Update models
-
-\- Recommend actions
-
-\- Justify prior decisions
+update thresholds
 
 
 
-Dreaming resets posture.
-
-It does not refine ambition.
+tune parameters
 
 
 
----
+refine heuristics
 
 
 
-\## VI. RELATION TO HARMONIC MEMORY ARCHITECTURE
+infer readiness
 
 
 
-Dreaming is the protected maintenance window for the Harmonic Memory Stack:
+promote patterns into rules
 
 
 
-| Component | Dream Function |
-
-|---------|----------------|
-
-| Afterglow | Decayed and reweighted |
-
-| MemoryCharge | Re-evaluated, never increased |
-
-| MemoryDrift | Dampened automatically |
-
-| Phase Coherence | Observed only |
-
-| Ghost | Compressed, never expanded |
+justify past actions
 
 
 
-Memory is never allowed to drive action.
-
-Dreaming ensures that remains true.
+Dreaming may not make tomorrow easier to act.
 
 
 
----
+VI. RELATION TO LEARNING (CLARIFICATION)
 
 
 
-\## VII. RELATION TO SHEPHERD OS (BINDING)
+Dreaming does not disable learning.
 
 
 
-Shepherd is the sole authority over Dreaming.
+It enforces honest learning.
+
+
+
+Learning is defined as:
+
+
+
+The ability to update understanding when the world changes.
+
+
+
+Dreaming enables learning by:
+
+
+
+dissolving stale confidence
+
+
+
+forcing rediscovery from record
+
+
+
+preventing accumulation of invisible priors
+
+
+
+A system that never dreams stops learning —
+
+it only accumulates momentum.
+
+
+
+VII. RELATION TO DOMAIN INTELLIGENCE
+
+
+
+Domain intelligences may:
+
+
+
+replay their local PSR
+
+
+
+recompute correlations
+
+
+
+thicken regime narratives
+
+
+
+They may not:
+
+
+
+carry conclusions forward as state
+
+
+
+preserve pattern weight across cycles
+
+
+
+treat archaeology output as belief
+
+
+
+Each day’s intelligence is re-earned from record.
+
+
+
+VIII. RELATION TO SHEPHERD (BINDING)
 
 
 
 During Dreaming:
 
-\- Posture collapses to \*\*HOLD\*\*
 
-\- Permissions are locked
 
-\- Learning is disabled
-
-\- Buffers must rebuild before exit
+All custody is WITHHELD
 
 
 
-Shepherd may:
-
-\- Enter Dreaming
-
-\- Extend Dreaming
-
-\- Deny exit from Dreaming
+No contracts may execute
 
 
 
-There is \*\*no override\*\* that forces wakefulness upward.
+No exit occurs without Shepherd approval
 
 
 
----
+Dreaming overrides all permissions.
 
 
 
-\## VIII. WHY THIS MATTERS
+There is no bypass.
 
 
 
-Most systems fail because they confuse motion with intelligence.
+IX. WHY THIS MATTERS
 
 
 
-Dreaming establishes:
-
-\- Forgetting as a first-class operation
-
-\- Silence as a valid state
-
-\- Restraint as survivability
+Most intelligent systems fail because they:
 
 
 
-Systems that refuse rest accumulate error.
-
-Systems that honor rest endure.
+confuse persistence with truth
 
 
 
----
+confuse correlation with understanding
 
 
 
-\## IX. CANONICAL SUMMARY
+confuse confidence with intelligence
 
 
 
-Dreaming is the Signal System’s refusal to mistake
+Dreaming prevents these failures.
 
-motion for intelligence,
 
-memory for wisdom,
 
-or confidence for truth.
+It makes intelligence renewable, not cumulative.
+
+
+
+X. CANONICAL SUMMARY
+
+
+
+Dreaming is not forgetting.
+
+
+
+Dreaming is the system’s refusal
+
+to let yesterday’s understanding
+
+dominate today’s reality.
+
+
+
+Memory remains.
+
+Belief dissolves.
+
+Intelligence stays alive.
 
 
 
 Status: SEALED
-
 
