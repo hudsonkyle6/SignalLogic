@@ -43,3 +43,31 @@ def scar_conditioning(trust: float, recent_scar_count: int) -> float:
     base = max(0.0, min(1.0, 0.5 + 0.05 * trust))
     penalty = min(0.5, 0.25 * recent_scar_count)
     return max(0.0, base - penalty)
+def get_recent_scar_weights(
+    psr_events,
+    *,
+    decay_rate: float = 0.1,
+    lookback: int = 30,
+):
+    """
+    Compute decayed scar weights from recent PSR events.
+
+    Descriptive only:
+    - No thresholds
+    - No decisions
+    - Higher weight = more recent / severe scar
+
+    Returns: list[float]
+    """
+    weights = []
+    age = 0
+
+    for e in reversed(psr_events[-lookback:]):
+        event_type = e.get("event") if isinstance(e, dict) else getattr(e, "event", None)
+
+        if event_type in ("INTERVAL_FAILED", "GATE_DENIED"):
+            weights.append((1.0 - decay_rate) ** age)
+
+        age += 1
+
+    return weights

@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Callable, Dict
 
-from forge.infrastructure.interval_mandate import IntervalMandate, is_expired
+from apps.signal_company_os.forge.infrastructure.interval_mandate import IntervalMandate, is_expired
 
 
 # --- Whitelisted task registry ---
