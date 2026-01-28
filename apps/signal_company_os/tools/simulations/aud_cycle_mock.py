@@ -4,21 +4,34 @@ import time
 import uuid
 from pathlib import Path
 
-from forge.infrastructure.readiness import (
+# --- Readiness evaluation ---
+from apps.signal_company_os.forge.infrastructure.readiness import (
     ReadinessInputs,
     evaluate_readiness_criteria,
 )
-from forge.infrastructure.interval_mandate import IntervalMandate
-from forge.infrastructure.psr import PSREvent, compute_trust, scar_conditioning
-from forge.gate import human_gate_prompt
-from forge.run_interval import run_interval
+
+# --- Interval + trust primitives ---
+from apps.signal_company_os.forge.infrastructure.interval_mandate import (
+    IntervalMandate,
+)
+from apps.signal_company_os.forge.infrastructure.psr import (
+    PSREvent,
+    compute_trust,
+    scar_conditioning,
+)
+
+# --- Human gate + execution ---
+from apps.signal_company_os.forge.human_gate_adapter import human_gate_prompt
+from apps.signal_company_os.forge.run_interval import run_interval
 
 
 def mock_cycle():
     """
     End-to-end AUD simulation:
-    - mock envelopes / convergence
-    - compute readiness
+
+    - mock PSR history
+    - compute trust + scar conditioning
+    - evaluate readiness
     - human gate
     - interval execution
     """
@@ -81,16 +94,17 @@ justification: {mandate.justification}
 """
     )
 
-    if decision.decision != "GRANT":
-        print(f"[AUD] HUMAN DECISION: {decision.decision}")
+    if decision != "OPEN":
+        print(f"[AUD] EXECUTION CLOSED — readiness criteria not met")
         return
+
 
     print("[AUD] INTERVAL GRANTED — executing")
 
     # --- Execute interval ---
     out = run_interval(
         mandate,
-        log_dir=Path("artifacts/interval_logs")
+        log_dir=Path("artifacts/interval_logs"),
     )
 
     print(f"[AUD] INTERVAL COMPLETE — log written to {out}")
