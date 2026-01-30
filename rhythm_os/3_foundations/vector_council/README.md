@@ -1,8 +1,8 @@
 VECTOR COUNCIL — FOUNDATIONS
 
-This is the canonical foundations layer for Rhythm OS invariants and cycle dynamics.
+Canonical foundations layer for Rhythm OS invariants and cycle dynamics.
 
 Rules:
-- No legacy resurrection.
+- No legacy resurrection (archive remains archive).
 - No authority surfaces here.
-- Pure primitives: contracts, invariants, summaries, deterministic evaluators.
+- Pure primitives only: contracts, dataclasses, summaries, deterministic evaluators.
