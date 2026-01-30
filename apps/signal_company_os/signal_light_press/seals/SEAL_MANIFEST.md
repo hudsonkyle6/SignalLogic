@@ -1,23 +1,33 @@
-# SEAL_MANIFEST — Signal Light Press
+# SEAL\_MANIFEST — Signal Light Press
 
 Status: Canonical (Descriptive)
 Authority: Signal Light Press
 Scope: Seal inventory and future sealing rules
 
 ## Rule (Going Forward)
+
 New seals must:
-- be placed in /seals
-- include ISO date in filename (YYYY-MM-DD)
-- include explicit subject and scope
-- optionally include checksum of sealed target(s)
+
+* be placed in /seals
+* include ISO date in filename (YYYY-MM-DD)
+* include explicit subject and scope
+* optionally include checksum of sealed target(s)
 
 Historical seals remain valid and are not rewritten.
 
 ## Inventory
+
 Generated manually (initial), then updated on every new seal.
 
-2026-01-26 | ARCHAEOLOGY_AND_PATTERN_EXCAVATION_DOCTRINE | SEALED | CROWN JEWEL
-2026-01-26 | DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE | SEALED | CROWN JEWEL
-2026-01-26 | ENERGETIC_PERMISSION_DOCTRINE | SEALED | CROWN JEWEL
-2026-01-26 | CONTRACTS_AND_PERMISSIONED_EXECUTION_DOCTRINE | SEALED | CROWN JEWEL
-2026-01-26 | SYSTEM_POSTURE_AND_SINGLE_LOOP_DOCTRINE | SEALED | CROWN JEWEL
+2026-01-26 | ARCHAEOLOGY\_AND\_PATTERN\_EXCAVATION\_DOCTRINE | SEALED | CROWN JEWEL
+2026-01-26 | DREAMING\_AND\_MEMORY\_MAINTENANCE\_DOCTRINE | SEALED | CROWN JEWEL
+2026-01-26 | ENERGETIC\_PERMISSION\_DOCTRINE | SEALED | CROWN JEWEL
+2026-01-26 | CONTRACTS\_AND\_PERMISSIONED\_EXECUTION\_DOCTRINE | SEALED | CROWN JEWEL
+2026-01-26 | SYSTEM\_POSTURE\_AND\_SINGLE\_LOOP\_DOCTRINE | SEALED | CROWN JEWEL
+
+2026-01-29 — SIGNAL\_COMPANY\_CANONICAL\_ARCHITECTURE\_CORE\_AND\_CRAFT
+
+Classification: Crown Jewel
+
+Status: Canonical
+
