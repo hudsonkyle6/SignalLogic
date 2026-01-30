@@ -1,0 +1,53 @@
+# CONTROL CONTRACT v1
+# Purpose: Define explicit escalation rules (ACT → PUSH) under AUD.
+# This is not "prediction". This is a constraint system.
+
+ControlContract:
+  Version: "1.0.0"
+  Authority: "Assist Under Discipline"
+
+  Definitions:
+    # ACT = do real work, but bounded
+    ACT:
+      description: "Execute bounded work on key arcs. No irreversible commitments."
+
+    # PUSH = commit resources / irreversible moves / high-risk acceleration
+    PUSH:
+      description: "Irreversible commitments, major capex, major operational risk, high tempo."
+
+  Gates:
+    # These are REQUIRED for escalation beyond PREPARE.
+    RequiredHumanGate:
+      field: "DecisionState"         # from human_ledger.csv
+      must_be_one_of: ["ACT", "PUSH"] # system may never invent authority
+
+    # These are REQUIRED for ANY PUSH attempt.
+    RequiredForPush:
+      - oracle_present
+      - oracle_contract_valid
+      - aud_guardrail_present
+      - human_explicit_push
+
+  Thresholds:
+    # Default: require stable world + stable ghost + moderate-to-high convergence.
+    MinOCIForPush: 0.70
+    MinGhostStabilityForPush: 0.70
+    MaxWVIForPush: 0.55
+    MinHorizonIndexForPush: 0.55
+
+    # If dark field is DEEP, allow slightly lower OCI — but still require human PUSH.
+    DeepDarkFieldPolicy:
+      enabled: true
+      DarkFieldBandMustBe: "DEEP"
+      OCIOverrideFloor: 0.62
+
+  Cooldowns:
+    # Prevent rapid oscillation into PUSH.
+    PushCooldownDays: 3
+    RequireTwoConsecutiveDaysMeetingThresholds: true
+
+  Forbidden:
+    - "model_initiated_push"
+    - "lighthouse_escalation"
+    - "ghost_driven_escalation"
+    - "silent_threshold_change"
