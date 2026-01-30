@@ -1,8 +1,6 @@
-CYCLE DYNAMICS — FOUNDATIONAL PLACEHOLDER
+CYCLE DYNAMICS (FOUNDATIONAL)
 
-This directory will eventually house canonical coupling and
-cycle-dynamics primitives for Rhythm OS.
+Canonical coupling / cycle dynamics primitives will live here.
 
-No legacy coupling code has been imported here intentionally.
-
-Design will proceed from first principles.
+No deprecated coupling code has been imported intentionally.
+Any reintroduction must come from a fresh spec and clean implementation.
