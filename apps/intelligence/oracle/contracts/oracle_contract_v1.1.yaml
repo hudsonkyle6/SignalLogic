@@ -1,7 +1,32 @@
 # ============================================================
 # ORACLE CONTRACT v1.1 (FINAL)
 # ============================================================
+# ============================================================
+# ORACLE CONTRACT v1.1 (FINAL)
+# ============================================================
+
+Header:
+  authority: none
+  execution: forbidden
+  role: observation_and_projection_only
+  binding_power: zero
+
 # Purpose:
+#   Canonical boundary between physical signal truth (merged_signal)
+#   and governed decision layers (Oracle L1–L4).
+#
+# Core Change (v1.1):
+#   Resonance is now split into:
+#     • ResonanceRaw   — physical Z-score (unbounded, truth)
+#     • ResonanceValue — governed, normalized [0,1] (action-safe)
+#
+# Status:
+#   ✅ Stable
+#   ✅ Oracle-safe
+#   ✅ Sage-ready
+# ============================================================
+
+  Purpose:
 #   Canonical boundary between physical signal truth (merged_signal)
 #   and governed decision layers (Oracle L1–L4).
 #

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Set
 from pathlib import Path
 import pandas as pd
 import yaml
@@ -21,7 +21,7 @@ NEVER_NULL_TODAY = [
     "H_t",
 ]
 
-# Normalized [0,1] fields
+# Normalized [0,1] governed fields
 RANGES_0_1 = {
     "ResonanceValue": (0.0, 1.0),
     "Amplitude": (0.0, 1.0),
@@ -40,6 +40,20 @@ RANGES_0_1 = {
 RANGES_NON_NEGATIVE = {
     "Afterglow": (0.0, float("inf")),
     "MemoryCharge": (0.0, float("inf")),
+}
+
+# Physical truth columns — MUST NEVER be overwritten by Oracle
+PHYSICAL_TRUTH_COLUMNS: Set[str] = {
+    "Date",
+    "Season",
+    "Amplitude",
+    "ResonanceRaw",
+    "H_t",
+    "A_t",
+    "C_t",
+    "E_t",
+    "phi_h",
+    "phi_e",
 }
 
 
@@ -178,8 +192,34 @@ def _ensure_ranges(df: pd.DataFrame, ctx: str) -> None:
         )
 
 
+def _ensure_physical_truth_not_overwritten(
+    df_before: pd.DataFrame,
+    df_after: pd.DataFrame,
+    ctx: str,
+) -> None:
+    """
+    Oracle must never overwrite physical truth columns.
+    Only governed/derived fields may change.
+    """
+    common = (
+        PHYSICAL_TRUTH_COLUMNS
+        .intersection(df_before.columns)
+        .intersection(df_after.columns)
+    )
+
+    diffs = []
+    for c in common:
+        if not df_before[c].equals(df_after[c]):
+            diffs.append(c)
+
+    if diffs:
+        raise OracleContractError(
+            f"[{ctx}] Physical truth overwrite detected in columns: {diffs}"
+        )
+
+
 # ============================================================
-# Public validator
+# Public validators
 # ============================================================
 
 def validate_oracle_inputs(
@@ -188,7 +228,7 @@ def validate_oracle_inputs(
     layer: str,
 ) -> None:
     """
-    Validate merged_signal.csv against Oracle Contract v1
+    Validate merged_signal.csv against Oracle Contract v1.1
     for the specified Oracle layer.
     """
 
@@ -204,3 +244,16 @@ def validate_oracle_inputs(
     _ensure_today_non_null(df, ctx)
     _ensure_numeric(df, ctx)
     _ensure_ranges(df, ctx)
+
+
+def validate_oracle_output_integrity(
+    df_before: pd.DataFrame,
+    df_after: pd.DataFrame,
+    ctx: str = "OraclePipeline",
+) -> None:
+    """
+    Enforce immutability of physical truth after Oracle computation.
+    Call this immediately after any Oracle layer emits a DataFrame.
+    """
+    _ensure_physical_truth_not_overwritten(df_before, df_after, ctx)
+
