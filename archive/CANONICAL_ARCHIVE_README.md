@@ -12,6 +12,24 @@ Enforcement: Structural (read-only, non-governing)
 
 
 
+CANONICAL ARCHIVE — README
+
+
+
+STATUS
+
+
+
+Classification: Canonical Archive
+
+Authority: Signal Light Press (Kernel)
+
+Binding Power: None
+
+Enforcement: Structural (read-only, non-governing)
+
+
+
 PURPOSE
 
 
@@ -94,13 +112,71 @@ may be modernized or “cleaned up”
 
 
 
-If an idea here appears valuable, it must be rebuilt from first principles under current canon and seals.
+Direct reuse is forbidden.
+
+
+
+RECONSTRUCTION EXCEPTION (HUMAN-ONLY)
+
+
+
+Material in this archive may be consulted for inspiration or historical reference under the following conditions:
+
+
+
+Nothing is copied verbatim into active systems
+
+
+
+Nothing is imported, executed, or linked
+
+
+
+All extracted value is re-expressed from first principles
+
+
+
+All responsibility rests with a human operator
+
+
+
+Any reconstruction must:
+
+
+
+Be explicitly approved by a human
+
+
+
+Be re-authored under current canon
+
+
+
+Be placed outside the archive
+
+
+
+Be sealed with current headers and amendment rules
+
+
+
+Be logged with source reference, date, and approver
+
+
+
+The archive never authorizes action.
+
+The archive never grants permission.
+
+The archive never speaks for the present.
 
 
 
 Reuse is forbidden.
 
 Reconstruction is permitted.
+
+Authority is earned anew.
 
 
 
@@ -120,7 +196,7 @@ CANONICAL ARCHIVE  →  FAILURE TAXONOMY
 
 The archive may inform memory of failure.
 
-It may not inform strategy, execution, or detection.
+It may not inform strategy, execution, detection, or optimization.
 
 
 
@@ -193,4 +269,6 @@ It is preserved so the system remembers what it survived.
 
 
 It is silent by design.
+
+It is powerful only through human restraint.
 
