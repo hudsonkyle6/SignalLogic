@@ -30,5 +30,24 @@ It now emerges from insufficient resemblance or readiness.
 Shepherd remains archived as a historical reference and design phase.
 It MUST NOT be reintroduced into active systems.
 
+# Signal Light Press — Canonical Archive
+
+This directory contains retired, frozen, or superseded materials from prior
+instantiations of Signal Company systems.
+
+Nothing in this directory is live.
+Nothing here is imported.
+Nothing here is subject to refactor.
+
+All contents are preserved for:
+- historical record
+- auditability
+- lineage reconstruction
+- doctrinal continuity
+
+Authority: Signal Light Press  
+Status: Frozen Archive  
+Executable: No
+
 — END OF DOCUMENT —
 SEAL: 11b21e0800798515f5b7e12b7a466b88ef9907668fc6fc3e4656ed4f08251fcd
