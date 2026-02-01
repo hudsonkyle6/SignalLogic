@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 codex/doctrine/ASSIST_UNDER_DISCIPLINE.md
 codex/doctrine/DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md
 codex/doctrine/DOCTRINAL_MIRROR_HEADER_STANDARD.md
@@ -91,4 +112,4 @@ codex/canon/SIGNAL_COMPANY_POSTURE_REPORT.md
 codex/canon/SIGNAL_CONTINUITY_COVENANT.md
 
 — END OF DOCUMENT —
-SEAL: 4fc1c5ad100cd52c67eefe2cebc61391245563c91babc43aef57c6a54f1b17e7
+SEAL: 8e70fbc37862c89917fd74215e2afa5c5bedfe1eb110f90f67fa2e40990e35fe

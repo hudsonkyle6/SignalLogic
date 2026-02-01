@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Canonical Register of Seals, Authority, and Binding Semantics
 
 
@@ -625,4 +646,4 @@ AUTHORITY: Signal Light Press
 LOCATION: rhythm\_os/sage/archive/doctrine/SEAL\_BOOK.md
 
 — END OF DOCUMENT —
-SEAL: 9b4a701526a11242a7a8f32e18e66e689a2b2c20775577bc5a11a10cac09652c
+SEAL: 1b06968fceee52cc1828b3233408bff045ca5d156ef0081992db119025af3ba1

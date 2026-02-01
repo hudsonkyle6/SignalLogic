@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # KERNEL_NAVIGATOR — Signal Light Press
 
 Status: Canonical (Descriptive)
@@ -96,4 +117,4 @@ Single entry point to the Signal Light Press kernel: canon, doctrine, seals, aud
 - KERNEL_TO_OS_BRIDGE.md
 
 — END OF DOCUMENT —
-SEAL: e3ec8fef25993a95805884d8fbde8da686d59491e5916713422b08bb43848baa
+SEAL: cc704223a4125d97d2c9908200393cba08314fef1ed105bb09d42399df68b080

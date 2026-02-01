@@ -47,6 +47,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 I. PURPOSE OF THIS GUIDE
 
 
@@ -570,4 +591,4 @@ The system does not save you from consequence.
 It ensures you see it coming.
 
 — END OF DOCUMENT —
-SEAL: a860f097d91605bc481bf34f70cd46fe21b78d85da8b3e226ec302c633480353
+SEAL: 563c34fbe6387cb4ed073a2040c9ed57c95458b4ecd8547ed0069a376fd15116

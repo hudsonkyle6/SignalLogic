@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Scope: Core systems only
 I. FIRST PRINCIPLE
 
@@ -406,4 +427,4 @@ STATUS
 DECAY\_CANON = SEALED
 
 — END OF DOCUMENT —
-SEAL: 2ec8e5c663265ff92b48ef01e82f93398edd215c60390e1a2623bf0e5fe4b147
+SEAL: e3447d4b9fd1c4e5e33c945cc39b68e8a2136696a8f57aaa95669e1bc9cb4411

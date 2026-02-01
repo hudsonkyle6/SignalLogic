@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 📜 ORACLE DOCTRINE — RHYTHM OS
 
 DOCTRINAL MIRROR NOTICE
@@ -177,4 +198,4 @@ Oracle is accurate.
 This accuracy is the foundation upon which all higher meaning rests.
 
 — END OF DOCUMENT —
-SEAL: 91ee8f8ef5125549e5ff0f6473e4c813044d5aedf6a48432b038241d7c12d89c
+SEAL: 504625e5d92d424d0548cf4485dc19195667ec460ce9ed9511eb2f8639f05463

@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Light Press — Formal Governing Law
 
 This document defines the Harmonic Alignment Law (HAL):
@@ -588,4 +609,4 @@ Alignment without integrity is invalid.
 Silence is superior to false clarity.
 
 — END OF DOCUMENT —
-SEAL: 61b6160639b3e873d0c4158ae8182c9363c547b4fdd088779cac038beb18edf9
+SEAL: c89797211e1c5764b67b86a4c900133c34bcc86eeb55f34aff0cc85d02027fb3

@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Date: 2026-01-27
 Scope: The Signal Company Core (All Instantiations)
 Version: Final Instantiation — V1.0
@@ -173,4 +194,4 @@ The weave is tight: each script’s purpose is clear and feeds the next layer’
 The system is fully mapped and ready to implement remaining gaps (interval runner, formal readiness function, scar conditioning rules).
 
 — END OF DOCUMENT —
-SEAL: 995843aa51edf37f3305669f2bca435b3d47286be9c423e49bf5e50a340d2c74
+SEAL: 5e0e79a136e51692dced08a3633f7a467ec27fb002927e53098bf05c2a45f59e

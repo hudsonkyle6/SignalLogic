@@ -26,6 +26,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Doctrine First · Discovery Without Belief · Evidence Without Authority
 
 
@@ -411,4 +432,4 @@ Truth survives because authority does not attach to it.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: bc3d79a7144e39b92b4f7cb9e600e8f3eba432ae351733ada4b85dcbc959ae40
+SEAL: 92e8e9d2947578110d8fbc8929c422f9949770136066cf1b24ba5319c162725b

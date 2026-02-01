@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Invariant: 3-4-7 Geometry
 I. THE THREE PILLARS (3)
 
@@ -634,4 +655,4 @@ It does not command, optimize, or predict outcomes.
 It exists to help humans and institutions adopt the correct posture before action.
 
 — END OF DOCUMENT —
-SEAL: 8cdad1224458905e44e9e4d2b23b0baab90164017a90a44045671e23ce230c37
+SEAL: 9e0534c7d74ce5873fb4f73198322a3886f78fa3e29a5b5a966e0e80ec124439

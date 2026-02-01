@@ -50,6 +50,27 @@ Executable: No
 Authority: Signal Light Press
 Classification: WORKING
 Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
 Domain: Edition
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
@@ -278,4 +299,4 @@ Nothing replaces judgment.
 The system exists to prevent false clarity, not produce certainty.
 
 — END OF DOCUMENT —
-SEAL: c710b4f8c27e57e40139df77ebfa0acffc34113e66075cd6dcfb157d09f43622
+SEAL: 2e6ce6a54bc77bb72f27a70e01db6c79ca57a7de7cb1782c61633af08d0a5a4d

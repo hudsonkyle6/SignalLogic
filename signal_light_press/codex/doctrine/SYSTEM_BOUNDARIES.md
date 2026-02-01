@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Light Press — Canonical Boundary Doctrine
 
 DOCUMENT METADATA
@@ -723,4 +744,4 @@ Signal Light Press
 January 2026
 
 — END OF DOCUMENT —
-SEAL: 715792f6278a18246874a741b71c8504a6f3fb06efe918dc17b8a8074f967430
+SEAL: aa2d36130a4aa5d9f383ae46d73fc69a25c23a8a52d6847962c8736da9f313a5

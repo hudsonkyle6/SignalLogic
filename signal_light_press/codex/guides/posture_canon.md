@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# POSTURE CANON — SIGNAL COMPANY
 
 Posture is a descriptive state of alignment between:
@@ -221,4 +242,4 @@ Posture names the moment.
 Humans choose the response.
 
 — END OF DOCUMENT —
-SEAL: 2433497462c18cb138b764c77fcd644fb6f13fe0b7617b1b38bdc0c9bced7e29
+SEAL: 8393e262c1893032c42844f1bd22528fead36fa5c3325f323f5fdcf1f0233c86

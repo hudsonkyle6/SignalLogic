@@ -47,6 +47,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 I. PURPOSE OF THE PERSONAL HUNTER
 
 
@@ -448,4 +469,4 @@ The Personal Hunter exists to make you wiser, not richer faster.
 If it ever threatens peace, margin, or sleep — it has failed.
 
 — END OF DOCUMENT —
-SEAL: a56538189616769e9a43b3846eb4ec9e2595d498a6777b29fda20191811eecd9
+SEAL: 9dca46cdf88fbbe6204c378eeb02b9bf1a858322bb39b8752ce9dcde09cb7012

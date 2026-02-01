@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 AGAINST CLEAR-CUT THINKING
 
 
@@ -134,4 +155,4 @@ This is not an argument against reform. Forests regenerate. Civilizations evolve
 The work, then, is not to prevent change, but to learn how to change without severing the roots that still carry water. In forests, as in civilizations, what is most essential is often silent, ancient, and easily mistaken for expendable. Only after it is gone does its absence begin to speak.
 
 — END OF DOCUMENT —
-SEAL: afdcbafa229287703d185adbddb7700b9acdeb969e33c541568103ecaf0a4ede
+SEAL: 9d8e4fc4417ad66bb0f29a5a902d7d940ea13a3055b11b561730cfcc71db8c6b

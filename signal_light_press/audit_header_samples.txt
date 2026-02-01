@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ===== FILE: codex/canon/FAILURE_TAXONOMY.md =====
 📜 FAILURE TAXONOMY — CANONICAL MEMORY REGISTER (v1.0)
 
@@ -2334,4 +2355,4 @@ No changes were necessary.
 — Signal Light Press
 
 — END OF DOCUMENT —
-SEAL: 4a784b1fb8f794bbaee993c8e73265a53c209e45088b6c829c3768e874c0ac90
+SEAL: d7a4f45515ae6765b6d42e7b0172b8e2203148a5d02bcc42a80543390a314979

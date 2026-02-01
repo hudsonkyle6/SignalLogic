@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 📜 SIGNAL LIGHT PRESS — MASTER IP INDEX
 
 
@@ -626,4 +647,4 @@ Date: 2026-01-17
 - `codex/canon/RHYTHM_OS_SYSTEM_CARTOGRAPHY.md` — system map of jurisdiction + math primitives (descriptive only)
 
 — END OF DOCUMENT —
-SEAL: b501e38bf8953fcaadd27297963a24803566fe61e97bb29c01679e5608180c58
+SEAL: 30b09417a17df76c4e19bccd52a8da34173cf948c85256c51eab87ca61e5e0c5

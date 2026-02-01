@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Canon Adjudication Table
 
 Purpose:
@@ -107,4 +128,4 @@ Legend:
 | SIGNAL_CONTINUITY_COVENANT.md | codex/canon/SIGNAL_CONTINUITY_COVENANT.md |  |  |
 
 — END OF DOCUMENT —
-SEAL: 4811cb9f46cf9a97002daab33675630b548744504254dcb37d06e5096793e201
+SEAL: 05f6511a6ae4369776004efa0c2f689de5cadae8a59e98bf37286b04651d3e3a

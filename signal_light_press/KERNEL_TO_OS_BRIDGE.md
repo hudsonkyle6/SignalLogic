@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # KERNEL_TO_OS_BRIDGE — Doctrine ↔ Code Mapping
 
 Status: Reference
@@ -71,4 +92,4 @@ Provide a human map between binding doctrine and implementation loci in:
   -> HSO partition rules
 
 — END OF DOCUMENT —
-SEAL: 95fdcf59bd2aa87b6e1130107f8211b6cb40a4d7670c0f30762d860333e2f231
+SEAL: 60299af9898a75fcc705f77e74b1d10fe997ea9f9cec6c0241b6f895bcff6cbf

@@ -1,8 +1,7 @@
-#enforce_headers.py
+# enforce_headers.py
 from __future__ import annotations
 
 import re
-import sys
 import hashlib
 from dataclasses import dataclass
 from pathlib import Path
@@ -23,12 +22,26 @@ SLP_ROOT = REPO_ROOT / "signal_light_press"
 GOVERNABLE_SUFFIXES = {".md", ".txt", ".yaml", ".yml"}
 
 # ──────────────────────────────────────────────────────────────
-# Archive detection
+# Frozen / archive detection (NON-MUTABLE)
 # ──────────────────────────────────────────────────────────────
 
-def is_archive_path(path: Path) -> bool:
+def is_frozen_path(path: Path) -> bool:
     p = path.as_posix()
-    return p.startswith("signal_light_press/archive/") or "/archive/" in p
+
+    FROZEN_MARKERS = [
+        "/archive/",
+        "/_quarantine/",
+        "/doctrine_mirror/",
+        "/seals/",
+        "/snapshots/",
+        "/_mirror_backups/",
+        "/artifacts/",
+    ]
+
+    if p.startswith("signal_light_press/archive/"):
+        return True
+
+    return any(marker in p for marker in FROZEN_MARKERS)
 
 # ──────────────────────────────────────────────────────────────
 # Canonical header model
@@ -120,7 +133,7 @@ def profile_for_path(p: Path) -> HeaderProfile:
 
 def parse_header(text: str) -> Tuple[dict[str, str], int]:
     lines = text.splitlines()
-    header = {}
+    header: dict[str, str] = {}
     end = 0
 
     if not lines:
@@ -176,7 +189,8 @@ def split_body_and_seals(text: str) -> Tuple[str, Optional[str], Optional[str]]:
 # ──────────────────────────────────────────────────────────────
 
 def fix_file(path: Path) -> bool:
-    if is_archive_path(path):
+    # CRITICAL: Frozen domains must NEVER be mutated
+    if is_frozen_path(path):
         return False
 
     original = path.read_text(encoding="utf-8", errors="ignore")

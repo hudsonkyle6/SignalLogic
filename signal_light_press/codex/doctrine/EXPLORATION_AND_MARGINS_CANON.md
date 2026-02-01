@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Definition
 
 Exploration is the structured, posture-gated noticing and description of marginal conditions at the edges of known envelopes — without compression, pursuit, prioritization, or any narrowing of recoverability.
@@ -145,4 +166,4 @@ Authority: Signal Light Press
 Amendment Rule: Signal Light Press only
 
 — END OF DOCUMENT —
-SEAL: c16728fb76e2d756e1276d3d8e8dd5975ecf7d5d8b9c97d0bbbce6fb19e9a5c6
+SEAL: cde9e9983eae75eace0b66521cd3efdfc35718ac3dbe458087792ae41c98293a

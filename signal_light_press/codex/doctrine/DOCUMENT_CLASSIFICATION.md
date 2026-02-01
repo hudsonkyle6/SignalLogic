@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Scope: All documents, files, records, artifacts, and data products created or stored within the Signal Company ecosystem
 ## Purpose
 
@@ -231,4 +252,4 @@ Business ID 1011389 · Filing No. 7347041
 All Rights Reserved.
 
 — END OF DOCUMENT —
-SEAL: 5cdee53959ffb8b62b4b30ee13926bbcd8e1ebf4976579bd17472a1d01afa07c
+SEAL: 76903cd93dbaf702d20669ffade14638cbfa00b624c9452db141f4abb59e5e8e

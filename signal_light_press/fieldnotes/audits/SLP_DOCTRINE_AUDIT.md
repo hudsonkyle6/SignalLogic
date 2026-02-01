@@ -26,6 +26,27 @@ Domain: Fieldnotes
 Applies To: Signal Light Press (Internal)
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
 # Signal Light Press — Doctrine Audit
 
 - Governable files: **488**
@@ -320,4 +341,4 @@ Executable: No
   - signal_light_press\seals\SIGNAL_COMPANY_OS_README_SEAL_2026-01-16.md
   - signal_light_press\seals\SYSTEM_BOUNDARIES_SEAL_20-01-26.md
 — END OF DOCUMENT —
-SEAL: cd7c9fead90e4f6895bdf8f9e22ffde7646f402518e16335b956491d0820ea78
+SEAL: 9ac4c5b75100c995e51ac8b7ef48f63aeb1e8832a528bbaa6ac2b749e1161f29

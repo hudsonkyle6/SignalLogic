@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# INTERPRETATION LIMITS
 
 
@@ -117,4 +138,4 @@ Where confidence is low, SageOS will not compensate with language.
 Restraint is a core feature, not a limitation.
 
 — END OF DOCUMENT —
-SEAL: 1660176613d35e021a13fdfd3b01980f49bf7f36ac289bf94152b4b5fffb133a
+SEAL: af9449864f917e7e80664ecf939e978e396e8ac6e1dcc5291d03a9402c6fc06f

@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Canon Inventory Seal
 
 Status: Sealed
@@ -62,4 +83,4 @@ This certifies the cryptographic state of authoritative kernel files.
 Any future deviation requires adjudication + new seal.
 
 — END OF DOCUMENT —
-SEAL: 55489ab8ce630388fcb9abf7a8419ea207ebb8f974b81ecc2b02d663a831adaa
+SEAL: 823bee500fed408dbc8ed8f1b8ffd22cb8648f80e3bb70f5380810faa745846e

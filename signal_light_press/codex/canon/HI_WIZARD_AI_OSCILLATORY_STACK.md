@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 The Oscillatory Intelligence Stack (Canonical Description)
 
 
@@ -533,4 +554,4 @@ It is a name for an intelligence that refuses to outrun the ground it stands on.
 End of Canon
 
 — END OF DOCUMENT —
-SEAL: 82b69b7241377145b46ca6a6bf19342e9268341171a6d1fa64f4d886d85303a2
+SEAL: 1e2d55fbb09a3373ec459fc6b313631692a45f0879ebf3a2acd0a8f4afb630ab

@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 codex/canon/FAILURE_TAXONOMY.md
 codex/canon/HI_WIZARD_AI_OSCILLATORY_STACK.md
 codex/canon/MASTER_IP_INDEX.md
@@ -70,4 +91,4 @@ codex/canon/SIGNAL_COMPANY_POSTURE_REPORT.md
 codex/canon/SIGNAL_CONTINUITY_COVENANT.md
 
 — END OF DOCUMENT —
-SEAL: 7c4f08efda93105c40cdf179559d9960f3bc43c3499e564b3feb8e02d1b6419a
+SEAL: a2e4929b3e5010bd9c9a7fe5b6c4d2e7c7091298ff6a0d5680b2ea8db81eedbf

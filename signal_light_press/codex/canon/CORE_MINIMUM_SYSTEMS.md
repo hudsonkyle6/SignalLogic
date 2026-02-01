@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Scope: Core Operations only
 I. PURPOSE
 
@@ -382,4 +403,4 @@ STATUS
 MVCS = SEALED FOR IMPLEMENTATION
 
 — END OF DOCUMENT —
-SEAL: 1ddef3f97d80370895adfababaa6c450fd836c5bfb26f44ea91ba980ce3e2451
+SEAL: 903205205050e0d8628c9d07b641b6d2cdcf69e456d4d102fe9ca0916215007e

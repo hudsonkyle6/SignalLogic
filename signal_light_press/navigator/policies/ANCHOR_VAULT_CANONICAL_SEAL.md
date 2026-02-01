@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Anchor Vault Canonical Seal
 
 ## I. Purpose
@@ -120,4 +141,4 @@ it is silent by design.
 Silence must not be interpreted as permission.
 
 — END OF DOCUMENT —
-SEAL: ce76ad224713ec89cf478deef0a4221ea01974eb4b863022e8c9b5f07870dbb7
+SEAL: 0495acf7871c03df86fa0526366da5bb80d62de2fbbc0bd341ac17560f7940c3

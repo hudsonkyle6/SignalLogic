@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# SAGE ROLE DOCTRINE
 
 
@@ -183,4 +204,4 @@ Any expansion of SageOS authority requires explicit doctrine,
 written amendment, and human approval.
 
 — END OF DOCUMENT —
-SEAL: 271883f60dda70ba9a2298bb95dc06bf7e2ecdabe7778c330ba6135bae89397e
+SEAL: 85fc5acb42d5065edf13c2bb08ef826cbc3dcf0953b59547156a32a7236cb216

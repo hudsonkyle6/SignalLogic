@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Invariant: 3-4-7 Geometry
 Offline Sovereignty Clause
 
@@ -342,4 +363,4 @@ Authority: Signal Light Press
 Date: 13 January 2026
 
 — END OF DOCUMENT —
-SEAL: 5618e93b80ec266f9ca0c28bbed83b65a756b6f6e42241e10dc2565f21f43f77
+SEAL: b1eba6357174e69af69a94529a8665fd52c1c9145c1b8258f64297d7ae8ac273

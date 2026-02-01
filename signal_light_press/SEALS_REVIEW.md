@@ -47,6 +47,27 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Seals Review
 Rule: A seal must ONLY freeze state. No explanation, no interpretation.
 
@@ -54,4 +75,4 @@ Rule: A seal must ONLY freeze state. No explanation, no interpretation.
 |----------|----------------|------------------|-------|
 
 — END OF DOCUMENT —
-SEAL: 961ba1ee4f870d49a73a04d91996bb7c50a54ca05aa0c07faaaafbe0439c5fcd
+SEAL: abc1cce9ebb4351c1fb15c97d4f9ca5c0361ab33da7e82b0504b3491b975ff52

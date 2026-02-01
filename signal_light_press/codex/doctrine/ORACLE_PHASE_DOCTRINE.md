@@ -54,6 +54,27 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \## Role
 
 The Oracle is the phase-recognition faculty of Rhythm OS.
@@ -171,4 +192,4 @@ Canonical. Protected. Read-only.
 Date: 2026-01-18
 
 — END OF DOCUMENT —
-SEAL: ecf28f10f8a21c5b11b9f6bc6fb4de7e5238ca3057b18644303ae56733aba547
+SEAL: 3d1ccea71d5bbd647b88c1facf030022be807acf405fffdae9b8caaaf0584ace
