@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ./_archive_codex_pre_header_normalization__FROZEN/codex/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE.md
 ./_archive_codex_pre_header_normalization__FROZEN/codex/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE_ORIGINS.md
 ./_archive_codex_pre_header_normalization__FROZEN/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE.md
@@ -43,4 +50,4 @@ Executable: No
 ./publications/essays/philosophy_civic/AGAINST_CLEAR_CUT_THINKING.md
 
 — END OF DOCUMENT —
-SEAL: d271cc780481f81787716b600f099b5eb6d8cc0b8ea1c2651f2cd5c6ee301c3d
+SEAL: 21aacb70731c82e6e72bda37454628251038e6e167f9e22690340715b5e938b7

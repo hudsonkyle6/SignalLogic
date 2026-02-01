@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ────────────────────────────────────────
 
 # CORE AUD V1 — DOCTRINE SEAL (2026-01-27)
@@ -68,4 +75,4 @@ Tree Witness SHA256:
 * <1c19b04698acd30bcb8b7a2f92a91f2dee69b1c365527e6dd159d15aae829e99>
 
 — END OF DOCUMENT —
-SEAL: 0fea7dab30fccd5a49a912934e1dbb3f1a603c97246e9ab90e55021b1076c419
+SEAL: b11e623fdf5b4184e5622fe47131cc9d64b7f223ceada29e2c1c09dccfd1f457

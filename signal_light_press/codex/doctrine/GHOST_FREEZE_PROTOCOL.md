@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Ghost and Memory modules are treated as “physics.”
 
 They may shape stability and damping but must never:
@@ -83,4 +90,4 @@ Any functional change requires:
 4\) contract update in oracle/contracts/stability.yaml
 
 — END OF DOCUMENT —
-SEAL: 9f7d98f15d71bb7e08ddfd678f5ab39acb438cc53e1ebe57bd9cf1283ab8e2e5
+SEAL: 4d36a849f0668fd273bfe5badf1c69b6f03764e85e08e65cc35b3324a7558d19

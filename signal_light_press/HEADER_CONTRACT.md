@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Signal Light Press — Header Contract
 
 Status: Canonical
@@ -55,4 +62,4 @@ It governs presentation only.
 No document may define its own header format outside this contract.
 
 — END OF DOCUMENT —
-SEAL: 507f571eeab2ce17106fad69a3dca726a8e36eff80d444247c1ea692dae5f9d6
+SEAL: 60d984d8fad9c63bf477ad2e177edcef28231162873666d226e5b5f8d932462e

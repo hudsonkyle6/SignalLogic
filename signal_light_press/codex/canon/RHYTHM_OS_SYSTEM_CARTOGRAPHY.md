@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Rhythm OS — System Cartography
 **Status:** Canonical (Descriptive)  
 **Authority:** None  
@@ -478,4 +485,4 @@ This is not a decision rule. It is a geometric bound on normalized exposure.
 This appendix is descriptive only and confers no authority.
 
 — END OF DOCUMENT —
-SEAL: 12663b7c237985bd79bf76f5576881b3f0995f4ebb3b9a0b07eed8da77cf627f
+SEAL: 1ad23563e40850e2e86282451c571190d671a221070321c11f4a384d33a9bbea

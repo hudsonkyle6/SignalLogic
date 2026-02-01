@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 DOCTRINAL MIRROR NOTICE
 
 Source Authority:
@@ -351,4 +358,4 @@ CANONICAL SUMMARY
 Dreaming is the Signal System’s refusal to mistake motion for intelligence.
 
 — END OF DOCUMENT —
-SEAL: c75f868b2de802f2f4c9367207912f6633273ddd0df903f81760d4c113ded1a1
+SEAL: 8ec6fe6b42d832d34f092db971dab61d4cf011e7a2f9d97f9f82b07c7293671d

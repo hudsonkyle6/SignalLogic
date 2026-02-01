@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # RECOVERY_RITUAL — Kernel Restoration Procedure
 
 Status: Canonical (Descriptive)
@@ -69,4 +76,4 @@ Any change to canon/doctrine requires:
 - updated manifests (navigator + seal manifest)
 
 — END OF DOCUMENT —
-SEAL: 74e27bd0ad32ce0cf91bfe12a9a2330e6b352fee1d70a9ef4944db5c89af02eb
+SEAL: 17dc1ef53742919656ab6a892c80b79a459373b076acbd31c4a18b63efd9c3ad

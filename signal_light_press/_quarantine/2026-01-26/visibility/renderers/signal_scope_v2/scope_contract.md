@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 SIGNAL SCOPE — EXPORT CONTRACT
 
 PURPOSE
@@ -103,4 +110,4 @@ All renderers are subordinate to this interface.
 No renderer may expand or reinterpret this contract.
 
 — END OF DOCUMENT —
-SEAL: 123e4f848924217d8012b1255e362e017cb2222ff62ad0c46994267d0c1842a7
+SEAL: db946ef5f4bc1bd901869a0edc8f669f4b4e5e8e72e83808996bc5705586c21c

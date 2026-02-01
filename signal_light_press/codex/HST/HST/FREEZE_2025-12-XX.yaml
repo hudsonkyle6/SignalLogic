@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 freeze_date: 2025-12-XX
 scope: HST Doctrine
 status: canonical
@@ -49,4 +56,4 @@ note: >
   for Harmonic Systems Theory equations and formulations.
 
 — END OF DOCUMENT —
-SEAL: baa48a68e571a381a8dfb01c74ecbaf22244e0943b2baadc92086b82d85a2818
+SEAL: 7fa254e5793b2518e29561ade38e86d19c781dcbf3ba41effcae9e7035adcc26

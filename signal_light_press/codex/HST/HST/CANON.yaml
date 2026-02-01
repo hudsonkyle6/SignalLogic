@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 canonical: true
 owner: Signal Light Press (Kernel)
 rule: >
@@ -48,4 +55,4 @@ scope: HST Doctrine
   No other equation/HST directories are permitted.
 
 — END OF DOCUMENT —
-SEAL: 2326c074602fb972322bfb6ec48bf3268fde1edd79b298a1bd468ef264ad228f
+SEAL: 25888537839538dcd80fb8e63f7a4109e6acb7669713076f47af51db5e225e01

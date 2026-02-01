@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 codex/doctrine/ASSIST_UNDER_DISCIPLINE.md
 codex/doctrine/DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md
 codex/doctrine/DOCTRINAL_MIRROR_HEADER_STANDARD.md
@@ -77,4 +84,4 @@ codex/canon/SIGNAL_COMPANY_POSTURE_REPORT.md
 codex/canon/SIGNAL_CONTINUITY_COVENANT.md
 
 — END OF DOCUMENT —
-SEAL: a938b34647228112e27d9bdb6db0e6048f42e2365020180736db2a795506c155
+SEAL: 6a1db7b6bbd42f40c7fc6c34e032c2b893761811e21a51247b0f304b99670d52

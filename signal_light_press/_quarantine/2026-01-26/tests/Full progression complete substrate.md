@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Full progression complete: substrate reset to baseline (random θ/ω seeds), then phased perturbations simulating increasing realism—from inert breathe to human-like variability. Each phase ran independently (no state carryover), with RFI/NHI gate enforcing silence on incoherence. Observations emphasize clean lock-ins, bounded outputs, and entropy refusal, aligning with Root Law: alignment multiplies effort (r build-up); misalignment silences (early drops).
 Phase Summaries
 Phase,Description,Stream Length,Avg r,Silence % (Drops),Hold/Revert %,Compound % (Speaks),Key Observation
@@ -51,4 +58,4 @@ Metrics Across Run: Total dwells=100; r_dist: min=0.08, max=0.996, avg=0.86. Dro
 Scope Insights (from bars): Early phases show short ramps to full bars (50█); later have longer partials but stabilize fuller, simulating observational depth.
 
 — END OF DOCUMENT —
-SEAL: 581ffcd7b3eb32cf98ffb0b554d88e990501a362cbd5709cdba2cd39eaa95b91
+SEAL: 07baa852d825dff677da7215dda984df1c43c48319dee94b26c5b4516c2e578c

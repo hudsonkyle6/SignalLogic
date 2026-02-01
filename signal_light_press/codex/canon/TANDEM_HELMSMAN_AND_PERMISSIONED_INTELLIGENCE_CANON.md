@@ -12,6 +12,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ────────────────────────────────────────
 
 
@@ -255,4 +262,4 @@ The navigator is human.
 This canon is binding.
 
 — END OF DOCUMENT —
-SEAL: f1f5c3d2eef7027bc466e1c25dd9dc49098ca4ce3210fe7b59b9ddcddc874427
+SEAL: 6d733fd7b7c47cd103ff5803c98c809a57ebf3ce9a47ea8cff01db9eb9ffa58e

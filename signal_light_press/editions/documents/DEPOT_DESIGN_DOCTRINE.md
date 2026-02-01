@@ -36,6 +36,13 @@ Executable: No
 Authority: Signal Light Press
 Classification: WORKING
 Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
 Domain: Edition
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
@@ -613,4 +620,4 @@ XI. FINAL CANONICAL RULE
 A Depot is a promise to hold when movement becomes irresponsible.
 
 — END OF DOCUMENT —
-SEAL: 86dcf7c5725eeab8551960af01de37467f43d9c6c6a1eca6cbf76e69712120ec
+SEAL: 78a44973069251013ee5c20a46faf948c3570358ec7d27e176272e1e81a9c2d4

@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 AUTHORITY: Signal Light Press
 CLASSIFICATION: CANON
 SCOPE: Rhythm OS + Signal Company runtime wiring
@@ -136,4 +143,4 @@ A cycle implies only:
 Any script that cannot declare which Phase it belongs to is not runtime.
 
 — END OF DOCUMENT —
-SEAL: 4e7cecb22c110d227ed6a7e0172763263125b773157fb3836e9618f06d2dd4cd
+SEAL: f146b193e49b161c087dce81f0b595f86f6803bacb0d860d9e8f27c7bf065967

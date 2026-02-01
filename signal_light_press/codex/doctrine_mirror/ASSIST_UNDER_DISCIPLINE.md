@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Assist Under Discipline (AUD) is the governing design law of Rhythm OS.
 
 
@@ -139,4 +146,4 @@ Restraint is not a limitation.
 Restraint is the system.
 
 — END OF DOCUMENT —
-SEAL: 5774e9f8716ffca1e44b841f12d402f230a0101d6601ff26d3bea1a59e2b849a
+SEAL: a56b420b4fa7b3210f2cf78e6ddadcec3c10c108b863da244e870f7c2c14f1e2

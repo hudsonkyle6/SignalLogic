@@ -12,6 +12,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Doctrine First · No Authority · Memory Without Belief
 
 
@@ -439,4 +446,4 @@ Intelligence stays alive.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: a01f243f6eb19af1674854ed87714b11c2a76b450847d312202df0862ebf11d4
+SEAL: 8b9fc8da6a0470d1d46ce675c4d48167774accb0370b02af31bdc947604f334b

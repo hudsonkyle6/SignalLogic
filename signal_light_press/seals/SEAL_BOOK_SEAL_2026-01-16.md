@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 FREEZE SEAL
 
 Document: SEAL_BOOK.md
@@ -95,4 +102,4 @@ Signal Light Press (Kernel)
 STATUS: SEALED
 
 — END OF DOCUMENT —
-SEAL: 5ac6195da8e2de390e86e8fe12265514032478dd7061882c8da2e19270858f53
+SEAL: c87a3836ce200bd811fac6a4a7b2c3331cae9e4b32a5e6d5ec6d4112cc2f3792

@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 SEAL
 
 
@@ -54,4 +61,4 @@ Date: 2026-01-16
 Seal Type: GOVERNANCE SEAL
 
 — END OF DOCUMENT —
-SEAL: 74564acd2582ae4d5d869f05e7d8b7c5d08c7a874da59e74097a12743f19bd71
+SEAL: bb57b144f230eef7874731b7b54174d739063e00ac9cafb5840b744d95a2a8ef

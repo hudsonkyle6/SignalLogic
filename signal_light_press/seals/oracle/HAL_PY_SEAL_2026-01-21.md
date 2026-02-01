@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # SEAL — rhythm_os/domain/oracle/hal.py
 
 Date: 2026-01-21  
@@ -54,4 +61,4 @@ HAL outputs are consumable by Oracle only as descriptive inputs.
 No downstream interpretation is permitted at this layer.
 
 — END OF DOCUMENT —
-SEAL: c8bf4056eacd1d3f75604cd2e824f6da1bb2f83afcb6648fbce6b289f0b6eabc
+SEAL: d13add8f3130ef2870d326152ab58622c2451bcb4c69717d7e250eabcf361261

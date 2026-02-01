@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Light Press — Canonical IP \& Trademark Strategy
 
 
@@ -545,4 +552,4 @@ and we leave the rest to time.
 This is how institutions outlive markets.
 
 — END OF DOCUMENT —
-SEAL: ead8e1d6477decd5a210485fb9d0b63cee5a3f29985ba2b2e71826172fb1fbab
+SEAL: ab22cf7ebec8c98bdb358d28461b3c724693b16a0ef28d84b0f4f9c8582ad396

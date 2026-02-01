@@ -33,6 +33,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \## ENGINE CLASSIFICATION (BINDING)
 
 
@@ -416,4 +423,4 @@ It exists to build wisdom, not appetite.
 When in doubt, it rests.
 
 — END OF DOCUMENT —
-SEAL: b3bbb12427e33d9f1449be3d00d5ed88df90f9f3d6861f70376f3d604c6b1e4c
+SEAL: 566f46c13f7a48f6f09ff2783bacecbe1b6bd019904362164ce43a0368382596

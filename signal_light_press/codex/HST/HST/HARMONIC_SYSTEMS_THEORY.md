@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Light Press — Core Scientific Canon
 
 
@@ -271,4 +278,4 @@ VI. CANONICAL RULE
 If a system model assumes linear continuity where oscillation dominates, the model is invalid under this canon.
 
 — END OF DOCUMENT —
-SEAL: 1a767711c76d561849013946c6fbb50ad13da891e2184b451ab9d545df46a2c4
+SEAL: cc8059dce93b05e155e7d146dee82de39c6d42521f72752e8f82a2a1fe0ac5c9

@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # GOVERNANCE ENGINE ROOM BUILD — RECORD SEAL
 
 Classification: Seal
@@ -64,4 +71,4 @@ Seal Timestamp (UTC):
 ────────────────────────────────────────
 
 — END OF DOCUMENT —
-SEAL: a3ffcb7b04c2c749a005ee72bf5186aad2ebcf9cd8e554e35b22ef5f8fe092b6
+SEAL: bb9901aa0948a5eea524215d3273cf096f2c3d220c49b659155b4565c782d3fd

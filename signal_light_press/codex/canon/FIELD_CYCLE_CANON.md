@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ---
 
 ## 1. Purpose
@@ -117,4 +124,4 @@ This canon freezes:
 All changes require formal canon amendment under Signal Light Press.
 
 — END OF DOCUMENT —
-SEAL: d15f92e411b465e0c9357c421d2917f4917abea55bd281419fb851eb5b25ab04
+SEAL: 26a916db0d015a4708f8078ef9b10ec7d289a45f7f0f184174a50d2445912e05

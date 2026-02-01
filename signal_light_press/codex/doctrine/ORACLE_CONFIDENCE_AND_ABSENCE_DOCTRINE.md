@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 This course formalizes what it means when Oracle speaks softly—or not at all.
 
 It prevents misinterpretation, overreach, and thrashing when signal quality degrades.
@@ -347,4 +354,4 @@ optimism under uncertainty
 The system fails closed by design.
 
 — END OF DOCUMENT —
-SEAL: 5a26f4a71a8f80d6d0a56ab13004074e30b384b5ed501c674fc8fe183747d264
+SEAL: 20ddd6c272f3223c1b5436823d54718568efdb21aaa78233a6d414cb88a9e573

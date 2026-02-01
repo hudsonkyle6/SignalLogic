@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 📜 PERSONAL HUNTER ENGINE — CANONICAL SCHEMA
 
 
@@ -452,4 +459,4 @@ The Personal Hunter exists to make you wiser, not richer faster.
 If it ever threatens peace, margin, or sleep — it has failed.
 
 — END OF DOCUMENT —
-SEAL: 5d3684ecd7403274f5fdec5362d9963b55db23e3a4dacf59e86c6bbc6252f3a6
+SEAL: 4d6b304972842e6145db0b0785b71557d098f36e286ab51a64d71add4b2b3a46

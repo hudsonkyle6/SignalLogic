@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Course II-D — Constraint × Phase Interaction
 
 Pure Theory Only (No Math, No Code, No Thresholds)
@@ -247,4 +254,4 @@ High drift → favor REFLECT
 Bias is directional, not executable.
 
 — END OF DOCUMENT —
-SEAL: 2279629bcea509c94019e2037bd576d783ea9c5f4a9d151dfba667b453708f52
+SEAL: 05d3a55854ba21ba82a22807d51a1d36bfdc5d408dd2cb813bc94fd05332b6e1

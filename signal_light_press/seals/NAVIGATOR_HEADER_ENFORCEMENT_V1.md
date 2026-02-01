@@ -5,8 +5,6 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
-Version: V1  
-
 Date: 2026-01-26  
 
 
@@ -216,4 +214,4 @@ SIGNAL LIGHT PRESS
 Custodian of Meaning, Memory, and Law
 
 — END OF DOCUMENT —
-SEAL: a847bf8dee85d1469b2696c154863d2744f867d7cc33d02390810985cee16841
+SEAL: 97156d0346b81b9352b6e1cd9f813d9ac2a0ef116b863ab9094791d8b0abb87b

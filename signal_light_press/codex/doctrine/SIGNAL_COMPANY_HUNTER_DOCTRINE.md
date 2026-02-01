@@ -5,6 +5,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 I. PURPOSE
 
 
@@ -366,4 +373,4 @@ Date: 2026-01-16
 Seal Type: CANONICAL SEAL
 
 — END OF DOCUMENT —
-SEAL: e46685503f3583448717a988583cf5c06e22892567e7ca1c26fb5d92e86c731e
+SEAL: a14381c1c99968ecaebcbf7bd659a3d1a4ce41a9590600df8f3c8073625be22c

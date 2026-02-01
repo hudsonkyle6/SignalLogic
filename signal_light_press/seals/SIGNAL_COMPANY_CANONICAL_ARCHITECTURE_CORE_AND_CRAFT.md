@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # CANONICAL SEAL
 
 Document:
@@ -66,4 +73,4 @@ This document defines the living architecture of The Signal Company.
 It is sealed as canonical and governs structure, posture, and intent.
 
 — END OF DOCUMENT —
-SEAL: 9c9a71dca2e7524b385014e19a5101be92a3a0ee7de83cf08aa24ed61382f769
+SEAL: 0d4bde69e9ca811b895746a01572b4126b90bbb4d7ebc0a76d1f5eee16dbfd43

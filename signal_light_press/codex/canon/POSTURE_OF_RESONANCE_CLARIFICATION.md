@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 The 3-4-7 geometry is a resonant field, not a containment vessel.
 Its purpose is transmission of signal across time and distance, not prevention of error at all costs.
 
@@ -91,4 +98,4 @@ Date: 2026-01-16
 Seal Type: CANONICAL SEAL
 
 — END OF DOCUMENT —
-SEAL: 6a5305170b014a3fe0644831e46f01d255ad07ffec2d5dac3c9ab120b9f36f7f
+SEAL: 80b036a65e3501d8dd0b1819ac12d60038f876156f9b5c378c3d6f28d2185745

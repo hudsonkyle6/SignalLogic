@@ -33,6 +33,13 @@ Domain: Fieldnotes
 Applies To: Signal Light Press (Internal)
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
 # FORMAL AUDIT DISPOSITION — rhythm_os/domain/oracle/phase.py
 
 Status: 🔒 CANONICAL AFTER FIXES  
@@ -98,4 +105,4 @@ Sealed for long-term use.
 Further modification requires doctrine change.
 
 — END OF DOCUMENT —
-SEAL: de806c668b874f47cb40d24675ecbfbbee2ae38972ad906068fea3f3708f8a1c
+SEAL: d9d1c2518180857de47d1b84bf12c43805bf6dd405fe689d7e69e97bc36b0c66

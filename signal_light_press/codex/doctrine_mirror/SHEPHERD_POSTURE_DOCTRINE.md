@@ -40,6 +40,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Doctrine First · No Tasks · No Execution
 
 
@@ -303,4 +310,4 @@ thrashing
 optimism under suppression
 
 — END OF DOCUMENT —
-SEAL: 348d5a1f8470bf7eb25c4060a26fee0fcccfa6bdbc34de38dc3b7f334cab9956
+SEAL: 58bc422ee98ef453a3438605a8dd075d38713f2d093c68448f5c1365a8af63b9

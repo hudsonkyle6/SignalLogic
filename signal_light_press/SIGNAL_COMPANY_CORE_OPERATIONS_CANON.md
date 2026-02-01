@@ -33,6 +33,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 SIGNAL COMPANY — CORE OPERATIONS CANON
 
 Authority: Signal Light Press (Kernel)
@@ -228,4 +235,4 @@ STATUS
 CORE_OPERATIONS_CANON = SEALED FOR IMPLEMENTATION
 
 — END OF DOCUMENT —
-SEAL: 7adbe52016a55fcce6ea5e3f49e2bfad804f2a66a2b509e4b7bb24562fde05aa
+SEAL: 4291c5eb7b9dd7cd86c840f9123a4224c58adda9d3dd9773c0f0b62bb1ea6fae
