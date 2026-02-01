@@ -1,0 +1,577 @@
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Signal Light Press — Formal Governing Law
+
+This document defines the Harmonic Alignment Law (HAL):
+a bounded mathematical expression describing the degree of alignment between system capacity, environmental phase, and timing within a harmonic system.
+
+DOCUMENT METADATA
+
+Authority: Signal Light Press
+
+Classification: CROWN JEWEL
+
+Domain: Theory & Science (Equations)
+
+Status: Canonical
+
+Applies To: Oracle, Sage, Shepherd, Helmsman
+
+Amendment Rule: Signal Light Press only
+
+I. PURPOSE OF THE LAW
+
+The Harmonic Alignment Law exists to:
+
+Quantify compatibility, not outcome
+
+Measure readiness, not success
+
+Express timing sensitivity, not control
+
+Bound interpretation within humility
+
+The law does not predict events.
+It describes conditions.
+
+II. FORMAL STATEMENT
+
+Let alignment at time t be expressed as:
+
+𝐻
+(
+𝑡
+)
+=
+1
++
+cos
+⁡
+(
+𝜙
+ℎ
+(
+𝑡
+)
+−
+𝜙
+𝑒
+(
+𝑡
+)
+)
+2
+×
+𝐶
+(
+𝑡
+)
+×
+𝐸
+(
+𝑡
+)
+H(t)=
+2
+1+cos(ϕ
+h
+	​
+
+(t)−ϕ
+e
+	​
+
+(t))
+	​
+
+×C(t)×E(t)
+
+Where:
+
+𝐻
+(
+𝑡
+)
+∈
+[
+0
+,
+1
+]
+H(t)∈[0,1] — Harmonic Alignment Index
+
+𝜙
+ℎ
+(
+𝑡
+)
+ϕ
+h
+	​
+
+(t) — Human or system phase
+
+𝜙
+𝑒
+(
+𝑡
+)
+ϕ
+e
+	​
+
+(t) — Environmental phase
+
+𝐶
+(
+𝑡
+)
+∈
+[
+0
+,
+1
+]
+C(t)∈[0,1] — Capacity factor
+
+𝐸
+(
+𝑡
+)
+∈
+[
+0
+,
+1
+]
+E(t)∈[0,1] — Energy or readiness factor
+
+III. VARIABLE DEFINITIONS (CANONICAL)
+1. Phase (
+𝜙
+ϕ)
+
+Phase represents position within a cycle, not direction or magnitude.
+
+Phase is circular
+
+Phase is periodic
+
+Phase is non-linear
+
+Phase difference, not absolute phase, determines alignment.
+
+2. Capacity (
+𝐶
+(
+𝑡
+)
+C(t))
+
+Capacity represents available, deployable ability at time t.
+
+Capacity includes:
+
+Physical readiness
+
+Resource availability
+
+Cognitive bandwidth
+
+Structural resilience
+
+Capacity does not include:
+
+Desire
+
+Urgency
+
+Ambition
+
+3. Energy / Readiness (
+𝐸
+(
+𝑡
+)
+E(t))
+
+Energy represents sustainable drive, not stored force.
+
+Energy decays naturally.
+Artificial extension produces fragility.
+
+IV. INTERPRETATION OF H(t)
+
+𝐻
+(
+𝑡
+)
+≈
+1
+H(t)≈1: High alignment
+
+𝐻
+(
+𝑡
+)
+≈
+0.5
+H(t)≈0.5: Partial or neutral alignment
+
+𝐻
+(
+𝑡
+)
+≈
+0
+H(t)≈0: Misalignment
+
+High alignment indicates compatibility, not inevitability.
+Low alignment indicates risk, not failure.
+
+V. DOMAIN OF VALIDITY
+
+The Harmonic Alignment Law is valid only when:
+
+Systems are bounded
+
+Phases are meaningfully defined
+
+Capacity is finite
+
+External forcing is non-dominant
+
+The law breaks down under:
+
+Extreme shocks
+
+Singular events
+
+Regime collapse
+
+Unbounded intervention
+
+VI. WHAT THE LAW DOES NOT CLAIM
+
+The Harmonic Alignment Law does not:
+
+Predict outcomes
+
+Optimize decisions
+
+Remove uncertainty
+
+Replace judgment
+
+Justify action
+
+Any use of the law beyond these bounds is non-canonical.
+
+VII. ROLE IN SIGNAL SYSTEMS
+
+Oracle may compute components of 
+𝐻
+(
+𝑡
+)
+H(t)
+
+Sage may interpret trends in 
+𝐻
+(
+𝑡
+)
+H(t)
+
+Shepherd may respect alignment constraints
+
+Helmsman may consider long-arc coherence
+
+No Engine may treat 
+𝐻
+(
+𝑡
+)
+H(t) as a command.
+
+VIII. FAILURE & HUMILITY CLAUSE
+
+When alignment is unclear, restraint is superior to action.
+
+Numerical clarity without contextual humility is error.
+
+IX. CANONICAL RULE
+
+Harmonic Alignment is a measure of readiness, not permission.
+
+Perfect. Below is a drop-in canonical section, written to match the tone, precision, and restraint of the existing document.
+
+You can paste this verbatim into
+archive/equations/HARMONIC_ALIGNMENT_LAW.md
+as the next numbered section.
+
+X. INTEGRITY GATE — 
+𝐺
+(
+𝑡
+)
+G(t)
+X.1 Definition
+
+Let:
+
+𝐺
+(
+𝑡
+)
+∈
+[
+0
+,
+1
+]
+G(t)∈[0,1]
+
+represent the Integrity / Trust Gate governing whether a computed alignment state may be interpreted or acted upon.
+
+𝐺
+(
+𝑡
+)
+G(t) does not measure alignment.
+It measures confidence in the coherence, continuity, and validity of the signals and system state used to compute alignment.
+
+X.2 What 
+𝐺
+(
+𝑡
+)
+G(t) Represents
+
+𝐺
+(
+𝑡
+)
+G(t) increases when system conditions indicate:
+
+Complete and continuous data feeds
+
+Valid schema and version integrity
+
+Stable coupling between signal layers
+
+Bounded drift within expected limits
+
+Verified snapshot continuity
+
+Explained or flagged anomalies
+
+𝐺
+(
+𝑡
+)
+G(t) decreases when conditions include:
+
+Missing or substituted inputs
+
+Schema or version mismatch
+
+Pipeline or heartbeat failure
+
+Unexplained outliers or discontinuities
+
+Excessive interpolation or fallback logic
+
+X.3 Canonical Role of 
+𝐺
+(
+𝑡
+)
+G(t)
+
+𝐺
+(
+𝑡
+)
+G(t) is an integrity gate, not a driver of alignment.
+
+It does not alter the physics of phase, capacity, or energy.
+It governs whether the resulting alignment state is admissible for interpretation.
+
+X.4 Gated Alignment Expression
+
+The trusted alignment state may be expressed as:
+
+𝐻
+trusted
+(
+𝑡
+)
+=
+𝐺
+(
+𝑡
+)
+×
+𝐻
+raw
+(
+𝑡
+)
+H
+trusted
+	​
+
+(t)=G(t)×H
+raw
+	​
+
+(t)
+
+Where:
+
+𝐻
+raw
+(
+𝑡
+)
+=
+1
++
+cos
+⁡
+(
+𝜙
+ℎ
+(
+𝑡
+)
+−
+𝜙
+𝑒
+(
+𝑡
+)
+)
+2
+×
+𝐶
+(
+𝑡
+)
+×
+𝐸
+(
+𝑡
+)
+H
+raw
+	​
+
+(t)=
+2
+1+cos(ϕ
+h
+	​
+
+(t)−ϕ
+e
+	​
+
+(t))
+	​
+
+×C(t)×E(t)
+
+This expression preserves the purity of the Harmonic Alignment Law while enforcing integrity discipline.
+
+X.5 Silence and Restraint Rule
+
+If 
+𝐺
+(
+𝑡
+)
+G(t) falls below the minimum trust threshold, the correct system output is silence.
+
+No interpretation, recommendation, or action is permitted when integrity is insufficient, regardless of the numerical value of alignment.
+
+X.6 Canonical Trust Bands (Initial)
+
+The following bands are canonical defaults:
+
+𝐺
+(
+𝑡
+)
+≥
+0.85
+G(t)≥0.85 — Trusted
+
+0.60
+≤
+𝐺
+(
+𝑡
+)
+<
+0.85
+0.60≤G(t)<0.85 — Partial (interpret with restraint)
+
+𝐺
+(
+𝑡
+)
+<
+0.60
+G(t)<0.60 — Silence required
+
+Threshold values may be refined through doctrine, but the silence rule is invariant.
+
+X.7 Canonical Rule
+
+Alignment without integrity is invalid.
+Silence is superior to false clarity.
+
+— END OF DOCUMENT —
+SEAL: 051109ff90ceaf42b86e9feccdcf43490db46ceb1873e53943929de0c85dcbce

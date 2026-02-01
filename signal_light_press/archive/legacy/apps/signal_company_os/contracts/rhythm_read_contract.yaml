@@ -1,0 +1,160 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+# -------------------------------------------------
+# SIGNAL COMPANY OS — RHYTHM READ CONTRACT
+# -------------------------------------------------
+# Authority: Signal Light Press (Kernel)
+# Classification: Protected Internal
+# Status: Canonical
+# Amendment Rule: Signal Light Press only
+# Geometry: 3-4-7 Aligned
+#
+# Purpose:
+#   Define the only lawful read-access Signal Company OS
+#   has into Rhythm OS and its Engines.
+#
+# This contract is restrictive by design.
+# Absence of permission implies denial.
+# -------------------------------------------------
+
+contract_version: 1.0
+consumer: SIGNAL_COMPANY_OS
+
+# -------------------------------------------------
+# GENERAL RULES
+# -------------------------------------------------
+rules:
+  read_only: true
+  write_access: false
+  execution: false
+  memory_write: false
+  optimization: false
+  prioritization: false
+
+# -------------------------------------------------
+# ORACLE OS — PERMITTED READS
+# -------------------------------------------------
+oracle:
+  allowed: true
+  fields:
+    - date
+    - season
+    - signal_state
+    - resonance
+    - amplitude
+    - phase
+    - drift_index
+    - volatility
+    - scarcity_flags
+    - market_field
+    - environmental_field
+    - horizon_band
+    - window_state
+    - ghost_trust_band
+    - afterglow_level
+    - dark_field_state
+
+  forbidden:
+    - raw_models
+    - prediction_parameters
+    - feature_weights
+    - training_artifacts
+    - internal_confidence_calibration
+
+# -------------------------------------------------
+# SAGE OS — PERMITTED READS
+# -------------------------------------------------
+sage:
+  allowed: true
+  fields:
+    - canonical_posture
+    - readiness_index
+    - doctrine_constraints
+    - narrative_guidance
+    - daily_brief
+    - seasonal_context
+    - archive_snapshot_id
+    - silence_flags
+
+  forbidden:
+    - doctrine_editing
+    - registry_mutation
+    - freeze_control
+    - canon_overrides
+
+# -------------------------------------------------
+# SHEPHERD OS — PERMITTED READS
+# -------------------------------------------------
+shepherd:
+  allowed: true
+  fields:
+    - posture_mode
+    - permission_envelope
+    - buffer_status
+    - risk_flags
+    - allow_windows
+    - deny_windows
+    - recovery_requirements
+    - dreaming_state
+
+  forbidden:
+    - capital_controls
+    - allocation_limits
+    - reserve_values
+    - opportunity_scoring
+    - hunter_outputs
+
+# -------------------------------------------------
+# HELMSMAN — CONDITIONAL READ
+# -------------------------------------------------
+helmsman:
+  allowed: conditional
+  condition:
+    - shepherd_allows_reflection == true
+    - ghost_trust_band >= STABLE
+    - dreaming_state == false
+
+  fields:
+    - long_arc_orientation
+    - seasonal_heading
+    - narrative_continuity_note
+
+  forbidden:
+    - strategy_definition
+    - execution_guidance
+    - prescriptive language
+
+# -------------------------------------------------
+# FAILURE & SILENCE CONDITIONS
+# -------------------------------------------------
+failure_policy:
+  on_missing_input: SILENCE
+  on_conflict: SILENCE
+  on_schema_violation: SILENCE
+  on_confidence_below_floor: SILENCE
+
+# -------------------------------------------------
+# AUDIT & TRACE
+# -------------------------------------------------
+audit:
+  log_reads: true
+  log_denials: true
+  trace_id_required: true
+
+# -------------------------------------------------
+# CLOSING STATEMENT
+# -------------------------------------------------
+seal:
+  statement: >
+    Signal Company OS may observe governed reality only.
+    It may not infer authority, intent, or obligation.
+    Silence is a valid and preferred state.
+  authority: Signal Light Press
+
+— END OF DOCUMENT —
+SEAL: 077b22f6bde504a2005ffadc35fd7f11c348bde9f176b23a6700a8de0b426e97

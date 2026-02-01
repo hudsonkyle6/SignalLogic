@@ -1,0 +1,129 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+# SIGNAL COMPANY OS — SILENCE DOCTRINE
+# Authority: Signal Light Press
+# Classification: Protected Internal
+# Status: Canonical
+# Amendment Rule: Signal Light Press only
+
+doctrine_version: 1.1
+scope: signal_company_os
+
+# -------------------------------------------------
+# SILENCE IS A FIRST-CLASS STATE
+# -------------------------------------------------
+
+principle:
+  statement: >
+    Silence is not failure.
+    Silence is lawful restraint under uncertainty,
+    disagreement, distortion, or insufficient confidence.
+    Silence preserves recoverability, trust, and long-arc coherence.
+
+# -------------------------------------------------
+# MANDATORY SILENCE CONDITIONS
+# -------------------------------------------------
+
+silence_conditions:
+
+  - id: ORACLE_INCOMPLETE
+    trigger: oracle.confidence < 0.5
+    rationale: External reality insufficiently resolved.
+
+  - id: ENGINE_DISAGREEMENT
+    trigger: oracle.signal_state conflicts_with sage.doctrine_status
+    rationale: Engines not aligned — interpretation forbidden.
+
+  - id: SHEPHERD_HOLD
+    trigger: shepherd.posture in [DORMANT, HOLD]
+    rationale: Provisioning frozen — no posture escalation allowed.
+
+  - id: BUFFER_THIN
+    trigger: shepherd.buffer_status == Thin
+    rationale: Recoverability at risk.
+
+  - id: HELMSMAN_ABSENT
+    trigger: helmsman.present == false AND narrative_requested == true
+    rationale: Narrative guidance not authorized.
+
+  - id: DOCTRINAL_REVIEW
+    trigger: sage.doctrine_status != CLEAR
+    rationale: Canon under review.
+
+  - id: BOUNDARY_BREACH
+    trigger: boundary_alert == true
+    rationale: System integrity compromised.
+
+  - id: RESONANCE_LOSS
+    trigger: resonance.previously_detected == true AND resonance.current == false
+    rationale: Observed resonance degraded or dissolved — automatic reversion to silence.
+
+# -------------------------------------------------
+# SILENCE BEHAVIOR
+# -------------------------------------------------
+
+behavior:
+  output: NONE
+  ui_state: SILENT
+  logging:
+    level: minimal
+    allowed:
+      - timestamp
+      - silence_condition_id
+      - engine_states_snapshot
+  retry: next_run_only
+
+# -------------------------------------------------
+# PROHIBITED ACTIONS DURING SILENCE
+# -------------------------------------------------
+
+forbidden_during_silence:
+  - summarization
+  - paraphrase
+  - guidance
+  - implication
+  - reassurance
+  - interpretation
+  - speculation
+  - resonance_amplification
+  - narrative_framing
+
+# -------------------------------------------------
+# OPTIONAL HUMAN NOTICE (FIXED TEXT ONLY)
+# -------------------------------------------------
+
+optional_notice:
+  enabled: true
+  message: >
+    System posture is withheld pending clarity.
+    Silence is active.
+    No action is recommended at this time.
+
+# -------------------------------------------------
+# RELATION TO RESONANCE
+# -------------------------------------------------
+
+resonance_interaction:
+  precedence: silence
+  rule: >
+    Resonance never overrides silence.
+    Resonance may only be observed when silence conditions are absent.
+    Silence resumes automatically upon loss of resonance or confidence.
+
+# -------------------------------------------------
+# ESCAPE CLAUSE
+# -------------------------------------------------
+
+escape:
+  allowed: false
+  rationale: >
+    Silence may only be lifted by upstream Engine state change.
+    No UI layer, renderer, or human request may override silence.
+
+— END OF DOCUMENT —
+SEAL: 91993007de08fb5fbe1f48780336c57442ba2f029cfad673ee752ace2cf49be3

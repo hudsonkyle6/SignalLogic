@@ -1,0 +1,54 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+codex
+seals
+chronicles
+fieldnotes
+publications
+contracts
+manifests
+navigator
+editions
+evidence
+registers
+CANONICAL_ROOTS.md
+KERNEL_NAVIGATOR.md
+HEADER_TEMPLATES.md
+IP_ENFORCEMENT_CHECKLIST.md
+KERNEL_TO_OS_BRIDGE.md
+
+— END OF DOCUMENT —
+SEAL: 7e20c690d02aa6a98245d90d1ffa971e890a980d313f8898531178fea7be546e

@@ -1,0 +1,49 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+# chronicles/manifest_latest.yaml
+# Status: Canonical (Descriptive)
+# Authority: Signal Light Press
+# Points to the most recent known recoverable state.
+
+latest:
+  timestamp_utc: "UNSET"
+  notes: "Update manually during a freeze."
+  snapshot_dir: "chronicles/snapshots"
+  checksum_file: "_CANON_CHECKSUMS.sha256"
+  seal_reference: "UNSET"
+
+— END OF DOCUMENT —
+SEAL: 6bcffd9bcbca6c7b85b4cefabbae53776c4380fb2343de3b74b3e5a95a388e0b

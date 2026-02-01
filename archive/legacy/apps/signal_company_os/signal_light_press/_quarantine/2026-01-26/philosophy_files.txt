@@ -1,8 +1,0 @@
-./_archive_codex_pre_header_normalization__FROZEN/codex/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE.md
-./_archive_codex_pre_header_normalization__FROZEN/codex/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE_ORIGINS.md
-./_archive_codex_pre_header_normalization__FROZEN/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE.md
-./_archive_codex_pre_header_normalization__FROZEN/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE_ORIGINS.md
-./codex/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE.md
-./codex/philosophy/philosophy/HARMONIC_MEMORY_ARCHITECTURE_ORIGINS.md
-./philosophy_files.txt
-./publications/essays/philosophy_civic/AGAINST_CLEAR_CUT_THINKING.md

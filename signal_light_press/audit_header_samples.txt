@@ -1,0 +1,2323 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+===== FILE: codex/canon/FAILURE_TAXONOMY.md =====
+📜 FAILURE TAXONOMY — CANONICAL MEMORY REGISTER (v1.0)
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Canonical — Memory-Binding
+
+Applies To: All Company Systems, Engines, Doctrine, and Governance
+
+Principle: Assist Under Discipline
+
+Status: CANONICAL — SEALED
+
+Effective Date: 2026-01-16
+
+Amendment Rule: Signal Light Press only
+
+
+
+I. PURPOSE
+
+
+
+This document exists to bind memory to failure so that the system does not repeat structural mistakes under new names.
+
+===== FILE: codex/canon/HI_WIZARD_AI_OSCILLATORY_STACK.md =====
+HI–WIZARD–AI
+
+The Oscillatory Intelligence Stack (Canonical Description)
+
+
+
+Status: Canon (Descriptive)
+
+Authority: Signal Light Press
+
+Scope: Explanatory only — introduces no new governance, permissions, or executable doctrine
+
+Last Alignment: 2026-01
+
+
+
+1\. Purpose and Placement
+
+
+
+This document describes the HI–WIZARD–AI stack as an explanatory vertical naming of an intelligence structure already present within Rhythm OS and Signal Company OS.
+
+
+
+It introduces no new authority, no new agents, and no executable logic.
+
+===== FILE: codex/canon/MASTER_IP_INDEX.md =====
+📜 SIGNAL LIGHT PRESS — MASTER IP INDEX
+
+Canonical Register v1.2 (SEALED)
+
+
+
+3-4-7 Geometry Aligned
+
+
+
+DOCUMENT METADATA
+
+
+
+Authority: Signal Light Press
+
+Classification: CROWN JEWEL
+
+Scope: Company-wide
+
+Status: SEALED — CANONICAL
+
+Invariant: 3-4-7 Geometry
+
+Amendment Rule: Signal Light Press only
+
+===== FILE: codex/canon/ORACLE_CONSTRAINT_PHASE_INTERACTION.md =====
+Course II-D — Constraint × Phase Interaction
+
+Pure Theory Only (No Math, No Code, No Thresholds)
+
+
+
+This course defines how phases and constraints relate without collapsing authority, without computation, and without leaking task semantics.
+
+
+
+Nothing executes here.
+
+Nothing decides here.
+
+This is interpretive law, not machinery.
+
+
+
+1\. Purpose (Why This Course Exists)
+
+
+
+Up to now, we have:
+
+
+
+===== FILE: codex/canon/ORACLE_PHASE_VOCABULARY.md =====
+\# ORACLE — Canonical Phase Vocabulary (v1)
+
+
+
+This document defines the only phase names the Oracle may emit.
+
+Phases are modes of reality, not instructions.
+
+
+
+No phase implies permission.
+
+Silence is always valid.
+
+
+
+---
+
+
+
+\## PHASES
+
+
+
+\### STILL
+
+===== FILE: codex/canon/personal/PERSONAL_HUNTER_ENGINE_CANON.md =====
+📜 PERSONAL HUNTER ENGINE — CANONICAL SCHEMA
+
+
+
+Authority: Private Lineage Shepherd (Non-Corporate)
+
+Classification: Private / Non-Corporate
+
+Status: Canonical — Binding
+
+Principle: Assist Under Discipline
+
+Philosophical Lineage: Dave Ramsey Conservatism / Forest–Pasture Law
+
+Connectivity: Offline Only
+
+
+
+I. PURPOSE OF THE PERSONAL HUNTER
+
+
+
+The Personal Hunter exists to:
+
+
+
+===== FILE: codex/canon/personal/PERSONAL_HUNTER_OPPORTUNITY_ENVELOPE.md =====
+📜 PERSONAL HUNTER ENGINE — CANONICAL OPPORTUNITY ENVELOPE
+
+
+
+Authority: Private Lineage Shepherd
+
+Classification: Private / Non-Corporate
+
+Status: CANONICAL — ACTIVE
+
+Principle: Assist Under Discipline
+
+Connectivity: Offline Only
+
+Philosophical Lineage: Dave Ramsey Conservatism · Forest–Pasture Law · Signal Rhythm OS
+
+\## ENGINE CLASSIFICATION (BINDING)
+
+
+
+This document defines a \*\*Layer 3 Application Engine\*\* (“Personal Hunter”).
+
+
+
+Authority Source: \*\*Private Lineage Shepherd\*\* (posture-gated)  
+
+===== FILE: codex/canon/POSTURE_OF_RESONANCE_CLARIFICATION.md =====
+Canonical Clarification — Posture of Resonance
+Date: January 16, 2026
+
+The 3-4-7 geometry is a resonant field, not a containment vessel.
+Its purpose is transmission of signal across time and distance, not prevention of error at all costs.
+
+The existing refusals remain binding and absolute:
+- No cheap intelligence
+- No automated judgment
+- No silent revisionism
+
+These constraints ensure truth survives motion and error leaves scars.
+They do not prevent motion when resonance is real.
+
+Resonance is now lawful when it precedes justification.
+Resonance authorizes contact, not conquest.
+Motion is permitted when something real sings back — not when fear, ambition, or opportunity pushes.
+
+The engines are servants of resonance, not jailers of motion.
+The domains are interfaces of contact, not relics to be preserved at all costs.
+
+The Helmsman emerges by harmony, not emergency — when the field sings through multiple voices coherently.
+
+Adaptive Posture Rule
+The system defaults to custodial silence (extreme safety posture) when:
+
+===== FILE: codex/canon/PROVISIONAL_ENTANGLEMENT_PROTOCOL.md =====
+📜 PROVISIONAL ENTANGLEMENT PROTOCOL — v1.0
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Canonical — Binding
+
+Applies To: Company System Only
+
+Principle: Assist Under Discipline
+
+Status: CANONICAL — SEALED
+
+Effective Date: 2026-01-16
+
+Amendment Rule: Signal Light Press only
+
+
+
+I. PURPOSE
+
+
+
+This protocol exists to permit limited, reversible exposure to a detected successor pattern without committing the system to destruction, replacement, or renewal.
+
+===== FILE: codex/canon/RHYTHM_OS_SYSTEM_CARTOGRAPHY.md =====
+Rhythm OS — System Cartography
+
+Status: Canonical (Descriptive)
+Authority: None
+Scope: Structural, Mathematical, Jurisdictional
+Posture: Custodial Silence (Default)
+
+Warning: This document explains where things live and what they are allowed to do.
+It grants no permission to act.
+
+Executive Summary
+
+Rhythm OS is a physics-first observational operating system.
+
+It does not decide, optimize, predict, recommend, advise, schedule, notify, or act.
+
+Its sole function is to:
+
+Observe oscillatory reality, preserve those observations immutably, and expose relational structure upward without authority.
+
+All meaning, memory, judgment, and action are separated in space, not by convention but by enforced architecture.
+
+The governing physical law of Rhythm OS is:
+
+Change is allowed where recovery is possible.
+
+===== FILE: codex/canon/SEAL_BOOK.md =====
+📕 SEAL BOOK
+
+
+
+Canonical Register of Seals, Authority, and Binding Semantics
+
+
+
+DOCUMENT METADATA
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: CROWN JEWEL
+
+Domain: Governance / Doctrine / Memory
+
+Status: CANONICAL
+
+Version: v1.0
+
+Effective Date: 2026-01-02
+
+Amendment Rule: Signal Light Press only
+
+===== FILE: codex/canon/SHEPHERD_DECISION_ORDERING.md =====
+Theory Only · No Math · No Code · No Tasks
+
+
+
+This course defines how Shepherd resolves conflicts between inputs.
+
+It does not compute values, thresholds, or outcomes.
+
+
+
+It establishes priority law.
+
+
+
+1\. Purpose
+
+
+
+Shepherd receives multiple informational inputs that may disagree.
+
+
+
+Course III-C answers:
+
+
+
+===== FILE: codex/canon/SHEPHERD_POSTURE_SEMANTICS.md =====
+Meaning, Not Mechanism · Law, Not Logic
+
+
+
+This course deepens what the three Shepherd postures mean, without introducing math, thresholds, or execution.
+
+
+
+Nothing decides how to act.
+
+Nothing decides what to do.
+
+Only what posture reality lawfully permits.
+
+
+
+1\. The Three Postures (Canonical Meanings)
+
+SILENT (Default · Armored)
+
+
+
+Meaning:
+
+Action is withheld by default due to uncertainty, suppression, or unresolved conditions.
+
+===== FILE: codex/canon/SHEPHERD_SILENT_VS_REFUSE.md =====
+When SILENT vs REFUSE Must Be Chosen
+
+
+
+This course resolves the last ambiguity in governance:
+
+When does Shepherd withhold (SILENT) versus explicitly deny (REFUSE)?
+
+
+
+This is doctrine, not logic.
+
+No thresholds.
+
+No math.
+
+No execution.
+
+
+
+1\. Purpose
+
+
+
+Both SILENT and REFUSE stop action.
+
+===== FILE: codex/canon/SIGNAL_COMPANY_CANONICAL_ARCHITECTURE_3-4-7.md =====
+⭐ THE SIGNAL COMPANY — CANONICAL ARCHITECTURE (3-4-7)
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Crown Jewel
+
+Status: Canonical
+
+Invariant: 3-4-7 Geometry
+
+
+
+I. THE THREE PILLARS (3)
+
+
+
+Identity → Intelligence → Industry
+
+
+
+These three pillars form the structural skeleton of The Signal Company.
+
+All seven Domains and all four Engines grow from them.
+
+===== FILE: codex/canon/SIGNAL_COMPANY_DOMAIN_ADAPTERS.md =====
+SIGNAL\_COMPANY\_OS — DOMAIN ADAPTERS
+
+Canonical Architecture for Multi-Domain Extension
+
+
+
+Status: Canon (Descriptive)
+
+Authority: Signal Light Press (Kernel)
+
+Scope: Multi-domain extension without core modification
+
+Executive Power: None
+
+Last Alignment: 2026-01
+
+
+
+1\. Purpose and Necessity
+
+
+
+Signal\_Company\_OS is designed to operate across multiple real-world domains—human, industrial, ecological, logistical, financial—without fragmenting doctrine or introducing executive authority.
+
+
+
+===== FILE: codex/canon/SIGNAL_COMPANY_OS_CHARTER.md =====
+📜 SIGNAL\_COMPANY\_OS — CHARTER OF AUTHORITY \& LIMITATION
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Crown Jewel — Constitutional Application
+
+Status: Canonical (Active)
+
+Invariant: 3-4-7 Geometry
+
+Amendment Rule: Signal Light Press only
+
+
+
+Offline Sovereignty Clause
+
+Signal\_Company\_OS is designed to operate offline by default.
+
+All authoritative inputs originate from local, governed artifacts.
+
+No external telemetry, cloud dependency, or continuous connectivity is required for canonical operation.
+
+
+
+===== FILE: codex/canon/SIGNAL_COMPANY_OS_HSO.md =====
+SIGNAL\_COMPANY\_OS — HUMAN SIGNAL OBSERVATORY (HSO)
+
+Canonical Description
+
+
+
+Status: Canon (Descriptive)
+
+Authority: Signal Light Press (Kernel)
+
+Scope: Human-signal ingestion and interpretation only
+
+Executive Power: None
+
+Last Alignment: 2026-01
+
+
+
+1\. Purpose and Standing
+
+
+
+The Human Signal Observatory (HSO) is the first lawful domain expression of Signal\_Company\_OS.
+
+
+
+===== FILE: codex/canon/SIGNAL_COMPANY_OS_INGESTION.md =====
+CANON NOTE — RHYTHM\_OS → SIGNAL\_COMPANY\_OS INGESTION
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Canonical · Resident Architecture
+
+Status: COMPLETE · FROZEN
+
+Date: 2026-01-20
+
+
+
+I. STATEMENT OF FACT
+
+
+
+A sealed, read-only ingestion chain from RHYTHM\_OS into SIGNAL\_COMPANY\_OS has been successfully established and verified.
+
+
+
+This chain:
+
+
+
+===== FILE: codex/canon/SIGNAL_COMPANY_POSTURE_REPORT.md =====
+📜 SIGNAL COMPANY — POSTURE REPORT
+
+
+
+Canonical Report v1.0
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Protected Internal
+
+Status: Canonical — Descriptive Only
+
+Amendment Rule: Signal Light Press Only
+
+Invariant: 3-4-7 Geometry
+
+Mode: Assist Under Discipline
+
+
+
+PURPOSE
+
+
+
+===== FILE: codex/canon/SIGNAL_CONTINUITY_COVENANT.md =====
+THE CONTINUITY COVENANT
+
+(Constitutional Law of Change)
+
+Status: Ratified
+Scope: Binding across all pillars, engines, and domains
+Purpose: To constrain power, prevent self-poisoning, and preserve non-destructive continuity across discontinuous time
+
+PREAMBLE
+
+This covenant is not a vision statement, philosophy, or aspiration.
+
+It is law derived from failure analysis.
+
+It exists to prevent the system from destroying itself in pursuit of relevance, renewal, or vitality, while still allowing genuine transmission of meaning when reality has already produced a superior path.
+
+The system exists as a lineage, not a machine.
+
+GOVERNING LAW
+
+Preserve by default.
+
+Detect before destroying.
+
+When detection is impossible without exposure, allow provisional entanglement under strict constraint.
+
+===== FILE: codex/doctrine/DOCTRINAL_MIRROR_HEADER_STANDARD.md =====
+📜 DOCTRINAL MIRROR HEADER STANDARD
+
+
+
+Signal Light Press
+
+
+
+Classification: Canonical Doctrine
+
+Status: SEALED
+
+Authority: Signal Light Press
+
+Scope: Doctrinal Integrity
+
+Effective Date: 2026-01-15
+
+
+
+I. PURPOSE
+
+
+
+This document defines the mandatory header format for all doctrinal mirrors within The Signal Company.
+
+===== FILE: codex/doctrine/DOCTRINE_AUTHORITY_AND_MIRRORING_CANON.md =====
+📜 DOCTRINAL AUTHORITY AND MIRRORING CANON
+
+
+
+Signal Light Press
+
+
+
+Classification: Canonical Doctrine
+
+Status: SEALED
+
+Authority: Signal Light Press
+
+Scope: Company-wide
+
+Effective Date: 2026-01-15
+
+
+
+I. PURPOSE
+
+
+
+This canon establishes the sole authority for doctrine within The Signal Company and defines the lawful relationship between doctrine, memory, and enforcement systems.
+
+===== FILE: codex/doctrine/DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE.md =====
+\# DREAMING \& MEMORY MAINTENANCE DOCTRINE
+
+
+
+Authority: Signal Light Press (Kernel)  
+
+Classification: Protected Internal  
+
+Status: SEALED — CANONICAL  
+
+Applies To: Rhythm OS (All Instantiations)
+
+
+
+---
+
+
+
+\## I. PURPOSE
+
+
+
+Dreaming is a \*\*non-operational system posture\*\* used to preserve coherence, recover capacity, and prevent false intelligence.
+
+
+
+===== FILE: codex/doctrine/ORACLE_CONFIDENCE_AND_ABSENCE_DOCTRINE.md =====
+Doctrine Only · No Logic · No Authority
+
+
+
+This course formalizes what it means when Oracle speaks softly—or not at all.
+
+It prevents misinterpretation, overreach, and thrashing when signal quality degrades.
+
+
+
+1\. Purpose
+
+
+
+Oracle outputs can be:
+
+
+
+confident
+
+
+
+uncertain
+
+
+
+===== FILE: codex/doctrine/ORACLE_PHASE_DOCTRINE.md =====
+\# ORACLE — Phase Recognition Doctrine (Canonical)
+
+
+
+\## Role
+
+The Oracle is the phase-recognition faculty of Rhythm OS.
+
+
+
+It exists to name the mode of reality presently underway, given upstream
+
+signals and constraints.
+
+
+
+The Oracle answers one question only:
+
+
+
+“What phase are we in?”
+
+
+
+\## What Oracle Is
+
+===== FILE: codex/doctrine/SHEPHERD_POSTURE_DOCTRINE.md =====
+Permission, Posture, and Guarded Authority
+
+
+
+Doctrine First · No Tasks · No Execution
+
+
+
+Shepherd is the governor.
+
+It does not act.
+
+It decides whether anything may act at all—and defaults to silence.
+
+
+
+1\. Purpose (Why Shepherd Exists)
+
+
+
+Up to now we have:
+
+
+
+Truth (Core)
+
+===== FILE: codex/doctrine/SIGNAL_COMPANY_HUNTER_DOCTRINE.md =====
+📜 SIGNAL COMPANY — HUNTER DOCTRINE
+
+
+
+Version: v1.0
+
+Status: CANONICAL — SEALED
+
+Authority: Signal Light Press (Kernel)
+
+Applies To: Intelligence Pillar (Company Instantiation Only)
+
+Principle: Assist Under Discipline
+
+Nature: Non-Executable Doctrine
+
+Effective Date: 2026-01-16
+
+Amendment Rule: Signal Light Press only
+
+
+
+I. PURPOSE
+
+
+
+===== FILE: codex/doctrine/TRIADIC_INSTANTIATION_PROTOCOL_SHEPHERD.md =====
+\# TRIADIC INSTANTIATION PROTOCOL — SHEPHERD (CORPORATE vs PRIVATE)
+
+
+
+Authority: Signal Light Press (Kernel)  
+
+Classification: Protected Internal  
+
+Status: SEALED — BINDING  
+
+
+
+\## PURPOSE
+
+This protocol prevents contamination between corporate systems and private lineage systems.
+
+
+
+\## RULES (NON-NEGOTIABLE)
+
+1\. \*\*Company Shepherd\*\* governs company assets, provisioning, and operational capital only.
+
+2\. \*\*Private Lineage Shepherd\*\* governs personal/heirloom assets and produces personal guidance only.
+
+3\. \*\*No crossing is permitted\*\*:
+
+===== FILE: codex/doctrine_mirror/ARCHIVE_HANDLING_RULES.md =====
+\# ARCHIVE HANDLING RULES — SIGNAL LIGHT PRESS
+
+
+
+Status: CANONICAL  
+
+Authority: Signal Light Press  
+
+Scope: All archival material under Signal Light Press custody
+
+
+\## Purpose
+
+
+
+These rules govern how documents are stored, accessed, modified, and preserved within the archive.
+
+
+
+They exist to:
+
+\- prevent drift,
+
+\- preserve intent,
+
+
+===== FILE: codex/doctrine_mirror/ASSIST_UNDER_DISCIPLINE.md =====
+\# ASSIST UNDER DISCIPLINE (AUD) — CANONICAL DOCTRINE
+
+
+
+Assist Under Discipline (AUD) is the governing design law of Rhythm OS.
+
+
+
+The system exists to assist human judgment under constraint,
+
+not to replace it, accelerate it, or compel it.
+
+## LAYER AUTHORITY CLAUSE (BINDING)
+
+Rhythm OS governs **whether** action is permitted.  
+Applications explore **what** might be done.  
+Humans alone decide **if** action occurs.
+
+No application may override posture. No engine may bypass constraint.
+
+
+
+\## PERMITTED FUNCTIONS
+
+
+
+===== FILE: codex/doctrine_mirror/BOUNDARY_FIELD_DOCTRINE.md =====
+THE BOUNDARY FIELD DOCTRINE
+
+
+
+DOCTRINAL MIRROR NOTICE
+
+
+
+Source Authority:
+
+Signal Light Press
+
+
+
+Canonical Source:
+
+signal\_light\_press/doctrine/DOCTRINE\_OF\_SILENCE\_AND\_NON\_ACTION.md
+
+
+
+Mirror Location:
+
+rhythm\_os/sage/archive/doctrine/DOCTRINE\_OF\_SILENCE\_AND\_NON\_ACTION.md
+
+
+
+===== FILE: codex/doctrine_mirror/CANON_INDEX.md =====
+\# 📜 CANON\_INDEX
+
+
+
+Authority: Signal Light Press  
+
+Classification: Internal Canon Register  
+
+Binding Logic: None  
+
+Executable: No  
+
+Purpose: Enumerate canonical documents and interpretive references
+
+
+
+---
+
+
+
+\## I. DOCTRINAL CANON (BINDING IN MEANING)
+
+
+
+These documents define interpretive law and constraint.
+
+===== FILE: codex/doctrine_mirror/CANONICAL_FREEZE_PROTOCOL.md =====
+CANONICAL FREEZE PROTOCOL
+
+Authority: Signal Light Press
+
+Classification: Protected Internal
+
+Status: Canonical
+
+
+PURPOSE
+
+
+
+This protocol preserves historical honesty by recording what the system believed at a given time.
+
+
+
+Freezes prevent retroactive certainty.
+
+
+
+
+
+
+
+
+===== FILE: codex/doctrine_mirror/confidential_marking.md =====
+\# CONFIDENTIAL MARKINGS — SIGNAL LIGHT PRESS
+
+Version: 1.0.0
+
+Status: CANONICAL
+
+
+
+> \*\*Status:\*\* Non-Executable Doctrine  
+
+> \*\*Authority:\*\* Interpretive guidance only  
+
+> \*\*Enforcement:\*\* None (informational, not binding)
+
+
+
+Use these markings on all CLASS II materials.
+
+
+
+\## Short Marking (Header/Footer)
+
+
+
+CONFIDENTIAL — SIGNAL LIGHT PRESS
+
+===== FILE: codex/doctrine_mirror/copyright_footer.md =====
+
+
+> \*\*Status:\*\* Non-Executable Doctrine  
+
+> \*\*Authority:\*\* Interpretive guidance only  
+
+> \*\*Enforcement:\*\* None (informational, not binding)
+
+
+
+
+
+© 2025 Signal Light Press
+
+Authored by Kyle H. Hudson
+
+State of New Hampshire
+
+Business ID 1011389 · Filing No. 7347041
+
+All Rights Reserved.
+
+
+===== FILE: codex/doctrine_mirror/DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md =====
+DATA PROVENANCE \& TRUTH INTEGRITY DOCTRINE
+Authority: Signal Light Press
+Classification: Crown Jewel
+Status: Canonical
+
+
+
+PURPOSE
+
+This doctrine defines what Signal systems may treat as true, inferred, remembered, or unknown.
+
+Truth is graded.
+Certainty is bounded.
+
+
+
+1. CLASSES OF INFORMATION
+
+• Observed — directly measured
+• Derived — computed from observed data
+• Inferred — model-based estimation
+• Remembered — memory-weighted historical signal
+• Simulated — hypothetical or exploratory
+
+All outputs must respect their class.
+
+===== FILE: codex/doctrine_mirror/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md =====
+DOCTRINE OF SILENCE \& NON-ACTION
+
+Authority: Signal Light Press
+
+Classification: Crown Jewel
+
+Status: Canonical
+
+
+
+DOCTRINAL MIRROR NOTICE
+
+
+
+Source Authority:
+
+Signal Light Press
+
+
+
+Canonical Source:
+
+signal\_light\_press/doctrine/DOCTRINE\_OF\_SILENCE\_AND\_NON\_ACTION.md
+
+
+
+===== FILE: codex/doctrine_mirror/DOCUMENT_CLASSIFICATION.md =====
+# DOCUMENT CLASSIFICATION — SIGNAL LIGHT PRESS
+
+Status: CANONICAL  
+Authority: Signal Light Press  
+Scope: All documents, files, records, artifacts, and data products created or stored within the Signal Company ecosystem
+
+## Purpose
+
+This document defines the official classification system for all materials governed by Signal Light Press.
+
+Its purpose is to ensure:
+
+- lawful intellectual property protection  
+- long-term clarity and coherence  
+- auditability and historical integrity  
+- disciplined separation between meaning, method, record, and state  
+
+This classification is mandatory.  
+No document may exist outside these categories.
+
+---
+
+## CLASS I — CANON (PUBLISHED / COPYRIGHTED)
+
+### Definition
+
+===== FILE: codex/doctrine_mirror/DREAMING_GOVERNANCE_CANON.md =====
+SIGNAL SYSTEM — DREAMING GOVERNANCE CANON
+
+
+
+Authority: Signal Light Press
+
+Classification: Protected Internal
+
+Status: Canonical — Binding
+
+Executable: No
+
+
+
+I. DREAMING IS A POSTURE, NOT A PROCESS
+
+
+
+Dreaming is a non-operational system state in which:
+
+
+
+Action is suspended
+
+
+
+===== FILE: codex/doctrine_mirror/ENERGETIC_PERMISSION_DOCTRINE.md =====
+📜 ENERGETIC PERMISSION DOCTRINE
+
+DOCTRINAL MIRROR NOTICE
+
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Mirror Location:
+rhythm_os/sage/archive/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+This file may not be edited independently.
+All changes must originate from the Canonical Source.
+
+Enforcement Role:
+This mirror exists solely to support enforcement,
+interpretation limits, and runtime integrity.
+
+Violation Notice:
+
+===== FILE: codex/doctrine_mirror/ENGINE_WARDEN_INTERFACE_CANON.txt =====
+📜 ENGINE–WARDEN INTERFACE CANON
+
+Signal Light Press — Canonical Governance Document
+
+This document defines the lawful interfaces between the Engines (Oracle, Sage, Shepherd, Helmsman) and the Wardens (Sea, Hearth, Craft).
+It ensures that intelligence may inform industry without becoming industry, and that industry may execute without governing itself.
+
+DOCUMENT METADATA
+
+Authority: Signal Light Press
+
+Classification: CROWN JEWEL
+
+Domain: Doctrine / Architecture
+
+Status: Canonical
+
+Applies To: All Engines, All Wardens, All Domains
+
+Amendment Rule: Signal Light Press only
+
+I. GOVERNING PRINCIPLE
+
+Engines govern meaning and timing.
+Wardens govern execution and craft.
+
+===== FILE: codex/doctrine_mirror/EXPLORATION_AND_MARGINS_CANON.md =====
+EXPLORATION \& MARGINS — CANON (OBSERVATION-ONLY)
+
+Authority: Signal Light Press
+
+Classification: Protected Internal
+
+Status: Canonical — Binding
+
+Executable: No
+
+Definition
+
+Exploration is the structured, posture-gated noticing and description of marginal conditions at the edges of known envelopes — without compression, pursuit, prioritization, or any narrowing of recoverability.
+
+It is not pursuit.
+
+It is not prioritization.
+
+It is not strategy.
+
+It is not action.
+
+It is not opportunity compression or hardening.
+
+Exploration is ecotone stewardship in observational form: maintaining legibility of faint or emerging oscillations (coherence drift, novelty-at-edges, buffer proximity) where the Boundary Field may first register latent potential surfacing or dark-envelope curvature beginning to form — while refusing penetration into core structure or irreversible domains.
+
+===== FILE: codex/doctrine_mirror/FAILURE_MODES_AND_DEGRADATION_DOCTRINE.md =====
+FAILURE MODES \& DEGRADATION DOCTRINE
+
+Authority: Signal Light Press
+
+Classification: Crown Jewel
+
+Status: Canonical
+
+
+
+
+
+PURPOSE
+
+
+
+This doctrine defines how Signal systems are permitted to fail, degrade, pause, or withdraw without cascading into irreversible harm.
+
+
+
+Failure is not an error state.
+
+Failure is a managed phase transition.
+
+
+
+===== FILE: codex/doctrine_mirror/GHOST_FREEZE_PROTOCOL.md =====
+\# GHOST FREEZE PROTOCOL — v1.0
+
+
+
+Ghost and Memory modules are treated as “physics.”
+
+They may shape stability and damping but must never:
+
+\- initiate action
+
+\- escalate urgency
+
+\- override discipline
+
+\- become targets for optimization
+
+
+
+Frozen modules:
+
+\- rhythm\_os/core/memory/ghost.py
+
+\- rhythm\_os/core/memory/afterglow.py
+
+
+
+===== FILE: codex/doctrine_mirror/HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md =====
+HUMAN AUTHORITY \& RESPONSIBILITY DOCTRINE
+Authority: Signal Light Press
+Classification: Crown Jewel
+Status: Canonical
+
+
+
+DOCTRINAL MIRROR NOTICE
+
+
+
+Source Authority:
+
+Signal Light Press
+
+
+
+Canonical Source:
+
+signal\_light\_press/doctrine/DOCTRINE\_OF\_SILENCE\_AND\_NON\_ACTION.md
+
+
+
+Mirror Location:
+
+
+===== FILE: codex/doctrine_mirror/interpretation_limits.md =====
+\# INTERPRETATION LIMITS
+
+
+
+> \*\*Status:\*\* Non-Executable Doctrine  
+
+> \*\*Authority:\*\* Interpretive guidance only  
+
+> \*\*Enforcement:\*\* None (informational, not binding)
+
+
+
+
+
+SageOS operates under explicit limits to prevent overreach,
+
+false certainty, and narrative drift.
+
+
+
+SageOS refuses to conclude:
+
+
+
+\- That a single day constitutes a regime change
+
+===== FILE: codex/doctrine_mirror/ip_classification_doctrine.md =====
+\# IP CLASSIFICATION DOCTRINE — SIGNAL LIGHT PRESS
+
+Version: 1.0.0
+
+Status: CANONICAL
+
+Effective Date: 2025-12-19
+
+DOCTRINAL MIRROR NOTICE
+
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Mirror Location:
+rhythm_os/sage/archive/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+This file may not be edited independently.
+All changes must originate from the Canonical Source.
+
+===== FILE: codex/doctrine_mirror/IP_PROTECTION_STRATAGEM.md =====
+📜 IP\_PROTECTION\_STRATAGEM.md
+
+
+
+Signal Light Press — Canonical IP \& Trademark Strategy
+
+
+
+DOCUMENT METADATA
+
+
+
+Authority: Signal Light Press
+
+
+
+Classification: CROWN JEWEL
+
+
+
+Domain: Identity / IP / Governance
+
+
+
+Status: Canonical
+
+===== FILE: codex/doctrine_mirror/memory_ethics.md =====
+\# MEMORY ETHICS — SAGE OS
+
+
+
+> \*\*Status:\*\* Non-Executable Doctrine  
+
+> \*\*Authority:\*\* Interpretive guidance only  
+
+> \*\*Enforcement:\*\* None (informational, not binding)
+
+
+
+
+
+Memory within SageOS exists to preserve meaning,
+
+prevent narrative revisionism, and support long-term coherence.
+
+
+
+SageOS preserves:
+
+\- Oracle snapshots as received
+
+\- Named postures and their rationale
+
+===== FILE: codex/doctrine_mirror/oracle_doctrine.md =====
+\# ORACLE DOCTRINE — RHYTHM OS
+
+
+
+> \*\*Status:\*\* Non-Executable Doctrine  
+
+> \*\*Authority:\*\* Interpretive guidance only  
+
+> \*\*Enforcement:\*\* None (informational, not binding)
+
+DOCTRINAL MIRROR NOTICE
+
+Source Authority:
+Signal Light Press
+
+Canonical Source:
+signal_light_press/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Mirror Location:
+rhythm_os/sage/archive/doctrine/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+
+Status:
+READ-ONLY MIRROR
+
+Modification Rule:
+
+===== FILE: codex/doctrine_mirror/posture_canon.md =====
+\# POSTURE CANON — SIGNAL COMPANY
+
+Posture is a descriptive state of alignment between:
+
+\- World conditions (Oracle)
+
+\- Human capacity (annotations)
+
+\- Trust and stability (Ghost / Dark Field)
+
+
+
+Posture does not dictate action.
+
+It names the character of the moment.
+
+
+
+The canonical postures are finite and stable.
+
+
+
+---
+
+
+
+===== FILE: codex/doctrine_mirror/READERS_GUIDE.md =====
+📘 Reader’s Guide to the Signal System Canon
+
+
+
+Authority: Signal Light Press
+
+Classification: Canonical (Interpretive)
+
+Scope: Orientation \& Understanding
+
+Applies To: Humans only
+
+Enforcement: None
+
+Amendment Rule: Signal Light Press only
+
+
+
+I. PURPOSE OF THIS GUIDE
+
+
+
+This Reader’s Guide exists to answer a single question:
+
+
+
+===== FILE: codex/doctrine_mirror/RHYTHM_OS_OUTPUT_DOCTRINE.md =====
+📜 RHYTHM OS — SYSTEM OUTPUT \& SIGNAL DOCTRINE
+
+
+
+Signal Light Press — Canonical Interpretive Law
+
+
+
+Authority: Signal Light Press
+
+Classification: CROWN JEWEL
+
+Domain: System Doctrine / Interpretive Canon
+
+Status: Canonical (Active)
+
+Amendment Rule: Signal Light Press only
+
+Execution: Non-Executable
+
+Binding Power: Interpretive Only
+
+
+
+DOCTRINAL MIRROR NOTICE
+
+===== FILE: codex/doctrine_mirror/sage_role_doctrine.md =====
+\# SAGE ROLE DOCTRINE
+
+
+
+DOCTRINAL MIRROR NOTICE
+
+
+
+Source Authority:
+
+Signal Light Press
+
+
+
+Canonical Source:
+
+signal\_light\_press/doctrine/DOCTRINE\_OF\_SILENCE\_AND\_NON\_ACTION.md
+
+
+
+Mirror Location:
+
+rhythm\_os/sage/archive/doctrine/DOCTRINE\_OF\_SILENCE\_AND\_NON\_ACTION.md
+
+
+
+===== FILE: codex/doctrine_mirror/SAGE_ROLE_FREEZE_ADDENDUM.md =====
+\# SAGE ROLE FREEZE ADDENDUM — v1.0 (SEALED)
+
+
+
+Authority: Signal Light Press (Kernel)  
+
+Classification: Protected Internal  
+
+Applies To: Sage OS (Knowing)  
+
+Status: SEALED — CANONICAL  
+
+Effective: 2026-01-12  
+
+Amendment Authority: Signal Light Press ONLY  
+
+
+
+---
+
+
+
+\## I. PURPOSE
+
+
+
+===== FILE: codex/doctrine_mirror/SHEPHERD_AUTHORITY_REFERENCE.md =====
+This document references Shepherd authority definitions.
+
+
+
+Canonical authority for permissions, pacing, and resource control
+
+resides in:
+
+
+
+rhythm\_os/shepherd/doctrine/
+
+&nbsp;   SHEPHERD\_PERMISSIONS\_PACING\_AND\_RESOURCE\_AUTHORITY.md
+
+
+
+Sage may observe outcomes and posture,
+
+but may not redefine Shepherd authority.
+
+
+
+
+===== FILE: codex/doctrine_mirror/SYSTEM_BOUNDARIES.md =====
+📜 SYSTEM\_BOUNDARIES.md
+
+Signal Light Press — Canonical Boundary Doctrine
+
+DOCUMENT METADATA
+
+
+
+Authority: Signal Light Press
+
+Classification: CROWN JEWEL
+
+Domain: Doctrine / Governance
+
+Status: CANONICAL · ACTIVE
+
+Applies To: All Pillars, Engines, Wardens, Domains, and Resident OSes
+
+Amendment Rule: Signal Light Press only
+
+Effective Form: Post–RHYTHM\_OS Sealing (January 2026)
+
+
+
+I. GOVERNING PRINCIPLE
+
+===== FILE: seals/apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/brittleness.audit.md =====
+# FORMAL AUDIT DISPOSITION — antifragile/brittleness.py
+git commit -m "Add canonical audit disposition for antifragile brittleness descriptor# FORMAL AUDIT DISPOSITION — antifragile/brittleness.py
+
+Status: ⚠️ MOSTLY CANONICAL · ACCEPTABLE WITH REQUIRED LANGUAGE & FRAMING FIXES  
+Final Status After Etch: 🔒 CANONICAL  
+Class: Descriptive / normalization-only  
+Authority: None  
+Decision Power: Zero  
+Behavioral Changes: None required  
+Language Changes: Mandatory (as specified)
+
+---
+
+## Overall Posture
+
+The module is structurally lawful and aligned with the antifragile layer’s
+descriptive-only charter. No behavioral violations are present.
+All concerns are confined to semantics, naming, and framing — identical in
+pattern to `strain.py`.
+
+All issues are resolvable through wording changes alone.
+No logic, math, or structural alterations are required.
+
+---
+
+
+===== FILE: seals/apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/state.audit.md =====
+mkdir -p apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile
+nano apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/state.audit.md# FORMAL AUDIT DISPOSITION — antifragile/state.py
+
+Status: 🔒 CANONICAL AFTER STRUCTURAL REWRITE  
+Class: Descriptive / aggregation-only (normalization indices)  
+Authority: None  
+Decision Power: Zero  
+Behavioral Changes: Structural coherence required (no new math introduced)  
+Language Changes: Mandatory (descriptive-only framing)
+
+---
+
+## Summary
+
+`state.py` is the antifragile aggregation surface. It composes independently
+computed normalized descriptors into a single record and returns them
+without interpretation, gating, or action semantics.
+
+This file required structural correction (not merely wording) due to:
+- non-functional pasted fragments
+- execution at import time (code outside function)
+- multiple incompatible return shapes
+- undefined symbols
+
+The canonical form is a single pure function:
+
+===== FILE: seals/apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/strain.audit.md =====
+# FORMAL AUDIT DISPOSITION — antifragile/strain.py
+
+Status: 🔒 CANONICAL AFTER WORDING ETCH  
+Class: Descriptive / normalization-only  
+Authority: None  
+Decision Power: Zero  
+Behavioral Changes: None required  
+Language Changes: Mandatory (as specified)
+
+## Acceptance Notes
+
+The mathematical structure is lawful.
+
+All risks were semantic, not functional.
+
+Your proposed docstring rewrite and helper framing are sufficient and final.
+
+Once those wording changes are applied exactly as written, the file is sealed for long-term use.
+
+There are no remaining hidden authority leaks after the language corrections.
+
+## Canonical Record (For Archive)
+
+All antifragile descriptors must treat missing reference data as maximal normalized deviation, not as error, failure, or alarm.  
+Language implying governance, recovery, stress, or judgment is forbidden at this layer.  
+
+===== FILE: seals/ARCHITECTURE_FREEZE_2026-01-12.md =====
+\# ARCHITECTURE FREEZE — SIGNAL COMPANY (3-4-7)
+
+
+
+Authority: Signal Light Press (Kernel)  
+
+Classification: Canonical Seal  
+
+Effective Date: 2026-01-12  
+
+
+
+The Signal Company Canonical Architecture (3-4-7 Geometry) is hereby frozen.
+
+
+
+Document:
+
+SIGNAL\_COMPANY\_CANONICAL\_ARCHITECTURE\_3-4-7.md
+
+
+
+Rules:
+
+\- No amendments permitted without Signal Light Press authority
+
+===== FILE: seals/ARCHITECTURE_PLANES.md =====
+\# ARCHITECTURE PLANES — CANONICAL SEPARATION
+
+Authority: Signal Light Press  
+
+Classification: Protected Internal  
+
+Status: Canonical (Sealed)  
+
+Amendment Rule: Signal Light Press only  
+
+
+
+\## Purpose
+
+Define the irreducible structural separation of the Signal ecosystem so that:
+
+\- Law remains immutable and unattended
+
+\- Rhythm OS remains a pure observer / entrainment core
+
+\- Applications remain downstream-only consumers
+
+\- Auxiliary analysis remains optional and non-governing
+
+This separation prevents contamination, authority drift, and hidden control.
+
+===== FILE: seals/ARCHITECTURE_SEPERATION.md =====
+ARCHITECTURE SEPARATION
+
+Authority: Signal Light Press
+
+Status: CANONICAL — SEALED
+
+Date: 2026-01-17
+
+
+
+Rhythm OS core (kernel/) is unattended external rhythms only — immutable, independent, no human ledger.
+
+
+
+Antifragile engine is application-layer only (rhythm\_os/apps/signal\_company/antifragile/) — human-facing resilience, consumes published states, never writes upstream.
+
+
+
+Human ledger lives in app scope — rises as emergent signal, never steers foundation.
+
+
+
+All apps read published state only.
+
+
+
+===== FILE: seals/artifacts/test_doctrine_20260116.txt =====
+Hybrid Cycle Test - 2026-01-16
+Status: PASS - Full round-trip integrity (100% match on preserved fields)
+Original: test_doctrine_cycle.osc.json
+Exported: test_doctrine_cycle.txt
+Re-imported: test_doctrine_reimported.osc.json
+Notes: Timestamp differs (expected). All other fields identical.
+Tests confirm: oscillatory memory survives export/re-import without loss.
+
+
+Preserve by default. Detect before destroying. When detection is impossible without exposure, allow provisional entanglement under constraint. Destroy only in service of what has proven itself.
+===== FILE: seals/CANONICAL_ARCHIVE_FREEZE_SEAL_2026-01-16.md =====
+DOCUMENT
+
+
+
+Canonical Archive (Directory-Level)
+
+Location: C:\\Users\\SignalADmin\\Signal Archive\\SignalLogic\\archive
+
+Authority: Signal Light Press (Kernel)
+
+Seal Type: FREEZE SEAL
+
+
+
+DECLARATION
+
+
+
+This directory is hereby declared CANONICAL ARCHIVE (FROZEN).
+
+
+
+Its contents are preserved exactly as historical record and may not be altered in meaning, authority, or function.
+
+
+
+===== FILE: seals/COMPANY_HUNTER_DORMANCY_AND_ACTIVATION_CANON_ARCHIVE_FREEZE_SEAL_2026-01-16.md =====
+FREEZE SEAL
+
+
+
+Document: COMPANY\_HUNTER\_DORMANCY\_AND\_ACTIVATION\_CANON.md
+
+Location: signal\_light\_press/canonical\_archive/
+
+Authority: Signal Light Press (Kernel)
+
+Seal Type: FREEZE SEAL
+
+
+
+SCOPE
+
+
+
+The document’s text, structure, and intent are frozen.
+
+
+
+It may not be reinterpreted, modernized, reactivated, or cited as authority.
+
+
+
+===== FILE: seals/COMPANY_HUNTER_DORMANCY_SEAL_2026-01-12.md =====
+\# CANONICAL SEAL — COMPANY HUNTER DORMANCY \& ACTIVATION
+
+
+
+Authority: Signal Light Press (Kernel)  
+
+Classification: Canonical Seal  
+
+Effective Date: 2026-01-12  
+
+
+
+This seal affirms the canonical status of the document:
+
+
+
+COMPANY\_HUNTER\_DORMANCY\_AND\_ACTIVATION\_CANON.md
+
+
+
+Binding Effects:
+
+\- Company Hunter is dormant by default
+
+\- Activation requires explicit human authorization and surplus confirmation
+
+===== FILE: seals/HYBRID_CYCLE_TEST.md =====
+Hybrid Cycle Test - 2026-01-16
+
+Status: PASS - Full round-trip integrity (100% match on preserved fields)
+
+Original: test\_doctrine\_20260116.osc.json
+
+Exported: test\_doctrine\_20260116.txt
+
+Re-imported: test\_doctrine\_reimported.osc.json
+
+Notes: Timestamp differs (expected on re-import). All other fields identical.
+
+Tests confirm: oscillatory memory survives export/re-import without loss.
+
+
+===== FILE: seals/oracle/HAL_PY_SEAL_2026-01-21.md =====
+# SEAL — rhythm_os/domain/oracle/hal.py
+
+Date: 2026-01-21  
+Status: SEALED  
+Layer: HAL (Harmonic Alignment Law)
+
+## Scope
+Pure harmonic alignment measurement.
+
+## Guarantees
+- Geometry only
+- No thresholds
+- No bucketing
+- No authority
+- No decision power
+
+## Notes
+HAL outputs are consumable by Oracle only as descriptive inputs.
+No downstream interpretation is permitted at this layer.
+
+===== FILE: seals/oracle/ORACLE_ORACLE_PY_SEAL_2026-01-21.md =====
+# SEAL — rhythm_os/domain/oracle/oracle.py
+Date: 2026-01-21
+Status: SEALED
+Class: Oracle / Descriptive-only
+Authority: None
+Decision Power: Zero
+
+## Seal Basis
+- Canonical descriptor + convergence types imported (no local duplication).
+- Pattern classification fenced as vocabulary only (no posture, no authority).
+- Convergence summary fenced as density reporting only (no gating).
+- Adapter-facing surface explicitly ignores non-oracle inputs.
+
+## Notes
+- Thresholds are lexical partitions only.
+- Downstream interpretation remains outside Oracle.
+
+===== FILE: seals/ORACLE_CONFIDENCE_AND_ABSENCE_SEAL_2026-01-18.md =====
+Oracle Confidence \& Absence Doctrine sealed.
+
+Silence and low confidence are lawful states.
+
+No authority granted.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/ORACLE_CONSTRAINT_PHASE_INTERACTION_SEAL_2026-01-18.md =====
+Oracle × Constraint Interaction Doctrine sealed.
+
+Defines interpretive law only.
+
+No authority granted.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/ORACLE_PHASE_SCHEMA_SEAL_2026-01-18.md =====
+Oracle Phase Output Schema sealed.
+
+Schema defines shape only, no authority.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/ORACLE_PHASE_VOCABULARY_SEAL_2026-01-18.md =====
+Oracle Phase Vocabulary sealed.
+
+Names frozen for Rhythm OS v1.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/PERSONAL_HUNTER_CANON_SEAL_2026-01-12.md =====
+📜 PERSONAL HUNTER ENGINE — CANONICAL SCHEMA
+
+
+
+Authority: Private Lineage Shepherd (Non-Corporate)
+
+Classification: Private / Non-Corporate
+
+Status: Canonical — Binding
+
+Principle: Assist Under Discipline
+
+Philosophical Lineage: Dave Ramsey Conservatism / Forest–Pasture Law
+
+Connectivity: Offline Only
+
+
+
+I. PURPOSE OF THE PERSONAL HUNTER
+
+
+
+The Personal Hunter exists to:
+
+
+
+===== FILE: seals/PERSONAL_HUNTER_ENGINE_CANON_SEAL_2026-01-16.md =====
+SEAL
+
+
+
+Document: PERSONAL\_HUNTER\_ENGINE\_CANON.md
+
+Canonical Location: signal\_light\_press/canon/personal/PERSONAL\_HUNTER\_ENGINE\_CANON.md
+
+Authority: Signal Light Press (Kernel)
+
+Scope: Private / Non-Corporate
+
+Seal Type: GOVERNANCE SEAL
+
+Seal Type: FREEZE SEAL
+
+DECLARATION
+
+
+
+This document is hereby declared CANONICAL and BINDING for personal use.
+
+
+
+It establishes non-negotiable constraints governing personal capital exploration,
+
+===== FILE: seals/PERSONAL_HUNTER_OPPORTUNITY_ENVELOPE_SEAL_2026-01-12.md =====
+
+===== FILE: seals/POSTURE_OF_RESONANCE_SEAL_2026-01-16.md =====
+SEAL
+
+C:\\Users\\SignalADmin\\Signal Archive\\SignalLogic\\signal\_light\_press\\canon
+
+
+
+This clarification establishes the posture of resonance.
+
+All downstream components must conform.
+
+No silent amendments permitted.
+
+────────────────────────────────────────
+
+Authority: Signal Light Press
+
+Date: 2026-01-16
+
+Seal Type: CANONICAL SEAL
+
+
+===== FILE: seals/PROVISIONAL_ENTANGLEMENT_PROTOCOL_SEAL_2026-01-16.md =====
+SEAL
+
+
+
+The Provisional Entanglement Protocol is hereby declared Canonical.
+
+All prior drafts are superseded.
+
+No silent amendments are permitted.
+
+
+
+────────────────────────────────────────
+
+Authority: Signal Light Press
+
+Date: 2026-01-16
+
+Seal Type: GOVERNANCE SEAL
+
+
+===== FILE: seals/README.md =====
+# Signal Light Press — Seals
+
+This directory contains **sealed canonical documents** issued by Signal Light Press.
+
+## Canonical Seals
+Files at the root of this directory represent:
+- Frozen architectural statements
+- Doctrine confirmations
+- Authority acknowledgments
+- Historical boundary markers
+
+These documents are **canonical** and should not be modified except through
+explicit re-sealing events.
+
+## Artifacts / Drafts
+The `artifacts/` subdirectory contains:
+- Test documents
+- Experimental seal formats
+- Validation or rehearsal outputs
+
+These files are **non-canonical** and exist for reference, provenance, or audit
+purposes only.
+
+## Doctrine
+The kernel (Rhythm OS core) does **not** depend on these files.
+
+===== FILE: seals/RHYTHM_OS_COURSE_I_IIB_CANONICAL_SEAL_2026-01-18.md =====
+\# Rhythm OS — Course I \& Course II-B Canonical Seal
+
+
+
+Date: 2026-01-18  
+
+Authority: Signal Light Press  
+
+Status: SEALED — Additive Record
+
+
+
+\## Scope of This Seal
+
+
+
+This seal records the completion and locking of:
+
+
+
+• Course I — Rhythm OS Core (Immutable Substrate)  
+
+• Course II-A — Constraint Families  
+
+• Course II-B — Antifragile Signals  
+
+===== FILE: seals/SEAL_BOOK_SEAL_2026-01-16.md =====
+FREEZE SEAL
+
+Document: SEAL_BOOK.md
+Canonical Location: signal_light_press/canon/SEAL_BOOK.md
+Authority: Signal Light Press (Kernel)
+Seal Type: FREEZE SEAL
+
+
+
+
+DECLARATION
+
+This document is hereby declared CANONICAL (FROZEN).
+
+Its contents, meaning, authority, and internal structure are fixed as of the effective date below.
+
+
+SCOPE
+
+The following are frozen:
+
+• Text content
+• Section ordering
+• Terminology and definitions
+• Declared authorities
+
+===== FILE: seals/SHEPHERD_DECISION_ORDERING_SEAL_2026-01-18.md =====
+Shepherd Decision Ordering sealed.
+
+Defines dominance resolution law.
+
+No execution authority granted.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/SHEPHERD_POSTURE_DOCTRINE_SEAL_2026-01-18.md =====
+Shepherd Posture Doctrine sealed.
+
+Defines permission and silence governance.
+
+No task authority granted.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/SHEPHERD_POSTURE_SCHEMA_SEAL_2026-01-18.md =====
+Shepherd Posture Output Schema sealed.
+
+Defines shape only; no execution authority.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/SHEPHERD_POSTURE_SEMANTICS_SEAL_2026-01-18.md =====
+Shepherd Posture Semantics sealed.
+
+Defines SILENT, REFUSE, and ALLOW meanings.
+
+No execution authority granted.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/SHEPHERD_SILENT_VS_REFUSE_SEAL_2026-01-18.md =====
+Shepherd SILENT vs REFUSE doctrine sealed.
+
+Defines lawful withholding vs denial of authority.
+
+Date: 2026-01-18
+
+
+
+
+===== FILE: seals/SIGNAL_COMPAN_OS_INGESTION_SEAL.md =====
+SIGNAL COMPANY INGESTION SEAL
+
+
+
+RHYTHM\_OS → SIGNAL\_COMPANY\_OS
+
+
+
+Authority: Signal Light Press (Kernel)
+
+Classification: Canonical Seal · Resident Architecture
+
+Status: ACTIVE · FROZEN
+
+Date: 2026-01-20
+
+
+
+STATEMENT OF SEAL
+
+
+
+This seal attests that a lawful ingestion boundary between RHYTHM\_OS and SIGNAL\_COMPANY\_OS has been established, verified, and frozen.
+
+
+
+===== FILE: seals/SIGNAL_COMPANY_HUNTER_DOCTRINE_SEAL.md =====
+\## SEAL ENTRY — 2026-01-16
+
+
+
+Document: SIGNAL\_COMPANY\_HUNTER\_DOCTRINE.md  
+
+Seal Type: CANONICAL  
+
+Authority: Signal Light Press  
+
+Scope: Company-wide (Intelligence Pillar)  
+
+Status: Binding  
+
+Supersedes: All prior Hunter doctrine drafts  
+
+Amendment Rule: Signal Light Press only  
+
+
+
+Summary:
+
+Establishes the Hunter as a non-executive detection authority.
+
+Authorizes observation only.
+
+===== FILE: seals/SIGNAL_COMPANY_HUNTER_DOCTRINE_SEAL_2026-01-16.md =====
+
+===== FILE: seals/SIGNAL_COMPANY_OS_README_SEAL_2026-01-16.md =====
+SEAL C:\\Users\\SignalADmin\\Signal Archive\\SignalLogic\\rhythm\_os\\apps\\signal\_company/README.md
+
+
+
+This README establishes the constitutional intent of Signal Company OS.
+
+All files, schemas, contracts, and behaviors must conform.
+
+If any implementation conflicts, this README prevails.
+
+Authority: Signal Light Press
+
+Date: 2026-01-16
+
+Seal Type: CANONICAL SEAL
+
+
+===== FILE: seals/SLP-SEAL-IP-2026-01-12.md =====
+🔒 SIGNAL LIGHT PRESS — SEAL RECORD
+
+MASTER IP INDEX UPDATE
+
+
+
+Seal ID: SLP-SEAL-IP-2026-01-12
+
+Document: Master IP Index
+
+Previous Version: v1.1
+
+Sealed Version: v1.2 FINAL
+
+
+
+Authority: Signal Light Press
+
+Classification: Crown Jewel
+
+Seal Type: Canonical Alignment Seal
+
+
+
+SCOPE OF SEAL
+
+===== FILE: seals/SYSTEM_BOUNDARIES_SEAL_20-01-26.md =====
+SEAL C:\\Users\\SignalADmin\\Signal Archive\\SignalLogic\\apps\\signal\_company\_os\\sage\\archive\\doctrine\_mirror/SYSTEM\_BOUNDARIES.md
+
+
+
+This README establishes the constitutional intent of Signal Company OS.
+
+All files, schemas, contracts, and behaviors must conform.
+
+If any implementation conflicts, this README prevails.
+
+Authority: Signal Light Press
+
+Date: 2026-01-16
+
+Seal Type: CANONICAL SEAL
+
+
+
+
+===== FILE: seals/wizard/HI_WIZARD_AI_STACK_REVIEW_2026-01.md =====
+# REVIEW — HI–WIZARD–AI Oscillatory Stack
+
+Date: 2026-01  
+Result: CONFIRMED (no changes required)
+
+The HI–WIZARD–AI canon was reviewed for:
+- Encoding integrity
+- Doctrinal alignment
+- Boundary correctness
+
+No changes were necessary.
+
+— Signal Light Press
+
+— END OF DOCUMENT —
+SEAL: ac6c5bd23650ab779eab4961464e7c82d302b8172ff03b5487996b9fff104200

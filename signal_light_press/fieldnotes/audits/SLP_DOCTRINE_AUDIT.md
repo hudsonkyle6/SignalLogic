@@ -1,0 +1,309 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+# Signal Light Press — Doctrine Audit
+
+- Governable files: **488**
+- Missing headers: **76**
+- Archive files: **184**
+- Duplicate sets: **35**
+- Broken links: **0**
+
+## Missing Header Keys
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\contracts\oracle_to_shepherd_contract.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\contracts\shepherd_condition_vocabulary.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\contracts\shepherd_input_contract.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\contracts\shepherd_to_sage_constraint_contract.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\BOUNDARY_FIELD_INTEGRATION.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\FAILURE_MODES_AND_DEGRADATION.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\HUMAN+AUTHORITY_ADDENDUM.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\SHEPHERD_ACTIVATION_CRITERIA.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\SHEPHERD_PERMISSIONS_PACING_AND_RESOURCE_AUTHORITY.md  missing=['Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\SHEPHERD_POSTURE_CANON.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\SHEPHERD_ROLE_DOCTRINE.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\doctrine\SHEPHERD_SCOPE_AND_LIMITS.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\ledger\shepherd_ledger.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\manifests\dormant_manifest.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\README.MD  missing=['Authority', 'Classification', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\runtime\dreaming_governance.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\runtime\helmsman_emergence_law.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\runtime\runtime_guardrails.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\runtime\shepherd_posture_snapshot.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\schemas\shepherd_condition_report.schema.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\state\oracle_to_shepherd_contract.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\state\shepherd_input_contract.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\state\shepherd_posture_snapshot.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\state\shepherd_state.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\apps_signal_company_os_shepherd\state\shepherd_to_sage_constraint_contract.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\rhythm_os_domain_shepherd\posture_schema.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_AUTHORITY_REFERENCE.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_DECISION_ORDERING.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_DECISION_ORDERING_SEAL_2026-01-18.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_POSTURE_DOCTRINE_SEAL_2026-01-18.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_POSTURE_SCHEMA_SEAL_2026-01-18.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_POSTURE_SEMANTICS.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_POSTURE_SEMANTICS_SEAL_2026-01-18.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_SILENT_VS_REFUSE.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\canon\shepherd_excision_2026-01-28\signal_light_press_references\SHEPHERD_SILENT_VS_REFUSE_SEAL_2026-01-18.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\DATA_AUTHORITY.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\LEGACY_DATA_MAP.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\LEGACY_FROZEN.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\signal_company\posture\posture_report_2026-01-13.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\signal_company\posture\posture_report_2026-01-14.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\signal_company\posture\posture_report_2026-01-15.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\signal_company\posture\posture_report_2026-01-16.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\data_legacy\signal_observations_2025_2026\signal_company\posture\posture_report_2026-01-17.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\depracated_environment\coupling\README.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\extraction\signal_company_os_2026-01-29\refs_signal_company_os.txt  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\extraction\signal_company_os_2026-01-29\tree_signal_company_os.txt  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\adapters\rhythm_ingest\README.md  missing=['Classification', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\oracle\contracts\control.yaml  missing=['Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\oracle\contracts\governance.yaml  missing=['Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\oracle\contracts\logging.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\oracle\contracts\oracle_contract_v1.1.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\oracle\contracts\sage_reservation.yaml  missing=['Authority', 'Classification', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\oracle\contracts\stability.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\index\manifests\freeze_2025-12-20.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\index\manifests\freeze_2026-01-12.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\index\manifests\freeze_2026-01-13.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\index\manifests\ghost_freeze_v1.0.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\index\manifests\ghost_freeze_v1.0_headers.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\laws\operator_law.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\laws\rhythm_law.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\laws\sage_law.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\laws\seasonal_law.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\annual_arc.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\backlog.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\daily_intent.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\README.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\seasonal_arc.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\weekly_intent.yaml  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\oracle_link\README.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\oracle_link\schema_version.txt  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\processes\README.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\rhythms\harmony_notes.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\rhythms\README.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\shepherd_link\README.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\state\README.md  missing=['Domain', 'Applies To', 'Amendment Rule', 'Executable']
+- signal_light_press\archive\legacy\apps\signal_company_os\sage\state\TTL.md  missing=['Authority', 'Classification', 'Status', 'Domain', 'Applies To', 'Amendment Rule', 'Executable']
+
+## Duplicate Content (SHA-256 match)
+- sha=35226858b756d0e4…
+  - signal_light_press\_quarantine\2026-01-26\_HOUSEKEEPING_TREE_BEFORE.txt
+  - signal_light_press\_quarantine\2026-01-26\AUDIT_HEADERS_REPORT.md
+  - signal_light_press\AUDIT_HEADERS_REPORT.md
+  - signal_light_press\seals\ARCHAEOLOGY_AND_PATTERN_EXCAVATION_DOCTRINE_SEAL_2026-01-XX.md
+  - signal_light_press\seals\PERSONAL_HUNTER_OPPORTUNITY_ENVELOPE_SEAL_2026-01-12.md
+  - signal_light_press\seals\SIGNAL_COMPANY_CANONICAL_ARCHITECTURE_CORE_AND_CRAFT_SEAL_2026-01-29.md
+  - signal_light_press\seals\SIGNAL_COMPANY_HUNTER_DOCTRINE_SEAL_2026-01-16.md
+  - signal_light_press\VERIFY.md
+- sha=57192cff5b1ac5fa…
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T040708Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T041000Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042311Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042312Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042313Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042314Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042315Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042552Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042553Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042554Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042555Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042556Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042604Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042605Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042606Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042607Z\BOUNDARY_FIELD_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042608Z\BOUNDARY_FIELD_DOCTRINE.md
+- sha=efc319350f90e9e4…
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T040708Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T041000Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042311Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042312Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042313Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042314Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042315Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042552Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042553Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042554Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042555Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042556Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042604Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042605Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042606Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042607Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042608Z\DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+- sha=68f11d81cc88cf43…
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T040708Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T041000Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042311Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042312Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042313Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042314Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042315Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042552Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042553Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042554Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042555Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042556Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042604Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042605Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042606Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042607Z\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042608Z\ENERGETIC_PERMISSION_DOCTRINE.md
+- sha=51264f8f35cae08d…
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T040708Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T041000Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042311Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042312Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042313Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042314Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042315Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042552Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042553Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042554Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042555Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042556Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042604Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042605Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042606Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042607Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042608Z\HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+- sha=69468eb2b23913ac…
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T040708Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T041000Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042311Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042312Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042313Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042314Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042315Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042552Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042553Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042554Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042555Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042556Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042604Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042605Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042606Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042607Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+  - signal_light_press\_quarantine\2026-01-26\_mirror_backups\doctrine_mirror_backup_20260122T042608Z\RHYTHM_OS_OUTPUT_DOCTRINE.md
+- sha=e3b0c44298fc1c14…
+  - signal_light_press\archive\extraction\signal_company_os_2026-01-29\refs_signal_company_os.txt
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\laws\operator_law.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\laws\sage_law.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\annual_arc.yaml
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\backlog.yaml
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\daily_intent.yaml
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\seasonal_arc.yaml
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\ledger\weekly_intent.yaml
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\oracle_link\schema_version.txt
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\rhythms\harmony_notes.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\shepherd_link\README.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\sage\state\TTL.md
+- sha=9405898996f31adb…
+  - signal_light_press\archive\legacy\apps\signal_company_os\antifragile\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\ari\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\artifacts\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\observe\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\oracle\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\resonance\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\snapshots\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\storage\ARCHIVED.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\tools\simulations\ARCHIVED.md
+- sha=18e7bd1378ebe8ce…
+  - signal_light_press\archive\legacy\apps\signal_company_os\AUTHORITY.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\README.md
+  - signal_light_press\archive\legacy\apps\signal_company_os\resonance\README.md
+  - signal_light_press\archive\resources\notes\daily_recap\nov25.txt
+  - signal_light_press\archive\shepherd_retired_2026-01-27\ARCHIVE_FROZEN.md
+- sha=e95458c8a98b597e…
+  - signal_light_press\archive\resources\migrations\sage_archive_pre_signal_light_press_20260120_165725\doctrine_mirror\posture_canon.md
+  - signal_light_press\archive\shepherd_retired_2026-01-27\doctrine\posture_canon.md
+- sha=eced4798eceea843…
+  - signal_light_press\archive\resources\migrations\sage_archive_pre_signal_light_press_20260120_165725\doctrine_mirror\SHEPHERD_AUTHORITY_REFERENCE.md
+  - signal_light_press\archive\shepherd_retired_2026-01-27\doctrine\SHEPHERD_AUTHORITY_REFERENCE.md
+- sha=b3e286bf9f5dafc4…
+  - signal_light_press\codex\canon\HUMAN_GATE_INTERFACE_CANON.md
+  - signal_light_press\codex\canon\SIGNAL_COMPANY_CORE_OPERATIONS_CANON.md
+- sha=32332618c3bc6bae…
+  - signal_light_press\codex\doctrine\ARCHAEOLOGY_AND_PATTERN_EXCAVATION_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\ARCHAEOLOGY_AND_PATTERN_EXCAVATION_DOCTRINE.md
+- sha=985e170759c12700…
+  - signal_light_press\codex\doctrine\ASSIST_UNDER_DISCIPLINE.md
+  - signal_light_press\codex\doctrine_mirror\ASSIST_UNDER_DISCIPLINE.md
+- sha=50dae5ff6d207468…
+  - signal_light_press\codex\doctrine\CANON_INDEX.md
+  - signal_light_press\codex\doctrine_mirror\CANON_INDEX.md
+- sha=f77d2878da80cf09…
+  - signal_light_press\codex\doctrine\CONTRACTS_AND_PERMISSIONED_EXECUTION_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\CONTRACTS_AND_PERMISSIONED_EXECUTION_DOCTRINE.md
+- sha=cac3f50ea6433a06…
+  - signal_light_press\codex\doctrine\DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md
+  - signal_light_press\codex\doctrine_mirror\DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md
+- sha=cdd9369c373a249e…
+  - signal_light_press\codex\doctrine\DOCTRINAL_MIRROR_HEADER_STANDARD.md
+  - signal_light_press\codex\doctrine_mirror\DOCTRINAL_MIRROR_HEADER_STANDARD.md
+- sha=31e872d327ae619d…
+  - signal_light_press\codex\doctrine\DOCTRINE_AUTHORITY_AND_MIRRORING_CANON.md
+  - signal_light_press\codex\doctrine_mirror\DOCTRINE_AUTHORITY_AND_MIRRORING_CANON.md
+- sha=ec084843b6f44596…
+  - signal_light_press\codex\doctrine\DOCUMENT_CLASSIFICATION.md
+  - signal_light_press\codex\doctrine_mirror\DOCUMENT_CLASSIFICATION.md
+- sha=d984194e1486d50e…
+  - signal_light_press\codex\doctrine\DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE.md
+- sha=e2364ee51d7233a1…
+  - signal_light_press\codex\doctrine\ENERGETIC_PERMISSION_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\ENERGETIC_PERMISSION_DOCTRINE.md
+- sha=879110c764daa26e…
+  - signal_light_press\codex\doctrine\EXPLORATION_AND_MARGINS_CANON.md
+  - signal_light_press\codex\doctrine_mirror\EXPLORATION_AND_MARGINS_CANON.md
+- sha=b78b63e5cc63c553…
+  - signal_light_press\codex\doctrine\FAILURE_MODES_AND_DEGRADATION_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\FAILURE_MODES_AND_DEGRADATION_DOCTRINE.md
+- sha=48c63b9a9a6c92d1…
+  - signal_light_press\codex\doctrine\GHOST_FREEZE_PROTOCOL.md
+  - signal_light_press\codex\doctrine_mirror\GHOST_FREEZE_PROTOCOL.md
+- sha=9feb1a56baffd54b…
+  - signal_light_press\codex\doctrine\ip_classification_doctrine.md
+  - signal_light_press\codex\doctrine_mirror\ip_classification_doctrine.md
+- sha=3aba10b7315d3806…
+  - signal_light_press\codex\doctrine\ORACLE_CONFIDENCE_AND_ABSENCE_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\ORACLE_CONFIDENCE_AND_ABSENCE_DOCTRINE.md
+- sha=b1bad23820eab48b…
+  - signal_light_press\codex\doctrine\oracle_doctrine.md
+  - signal_light_press\codex\doctrine_mirror\oracle_doctrine.md
+- sha=d2b9b6fb7c399adb…
+  - signal_light_press\codex\doctrine\ORACLE_PHASE_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\ORACLE_PHASE_DOCTRINE.md
+- sha=333e117fa7179d67…
+  - signal_light_press\codex\doctrine\REQUIRED_LOCAL_GOVERNANCE_ENFORCEMENT.md
+  - signal_light_press\codex\doctrine_mirror\REQUIRED_LOCAL_GOVERNANCE_ENFORCEMENT.md
+- sha=b25f90791ac69805…
+  - signal_light_press\codex\doctrine\sage_role_doctrine.md
+  - signal_light_press\codex\doctrine_mirror\sage_role_doctrine.md
+- sha=b8c1fe0bb12493eb…
+  - signal_light_press\codex\doctrine\SIGNAL_COMPANY_HUNTER_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\SIGNAL_COMPANY_HUNTER_DOCTRINE.md
+- sha=9b5e3c9e5f787f10…
+  - signal_light_press\codex\doctrine\SYSTEM_BOUNDARIES.md
+  - signal_light_press\codex\doctrine_mirror\SYSTEM_BOUNDARIES.md
+- sha=ae3c696a19a45404…
+  - signal_light_press\codex\doctrine\SYSTEM_POSTURE_AND_SINGLE_LOOP_DOCTRINE.md
+  - signal_light_press\codex\doctrine_mirror\SYSTEM_POSTURE_AND_SINGLE_LOOP_DOCTRINE.md
+- sha=fef0b45b530da75c…
+  - signal_light_press\seals\SIGNAL_COMPANY_OS_README_SEAL_2026-01-16.md
+  - signal_light_press\seals\SYSTEM_BOUNDARIES_SEAL_20-01-26.md
+— END OF DOCUMENT —
+SEAL: 9eab135206dad8842395a309a81221c150789d647751e752a99cb6864f50aa0a

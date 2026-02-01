@@ -1,0 +1,80 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+codex/doctrine/ASSIST_UNDER_DISCIPLINE.md
+codex/doctrine/DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md
+codex/doctrine/DOCTRINAL_MIRROR_HEADER_STANDARD.md
+codex/doctrine/DOCTRINE_AUTHORITY_AND_MIRRORING_CANON.md
+codex/doctrine/DOCUMENT_CLASSIFICATION.md
+codex/doctrine/DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE.md
+codex/doctrine/EXPLORATION_AND_MARGINS_CANON.md
+codex/doctrine/FAILURE_MODES_AND_DEGRADATION_DOCTRINE.md
+codex/doctrine/GHOST_FREEZE_PROTOCOL.md
+codex/doctrine/ip_classification_doctrine.md
+codex/doctrine/ORACLE_CONFIDENCE_AND_ABSENCE_DOCTRINE.md
+codex/doctrine/oracle_doctrine.md
+codex/doctrine/ORACLE_PHASE_DOCTRINE.md
+codex/doctrine/sage_role_doctrine.md
+codex/doctrine/SAGE_ROLE_FREEZE_ADDENDUM.md
+codex/doctrine/SHEPHERD_POSTURE_DOCTRINE.md
+codex/doctrine/SIGNAL_COMPANY_HUNTER_DOCTRINE.md
+codex/doctrine/SYSTEM_BOUNDARIES.md
+codex/doctrine/TRIADIC_INSTANTIATION_PROTOCOL_SHEPHERD.md
+codex/canon/DREAMING_GOVERNANCE_CANON.md
+codex/canon/ENGINE_WARDEN_INTERFACE_CANON.txt
+codex/canon/FAILURE_TAXONOMY.md
+codex/canon/HI_WIZARD_AI_OSCILLATORY_STACK.md
+codex/canon/MASTER_IP_INDEX.md
+codex/canon/ORACLE_CONSTRAINT_PHASE_INTERACTION.md
+codex/canon/ORACLE_PHASE_VOCABULARY.md
+codex/canon/personal/PERSONAL_HUNTER_ENGINE_CANON.md
+codex/canon/personal/PERSONAL_HUNTER_OPPORTUNITY_ENVELOPE.md
+codex/canon/POSTURE_OF_RESONANCE_CLARIFICATION.md
+codex/canon/PROVISIONAL_ENTANGLEMENT_PROTOCOL.md
+codex/canon/RHYTHM_OS_SYSTEM_CARTOGRAPHY.md
+codex/canon/SEAL_BOOK.md
+codex/canon/SHEPHERD_DECISION_ORDERING.md
+codex/canon/SHEPHERD_POSTURE_SEMANTICS.md
+codex/canon/SHEPHERD_SILENT_VS_REFUSE.md
+codex/canon/SIGNAL_COMPANY_CANONICAL_ARCHITECTURE_3-4-7.md
+codex/canon/SIGNAL_COMPANY_DOMAIN_ADAPTERS.md
+codex/canon/SIGNAL_COMPANY_OS_CHARTER.md
+codex/canon/SIGNAL_COMPANY_OS_HSO.md
+codex/canon/SIGNAL_COMPANY_OS_INGESTION.md
+codex/canon/SIGNAL_COMPANY_POSTURE_REPORT.md
+codex/canon/SIGNAL_CONTINUITY_COVENANT.md
+
+— END OF DOCUMENT —
+SEAL: a938b34647228112e27d9bdb6db0e6048f42e2365020180736db2a795506c155

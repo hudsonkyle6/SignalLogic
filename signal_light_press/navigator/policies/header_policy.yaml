@@ -1,3 +1,38 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 authoritative_roots:
   - signal_light_press/codex
   - signal_light_press/editions
@@ -81,3 +116,6 @@ seal_allowed_classes:
 
 header_contract_path: "signal_light_press/HEADER_CONTRACT.md"
 crypto_private_key_path: "signal_light_press/private.pem"  # Add your key path
+
+— END OF DOCUMENT —
+SEAL: 61108e6f407dd7a558e692ba7f441b2db7ce3f48187e5f7a2a57919029242d36

@@ -1,11 +1,14 @@
 """
-Canonical alias surface for Rhythm OS foundations.
+Canonical runtime import surface for Rhythm OS foundations.
 
-RULE:
-- Do NOT import from rhythm_os.3_foundations directly in runtime code.
-- Import from rhythm_os.foundations (this module) instead.
-
-This module will re-export canonical foundation primitives over time.
+RULES:
+- Runtime code imports from here
+- No authority semantics live here
+- Foundations expose only minimal invariants
 """
 
-# Intentionally empty until we migrate primitives.
+from rhythm_os.foundations_runtime.execution_gate import ExecutionGateDecision
+
+__all__ = [
+    "ExecutionGateDecision",
+]

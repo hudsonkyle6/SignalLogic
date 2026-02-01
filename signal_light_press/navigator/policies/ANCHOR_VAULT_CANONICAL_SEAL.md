@@ -1,12 +1,38 @@
 Authority: Signal Light Press
-Classification: SEAL
-Status: ACTIVE
-Domain: Governance
-Applies To: Signal Light Press — Anchor Vault
-Effective Date: 2026-01-28
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
-
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Anchor Vault Canonical Seal
 
 ## I. Purpose
@@ -78,3 +104,6 @@ If a sealed document does not speak to a condition,
 it is silent by design.
 
 Silence must not be interpreted as permission.
+
+— END OF DOCUMENT —
+SEAL: 31a4c2cbb3f48ac92f633521dbb9d7b51919ed41af55945bfb9e56450c762f93

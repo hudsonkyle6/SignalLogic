@@ -1,0 +1,133 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+codex/canon/FAILURE_TAXONOMY.md
+codex/canon/HI_WIZARD_AI_OSCILLATORY_STACK.md
+codex/canon/MASTER_IP_INDEX.md
+codex/canon/ORACLE_CONSTRAINT_PHASE_INTERACTION.md
+codex/canon/ORACLE_PHASE_VOCABULARY.md
+codex/canon/personal/PERSONAL_HUNTER_ENGINE_CANON.md
+codex/canon/personal/PERSONAL_HUNTER_OPPORTUNITY_ENVELOPE.md
+codex/canon/POSTURE_OF_RESONANCE_CLARIFICATION.md
+codex/canon/PROVISIONAL_ENTANGLEMENT_PROTOCOL.md
+codex/canon/RHYTHM_OS_SYSTEM_CARTOGRAPHY.md
+codex/canon/SEAL_BOOK.md
+codex/canon/SHEPHERD_DECISION_ORDERING.md
+codex/canon/SHEPHERD_POSTURE_SEMANTICS.md
+codex/canon/SHEPHERD_SILENT_VS_REFUSE.md
+codex/canon/SIGNAL_COMPANY_CANONICAL_ARCHITECTURE_3-4-7.md
+codex/canon/SIGNAL_COMPANY_DOMAIN_ADAPTERS.md
+codex/canon/SIGNAL_COMPANY_OS_CHARTER.md
+codex/canon/SIGNAL_COMPANY_OS_HSO.md
+codex/canon/SIGNAL_COMPANY_OS_INGESTION.md
+codex/canon/SIGNAL_COMPANY_POSTURE_REPORT.md
+codex/canon/SIGNAL_CONTINUITY_COVENANT.md
+codex/doctrine/DOCTRINAL_MIRROR_HEADER_STANDARD.md
+codex/doctrine/DOCTRINE_AUTHORITY_AND_MIRRORING_CANON.md
+codex/doctrine/DREAMING_AND_MEMORY_MAINTENANCE_DOCTRINE.md
+codex/doctrine/ORACLE_CONFIDENCE_AND_ABSENCE_DOCTRINE.md
+codex/doctrine/ORACLE_PHASE_DOCTRINE.md
+codex/doctrine/SHEPHERD_POSTURE_DOCTRINE.md
+codex/doctrine/SIGNAL_COMPANY_HUNTER_DOCTRINE.md
+codex/doctrine/TRIADIC_INSTANTIATION_PROTOCOL_SHEPHERD.md
+codex/doctrine_mirror/ARCHIVE_HANDLING_RULES.md
+codex/doctrine_mirror/ASSIST_UNDER_DISCIPLINE.md
+codex/doctrine_mirror/BOUNDARY_FIELD_DOCTRINE.md
+codex/doctrine_mirror/CANON_INDEX.md
+codex/doctrine_mirror/CANONICAL_FREEZE_PROTOCOL.md
+codex/doctrine_mirror/confidential_marking.md
+codex/doctrine_mirror/copyright_footer.md
+codex/doctrine_mirror/DATA_PROVENANCE_AND_TRUTH_INTEGRITY.md
+codex/doctrine_mirror/DOCTRINE_OF_SILENCE_AND_NON_ACTION.md
+codex/doctrine_mirror/DOCUMENT_CLASSIFICATION.md
+codex/doctrine_mirror/DREAMING_GOVERNANCE_CANON.md
+codex/doctrine_mirror/ENERGETIC_PERMISSION_DOCTRINE.md
+codex/doctrine_mirror/ENGINE_WARDEN_INTERFACE_CANON.txt
+codex/doctrine_mirror/EXPLORATION_AND_MARGINS_CANON.md
+codex/doctrine_mirror/FAILURE_MODES_AND_DEGRADATION_DOCTRINE.md
+codex/doctrine_mirror/GHOST_FREEZE_PROTOCOL.md
+codex/doctrine_mirror/HUMAN_AUTHORITY_AND_RESPONSIBILITY_DOCTRINE.md
+codex/doctrine_mirror/interpretation_limits.md
+codex/doctrine_mirror/ip_classification_doctrine.md
+codex/doctrine_mirror/IP_PROTECTION_STRATAGEM.md
+codex/doctrine_mirror/memory_ethics.md
+codex/doctrine_mirror/oracle_doctrine.md
+codex/doctrine_mirror/posture_canon.md
+codex/doctrine_mirror/READERS_GUIDE.md
+codex/doctrine_mirror/RHYTHM_OS_OUTPUT_DOCTRINE.md
+codex/doctrine_mirror/sage_role_doctrine.md
+codex/doctrine_mirror/SAGE_ROLE_FREEZE_ADDENDUM.md
+codex/doctrine_mirror/SHEPHERD_AUTHORITY_REFERENCE.md
+codex/doctrine_mirror/SYSTEM_BOUNDARIES.md
+seals/apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/brittleness.audit.md
+seals/apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/state.audit.md
+seals/apps/signal_company_os/signal_light_press/fieldnotes/audits/antifragile/strain.audit.md
+seals/ARCHITECTURE_FREEZE_2026-01-12.md
+seals/ARCHITECTURE_PLANES.md
+seals/ARCHITECTURE_SEPERATION.md
+seals/artifacts/test_doctrine_20260116.txt
+seals/CANONICAL_ARCHIVE_FREEZE_SEAL_2026-01-16.md
+seals/COMPANY_HUNTER_DORMANCY_AND_ACTIVATION_CANON_ARCHIVE_FREEZE_SEAL_2026-01-16.md
+seals/COMPANY_HUNTER_DORMANCY_SEAL_2026-01-12.md
+seals/HYBRID_CYCLE_TEST.md
+seals/oracle/HAL_PY_SEAL_2026-01-21.md
+seals/oracle/ORACLE_ORACLE_PY_SEAL_2026-01-21.md
+seals/ORACLE_CONFIDENCE_AND_ABSENCE_SEAL_2026-01-18.md
+seals/ORACLE_CONSTRAINT_PHASE_INTERACTION_SEAL_2026-01-18.md
+seals/ORACLE_PHASE_SCHEMA_SEAL_2026-01-18.md
+seals/ORACLE_PHASE_VOCABULARY_SEAL_2026-01-18.md
+seals/PERSONAL_HUNTER_CANON_SEAL_2026-01-12.md
+seals/PERSONAL_HUNTER_ENGINE_CANON_SEAL_2026-01-16.md
+seals/PERSONAL_HUNTER_OPPORTUNITY_ENVELOPE_SEAL_2026-01-12.md
+seals/POSTURE_OF_RESONANCE_SEAL_2026-01-16.md
+seals/PROVISIONAL_ENTANGLEMENT_PROTOCOL_SEAL_2026-01-16.md
+seals/README.md
+seals/RHYTHM_OS_COURSE_I_IIB_CANONICAL_SEAL_2026-01-18.md
+seals/SEAL_BOOK_SEAL_2026-01-16.md
+seals/SHEPHERD_DECISION_ORDERING_SEAL_2026-01-18.md
+seals/SHEPHERD_POSTURE_DOCTRINE_SEAL_2026-01-18.md
+seals/SHEPHERD_POSTURE_SCHEMA_SEAL_2026-01-18.md
+seals/SHEPHERD_POSTURE_SEMANTICS_SEAL_2026-01-18.md
+seals/SHEPHERD_SILENT_VS_REFUSE_SEAL_2026-01-18.md
+seals/SIGNAL_COMPAN_OS_INGESTION_SEAL.md
+seals/SIGNAL_COMPANY_HUNTER_DOCTRINE_SEAL.md
+seals/SIGNAL_COMPANY_HUNTER_DOCTRINE_SEAL_2026-01-16.md
+seals/SIGNAL_COMPANY_OS_README_SEAL_2026-01-16.md
+seals/SLP-SEAL-IP-2026-01-12.md
+seals/SYSTEM_BOUNDARIES_SEAL_20-01-26.md
+seals/wizard/HI_WIZARD_AI_STACK_REVIEW_2026-01.md
+
+— END OF DOCUMENT —
+SEAL: 9630cd627e78e68a3bac45acde4a8834640767287aa5a11f0732dc7a18578fd2

@@ -1,0 +1,18 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+This module was removed from the Rhythm OS core due to reliance on external APIs, dataset curation, and temporal repair logic.
+
+Environmental sensing and reporting are interpretive activities and may only exist as optional
+forcing.py was removed from the core because it mutates historical state, injects synthetic pressure variables, and performs optimization-adjacent signal blending.
+
+Forcing semantics are incompatible with a sovereign, append-only observational core. overlays.
+
+The sealed core observes deterministic physical cycles only and must remain offline-capable.
+
+— END OF DOCUMENT —
+SEAL: 243fe82595e1386611b623a2203d7d8771e80e28f69c9d5a464c8624e2ea2a47

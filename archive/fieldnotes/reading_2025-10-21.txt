@@ -1,6 +1,0 @@
-2025-10-21T14:06:25.282018 | Amplitude: 44.08, Freq: 2.00, Phase: Rising
-2025-10-21T14:47:16.007026 | Amplitude: 44.08, Freq: 2.00, Phase: Rising
-2025-10-21T14:48:14.488971 | Amplitude: 44.08, Freq: 2.00, Phase: Rising
-2025-10-21T18:37:56.031617 | Amplitude: 44.08, Freq: 2.00, Phase: Rising
-2025-10-21T18:37:59.039665 | Amplitude: 44.08, Freq: 2.00, Phase: Rising
-2025-10-21T18:39:02.854417 | Amplitude: 44.08, Freq: 2.00, Phase: Rising
