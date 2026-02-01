@@ -1,0 +1,63 @@
+# SIGNAL COMPANY — POSTURE SNAPSHOT
+# Authority: Signal Light Press
+# Classification: Protected Internal
+# Status: Canonical
+# Source: Rhythm OS (Governed Engines Only)
+
+snapshot_version: 1.0
+timestamp: null
+run_id: null
+
+# -------------------------------------------------
+# ENGINE POSTURES (READ-ONLY)
+# -------------------------------------------------
+
+oracle:
+  signal_state: null            # Resonant | Still | Turbulent
+  season: null                  # Reflect | Build | etc.
+  volatility_band: null         # Low | Moderate | High
+  scarcity_signal: null         # None | Emerging | Active
+  confidence: null              # 0.0–1.0
+
+sage:
+  readiness_index: null         # 0.0–1.0
+  doctrine_status: CLEAR        # CLEAR | REVIEW | HOLD
+  narrative_mode: ASSIST_ONLY  # Always assist-only
+  archive_integrity: OK         # OK | DEGRADED
+
+posture:
+  posture: DORMANT              # DORMANT | HOLD | EASE | PROCEED
+  buffer_status: null           # Thin | Adequate | Strong
+  permission_window: CLOSED     # CLOSED | NARROW | OPEN
+  risk_surface: null            # Low | Moderate | Elevated
+  insight_allowed: true
+
+helmsman:
+  present: false                # True only if explicitly surfaced
+  guidance_available: false     # Narrative may exist, not required
+
+# -------------------------------------------------
+# COMPANY-WIDE CONSTRAINTS
+# -------------------------------------------------
+
+constraints:
+  escalation_allowed: false
+  capital_release_allowed: false
+  new_commitments_allowed: false
+  experimentation_allowed: false
+
+# -------------------------------------------------
+# SILENCE FLAGS
+# -------------------------------------------------
+
+silence:
+  enforced: false
+  reason: null                  # e.g. "insufficient confidence"
+
+# -------------------------------------------------
+# HUMAN AUTHORITY
+# -------------------------------------------------
+
+human:
+  decision_required: false
+  attention_level: ROUTINE      # ROUTINE | HEIGHTENED | CRITICAL
