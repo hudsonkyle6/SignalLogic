@@ -6,12 +6,10 @@ import fnmatch
 import hashlib
 import json
 import os
-import re
 import shutil
 import time
-from collections import Counter, deque
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import List, Optional
 
 # ──────────────────────────────────────────────────────────────
 # Utilities
@@ -40,7 +38,7 @@ def is_subpath(p: Path, root: Path) -> bool:
         return False
 
 # ──────────────────────────────────────────────────────────────
-# Repo Rules
+# Repo Rules / Guards
 # ──────────────────────────────────────────────────────────────
 
 DEFAULT_IGNORE_DIRS = {
@@ -52,14 +50,14 @@ DEFAULT_IGNORE_GLOBS = [
     "*.pyc", "*.pyo", "*.tmp", "*.bak", "*.swp", "*.log",
 ]
 
-# Absolute never-touch zones
+# Absolute never-touch zones (directories)
 NEVER_TOUCH_PREFIXES = [
     "archive/",
     "signal_light_press/archive/",
     "rhythm_os/data/",
 ]
 
-# Safe bucket rules
+# Safe bucket rules (file-type → bucket root)
 SAFE_BUCKETS = [
     ("*.md", "docs"),
     ("*.txt", "docs"),
@@ -72,11 +70,21 @@ SAFE_BUCKETS = [
     ("*.ps1", "tools/scripts"),
 ]
 
+# Junk names for optional loose-script moves
 JUNK_DIR_NAMES = {"tmp", "temp", "old", "misc", "draft", "_old", "_tmp"}
 
-# ──────────────────────────────────────────────────────────────
-# Guards
-# ──────────────────────────────────────────────────────────────
+# Absolute never-move globs (files)
+NEVER_MOVE_GLOBS = [
+    # contracts are sacred
+    "apps/**/contracts/**",
+    "apps/**/contract/**",
+    # boundaries stay anchored
+    "**/BOUNDARY.md",
+    "**/ARCHIVAL_BOUNDARY.md",
+    # root README is canonical; never promote/collide
+    "README.md",
+    "docs/README.md",
+]
 
 def should_ignore_path(p: Path) -> bool:
     for d in DEFAULT_IGNORE_DIRS:
@@ -90,6 +98,13 @@ def should_ignore_path(p: Path) -> bool:
 def is_never_touch(p: Path, root: Path) -> bool:
     rel = norm_slashes(safe_relpath(p, root)).lower()
     return any(rel.startswith(x) for x in NEVER_TOUCH_PREFIXES)
+
+def is_never_move_file(p: Path, root: Path) -> bool:
+    rel = norm_slashes(safe_relpath(p, root)).lstrip("./").lower()
+    for pat in NEVER_MOVE_GLOBS:
+        if fnmatch.fnmatch(rel, pat.lower()):
+            return True
+    return False
 
 def is_python_package_dir(d: Path) -> bool:
     return (d / "__init__.py").exists()
@@ -150,19 +165,22 @@ def propose_layout_plan(root: Path, deep: bool = False) -> LayoutPlan:
 
     candidates: List[Path] = []
 
+    # Collect candidates with strict guards
     for dirpath, dirnames, filenames in os.walk(root):
         d = Path(dirpath)
-
         dirnames[:] = [n for n in dirnames if n not in DEFAULT_IGNORE_DIRS]
 
-        rel_dir = norm_slashes(safe_relpath(d, root))
         if is_never_touch(d, root):
             dirnames[:] = []
             continue
 
         for fn in filenames:
             p = d / fn
-            if should_ignore_path(p) or is_never_touch(p, root):
+            if should_ignore_path(p):
+                continue
+            if is_never_touch(p, root):
+                continue
+            if is_never_move_file(p, root):
                 continue
             candidates.append(p)
 
@@ -176,28 +194,23 @@ def propose_layout_plan(root: Path, deep: bool = False) -> LayoutPlan:
         if not dest_root:
             continue
 
-        # Exclusions
-        if "oracle/contracts" in norm_slashes(safe_relpath(p, root)).lower():
-            continue
-        if "boundary" in p.name.lower():
-            continue
-
+        # Path-preserving mirror
         rel_parent = norm_slashes(safe_relpath(p.parent, root)).lstrip("./")
-        bucketed_rel = f"{dest_root}/{rel_parent}" if rel_parent else dest_root
+        bucketed_rel = f"{dest_root}/{rel_parent}" if rel_parent and rel_parent != "." else dest_root
 
         # README rule: never promote to docs root
         if p.name.lower() == "readme.md" and bucketed_rel.rstrip("/") == "docs":
             continue
 
-        # Python rule: only loose scripts in junk
-        if p.suffix == ".py":
+        # Python rule: only move loose scripts from junk, never packages
+        if p.suffix.lower() == ".py":
             parts = set(rel_parent.lower().split("/"))
-            if not (parts & JUNK_DIR_NAMES) or is_in_python_package(p, root):
+            in_junk = bool(parts & JUNK_DIR_NAMES)
+            if not in_junk or is_in_python_package(p, root):
                 continue
-            bucketed_rel = f"tools/loose_scripts/{rel_parent}"
+            bucketed_rel = f"tools/loose_scripts/{rel_parent}" if rel_parent else "tools/loose_scripts"
 
         dst = _unique_dst(root / bucketed_rel / p.name)
-
         if dst.exists():
             notes.append(f"SKIP exists: {safe_relpath(p, root)} → {safe_relpath(dst, root)}")
             continue
@@ -220,7 +233,7 @@ def propose_layout_plan(root: Path, deep: bool = False) -> LayoutPlan:
     if not ops:
         notes.append("No safe moves proposed.")
     else:
-        notes.append("Deep plan rules enforced (path-preserving, README-safe).")
+        notes.append("Deep plan rules enforced (path-preserving; contracts/boundaries/README protected).")
 
     return LayoutPlan(
         root=str(root),
