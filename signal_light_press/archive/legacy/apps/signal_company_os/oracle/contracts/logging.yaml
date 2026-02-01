@@ -1,0 +1,31 @@
+# STABILITY CONTRACT v1
+# Purpose: Prevent overreaction during learning and regime shifts.
+
+StabilityContract:
+  Version: "1.0.0"
+
+  LearningPhase:
+    Enabled: true
+    ObservationWindowDays: 21
+
+  DriftPolicy:
+    Allowed:
+      - phase_shift
+      - streak_reset
+      - confidence_drop
+    Forbidden:
+      - silent_schema_change
+      - metric_redefinition
+      - weight_rebalancing
+
+  Alerts:
+    StreakReset:
+      Severity: info
+      Action: log_only
+    ConfidenceDrop:
+      Severity: info
+      Action: log_only
+
+  Invariants:
+    - "Streak resets do not imply failure."
+    - "Confidence may drop during phase emergence."

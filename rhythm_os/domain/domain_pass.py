@@ -4,29 +4,24 @@ from typing import List, Dict, Any
 from rhythm_os.core.wave.wave import Wave
 
 
-def domain_pass(waves: List[Wave], context: Dict[str, Any]) -> Dict[str, Any]:
+def attach_domain_metadata(waves: List[Wave], context: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Apply domain judgment to newly minted Waves.
+    Attach inert, non-authoritative metadata to newly minted Waves.
 
-    Rules:
-    - Pure logic only
+    Properties:
+    - Pure function
     - No IO
     - No persistence
-    - No human-facing output
+    - No evaluation
+    - No posture or permission semantics
     """
 
-    # Placeholder domain posture
-    antifragile_state = {}
-    oracle_state = {}
-    shepherd_state = {}
+    descriptors: Dict[str, Any] = {}
 
     return {
-        "antifragile": antifragile_state,
-        "oracle": oracle_state,
-        "shepherd": shepherd_state,
+        "descriptors": descriptors,
         "_meta": {
-            "evaluated_at": datetime.utcnow().isoformat(),
-            "domain_version": "v0",
+            "attached_at": datetime.utcnow().isoformat(),
+            "schema_version": "v0",
         },
     }
-

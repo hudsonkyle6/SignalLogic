@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 import math
 
-from rhythm_os.domain.domain_wave import DomainWave
+from rhythm_os.psr.domain_wave import DomainWave
 from rhythm_os.domain.oracle.descriptors import (
     AlignmentDescriptor,
     AlignmentPattern,

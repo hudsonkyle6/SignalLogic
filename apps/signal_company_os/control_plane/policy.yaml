@@ -1,0 +1,46 @@
+version: v0
+authority_root:
+  production_root: "C:\\Users\\SignalADmin\\Signal Archive\\SignalLogic"
+  lab_root: "C:\\Users\\SignalADmin\\Signal Archive\\SignalLogic\\apps\\signal_core"
+
+never_touch:
+  - "signal_light_press/archive/**"
+  - "rhythm_os/data/**"
+  - "**/.git/**"
+  - "**/__pycache__/**"
+  - "**/.venv/**"
+  - "**/node_modules/**"
+  - "**/.mypy_cache/**"
+  - "**/.pytest_cache/**"
+
+ops:
+  allow:
+    - mkdir
+    - move
+  deny:
+    - delete
+    - overwrite
+    - edit_in_place
+
+apply_rules:
+  overwrite: false
+  deletes: false
+  require_gate_for_apply: true
+  gate_ledger_path: "apps/signal_company_os/control_plane/audits/gate_ledger.jsonl"
+
+slp:
+  root: "signal_light_press"
+  governable_suffixes: [".md", ".txt", ".yaml", ".yml"]
+  required_header_keys:
+    - Authority
+    - Classification
+    - Status
+    - Domain
+    - Applies To
+    - Amendment Rule
+    - Executable
+
+plans:
+  require_root_match: true
+  require_reason: true
+  allow_relative_dst: false

@@ -1,0 +1,79 @@
+CANONICAL SEAL ENTRY
+
+Seal ID: CANONICAL_ARCHIVE_BOUNDARY_SEAL_2026-01-29
+
+Classification: Canonical
+Domain: Signal Light Press · Kernel
+Applies To: SignalLogic/archive/
+Status: Active
+Amendment Rule: Signal Light Press only
+Enforcement: Structural (filesystem + process discipline)
+Executable: No
+
+SEALED STATEMENT
+
+This seal formally establishes the Canonical Archive as a non-governing, non-executable, historically preserved substrate within the Signal system.
+
+All contents under the archive directory are frozen with respect to authority, execution, and doctrine.
+
+The archive exists to preserve memory, lineage, and failure knowledge — not to guide or authorize present or future system behavior.
+
+AUTHORITY DECLARATION
+
+No file, code, artifact, dataset, doctrine, or note contained within the Canonical Archive:
+
+possesses governing authority
+
+may influence active doctrine
+
+may be imported into live engines
+
+may be cited as justification for action
+
+may be executed or reactivated
+
+may be modernized, optimized, or cleaned
+
+Authority does not propagate from the archive.
+
+RECONSTRUCTION PROVISION (HUMAN-GATED)
+
+Material contained within the Canonical Archive may be consulted by a human operator for historical reference or inspiration only.
+
+Any value derived must be:
+
+reconstructed from first principles
+
+re-authored under current canon
+
+placed outside the archive
+
+sealed with current headers and amendment rules
+
+logged with source reference, date, and human approver
+
+No mechanism exists for direct reuse.
+
+Responsibility and consequence rest solely with the human.
+
+DIRECTIONAL CONSTRAINT
+
+The only permitted informational flow is:
+
+CANONICAL ARCHIVE → FAILURE TAXONOMY
+
+
+No other influence path is lawful.
+
+FINALITY CLAUSE
+
+This seal freezes the archive boundary permanently unless explicitly amended by Signal Light Press.
+
+Silence within the archive is intentional.
+Memory is preserved without authority.
+The system remembers — and does not regress.
+
+Seal Authority: Signal Light Press (Kernel)
+Seal Date: 2026-01-29
+Seal Scope: System-wide
+Supersedes: Implicit archival assumptions prior to this date

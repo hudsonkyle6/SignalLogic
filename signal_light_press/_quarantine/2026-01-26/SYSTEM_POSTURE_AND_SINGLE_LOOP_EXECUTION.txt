@@ -1,0 +1,219 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+📜 SYSTEM POSTURE & SINGLE-LOOP EXECUTION DOCTRINE (Canonical)
+
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Doctrine
+Applies To: Signal Company System (All Domains, All Instantiations)
+Amendment Rule: Signal Light Press only
+Executable: No
+
+Doctrine First · One Loop · No Hidden Authority
+
+I. PURPOSE
+
+This doctrine enforces a single causal loop across the entire Signal Company system.
+
+Its purpose is to ensure that:
+
+intelligence does not branch into parallel authorities
+
+posture cannot be bypassed
+
+execution cannot self-reinforce
+
+every action returns to observation before anything else occurs
+
+There is one loop.
+All systems live inside it.
+
+II. THE SINGLE LOOP (LOCKED)
+
+The system operates in exactly this order:
+
+Observe
+Physics, envelopes, residue, scars
+
+Record
+Waves → Dark Field (append-only)
+
+Excavate (Offline)
+ARCHAEOLOGY replay only
+
+Posture
+Shepherd sets posture (SILENT / ALLOW / REFUSE)
+
+Permission Check
+Contract literals evaluated (if posture allows)
+
+Execute (Bounded)
+Action occurs once, finitely
+
+Scar
+Cost and outcome recorded
+
+Return to Observation
+No memory of authority persists
+
+No step may be skipped.
+No step may be reordered.
+
+III. SYSTEM POSTURE (GLOBAL)
+
+System posture is global and singular.
+
+At any moment, the system is in exactly one posture:
+
+SILENT — observation only, no execution
+
+ALLOW — execution may exist if contractually permitted
+
+REFUSE — execution forbidden
+
+Posture is not advice.
+Posture is not gradient.
+Posture is a gate.
+
+IV. NO PARALLEL LOOPS
+
+The following are forbidden:
+
+domain-local execution loops
+
+learning-while-acting loops
+
+speculative execution
+
+deferred authority
+
+posture shadowing
+
+silent retries
+
+There is no background execution.
+There is no side channel.
+
+If it is not in the loop, it does not exist.
+
+V. RELATION TO INTELLIGENCE
+
+Intelligence may exist anywhere before posture.
+
+Intelligence may:
+
+observe
+
+compute
+
+replay
+
+correlate
+
+summarize
+
+Intelligence may not:
+
+act
+
+schedule action
+
+prepare action
+
+pre-authorize action
+
+Action begins only after posture.
+
+VI. RELATION TO MEMORY
+
+Memory serves the loop; it never drives it.
+
+Memory informs excavation
+
+Excavation informs humans
+
+Humans issue contracts
+
+Contracts are checked post-posture
+
+Memory never grants momentum.
+
+VII. FAILURE MODE PREVENTED
+
+This doctrine exists to prevent:
+
+gradual authority creep
+
+execution by implication
+
+optimization masquerading as insight
+
+confidence compounding without consent
+
+Most systems fail here.
+
+This one does not.
+
+VIII. CANONICAL SUMMARY
+
+There is one loop.
+It is slow.
+It is explicit.
+It is survivable.
+
+Nothing escapes it.
+Nothing shortcuts it.
+Nothing acts twice.
+
+Status: SEALED
+
+— END OF DOCUMENT —
+SEAL: c215fb1b59bec33b60081f72738f95f738589fd47b41816de211bca3ec985d73

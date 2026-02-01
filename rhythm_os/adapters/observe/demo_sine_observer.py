@@ -13,8 +13,7 @@ import numpy as np
 from pathlib import Path
 
 from rhythm_os.adapters.observe.phase_extractor import extract_external_phase
-from rhythm_os.adapters.observe.phase_compare import build_domain_wave
-from rhythm_os.reports.signal_dashboard import render_signal_report
+from rhythm_os.psr.domain_wave import DomainWave
 from rhythm_os.core.field import compute_field
 
 
@@ -81,29 +80,31 @@ if __name__ == "__main__":
     }
 
     # 3. Build DomainWave (single write)
-    wave = build_domain_wave(
+    phase_field = 0.0  # synthetic reference phase (explicit, non-optimized)
+
+    wave = DomainWave(
         t=t_now,
         domain=DOMAIN,
         channel=CHANNEL,
+        field_cycle=FIELD_COMPONENT,
         phase_external=phase_external,
-        field_component=FIELD_COMPONENT,
-        coherence=1.0,  # clean synthetic oscillator
-        extractor_meta=extractor_meta,
-        output_path=OUTPUT_PATH,
+        phase_field=phase_field,
+        phase_diff=(phase_external - phase_field),
+        coherence=1.0,
+        extractor="demo_sine_observer",
     )
+
 
     # 4. Render report with this DomainWave
     field = compute_field(t_now)
 
     print("\n— DOMAIN WAVE WRITTEN —")
     print(wave)
+    print("\nField sample:")
+    print(field)
 
-    render_signal_report(
-        field_sample=field,
-        domain_waves=[wave],
-        engine_state={"posture": "SILENT", "state": "Still"},
-        context={"season": "Reflect"},
-    )
+
+
 
     print("\nProof complete.")
     print(

@@ -1,0 +1,55 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+# SageOS — Registry
+# Master path and module index
+
+paths:
+  root: "C:/Users/SignalADmin/sageOS"
+
+  laws: "C:/Users/SignalADmin/sageOS/laws"
+  ledger: "C:/Users/SignalADmin/sageOS/ledger"
+  console: "C:/Users/SignalADmin/sageOS/console"
+  archive: "C:/Users/SignalADmin/sageOS/archive"
+  rhythms: "C:/Users/SignalADmin/sageOS/rhythms"
+  oracle_link: "C:/Users/SignalADmin/sageOS/oracle_link"
+  shepherd_link: "C:/Users/SignalADmin/sageOS/shepherd_link"
+  processes: "C:/Users/SignalADmin/sageOS/processes"
+  state: "C:/Users/SignalADmin/sageOS/state"
+
+files:
+  state:
+    sage_state: "state/sage_state.json"
+    drift_index: "state/drift_index.csv"
+    readiness_index: "state/readiness_index.csv"
+    system_health: "state/system_health.csv"
+
+  rhythms:
+    human: "rhythms/human_rhythm.csv"
+    household: "rhythms/household_rhythm.csv"
+    seasonal: "rhythms/seasonal_rhythm.csv"
+    harmony: "rhythms/harmony_index.csv"
+    natural: "rhythms/natural_rhythm.csv"
+
+
+  oracle:
+    snapshot: "oracle_link/oracle_snapshot.json"
+    resonance: "oracle_link/resonance_feed.csv"
+    amplitude: "oracle_link/amplitude_feed.csv"
+    hst: "oracle_link/hst_feed.csv"
+
+  shepherd:
+    opportunities: "shepherd_link/opportunities.json"
+    targets: "shepherd_link/targets.csv"
+    risk_profile: "shepherd_link/risk_profile.csv"
+
+version:
+  sageOS: "0.1.0"
+  spec: "SageOS Schema v1"
+
+— END OF DOCUMENT —
+SEAL: 7bd8a2656a28a6be35b45da1fa0e5453c579f2d449e18e3415128a8a6622e094

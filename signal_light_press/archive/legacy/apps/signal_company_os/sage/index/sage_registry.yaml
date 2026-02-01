@@ -1,0 +1,176 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+# =========================================================
+# SAGE OS — CANONICAL REGISTRY
+# Authority: Signal Light Press
+# Engine: SAGE OS (Knowing)
+# Geometry: 3-4-7 Invariant
+# Classification: Protected Internal
+# Status: Canonical — SEALED
+# =========================================================
+
+sage:
+  identity:
+    engine_name: SAGE OS
+    role: Chief of Staff
+    function: Maintain clarity, memory, alignment, and meaning
+    agency: Non-Actuating
+    authority_source: Signal Light Press
+
+  operating_mode:
+    mode: Assist Under Discipline
+    narrative_only: true
+    actuation: forbidden
+    optimization: forbidden
+
+# ---------------------------------------------------------
+# CANONICAL READ SCOPE
+# ---------------------------------------------------------
+
+read_scope:
+
+  doctrine:
+    path: archive/doctrine/
+    permission: read_only
+    includes:
+      - SYSTEM_BOUNDARIES.md
+      - BOUNDARY_FIELD_DOCTRINE.md
+      - ip_classification_doctrine.md
+      - memory_ethics.md
+      - oracle_doctrine.md
+      - sage_role_doctrine.md
+      - posture_canon.md
+      - ARCHIVE_HANDLING_RULES.md
+      - SIGNAL_COMPANY_OS_CHARTER.md
+      - EXPLORATION_AND_MARGINS_CANON.md   # ← ADDED (Step B)
+
+  theory:
+    path: archive/HST/
+    permission: read_only
+    includes:
+      - HARMONIC_SYSTEMS_THEORY.md
+      - HARMONIC_ALIGNMENT_LAW.txt
+      - HARMONIC_MEMORY_ARCHITECTURE.md
+      - CANON.yaml
+      - FREEZE_2025-12-XX.yaml
+
+  applied_systems:
+    path: archive/documents/
+    permission: read_only
+    includes:
+      - HST_CONTROL_SYSTEM_CANON.md
+      - ARC_DESIGN_CANON.md
+      - DEPOT_DESIGN_DOCTRINE.md
+      - CRATE_ATOMIC_UNIT_CANON.md
+
+  memory:
+    path: archive/snapshots/
+    permission: read_only
+    immutability: enforced
+
+  logs:
+    path: archive/logs/
+    permission: read_only
+
+  maps_and_financials:
+    path:
+      - archive/maps/
+      - archive/financial/
+    permission: read_only
+
+  posture_reports:
+    path: archive/reports/
+    permission: read_only
+    includes:
+      - signal_company_posture/posture_report_v1.0.md
+
+# ---------------------------------------------------------
+# EXPLICIT WRITE PROHIBITIONS
+# ---------------------------------------------------------
+
+write_prohibited:
+  - archive/doctrine/
+  - archive/HST/
+  - archive/documents/
+  - archive/snapshots/
+  - archive/maps/
+  - archive/financial/
+  - index/
+  - laws/
+
+# ---------------------------------------------------------
+# PERMITTED OUTPUT CHANNELS
+# ---------------------------------------------------------
+
+outputs:
+  allowed:
+    - console/morning_brief.py
+    - console/daily_report.py
+    - console/end_of_day.py
+  constraints:
+    - narrative_only
+    - no prescriptions
+    - no optimization
+    - no actuation commands
+
+# ---------------------------------------------------------
+# BINDING DOCTRINAL CONSTRAINTS
+# ---------------------------------------------------------
+
+constraints:
+
+  boundary_field:
+    supremacy: true
+    enforcement: absolute
+    sage_role:
+      - may_reference
+      - may_reflect
+      - may_warn
+      - may_not_override
+
+  control_system:
+    sage_position: interpreter_only
+    action_selection: forbidden
+    learning_control: forbidden
+
+  memory_ethics:
+    drift_awareness: required
+    uncertainty_disclosure: required
+    confidence_collapse: forbidden
+
+  binding_laws:
+    - id: SIGNAL_COMPANY_OS_CHARTER
+      authority: Signal Light Press
+      classification: Crown Jewel
+      path: archive/doctrine/SIGNAL_COMPANY_OS_CHARTER.md
+      invariant: 3-4-7
+      amendment_authority: Signal Light Press only
+
+# ---------------------------------------------------------
+# FAILURE & HALT CONDITIONS
+# ---------------------------------------------------------
+
+halt_conditions:
+  - doctrine_missing
+  - boundary_field_unavailable
+  - snapshot_integrity_violation
+  - attempt_to_actuate
+  - attempt_to_optimize
+
+# ---------------------------------------------------------
+# CANONICAL SEAL
+# ---------------------------------------------------------
+
+seal:
+  authority: Signal Light Press
+  amendment_rule: Signal Light Press only
+  violation_consequence: Sage silence
+  effective_date: 2025-12-23
+
+— END OF DOCUMENT —
+SEAL: 41eafa0214a50fbd39611962bf79b594e3bc29c7e70835384020e2374d0249a8

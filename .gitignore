@@ -62,3 +62,5 @@ archive/resources/
 
 
 
+__pycache__/
+*.pyc

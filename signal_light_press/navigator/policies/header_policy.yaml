@@ -1,0 +1,156 @@
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+authoritative_roots:
+  - signal_light_press/codex
+  - signal_light_press/editions
+  - signal_light_press/contracts
+  - signal_light_press/manifests
+  - signal_light_press/registers
+
+exclude_globs:
+  - "**/_mirror_backups/**"
+  - "**/_archive_*/**"
+  - "**/chronicles/**"
+  - "**/fieldnotes/**"
+  - "**/publications/**"
+  - "**/*.csv"
+  - "**/*.png"
+  - "**/*.tar.gz"
+
+required_fields:
+  default:
+    - Authority
+    - Status
+  canon:
+    - Authority
+    - Classification
+    - Scope
+    - Status
+    - Amendment Rule
+    - Effective Date
+    - Domain
+    - Applies To
+    - Executable
+  doctrine:
+    - Authority
+    - Classification
+    - Scope
+    - Status
+    - Domain
+    - Applies To
+  guide:
+    - Authority
+    - Classification
+    - Scope
+    - Status
+    - Domain
+    - Applies To
+  policy:
+    - Authority
+    - Classification
+    - Scope
+    - Status
+    - Domain
+    - Applies To
+  reference:
+    - Authority
+    - Classification
+    - Scope
+    - Status
+    - Domain
+    - Applies To
+  archive:
+    - Authority
+    - Classification
+    - Scope
+    - Status
+
+defaults:
+  Authority: "Signal Light Press"
+  Classification: "WORKING"
+  Scope: "Signal Light Press — Anchor Vault"
+  Status: "DRAFT"
+  Amendment Rule: "Signal Light Press only"
+  Effective Date: "2026-01-28"
+  Domain: "Document"
+  Applies To: "Signal Light Press"
+  Executable: "No"
+
+seal_allowed_classes:
+  - canon
+  - policy
+  - register
+
+header_contract_path: "signal_light_press/HEADER_CONTRACT.md"
+crypto_private_key_path: "signal_light_press/private.pem"  # Add your key path
+
+— END OF DOCUMENT —
+SEAL: 78470513554357d0d5b7b0693da1e92138f3af4cde06881e35f472d969fab386

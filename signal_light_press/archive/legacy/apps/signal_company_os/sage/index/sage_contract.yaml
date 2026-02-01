@@ -1,0 +1,46 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+SageContract:
+  Version: "1.0.0"
+  Purpose: "Interpretive coherence, not decision or control"
+
+  Inputs:
+    Oracle:
+      - oracle_snapshot.json
+      - resonance_feed.csv
+      - amplitude_feed.csv
+      - hst_feed.csv
+    HumanContext:
+      - rhythms/annotations/human_annotation.csv
+      - rhythms/annotations/household_annotation.csv
+      - rhythms/annotations/seasonal_annotation.csv
+
+  Outputs:
+    Allowed:
+      - MorningBrief
+      - DailyReport
+      - EndOfDayReflection
+      - ArchiveLogs
+    Forbidden:
+      - Commands
+      - Allocations
+      - Predictions
+      - ExecutionFlags
+
+  InterpretationRules:
+    - "All outputs must cite Oracle inputs"
+    - "Confidence must be qualified by G(t)"
+    - "No single-day signal may be treated as regime change"
+    - "Constraints must be phrased as non-actions"
+
+  Authority:
+    Kernel: "Signal Light Press"
+    Override: "Human only"
+
+— END OF DOCUMENT —
+SEAL: edc71d35b7282bce7faeb5c9267bd82acfe06653113b942abeb3e5ac037c6de0

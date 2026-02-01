@@ -1,0 +1,173 @@
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Archive
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
+# SIGNAL LIGHT PRESS — IP & LEGAL STRATEGY CONTRACT
+# Version: 1.1.0
+# Status: CANONICAL
+# Effective Date: 2025-12-19
+# Jurisdiction: United States / State of New Hampshire
+
+Contract:
+  Name: "Signal Light Press IP & Legal Strategy"
+  Purpose: >
+    To define how intellectual property is created, owned, classified,
+    protected, published, and governed under Signal Light Press,
+    strictly in accordance with applicable law, good-faith compliance,
+    and long-term stewardship principles.
+
+FirstPrinciple:
+  Statement: >
+    The law already provides the playbook.
+    Signal Light Press operates through disciplined alignment with
+    statutory intent, permitted discretion, and established precedent.
+    No workaround, evasion, misrepresentation, or concealment is permitted.
+
+LegalFramework:
+  GoverningLaw:
+    - "U.S. Copyright Law (Title 17, U.S. Code)"
+    - "New Hampshire State Business Law"
+    - "Trade Secret Doctrine"
+    - "Contract Law"
+    - "Historic Preservation & Conservation Allowances"
+    - "Established Publishing Norms"
+
+Entity:
+  Name: "Signal Light Press"
+  State: "New Hampshire"
+  BusinessID: "1011389"
+  FilingNumber: "7347041"
+  Role:
+    - Publisher
+    - Intellectual Property Holding Entity
+    - Doctrine Authority
+    - Trade Secret Custodian
+    - Steward of Canonical Works
+
+OwnershipPrinciples:
+  AutomaticCopyright:
+    Description: >
+      Copyright exists automatically at the moment of original authorship.
+      No registration is required for ownership.
+    Statutory: true
+
+  EntityOwnership:
+    Description: >
+      Signal Light Press may own intellectual property either as the author
+      (work made for hire) or by assignment from the author.
+    PermittedByLaw: true
+
+  ProtectionChoice:
+    Description: >
+      Signal Light Press may lawfully elect among copyright,
+      trade secret, or hybrid protection models for each work,
+      consistent with statutory allowances.
+    PublicationNotRequired: true
+
+InterpretivePrinciple:
+  Statement: >
+    Signal Light Press actively seeks and applies lawful opportunities
+    explicitly provided by statute, regulation, precedent, and
+    administrative discretion.
+
+    These include elective pathways, exemptions, allowances, variances,
+    preservation-oriented provisions, and intent-based interpretations
+    that enable higher-quality, longer-lasting, and more humane outcomes
+    than minimum compliance alone.
+
+    Such use of the law is pursued openly, in good faith, and without
+    misrepresentation. It reflects stewardship, restoration, and care,
+    not evasion or extraction.
+
+IPClassification:
+
+  ClassI:
+    Name: "Canonical Published Works"
+    ProtectionModel: "Copyright-forward"
+    Includes:
+      - Codices
+      - Manifestos
+      - Essays
+      - Manuals
+      - Public-facing doctrine
+      - SageOS narrative outputs intended for reading
+    LegalPosture:
+      CopyrightHolder: "Signal Light Press"
+      AuthorAttribution: "Kyle H. Hudson (where applicable)"
+      FederalRegistration: "Optional for flagship works"
+    CanonicalFooter: |
+      © 2025 Signal Light Press
+      Authored by Kyle H. Hudson
+      State of New Hampshire
+      Business ID 1011389 · Filing No. 7347041
+      All Rights Reserved.
+
+  ClassII:
+    Name: "System & Method IP"
+    ProtectionModel: "Trade secret–first"
+    Includes:
+      - Rhythm OS internals
+      - Sage developmental rules
+      - Ghost trust mechanics
+      - AC/DC conversion logic
+      - Thresholds, weights, sequencing logic
+      - Operational playbooks
+      - Control, governance, and safety architectures
+    LegalPosture:
+      Disclosure: "Prohibited without written authorization"
+      Access: "Strictly controlled"
+      Protection: "Trade Secret"
+    InternalMarking: |
+      CONFIDENTIAL — SIGNAL LIGHT PRESS
+      Proprietary systems and methods.
+      Unauthorized disclosure prohibited.
+
+  ClassIII:
+    Name: "Hybrid Works"
+    ProtectionModel: "Published shell, protected core"
+    Includes:
+      - Conceptual explanations
+      - High-level architecture diagrams
+      - Philosophy without parameters
+      - Educational system descriptions
+    LegalPosture:
+      Narrative: "Copyrighted"
+      Implementation: "Trade Secret"
+
+OperationalRules:
+  PublicationRule: >
+    Publish what is meant to be remembered and transmitted.
+  ProtectionRule: >
+    Protect what enables the system to function, endure, and remain safe.
+  AssignmentRule: >
+    All works created for Signal Light Press shall be owned by
+    or assigned to Signal Light Press by written agreement.
+  StewardshipRule: >
+    All intellectual property shall be managed with an emphasis on
+    durability, restoration, and long-term public good.
+  EnforcementRule: >
+    This contract governs classification, marking, handling,
+    and disclosure of all intellectual property under Signal Light Press.
+
+Prohibitions:
+  - "No false claims of federal copyright registration."
+  - "No implication of government endorsement."
+  - "No concealment, misrepresentation, or deceptive practices."
+  - "No disclosure of trade secrets without written authorization."
+
+Amendment:
+  Method: "Written revision with version increment"
+  Authority: "Signal Light Press"
+
+Declaration:
+  Statement: >
+    This contract reflects lawful, intentional, and disciplined alignment
+    with existing law. Signal Light Press commits to good-faith compliance,
+    responsible stewardship, and the use of legal discretion to restore,
+    preserve, and improve systems beyond minimum compliance where permitted.
+
+— END OF DOCUMENT —
+SEAL: da079bf97edfcce30de5c83b58d86b9ed522a1a31ff75420dfd8822318c58e82

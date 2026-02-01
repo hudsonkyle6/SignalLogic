@@ -1,49 +1,27 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Literal
-
-from rhythm_os.domain.shepherd.shepherd import ShepherdPosture
-
-
-GateState = Literal["CLOSED", "OPEN"]
-
-
-@dataclass(frozen=True)
-class ExecutionGateDecision:
-    """
-    Declarative execution gate.
-
-    This object:
-    - Authorizes no execution
-    - Schedules nothing
-    - Persists nothing
-    - Exists only to state whether actions may exist at all
-    """
-    state: GateState
-    reason: str
+from rhythm_os.foundations import ExecutionGateDecision
 
 
 def evaluate_execution_gate(
     *,
-    shepherd_posture: ShepherdPosture,
+    permission: bool,
 ) -> ExecutionGateDecision:
     """
-    Canonical execution gate evaluation.
+    Canonical execution gate.
 
-    Rule:
-    - ALLOW  -> OPEN
-    - SILENT -> CLOSED
-    - REFUSE -> CLOSED
+    Kernel rule:
+    - permission == True  -> OPEN
+    - permission == False -> CLOSED
     """
 
-    if shepherd_posture.posture == "ALLOW":
+    if permission:
         return ExecutionGateDecision(
             state="OPEN",
-            reason="shepherd posture allows existence of action",
+            reason="execution permission granted",
         )
 
     return ExecutionGateDecision(
         state="CLOSED",
-        reason="shepherd posture does not permit action",
+        reason="execution permission not granted",
     )

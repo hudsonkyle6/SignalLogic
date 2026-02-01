@@ -1,0 +1,225 @@
+"""
+Canonical Cycle Runner — Single Step (with Drift)
+
+AUTHORITY: Signal Light Press
+CLASSIFICATION: RUNTIME ENTRYPOINT
+EXECUTABLE: YES
+DECISION AUTHORITY: NONE
+
+Advances exactly one cycle.
+Implements Phase 3 (Reserve Layer) with DRIFT only.
+
+Append-only. Silence allowed. No oracle. No execution.
+"""
+
+from __future__ import annotations
+
+import json
+import time
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Sequence, Tuple
+
+from rhythm_os.domain.antifragile.drift import compute_drift_index
+from rhythm_os.psr.append_domain_wave import append_domain_wave
+from rhythm_os.psr.domain_wave import DomainWave
+
+
+# ---------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------
+
+BUS_DIR = Path("rhythm_os/data/dark_field")
+HISTORY_WINDOW_SEC = 24.0 * 3600.0
+
+# We compute drift on a single scalar stream. For now:
+# - metric source stream: domain="core", channel="bootstrap_calibration"
+# - scalar: abs(phase_diff)
+DRIFT_SOURCE_DOMAIN = "core"
+DRIFT_SOURCE_CHANNEL = "bootstrap_calibration"
+
+# Baseline length for drift computation
+DRIFT_BASELINE_N = 12
+
+
+# ---------------------------------------------------------------------
+# Time helpers
+# ---------------------------------------------------------------------
+
+def cycle_time() -> float:
+    return time.time()
+
+
+def today_bus_file(t_ref: float) -> Path:
+    # Local date stamp for filename (matches your existing convention)
+    date_str = time.strftime("%Y-%m-%d", time.localtime(t_ref))
+    return BUS_DIR / f"{date_str}.jsonl"
+
+
+# ---------------------------------------------------------------------
+# Bus read helpers (verbatim)
+# ---------------------------------------------------------------------
+
+def _iter_bus_lines(files: List[Path]) -> Sequence[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    for f in files:
+        try:
+            with f.open("r", encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    out.append(json.loads(line))
+        except FileNotFoundError:
+            continue
+    return out
+
+
+def load_recent_domain_waves(
+    *,
+    t_ref: float,
+    history_window_sec: float,
+) -> List[DomainWave]:
+    """
+    Load recent DomainWave packets from the bus (append-only JSONL).
+
+    This is a verbatim loader:
+    - no mutation
+    - no inference
+    - best-effort parse (skips malformed lines)
+    """
+    if not BUS_DIR.exists():
+        return []
+
+    files = sorted(BUS_DIR.glob("*.jsonl"))
+    if not files:
+        return []
+
+    raw = _iter_bus_lines(files)
+
+    out: List[DomainWave] = []
+    for rec in raw:
+        try:
+            t = float(rec.get("t"))
+        except Exception:
+            continue
+
+        if abs(t - t_ref) > history_window_sec:
+            continue
+
+        # Only accept records that match DomainWave schema keys
+        try:
+            dw = DomainWave(
+                t=float(rec["t"]),
+                domain=str(rec["domain"]),
+                channel=str(rec["channel"]),
+                field_cycle=str(rec.get("field_cycle", "unknown")),
+                phase_external=float(rec.get("phase_external", 0.0)),
+                phase_field=float(rec.get("phase_field", 0.0)),
+                phase_diff=float(rec.get("phase_diff", 0.0)),
+                coherence=rec.get("coherence", None),
+                extractor=dict(rec.get("extractor", {})),
+            )
+        except Exception:
+            continue
+
+        out.append(dw)
+
+    # Sort by time ascending for baseline windows
+    out.sort(key=lambda w: float(w.t))
+    return out
+
+
+# ---------------------------------------------------------------------
+# Phase 1 — Horizon Scan (silence allowed)
+# ---------------------------------------------------------------------
+
+def phase_horizon_scan(t_ref: float) -> None:
+    # Intentionally inert for now.
+    pass
+
+
+# ---------------------------------------------------------------------
+# Phase 2 — Memory Core (silence allowed)
+# ---------------------------------------------------------------------
+
+def phase_memory_core(t_ref: float) -> None:
+    # Intentionally inert for now.
+    pass
+
+
+# ---------------------------------------------------------------------
+# Phase 3 — Reserve Layer (DRIFT only)
+# ---------------------------------------------------------------------
+
+def phase_reserve_layer(t_ref: float) -> None:
+    """
+    Computes drift index (0–1) over a scalar stream and appends a new
+    DomainWave packet to today's bus file.
+
+    Drift is descriptive only. No thresholds. No decisions.
+    """
+    waves = load_recent_domain_waves(t_ref=t_ref, history_window_sec=HISTORY_WINDOW_SEC)
+
+    # Filter source stream
+    src = [
+        w for w in waves
+        if w.domain == DRIFT_SOURCE_DOMAIN and w.channel == DRIFT_SOURCE_CHANNEL
+    ]
+
+    # Need at least 2 points to have "current + baseline"
+    if len(src) < 2:
+        return  # silence is valid
+
+    # Scalar stream = abs(phase_diff)
+    series = [abs(float(w.phase_diff)) for w in src]
+
+    current = series[-1]
+    baseline = series[-(DRIFT_BASELINE_N + 1):-1]  # up to N prior points
+
+    drift_value = compute_drift_index(current=current, baseline=baseline)
+
+    # Emit as a DomainWave packet (schema-compatible)
+    dw_out = DomainWave(
+        t=float(t_ref),
+        domain="antifragile",
+        channel="drift_index",
+        field_cycle="computed",
+        phase_external=0.0,
+        phase_field=0.0,
+        phase_diff=float(drift_value),  # store scalar in phase_diff for now
+        coherence=None,
+        extractor={
+            "source": f"{DRIFT_SOURCE_DOMAIN}:{DRIFT_SOURCE_CHANNEL}",
+            "method": "compute_drift_index(abs(phase_diff))",
+            "version": "v1",
+        },
+    )
+
+    path = today_bus_file(t_ref)
+    append_domain_wave(path, dw_out)
+
+
+# ---------------------------------------------------------------------
+# Phase 4 — Alignment Layer (silence allowed)
+# ---------------------------------------------------------------------
+
+def phase_alignment_layer(t_ref: float) -> None:
+    # Intentionally inert for now.
+    pass
+
+
+# ---------------------------------------------------------------------
+# Cycle execution
+# ---------------------------------------------------------------------
+
+def run_cycle_once() -> None:
+    t_ref = cycle_time()
+
+    phase_horizon_scan(t_ref)
+    phase_memory_core(t_ref)
+    phase_reserve_layer(t_ref)
+    phase_alignment_layer(t_ref)
+
+
+if __name__ == "__main__":
+    run_cycle_once()
