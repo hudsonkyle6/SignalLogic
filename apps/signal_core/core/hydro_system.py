@@ -1,7 +1,3 @@
-# hydro_system.py
-# Run-of-River "Hydro" Multi-Agent System
-# Repo comb + safe layout optimization (shallow / deep)
-
 from __future__ import annotations
 
 import argparse
@@ -18,19 +14,23 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 # ──────────────────────────────────────────────────────────────
-# Helpers
+# Utilities
 # ──────────────────────────────────────────────────────────────
+
 def now_ts() -> str:
     return time.strftime("%Y-%m-%d %H:%M:%S")
 
-def norm_slashes(s: str) -> str:
-    return s.replace("\\", "/")
+def sha16(s: str) -> str:
+    return hashlib.sha256(s.encode("utf-8")).hexdigest()[:16]
 
 def safe_relpath(p: Path, root: Path) -> str:
     try:
         return str(p.resolve().relative_to(root.resolve()))
     except Exception:
         return str(p)
+
+def norm_slashes(s: str) -> str:
+    return s.replace("\\", "/")
 
 def is_subpath(p: Path, root: Path) -> bool:
     try:
@@ -40,71 +40,48 @@ def is_subpath(p: Path, root: Path) -> bool:
         return False
 
 # ──────────────────────────────────────────────────────────────
-# Boundary / Doctrine Guard (authoritative)
+# Repo Rules
 # ──────────────────────────────────────────────────────────────
-def is_never_move_file(p: Path) -> bool:
-    """
-    Boundary / doctrine files must never move.
-    Semantic rule: any filename containing 'BOUNDARY' is protected.
-    """
-    return "BOUNDARY" in p.name.upper()
 
-# ──────────────────────────────────────────────────────────────
-# Ignore / safety rules
-# ──────────────────────────────────────────────────────────────
 DEFAULT_IGNORE_DIRS = {
-    ".git", ".hg", ".svn",
-    "__pycache__", ".pytest_cache", ".mypy_cache",
-    "node_modules", ".venv", "venv", "env",
-    "dist", "build", ".idea", ".vscode",
+    ".git", "__pycache__", ".pytest_cache", ".mypy_cache",
+    "node_modules", ".venv", "venv", "env", "dist", "build",
 }
 
 DEFAULT_IGNORE_GLOBS = [
-    "*.pyc", "*.pyo", "*.pyd", "*.tmp", "*.bak", "*.swp",
-    "*.log", "*.sqlite", "*.db",
+    "*.pyc", "*.pyo", "*.tmp", "*.bak", "*.swp", "*.log",
 ]
 
-# These paths are NEVER inspected or moved
-DEFAULT_NEVER_TOUCH_PREFIXES = [
-    "signal_light_press/archive/",
-    "signal_light_press/_quarantine/",
+# Absolute never-touch zones
+NEVER_TOUCH_PREFIXES = [
     "archive/",
+    "signal_light_press/archive/",
     "rhythm_os/data/",
 ]
 
-SAFE_DEEP_BUCKETS = [
+# Safe bucket rules
+SAFE_BUCKETS = [
     ("*.md", "docs"),
     ("*.txt", "docs"),
-    ("*.pdf", "docs"),
-    ("*.rst", "docs"),
-    ("*.yml", "config"),
-    ("*.yaml", "config"),
     ("*.json", "config"),
+    ("*.yaml", "config"),
+    ("*.yml", "config"),
     ("*.toml", "config"),
     ("*.ini", "config"),
-    ("*.ipynb", "research/notebooks"),
-    ("*.ps1", "tools/scripts"),
-    ("*.bat", "tools/scripts"),
     ("*.sh", "tools/scripts"),
-    ("*.png", "assets/images"),
-    ("*.jpg", "assets/images"),
-    ("*.jpeg", "assets/images"),
-    ("*.webp", "assets/images"),
-    ("*.svg", "assets/images"),
+    ("*.ps1", "tools/scripts"),
 ]
 
-JUNK_DIR_NAMES = {
-    "tmp", "temp", "old", "misc", "scratch",
-    "draft", "dead", "deprecated", "_old", "_tmp"
-}
+JUNK_DIR_NAMES = {"tmp", "temp", "old", "misc", "draft", "_old", "_tmp"}
 
 # ──────────────────────────────────────────────────────────────
-# Utility checks
+# Guards
 # ──────────────────────────────────────────────────────────────
+
 def should_ignore_path(p: Path) -> bool:
-    parts = {x.name for x in p.parents} | {p.name}
-    if any(d in parts for d in DEFAULT_IGNORE_DIRS):
-        return True
+    for d in DEFAULT_IGNORE_DIRS:
+        if d in p.parts:
+            return True
     for g in DEFAULT_IGNORE_GLOBS:
         if fnmatch.fnmatch(p.name, g):
             return True
@@ -112,35 +89,30 @@ def should_ignore_path(p: Path) -> bool:
 
 def is_never_touch(p: Path, root: Path) -> bool:
     rel = norm_slashes(safe_relpath(p, root)).lower()
-    return any(rel.startswith(prefix) for prefix in DEFAULT_NEVER_TOUCH_PREFIXES)
+    return any(rel.startswith(x) for x in NEVER_TOUCH_PREFIXES)
 
-def _unique_dst(dst: Path) -> Path:
-    if not dst.exists():
-        return dst
-    stem, suf = dst.stem, dst.suffix
-    parent = dst.parent
-    for i in range(2, 1000):
-        cand = parent / f"{stem}_{i}{suf}"
-        if not cand.exists():
-            return cand
-    return dst
+def is_python_package_dir(d: Path) -> bool:
+    return (d / "__init__.py").exists()
 
-def _bucket_for_file(name: str, buckets: List[Tuple[str, str]]) -> Optional[str]:
-    lname = name.lower()
-    for pat, dst in buckets:
-        if fnmatch.fnmatch(lname, pat.lower()):
-            return dst
-    return None
+def is_in_python_package(p: Path, root: Path) -> bool:
+    cur = p.parent.resolve()
+    root = root.resolve()
+    while cur != root:
+        if is_python_package_dir(cur):
+            return True
+        cur = cur.parent
+    return False
 
 # ──────────────────────────────────────────────────────────────
-# Data structures
+# Planning Structures
 # ──────────────────────────────────────────────────────────────
+
 @dataclasses.dataclass
 class MoveOp:
-    op: str  # mkdir | move
-    src: Optional[str] = None
-    dst: Optional[str] = None
-    reason: str = ""
+    op: str               # "mkdir" | "move"
+    src: Optional[str]
+    dst: Optional[str]
+    reason: str
 
 @dataclasses.dataclass
 class LayoutPlan:
@@ -149,74 +121,118 @@ class LayoutPlan:
     notes: List[str]
     ops: List[MoveOp]
 
+def _unique_dst(dst: Path) -> Path:
+    if not dst.exists():
+        return dst
+    stem, suf = dst.stem, dst.suffix
+    for i in range(2, 1000):
+        alt = dst.with_name(f"{stem}_{i}{suf}")
+        if not alt.exists():
+            return alt
+    return dst
+
+def _bucket_for_file(name: str) -> Optional[str]:
+    lname = name.lower()
+    for pat, bucket in SAFE_BUCKETS:
+        if fnmatch.fnmatch(lname, pat):
+            return bucket
+    return None
+
 # ──────────────────────────────────────────────────────────────
-# Layout planner
+# Deep Layout Planner (Path-Preserving)
 # ──────────────────────────────────────────────────────────────
-def propose_layout_plan(root: Path, deep: bool) -> LayoutPlan:
+
+def propose_layout_plan(root: Path, deep: bool = False) -> LayoutPlan:
     root = root.resolve()
-    ops: List[MoveOp] = []
     notes: List[str] = []
-    mkdirs = set()
+    ops: List[MoveOp] = []
+    mkdirs: set[str] = set()
+
     candidates: List[Path] = []
 
     for dirpath, dirnames, filenames in os.walk(root):
         d = Path(dirpath)
+
         dirnames[:] = [n for n in dirnames if n not in DEFAULT_IGNORE_DIRS]
 
         rel_dir = norm_slashes(safe_relpath(d, root))
-        if any(rel_dir.lower().startswith(pfx) for pfx in DEFAULT_NEVER_TOUCH_PREFIXES):
+        if is_never_touch(d, root):
             dirnames[:] = []
             continue
 
         for fn in filenames:
             p = d / fn
-            if should_ignore_path(p):
-                continue
-            if is_never_touch(p, root):
-                continue
-            if is_never_move_file(p):
+            if should_ignore_path(p) or is_never_touch(p, root):
                 continue
             candidates.append(p)
 
-    # Root-level bucketing
-    for p in sorted([c for c in candidates if c.parent == root]):
-        dest_dir = _bucket_for_file(p.name, SAFE_DEEP_BUCKETS)
-        if not dest_dir:
+    deep_moves = 0
+
+    for p in sorted(candidates):
+        if p.parent == root:
             continue
-        dst = _unique_dst(root / dest_dir / p.name)
-        mkdirs.add(dest_dir)
-        ops.append(MoveOp("move", str(p), str(dst), "Bucket root file"))
 
-    if deep:
-        for p in sorted([c for c in candidates if c.parent != root]):
-            if is_never_move_file(p):
+        dest_root = _bucket_for_file(p.name)
+        if not dest_root:
+            continue
+
+        # Exclusions
+        if "oracle/contracts" in norm_slashes(safe_relpath(p, root)).lower():
+            continue
+        if "boundary" in p.name.lower():
+            continue
+
+        rel_parent = norm_slashes(safe_relpath(p.parent, root)).lstrip("./")
+        bucketed_rel = f"{dest_root}/{rel_parent}" if rel_parent else dest_root
+
+        # README rule: never promote to docs root
+        if p.name.lower() == "readme.md" and bucketed_rel.rstrip("/") == "docs":
+            continue
+
+        # Python rule: only loose scripts in junk
+        if p.suffix == ".py":
+            parts = set(rel_parent.lower().split("/"))
+            if not (parts & JUNK_DIR_NAMES) or is_in_python_package(p, root):
                 continue
-            dest_dir = _bucket_for_file(p.name, SAFE_DEEP_BUCKETS)
-            if not dest_dir:
-                continue
-            dst = _unique_dst(root / dest_dir / p.name)
-            mkdirs.add(dest_dir)
-            ops.append(MoveOp(
-                "move",
-                str(p),
-                str(dst),
-                f"Deep bucket: {safe_relpath(p, root)} → {dest_dir}/"
-            ))
+            bucketed_rel = f"tools/loose_scripts/{rel_parent}"
 
-    for drel in sorted(mkdirs):
-        dpath = (root / drel)
-        if not dpath.exists():
-            ops.insert(0, MoveOp("mkdir", None, str(dpath), "Create bucket"))
+        dst = _unique_dst(root / bucketed_rel / p.name)
 
-    notes.append("Boundary / doctrine files exempt")
-    notes.append("signal_light_press quarantine exempt")
-    notes.append("No deletes, no overwrites")
+        if dst.exists():
+            notes.append(f"SKIP exists: {safe_relpath(p, root)} → {safe_relpath(dst, root)}")
+            continue
 
-    return LayoutPlan(str(root), now_ts(), notes, ops)
+        mkdirs.add(bucketed_rel)
+        ops.append(MoveOp(
+            "move",
+            str(p),
+            str(dst),
+            f"Path-preserving bucket: {safe_relpath(p, root)} → {bucketed_rel}/"
+        ))
+        deep_moves += 1
+        if deep_moves >= 3000:
+            notes.append("STOP: deep move cap reached")
+            break
+
+    for d in sorted(mkdirs):
+        ops.insert(0, MoveOp("mkdir", None, str(root / d), "Create bucket dir"))
+
+    if not ops:
+        notes.append("No safe moves proposed.")
+    else:
+        notes.append("Deep plan rules enforced (path-preserving, README-safe).")
+
+    return LayoutPlan(
+        root=str(root),
+        created_at=now_ts(),
+        notes=notes,
+        ops=ops,
+    )
 
 # ──────────────────────────────────────────────────────────────
-# Plan persistence
+# Plan IO + Apply
 # ──────────────────────────────────────────────────────────────
+
 def save_plan(plan: LayoutPlan, out_path: Path) -> None:
     out_path.write_text(json.dumps({
         "root": plan.root,
@@ -228,43 +244,44 @@ def save_plan(plan: LayoutPlan, out_path: Path) -> None:
 def load_plan(path: Path) -> LayoutPlan:
     obj = json.loads(path.read_text(encoding="utf-8"))
     return LayoutPlan(
-        obj["root"],
-        obj["created_at"],
-        obj.get("notes", []),
-        [MoveOp(**op) for op in obj.get("ops", [])],
+        root=obj["root"],
+        created_at=obj["created_at"],
+        notes=obj["notes"],
+        ops=[MoveOp(**op) for op in obj["ops"]],
     )
 
-def apply_plan(plan: LayoutPlan) -> Tuple[bool, str]:
+def apply_plan(plan: LayoutPlan) -> str:
     root = Path(plan.root).resolve()
     for op in plan.ops:
         if op.op == "mkdir":
-            dst = Path(op.dst).resolve()
-            if not is_subpath(dst, root):
-                return False, "mkdir outside root refused"
-            dst.mkdir(parents=True, exist_ok=True)
+            d = Path(op.dst)
+            if not is_subpath(d, root):
+                return f"Refused mkdir outside root: {d}"
+            d.mkdir(parents=True, exist_ok=True)
         elif op.op == "move":
-            src = Path(op.src).resolve()
-            dst = Path(op.dst).resolve()
-            if not is_subpath(src, root) or not is_subpath(dst, root):
-                return False, "move outside root refused"
+            src = Path(op.src)
+            dst = Path(op.dst)
+            if not src.exists():
+                return f"Missing src: {src}"
             if dst.exists():
-                return False, f"overwrite refused: {dst}"
+                return f"overwrite refused: {dst}"
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.move(str(src), str(dst))
-    return True, "Plan applied"
+    return "Plan applied"
 
 # ──────────────────────────────────────────────────────────────
 # CLI
 # ──────────────────────────────────────────────────────────────
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", required=True)
     ap.add_argument("--propose-layout", action="store_true")
     ap.add_argument("--deep", action="store_true")
-    ap.add_argument("--save-plan", default="layout_plan.json")
+    ap.add_argument("--save-plan", default="deep_plan.json")
     ap.add_argument("--apply-plan")
-    args = ap.parse_args()
 
+    args = ap.parse_args()
     root = Path(args.root)
 
     if args.propose_layout:
@@ -278,8 +295,7 @@ def main() -> int:
 
     if args.apply_plan:
         plan = load_plan(Path(args.apply_plan))
-        ok, msg = apply_plan(plan)
-        print(msg)
+        print(apply_plan(plan))
         return 0
 
     ap.print_help()
