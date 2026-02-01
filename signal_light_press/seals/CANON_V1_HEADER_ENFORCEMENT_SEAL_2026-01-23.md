@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# CANON V1 — HEADER ENFORCEMENT SEAL
 
 
@@ -101,4 +108,4 @@ enforcement holds no authority.
 ────────────────────────────────────────
 
 — END OF DOCUMENT —
-SEAL: 88910098dce28698843af31821fd92ccba909a82eaf1aa221ca7077647e1231c
+SEAL: cea0d425fbdd687918252696d603169bec2a9ddbc4e5c98bd6b8dafa78849451

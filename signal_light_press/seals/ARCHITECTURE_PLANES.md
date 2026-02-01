@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# ARCHITECTURE PLANES — CANONICAL SEPARATION
 
 Authority: Signal Light Press  
@@ -265,4 +272,4 @@ Seal ID: ARCH-PLANES-2026-01-17
 Amendment Rule: Signal Light Press only
 
 — END OF DOCUMENT —
-SEAL: 7c9e26645e3ab047d728fc1af4cd80037e2d362094080480e2c1c4c757d76175
+SEAL: b67cbf53422f92baceda4b88cd16c7064471ce102dca458b60695786d3bd55b2

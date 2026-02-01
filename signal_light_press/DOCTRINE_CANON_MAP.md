@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Doctrine → Canon Map
 Status: ACTIVE AUDIT
 Authority: Signal Light Press
@@ -86,4 +93,4 @@ Rule: Every doctrine must explicitly defer to a governing canon (or SYSTEM_BOUND
 | codex/doctrine_mirror/SYSTEM_BOUNDARIES.md | NONE FOUND | N | Root canonical boundary doctrine defining system scope, limits, and irreducible separation |
 
 — END OF DOCUMENT —
-SEAL: 6f5cceb73464954595e46c9193b5387466d50b21f8e556a8eec253b432ba569e
+SEAL: b283fed47118b8a6e1f0cdeb697623ad209e1125b1df5a8d3f6a9f19756c89bf

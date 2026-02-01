@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 A Canonical Specification for Memory Modulation, Decay, and Survivability Enforcement
 
 
@@ -760,4 +767,4 @@ END OF DOCUMENT
 SEAL APPLIED — SIGNAL LIGHT PRESS
 
 — END OF DOCUMENT —
-SEAL: 46bcd785c227390399f5e51fbda518d8c03170a3b645e945e8ca72e4bb8ad3fa
+SEAL: 10df579cb5223a0a65dc4c2dbe855b073be5ca202cad3b15977547026bbc1563

@@ -19,6 +19,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Doctrine First · Discovery Without Belief · Evidence Without Authority
 
 
@@ -404,4 +411,4 @@ Truth survives because authority does not attach to it.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: 05d84d8daf70f5b02aeea83a3ba2fe353282efac2e12dc970e322a49fc2f7762
+SEAL: bc3d79a7144e39b92b4f7cb9e600e8f3eba432ae351733ada4b85dcbc959ae40

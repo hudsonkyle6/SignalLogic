@@ -43,6 +43,13 @@ Executable: No
 Authority: Signal Light Press
 Classification: WORKING
 Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
 Domain: Edition
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
@@ -501,4 +508,4 @@ XIII. FINAL CANONICAL RULE
 If the crate is wrong, the system is wrong.
 
 — END OF DOCUMENT —
-SEAL: 345663a0fdbcd1540d3087ddb0e70cd4a6c5ba75ef04d8e6699565aac9eaaae3
+SEAL: 2ead56ed65eac861e553d39c0076acce0f2a81138ea3781158752bf43632801d

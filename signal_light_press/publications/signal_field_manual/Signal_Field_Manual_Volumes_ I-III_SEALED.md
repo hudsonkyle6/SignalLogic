@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Field Manual — Volume I
 Observations on Maintenance, Margins, and Stability Under Load
 Signal Light Press — Publisher’s Introduction
@@ -449,4 +456,4 @@ Status: SEALED — CANONICAL
 ────────────────────────────────────────
 
 — END OF DOCUMENT —
-SEAL: 31a9a32acd2bb8a22b5506a2d13c2b455afffd54fa2f42d5dfc838e0c8388dec
+SEAL: 0af31c303bfcde5971ace126681ebf09443b01a4c1b62f4e79b420f49a4e1fe1

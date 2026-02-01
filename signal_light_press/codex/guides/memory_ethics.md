@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# MEMORY ETHICS — SAGE OS
 
 
@@ -122,4 +129,4 @@ All memory must be attributable, dated, and archived.
 Memory exists to serve truth, not ego.
 
 — END OF DOCUMENT —
-SEAL: c71693e58e4ef756c2ba12c8eadd816953164e4734a194ad742341b80affc8bf
+SEAL: 1763b2da99b53e2928636896f0492b77f4661b8f6d591a41e0153e200f552e23

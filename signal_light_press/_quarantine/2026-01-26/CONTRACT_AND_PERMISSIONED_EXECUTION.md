@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 📜 CONTRACTS \& PERMISSIONED EXECUTION DOCTRINE (Canonical)
 
 
@@ -393,4 +400,4 @@ Only humans may grant motion.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: 65d7718f0e7f4733075f81e3f030b60ec71b1932163a266b5ee4134821f86c4f
+SEAL: 49f593623589927449ea314b6a83a4ead670fcc5c619b174600418282e8eb0e2

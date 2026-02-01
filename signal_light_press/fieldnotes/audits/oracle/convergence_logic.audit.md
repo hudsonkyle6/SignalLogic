@@ -40,6 +40,13 @@ Domain: Fieldnotes
 Applies To: Signal Light Press (Internal)
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
 # FORMAL AUDIT DISPOSITION — rhythm_os/domain/oracle/convergence_logic.py
 
 Status: 🔒 CANONICAL AFTER FIXES  
@@ -108,4 +115,4 @@ Sealed for long-term use.
 Further modification requires doctrine change.
 
 — END OF DOCUMENT —
-SEAL: ec61de9a5f9eb5b59ed7147c33f6201bf3ac6fe338d54089ef4dbc0c827cc6b8
+SEAL: 1f95f250fd42be351d74cd7832b867f467fd247f98504e80f1fe5a7a6c08ceaa

@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 A Canonical Description of Ghost, Afterglow, and the Harmonic Memory Stack
 
 
@@ -640,4 +647,4 @@ It enables a form of intelligence rooted in nature rather than artificial abstra
 It is the memory of The Signal, and it is the foundation upon which the Helmsman will one day think.
 
 — END OF DOCUMENT —
-SEAL: 9f7c3e94b7025c94b2e590daa20fb70f71f66daa2f88e07c127d4ce3cdd33650
+SEAL: 1f452a674b26a0fd9b9f89fcc201bad148e765ca5b41c481a63ba65e3b444676

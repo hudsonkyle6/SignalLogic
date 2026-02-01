@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Signal Light Press — Canonical Doctrinal Archive
 
 STATUS: CANONICAL (NON-EXECUTABLE)
@@ -65,4 +72,4 @@ This archive is immutable except by explicit sealing actions
 under Signal Light Press authority.
 
 — END OF DOCUMENT —
-SEAL: 289593996f24df46d801a46c4cd74549c95c4d1feaa76d56521c2e34cf17f58c
+SEAL: 9f47ad061f23712ba528966c3d0a5f42587422ae2ec1d7d0c5c6a89e8c1f4aeb

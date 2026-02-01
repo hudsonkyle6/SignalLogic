@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 authoritative_roots:
   - signal_light_press/codex
   - signal_light_press/editions
@@ -125,4 +132,4 @@ header_contract_path: "signal_light_press/HEADER_CONTRACT.md"
 crypto_private_key_path: "signal_light_press/private.pem"  # Add your key path
 
 — END OF DOCUMENT —
-SEAL: 3c93416a4cce2d01a00dfacccf4ac56b2a4fc56cab9e7ce6300039936dbd389e
+SEAL: c2e1ffe686d7f827d0fc97608c79f69a14cde312c67314be7ca34668a4e16ef3

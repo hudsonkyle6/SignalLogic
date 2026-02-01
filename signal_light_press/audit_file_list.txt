@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ./audit_file_list.txt
 ./audit_tree_snapshot.txt
 ./chronicles/snapshots/manifest.yaml
@@ -193,4 +200,4 @@ Executable: No
 ./seals/wizard/HI_WIZARD_AI_STACK_REVIEW_2026-01.md
 
 — END OF DOCUMENT —
-SEAL: 77a239c2edc05b5e194faad038e881fe896a27c2d98a48ff0d473b24aa286f41
+SEAL: c6f8be97573107505697498dcd769d117ec97363ea09791e6e2d112e8a5a077a

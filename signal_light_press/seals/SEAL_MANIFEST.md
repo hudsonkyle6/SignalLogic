@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # SEAL\_MANIFEST — Signal Light Press
 
 Status: Canonical (Descriptive)
@@ -74,4 +81,4 @@ Classification: Crown Jewel
 Status: Canonical
 
 — END OF DOCUMENT —
-SEAL: dce2a5b54942bcfb0e0a5b979dcc2f2ac20d9c47de305fde7f188c8ee4045604
+SEAL: 51de64c82e5827334b07bd1b786a35320e89426a8991ac4251a0e726d7b4a184

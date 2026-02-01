@@ -19,6 +19,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 This README establishes the constitutional intent of Signal Company OS.
 
 All files, schemas, contracts, and behaviors must conform.
@@ -32,4 +39,4 @@ Date: 2026-01-16
 Seal Type: CANONICAL SEAL
 
 — END OF DOCUMENT —
-SEAL: cca9b509d84689581bef5420187d1f5b7e95550e9b7e55104603ccff36be9d9e
+SEAL: 8d747b5ddb46e515e38eea6d32766e9efd53b3cf360ff7c1a7ab29b49857bf8a

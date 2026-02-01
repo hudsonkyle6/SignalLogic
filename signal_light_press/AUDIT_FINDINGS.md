@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Signal Light Press — Audit Findings
 Status: ACTIVE AUDIT
 Authority: Signal Light Press
@@ -71,4 +78,4 @@ Timestamps: audit_timestamps.txt
 ## 6. Deferred Actions (NOT EXECUTED)
 
 — END OF DOCUMENT —
-SEAL: f9765a654a644954f89632fee1cef0f4f42d911c5566a81826670f52b4615ca5
+SEAL: e7872d397018625cb40f0ed01d72f9dded6409a17cf466441d748590dafd7ccb

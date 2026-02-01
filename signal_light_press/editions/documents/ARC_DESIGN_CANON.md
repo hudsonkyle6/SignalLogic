@@ -43,6 +43,13 @@ Executable: No
 Authority: Signal Light Press
 Classification: WORKING
 Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
 Domain: Edition
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
@@ -379,4 +386,4 @@ VIII. CANONICAL RULE
 An Arc is a promise to endure disruption without panic.
 
 — END OF DOCUMENT —
-SEAL: 388d7cf1b23a751487fae73421db32226101b705e2c1bf7c4b0873b0b3eea835
+SEAL: c3e6dfc82168ac861a2845f577ce1ee40186fcd1e559467eea930e9010837961

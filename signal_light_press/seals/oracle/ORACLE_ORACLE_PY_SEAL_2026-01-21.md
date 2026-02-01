@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # SEAL — rhythm_os/domain/oracle/oracle.py
 Date: 2026-01-21
 Status: SEALED
@@ -58,4 +65,4 @@ Decision Power: Zero
 - Downstream interpretation remains outside Oracle.
 
 — END OF DOCUMENT —
-SEAL: 679129eeafc7b4594abc5b494567172d4c7843c2fa0588b74bf02d7b3d29f1c8
+SEAL: 911085e21776d83d2f806803ca9bf5de7026c05b8cf5c860b4fde498e7639bc4

@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Into the Interior
 
 
@@ -173,4 +180,4 @@ The task of modern society is not to eliminate darkness, but to build structures
 Conrad did not offer hope. He offered a warning. Warnings, unlike solutions, require memory. And memory—collective, moral, historical—may be the last defense against the interior.
 
 — END OF DOCUMENT —
-SEAL: bf542f38ec5e3cc7763ea12e76b503048791e69b28790e567f3d9886acfab285
+SEAL: f39ed59edc34a59923858c9b5413ab837b0342e72fd343668ec6082ec26f038d

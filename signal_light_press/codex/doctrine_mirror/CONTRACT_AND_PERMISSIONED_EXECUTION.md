@@ -12,6 +12,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Doctrine First · Permission Is Explicit · Action Is Borrowed
 
 
@@ -345,4 +352,4 @@ Only humans may grant motion.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: de5d6120dfd0ff5d8844c94f49ed432ad832e2c141669b0716359cebf4c7bd31
+SEAL: 75cd054e8709523ad8304ee428ee5d817a64d94b52742cf89da3a33e2d5fc089

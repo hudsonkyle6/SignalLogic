@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Temporal Individuation and the Limits of Responsibility
 
 
@@ -299,4 +306,4 @@ Signal Light Press
 Authority preserved.
 
 — END OF DOCUMENT —
-SEAL: 2d0a1c66919667079c8a865620639fd7bbac836050d38a5e4c3a69ee658c175c
+SEAL: 980ce19c7b452a03e39c749606a1568f9f2fabdbafccd02ffec9996669f3aadf

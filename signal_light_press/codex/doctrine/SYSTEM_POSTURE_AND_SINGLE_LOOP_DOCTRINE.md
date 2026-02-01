@@ -19,6 +19,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Doctrine First · One Loop · No Escape
 
 
@@ -410,4 +417,4 @@ Anything else is drift.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: 8e0eda99829a4a0a10372da9ae1c3742b77e0e6bce1f2293a821063a46c5e072
+SEAL: 1cc578395fc2aa7677e73b87a29d2a2642f28096697067da62115ab30d35e7a0

@@ -40,6 +40,13 @@ Domain: Fieldnotes
 Applies To: Signal Light Press (Internal)
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: ARCHIVE
+Status: ARCHIVED
+Domain: Fieldnotes
+Applies To: Signal Light Press (Internal)
+Amendment Rule: Signal Light Press only
+Executable: No
 # Governance Engine Room Build Brief — 2026-01-23
 
 Classification: Fieldnote
@@ -94,4 +101,4 @@ Canon/Doctrine/Seal headers and enforcement policy.
 ────────────────────────────────────────
 
 — END OF DOCUMENT —
-SEAL: 3d1b98d447c3d35fb809cd63201b5f6255e74d3867b9333a1e5222a5decb0b2c
+SEAL: cfd4814735868e14ba9d4b5419acf6a00e15bd260f70eecefdca30b06133be22

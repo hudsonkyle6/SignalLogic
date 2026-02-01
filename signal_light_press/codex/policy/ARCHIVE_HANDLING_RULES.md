@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Scope: All archival material under Signal Light Press custody
 \## Purpose
 
@@ -211,4 +218,4 @@ It is optimized for truth.
 © Signal Light Press
 
 — END OF DOCUMENT —
-SEAL: 668195531dee643bc16417643b81eaf08c4fa9100615a9f2c8377448ad3841f3
+SEAL: e78487f0c67d9ee5dfcfdfbefc1c32c3c632acc3b24b58e433a8e0a227e775ec

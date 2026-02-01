@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 It establishes the theoretical basis for Ghost, Afterglow, historical pressure, and why the past cannot be erased—only cooled.
 
 
@@ -449,4 +456,4 @@ X. CANONICAL RULE
 Unacknowledged memory expresses itself as instability.
 
 — END OF DOCUMENT —
-SEAL: 26931564956a6c58425dd423fa9083a5b66686105a3e2dc869a1f1f5ea2ab50c
+SEAL: 9addbeb84cf0f5d5c25fb10df1dbfd44fe9815c25652be9b0bd7549fee698d57

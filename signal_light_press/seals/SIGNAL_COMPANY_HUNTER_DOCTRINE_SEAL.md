@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \## SEAL ENTRY — 2026-01-16
 
 
@@ -75,4 +82,4 @@ Notes:
 This seal completes the Detection layer of the Continuity Covenant.
 
 — END OF DOCUMENT —
-SEAL: 8917c8a198ee2c76dea6c64c8f16f3fb9d91a4b814fb8e70ba431dcc4dc1c74a
+SEAL: dc554f5a5bf3066883c2fe8bb57cf42eff72cdac9fe161b8324be55e43a61f21

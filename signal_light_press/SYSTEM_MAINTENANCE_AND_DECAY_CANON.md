@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 SIGNAL COMPANY — SYSTEM MAINTENANCE & DECAY CANON
 
 Authority: Signal Light Press (Kernel)
@@ -224,4 +231,4 @@ STATUS
 DECAY_CANON = SEALED
 
 — END OF DOCUMENT —
-SEAL: f08843d41cf1ad7ef91828b881ba86abd0f8f3e9eda9165d29045d0a3e669fd6
+SEAL: fc9ab9d00a0eb8d308aa39db50db8b55539ab1ff50276c270d514d11767719fb

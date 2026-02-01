@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 I. ROLE DEFINITION (PLAIN)
 
 Machine assistance is staff work.
@@ -196,4 +203,4 @@ It sharpens tools.
 It never swings the axe.
 
 — END OF DOCUMENT —
-SEAL: f1bf694770291846445bd677de7ad849b8d9e32c2be1c6b980d86bd19ddb77df
+SEAL: ef437cb2b78e85d88451e9b4d0af149ff9f9281eb3759704ca35004637988a0f

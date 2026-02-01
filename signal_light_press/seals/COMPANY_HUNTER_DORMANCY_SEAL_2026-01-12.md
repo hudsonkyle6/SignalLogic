@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# CANONICAL SEAL — COMPANY HUNTER DORMANCY \& ACTIVATION
 
 
@@ -91,4 +98,4 @@ Status: SEALED
 Authority: Signal Light Press
 
 — END OF DOCUMENT —
-SEAL: 29e37ef9b79bce115ce43867bfab6e045615a00669dabad3e1a3cf829b8e12da
+SEAL: d194bd0319a02327c953556e63a978869ef8a7641ba0aa1851a8897ebe779063

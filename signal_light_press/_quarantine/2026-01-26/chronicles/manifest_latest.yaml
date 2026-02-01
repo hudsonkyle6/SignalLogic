@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # chronicles/manifest_latest.yaml
 # Status: Canonical (Descriptive)
 # Authority: Signal Light Press
@@ -53,4 +60,4 @@ latest:
   seal_reference: "UNSET"
 
 — END OF DOCUMENT —
-SEAL: 6ad935fa60dfe30dad910165f0e282ab228baf58e47cd4d56d9431c4086ce353
+SEAL: 242092bff328e2ef1304cf70d36d0523b0e1ada65e42f1244d6be39b678395ae

@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # HEADER_TEMPLATES — Signal Light Press
 
 Status: Reference
@@ -68,4 +75,4 @@ NOTE:
 Existing .header_*.md files remain, but this file is the consolidated human reference.
 
 — END OF DOCUMENT —
-SEAL: 5b42e6fb1ee7b8cd0384c8e5b958d49a797bfa59be67c805539a58cc13b47395
+SEAL: 2decd5af0e5293636cb04e5f386bcbabeac46de66caf59698ddd2e4356963fa7

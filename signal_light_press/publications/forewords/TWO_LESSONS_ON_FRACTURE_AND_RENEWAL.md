@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Light Press
 
 A publication of the Signal Company LLC
@@ -169,4 +176,4 @@ Stillwater reflects the sky, but beneath lies depth, so it is with America. We m
 Beneath still waters the loudest signals sleep.
 
 — END OF DOCUMENT —
-SEAL: 072a568e7e33f3c0de819bb86ef128e0254ebaf0803aee09a01a4093aad3652f
+SEAL: 3ea4f59fb56d135393f0e811bcaa66fe9d4a52b15862725722bb84b4197b9b45

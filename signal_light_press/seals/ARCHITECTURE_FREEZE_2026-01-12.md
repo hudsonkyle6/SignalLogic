@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# ARCHITECTURE FREEZE — SIGNAL COMPANY (3-4-7)
 
 
@@ -81,4 +88,4 @@ This seal exists to prevent drift during execution.
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: 7adef45be704350509e58d70c70dde22627a4d174aa97e3d464082ae485f238c
+SEAL: f1164a22d427340b615907c50e9619929fa5e54b4465451b061caaf40361107a

@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 codex
 seals
 chronicles
@@ -58,4 +65,4 @@ IP_ENFORCEMENT_CHECKLIST.md
 KERNEL_TO_OS_BRIDGE.md
 
 — END OF DOCUMENT —
-SEAL: e61cec3a178435735ce535626f72d43d0637b0addfb2796a548a87d6c34b6be2
+SEAL: 191b142a3f045ce4049c24ee7b1b5a55ce46c5dbcf47be700da269771fa4e673

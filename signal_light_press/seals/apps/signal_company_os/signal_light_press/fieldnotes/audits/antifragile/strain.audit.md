@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # FORMAL AUDIT DISPOSITION — antifragile/strain.py
 
 Status: 🔒 CANONICAL AFTER WORDING ETCH  
@@ -70,4 +77,4 @@ Mathematics may be conservative; semantics may not.
 This file now conforms.
 
 — END OF DOCUMENT —
-SEAL: 85eace894c2e9b4145aad6723f05b5664f89f0ea513fdfae31ae25d8c6b2afe0
+SEAL: 59dbb6d2451d55ae5e956492156e345f34e1f2a8b3855e4cb2ae3211c16f2071

@@ -43,6 +43,13 @@ Executable: No
 Authority: Signal Light Press
 Classification: WORKING
 Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
 Domain: Edition
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
@@ -548,4 +555,4 @@ This document defines the maximum extent to which control is permitted within Si
 — Sealed under Signal Light Press, December 2025
 
 — END OF DOCUMENT —
-SEAL: 36892bfa5c80b07241fab4da279dc348391db3176b17a79d197a343d1337de4c
+SEAL: f877b7371bb3f6a67302b301b9eafb1ae05518717b57bda0bc140acee20b15a7

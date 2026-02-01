@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 CANONICAL_ROOTS.md
 chronicles/manifest_latest.yaml
 chronicles/RECOVERY_RITUAL.md
@@ -288,4 +295,4 @@ seals/SYSTEM_BOUNDARIES_SEAL_20-01-26.md
 seals/wizard/HI_WIZARD_AI_STACK_REVIEW_2026-01.md
 
 — END OF DOCUMENT —
-SEAL: 0e852cdec428cb03cecc5c1cf0cc50df38891f150baed776c99c0fa5c3050f4c
+SEAL: 0a9b58ed0800c391c3f954d5f3601248aabe5dac4ec680adcbe039706e091f01

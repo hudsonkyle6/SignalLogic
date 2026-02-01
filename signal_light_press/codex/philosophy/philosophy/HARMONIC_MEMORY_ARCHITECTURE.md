@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 THE SIGNAL COMPANY
 HARMONIC MEMORY ARCHITECTURE — WHITE PAPER (v1.0)
 A Canonical Description of Oscillatory Memory, Decay, and Survivability
@@ -603,4 +610,4 @@ Intelligence is oscillatory, not accumulative
 Survivability precedes optimization
 
 — END OF DOCUMENT —
-SEAL: e2408d5b60484fd1907270c3d95b3f7f9de774542a9f928beaa4da02042e56cc
+SEAL: 0989534a128470d95a5174c783319ef30489992180b7b0a7e7727f8eacab4cfa

@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# Rhythm OS — Course I \& Course II-B Canonical Seal
 
 
@@ -246,4 +253,4 @@ Status:
 SEALED · REFERENTIAL · NON-EXECUTABLE
 
 — END OF DOCUMENT —
-SEAL: 9d04d1104f867652325e1db7b5aea979b39cd4524851a92c6e21b0b2cffefb9a
+SEAL: 342b3cce2dda07c632f26c8a7c05fca5ea7d13688120aa997c47f91dc5dc11e5

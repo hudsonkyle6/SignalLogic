@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# Signal Light Press
 
 
@@ -267,4 +274,4 @@ Stability is preferred over motion.
 See: `codex/canon/RHYTHM_OS_SYSTEM_CARTOGRAPHY.md`
 
 — END OF DOCUMENT —
-SEAL: 625c790ce6521969bbd95b7b37bc7af7a2fb5b21b25e4760896fb477d0ef8bd9
+SEAL: ce1aafb1b02aa8623912485b2f625ed58ae047ec5b8154af3967e553cbc7625c

@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Scope: Signal Light Press Governance
 ────────────────────────────────────────
 
@@ -70,4 +77,4 @@ are insufficient.
 ────────────────────────────────────────
 
 — END OF DOCUMENT —
-SEAL: 4f9d7ad384c02b2df9870eec67b31e7f0a5ebfab614173389a661b4f2fa55337
+SEAL: 9e9c9f2259d0e273c38a31e1862042934b2cd98d773fd5ee832c4deee82b3858

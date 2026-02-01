@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Signal Company Core — CAN Bus Model Mapping
 All former scripts and files you sent are mapped into the new CAN bus structure below. Each component is placed where it fits logically, with a short description of why it's there, what it does, and how it flows in the CAN style (distributed nodes, message-passing, coherence arbitration).
 
@@ -204,4 +211,4 @@ Distributed observers that observe, phase-align, and broadcast packets when loca
 END OF SIGNAL COMPANY CORE DOCUMENT
 
 — END OF DOCUMENT —
-SEAL: 2fa6d1aa8ea44772d827d1f6544f4ebca868e4111fa5a4e4bc6788ec5b0863d8
+SEAL: bf368b3ffe013a7536cd71e7d94a448cb983f6b1a47eb152135fb3e5c4101266

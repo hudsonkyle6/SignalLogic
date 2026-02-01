@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 THE CONTINUITY COVENANT
 
 (Constitutional Law of Change)
@@ -190,4 +197,4 @@ This covenant prefers honest preservation over poisoned renewal.
 End of Document 1
 
 — END OF DOCUMENT —
-SEAL: 186ce44e40b18f7a0093e586b442fe1c00065dae280479647b59b03ab44c9a88
+SEAL: e24cebaa939c95bab06fcb927d6fb269fd9ee846ba33bf6803a9952f49625c4d

@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Canonical Architecture for Multi-Domain Extension
 
 
@@ -554,4 +561,4 @@ That decision always remains human.
 End of Canon
 
 — END OF DOCUMENT —
-SEAL: f9383896a088a377de77b07d0080d2c1efb49bc6fdc7fc42c30d30fd785f1fd0
+SEAL: 8c4026119478c21cd20e171db694dc4f77990bc4c482e9bf144a1b94cc9123e9

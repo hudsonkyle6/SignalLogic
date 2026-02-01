@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Signal Light Press — Seals
 
 This directory contains **sealed canonical documents** issued by Signal Light Press.
@@ -68,4 +75,4 @@ The kernel (Rhythm OS core) does **not** depend on these files.
 All seals are applied **from above**, by human authority, after the fact.
 
 — END OF DOCUMENT —
-SEAL: b28b417475c22c45fbe1e059107249393f758b91dc8d84ed07c73f2ea8b02f6e
+SEAL: d835400a86cef172a8e5c23b4d6f490cdd7afe3678a19f6762a898ea7f96eab5

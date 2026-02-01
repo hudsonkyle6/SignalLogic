@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \# ORACLE — Canonical Phase Vocabulary (v1)
 
 
@@ -164,4 +171,4 @@ Instability or ambiguity — no commitments allowed.
 Date: 2026-01-18
 
 — END OF DOCUMENT —
-SEAL: 1d5b8e4caa911d2a913513cc4336f4296fb0bf27ddb9c1ca473f26cb397fc20c
+SEAL: 85a1faf35dd40bf95796650087cf0b34715ff114a393f7c8d12d53f124d124e7

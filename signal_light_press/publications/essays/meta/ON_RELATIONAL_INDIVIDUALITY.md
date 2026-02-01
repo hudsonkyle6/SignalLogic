@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ON RELATIONAL INDIVIDUALITY
 
 Signal Light Press
@@ -182,4 +189,4 @@ To govern only where experience grants orientation.
 In this way, systems—natural, human, and artificial—may be allowed not merely to function, but to become themselves.
 
 — END OF DOCUMENT —
-SEAL: 4136a9e1110f485a396f27d7eb1ccb67f5d38f43d2ad77fa8b7b47dd96960994
+SEAL: 2909afebf74302f5b1adce0dbd52c31c843d48953fa739f9588ca0deabfec927

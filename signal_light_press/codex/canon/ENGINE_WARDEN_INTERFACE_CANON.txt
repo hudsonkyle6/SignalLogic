@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Signal Light Press — Canonical Governance Document
 
 This document defines the lawful interfaces between the Engines (Oracle, Sage, Shepherd, Helmsman) and the Wardens (Sea, Hearth, Craft).
@@ -318,4 +325,4 @@ VIII. CANONICAL RULE
 Industry expresses intelligence — it does not generate it.
 
 — END OF DOCUMENT —
-SEAL: 6380a11ea50db9ab56d02fdf361a514f51307dbd2037791f4dd648df36069a3b
+SEAL: 8a348a83b3b6eb210f8fd733a6050df3c01443b804c3d50b2a6e124ec15af1ed

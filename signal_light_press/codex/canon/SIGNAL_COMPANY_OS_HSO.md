@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Canonical Description
 
 
@@ -440,4 +447,4 @@ When perspective forms, HSO may describe—but never compel.
 End of Canon
 
 — END OF DOCUMENT —
-SEAL: 331fa4bbf96eda9c67f42604b9583ce6f29cba83049fe154da440a266afab678
+SEAL: 95fc40d3f3c1197f5282bfab69601c68908141933b0b8d086768b7acd6a079b6

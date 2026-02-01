@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # IP_ENFORCEMENT_CHECKLIST — Signal Light Press
 
 Status: Canonical (Descriptive)
@@ -61,4 +68,4 @@ Every new file added to the kernel must have:
 - [ ] Checksums regenerated only after adjudication
 
 — END OF DOCUMENT —
-SEAL: 14ad1b78006542ac47309a29a4bd5c14418cacfbcf6b84766675e7d0f3bea271
+SEAL: f5849cb5a63da0f32254038fd874455c777af667451b5c2e9aeec8ce8561929f

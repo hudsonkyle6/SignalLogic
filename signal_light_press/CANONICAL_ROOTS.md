@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # Canonical Roots — Signal Light Press
 
 Status: Declarative
@@ -66,4 +73,4 @@ Date: 2026-01-22
 No file outside the authoritative directories may assert canon.
 
 — END OF DOCUMENT —
-SEAL: 9fae12a9db6b3ade4bfa7ae2ca3780340fdee4a9f76bf5376ed5e26c4d85ee83
+SEAL: b6350f3b7de117a45ba9b40ebcce48fd0af11a0deb58c0b9764f4cd02517c204

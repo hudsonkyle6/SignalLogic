@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 PURPOSE
 
 This doctrine defines what Signal systems may treat as true, inferred, remembered, or unknown.
@@ -96,4 +103,4 @@ This doctrine is binding.
 — Sealed under Signal Light Press, December 2025
 
 — END OF DOCUMENT —
-SEAL: 94c2a58991831f60b59805554214504b79984cce91fdd4b2a85bec437218dbf6
+SEAL: e8d07d0d5208c0ee9edaaf6655cd1e72c72471aba7e51955848e65aa41285ac5

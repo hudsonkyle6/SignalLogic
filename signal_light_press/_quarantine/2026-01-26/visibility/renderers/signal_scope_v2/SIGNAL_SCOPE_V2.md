@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # SIGNAL_SCOPE_V2
 
 Authority: Signal Light Press
@@ -62,4 +69,4 @@ It renders previously observed Wave data only.
 Rendered output must be comparable across independent renderers.
 
 — END OF DOCUMENT —
-SEAL: 26f595349580c0457e62236ca22a995f3ba102eeaf419a0ae05c1f51372cbeee
+SEAL: f517d2d828e3848d6ac36ce6ce6476d3f86eeba9118df50197593c66e6fe360f

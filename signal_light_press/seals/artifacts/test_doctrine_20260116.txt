@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 Hybrid Cycle Test - 2026-01-16
 Status: PASS - Full round-trip integrity (100% match on preserved fields)
 Original: test_doctrine_cycle.osc.json
@@ -52,4 +59,4 @@ Tests confirm: oscillatory memory survives export/re-import without loss.
 Preserve by default. Detect before destroying. When detection is impossible without exposure, allow provisional entanglement under constraint. Destroy only in service of what has proven itself.
 
 — END OF DOCUMENT —
-SEAL: 8547f826df9c58729c718fde0a63349af7c3b6ffd179b303401e01e982a2ec43
+SEAL: 972d4030666b2f4c31a5d1da122e454a022c601a8f71e427843597287bc60a0a

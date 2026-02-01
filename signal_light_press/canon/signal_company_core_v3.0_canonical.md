@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 # The Signal Company Core
 A Temporal Helmsman for Disciplined Autonomy (AUD)
 
@@ -357,4 +364,4 @@ READY_FOR=(
 END OF CANONICAL CORE
 
 — END OF DOCUMENT —
-SEAL: 5b92f5f53f7ea1f37df5faaf5d27b834f62bb60e528b68fc18dc0e504e24e48c
+SEAL: b913b39fdb89161a0389b957687619e8693eb7e5cbc48cbbbb907106dddf2bf2

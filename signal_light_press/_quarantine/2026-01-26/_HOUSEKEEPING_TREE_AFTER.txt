@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 .
 ./.header_DOCTRINAL_MIRROR.md
 ./.header_freeze.md
@@ -410,4 +417,4 @@ Executable: No
 ./_HOUSEKEEPING_TREE_BEFORE.txt
 
 — END OF DOCUMENT —
-SEAL: f2e4f57b9281e6891f7b88075f096c69e2a071e6698513b575761cd8d160a541
+SEAL: 1f7a00010a69f77d0682eb88cc44ea737b75fa09c2929986214d92d3e46c3ae4

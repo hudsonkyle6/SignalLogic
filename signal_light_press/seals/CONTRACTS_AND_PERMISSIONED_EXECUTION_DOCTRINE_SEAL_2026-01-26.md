@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 📜 CANONICAL SEAL
 
 Document:
@@ -76,4 +83,4 @@ All amendments require Signal Light Press adjudication.
 — Signal Light Press
 
 — END OF DOCUMENT —
-SEAL: ec25ec06599213acdb55e3f49b0d7b1e24abc2228b02389a3c5ed6de04e5bec4
+SEAL: cd766b736cfdb70e7c028787e0e4ebb4ae891e5475c4298a3fc2f8e26cedb2c1

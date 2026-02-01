@@ -40,6 +40,13 @@ Domain: Document
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: WORKING
+Status: DRAFT
+Domain: Document
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 codex/canon/FAILURE_TAXONOMY.md
 codex/canon/HI_WIZARD_AI_OSCILLATORY_STACK.md
 codex/canon/MASTER_IP_INDEX.md
@@ -137,4 +144,4 @@ seals/SYSTEM_BOUNDARIES_SEAL_20-01-26.md
 seals/wizard/HI_WIZARD_AI_STACK_REVIEW_2026-01.md
 
 — END OF DOCUMENT —
-SEAL: a71b12b44b22b2d7ebe9c1954e4814994d363a26969f42299f228761c36234c7
+SEAL: d6191dc448556efb1f284550e433b3455c16474b99c48caa7673c4394122a4fa

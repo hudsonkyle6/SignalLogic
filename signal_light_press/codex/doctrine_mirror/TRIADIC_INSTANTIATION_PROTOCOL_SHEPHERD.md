@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 \## PURPOSE
 
 This protocol prevents contamination between corporate systems and private lineage systems.
@@ -98,4 +105,4 @@ Corporate cleanliness and personal sovereignty are preserved by separation, not 
 Status: SEALED
 
 — END OF DOCUMENT —
-SEAL: fcd596f0bdfa7b82a2c204b0e4e1150618c9060436f0176bf5128c20d5b73963
+SEAL: a29c49a5526825ba9de156dc34c0f92de3a17958f326697c55755fff5ff6cafa

@@ -47,6 +47,13 @@ Domain: Codex
 Applies To: Signal Light Press
 Amendment Rule: Signal Light Press only
 Executable: No
+Authority: Signal Light Press
+Classification: CROWN JEWEL
+Status: CANONICAL
+Domain: Codex
+Applies To: Signal Light Press
+Amendment Rule: Signal Light Press only
+Executable: No
 ## Binding Doctrine
 - SYSTEM_BOUNDARIES.md
 - SHEPHERD_POSTURE_DOCTRINE.md
@@ -65,4 +72,4 @@ Mirror doctrine exists in /codex/doctrine_mirror
 and is non-authoritative unless explicitly referenced.
 
 — END OF DOCUMENT —
-SEAL: d46300e5193ff5f97e84ee44db38784713bbba6beb6739e9ed7844f94aa133c1
+SEAL: fbfe71d09b4c0f3463f05a9432c5e191597997b461b415d93bf22939cf346c6e
