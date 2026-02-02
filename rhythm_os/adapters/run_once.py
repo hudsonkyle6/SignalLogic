@@ -1,3 +1,22 @@
+# run_once.py
+"""
+DIAGNOSTIC-ONLY MODULE
+
+This script performs a single, read-only observatory pass:
+- computes the sovereign field reference
+- evaluates alignment and convergence geometry
+- renders optional diagnostic visualization
+
+It CANNOT:
+- authorize action
+- emit actuation packets
+- open execution gates
+- evaluate mandates
+- express or imply authority of any kind
+
+System posture: OBSERVATORY_ONLY
+"""
+
 from __future__ import annotations
 
 import time
@@ -10,21 +29,12 @@ from rhythm_os.adapters.observe.synthetic_multi import (
     generate_multi_channel_synthetic,
 )
 
-# Oracle (geometry only)
-from rhythm_os.domain.oracle.phase import (
-    describe_alignment,
-    summarize_convergence,
-)
+# ORACLE — geometry & description only
+from rhythm_os.domain.oracle.phase import describe_alignment
 from rhythm_os.domain.oracle.convergence_logic import OracleConvergence
 from rhythm_os.domain.oracle.phase_emitter import emit_oracle_phase
 
-# Shepherd (sole authority)
-from rhythm_os.domain.shepherd import run_shepherd
-
-# Execution gate (inert)
-from rhythm_os.domain.execution.gate import evaluate_execution_gate
-
-# PRESENTATION ONLY (passive)
+# PRESENTATION ONLY (passive, read-only)
 from rhythm_os.ui.signal_dashboard import render_signal_dashboard
 
 
@@ -36,16 +46,20 @@ def run_once(
     render_dashboard: bool = True,
 ) -> Dict[str, Any]:
     """
-    Execute one full, sovereign Rhythm OS pass.
+    Execute one diagnostic observatory pass.
 
     This function:
-    - Owns time
-    - Computes field and domain observations
-    - Runs Oracle (descriptive only)
-    - Runs Shepherd (sole authority)
-    - Evaluates execution gate (inert)
-    - Optionally renders the diagnostic dashboard
-    - Returns a complete envelope
+    - computes the sovereign field reference
+    - generates optional synthetic domain observations
+    - runs Oracle geometry (descriptive only)
+    - emits no authority, posture, or decisions
+    - optionally renders a read-only diagnostic dashboard
+
+    This function CANNOT:
+    - authorize action
+    - evaluate execution
+    - open gates
+    - respond to mandates
     """
 
     # -----------------------------------------------------------------
@@ -55,13 +69,13 @@ def run_once(
     run_id = run_id or uuid.uuid4().hex
 
     # -----------------------------------------------------------------
-    # 1. Sovereign Field
+    # 1. Sovereign Field (physics only)
     # -----------------------------------------------------------------
     field_sample = compute_field(t_now)
     field_waves = materialize_field_waves(field_sample)
 
     # -----------------------------------------------------------------
-    # 2. Domain Observation
+    # 2. Domain Observation (optional synthetic input)
     # -----------------------------------------------------------------
     domain_waves = []
     if synthetic_channels:
@@ -71,7 +85,7 @@ def run_once(
         )
 
     # -----------------------------------------------------------------
-    # 3. ORACLE — descriptive only (sealed)
+    # 3. ORACLE — descriptive geometry only
     # -----------------------------------------------------------------
     oracle_descriptors = describe_alignment(
         t_ref=t_now,
@@ -94,36 +108,7 @@ def run_once(
     )
 
     # -----------------------------------------------------------------
-    # 4. SAGE — optional advisory context
-    # -----------------------------------------------------------------
-    sage_context = None
-    try:
-        from rhythm_os.domain.sage import run_sage
-
-        sage_context = run_sage(
-            oracle_descriptors=oracle_descriptors,
-            oracle_convergence=oracle_convergence,
-        )
-    except ImportError:
-        pass
-
-    # -----------------------------------------------------------------
-    # 5. SHEPHERD — sole authority
-    # -----------------------------------------------------------------
-    shepherd_posture = run_shepherd(
-        oracle_convergence=oracle_convergence,
-        sage_context=sage_context,
-    )
-
-    # -----------------------------------------------------------------
-    # 6. EXECUTION GATE — inert, declarative
-    # -----------------------------------------------------------------
-    execution_gate = evaluate_execution_gate(
-        shepherd_posture=shepherd_posture,
-    )
-
-    # -----------------------------------------------------------------
-    # 7. DASHBOARD — presentation only (no authority)
+    # 4. DASHBOARD — presentation only (no authority)
     # -----------------------------------------------------------------
     if render_dashboard:
         render_signal_dashboard(
@@ -134,13 +119,10 @@ def run_once(
             oracle_descriptors=oracle_descriptors,
             oracle_convergence=oracle_convergence,
             oracle_phase=oracle_phase,
-            shepherd_posture=shepherd_posture,
-            execution_gate=execution_gate,
-            context=sage_context or {},
         )
 
     # -----------------------------------------------------------------
-    # 8. Return Envelope
+    # 5. Return Diagnostic Envelope
     # -----------------------------------------------------------------
     return {
         "run_id": run_id,
@@ -151,7 +133,4 @@ def run_once(
         "oracle_descriptors": oracle_descriptors,
         "oracle_convergence": oracle_convergence,
         "oracle_phase": oracle_phase,
-        "sage_context": sage_context,
-        "shepherd_posture": shepherd_posture,
-        "execution_gate": execution_gate,
     }
