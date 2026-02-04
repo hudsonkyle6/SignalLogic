@@ -23,3 +23,6 @@ target-version = "py311"
 [tool.mypy]
 python_version = "3.11"
 ignore_missing_imports = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/signal_core"]
