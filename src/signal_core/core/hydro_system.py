@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# apps/signal_core/core/hydro_system.py
+# signal_core/core/hydro_system.py
 """
 Signal Hydro System
 Canonical Operational Backbone
@@ -28,7 +28,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from apps.signal_core.core.hydro_ingress_gate import evaluate_hydro_ingress_gate
+from signal_core.core.hydro_ingress_gate import evaluate_hydro_ingress_gate
 
 # Canonical riverbed writer (Hydro-only ingress)
 from rhythm_os.core.dark_field.store import append_wave_from_hydro
