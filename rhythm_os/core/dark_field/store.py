@@ -1,32 +1,23 @@
 # rhythm_os/core/dark_field/store.py
 
 """
-DARK FIELD — Append-Only Wave Archive
+IMMUTABLE DARK FIELD STORE
 
-Role:
-- Immutable memory
-- Non-actionable observation store
-- Coherence substrate (read-only for others)
+This module is Hydro-owned.
 
-Governance:
-- Assist Under Discipline
-- No evaluation
-- No mutation
-- No authority
+Rules:
+- May only be called by Hydro Basin 1
+- All Waves must have passed the Hydro Ingress Gate
+- Observatory and extractors must never call this directly
 
-DOCTRINE — ECOTONE BOOTSTRAP RULE
-- Persistence edges bootstrap lazily on first lawful use.
-- No eager filesystem creation at import / definition time.
-- Silence (absence of structure) is recoverable.
-- Side effects occur only as a byproduct of append, never on import.
-
-This module ONLY appends sealed Waves.
+If this module is imported outside Hydro, that is a violation.
 """
+
 
 from __future__ import annotations
 
 from pathlib import Path
-from datetime import date
+from datetime import datetime,timezone
 from typing import Optional
 
 from rhythm_os.core.wave.wave import Wave
@@ -56,7 +47,7 @@ def _daily_file(anchor_date: date) -> Path:
 # APPEND-ONLY WRITE (activation boundary)
 # ---------------------------------------------------------------------
 
-def append_wave(wave: Wave, *, anchor_date: Optional[date] = None) -> Path:
+def append_wave_from_hydro(wave: Wave, *, anchor_date: Optional[date] = None) -> Path:
     """
     Append a sealed Wave to the Dark Field.
 
@@ -69,9 +60,20 @@ def append_wave(wave: Wave, *, anchor_date: Optional[date] = None) -> Path:
     Ecotone behavior:
     - Directory structure bootstraps lazily on first append.
     """
+    
 
     if anchor_date is None:
-        anchor_date = wave.timestamp.date()
+        try:
+            # Wave.timestamp is ISO-8601 string by contract
+            ts = datetime.fromisoformat(wave.timestamp)
+        except Exception:
+            # Absolute fallback — should never happen, but stays safe
+            ts = datetime.now(timezone.utc)
+
+        anchor_date = ts.date()
+
+    
+        
 
     path = _daily_file(anchor_date)
 

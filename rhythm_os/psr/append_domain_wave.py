@@ -1,4 +1,5 @@
 # NOTE: This function must never create paths, retry writes, or infer intent.
+#append_domain_wave.py
 
 from pathlib import Path
 from rhythm_os.psr.domain_wave import DomainWave

@@ -70,9 +70,12 @@ def emit_antifragile_state(
     """
 
     # Load recent waves (silence is valid)
-    waves = load_recent_domain_waves(bus_dir, t_ref, history_window_sec)
-    if not waves:
-        return
+    waves = load_recent_domain_waves(
+        bus_dir=bus_dir,
+        t_ref=t_ref,
+        history_window_sec=history_window_sec,
+    )
+
 
     # Extract configured source series
     src = [
