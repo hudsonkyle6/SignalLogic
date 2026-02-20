@@ -37,11 +37,13 @@ class WaveView(Protocol):
     The scope may only render what already exists.
     """
     t: float
-    coherence: float
+    phase: float
+    amplitude: float
+    afterglow_decay: float
+    # optional convenience fields if adapters provide them
     phase_spread: float
     buffer_margin: float
     persistence: int
-
     drift: Optional[float]
     afterglow: Optional[float]
 
@@ -84,44 +86,49 @@ def render_scope(
         print("═" * 80 + "\n")
         return
 
-    _label("COHERENCE")
+    # -------------------------------------------------------------
+    # COHERENCE (CARRIER = Wave.amplitude)
+    # -------------------------------------------------------------
+    _label("COHERENCE (PHASE-LOCK CARRIER: amplitude 0–1)")
     for w in waves:
-        print(_bar(_clamp01(w.coherence)))
+        print(_bar(_clamp01(getattr(w, "amplitude", 0.0))))
 
+    # -------------------------------------------------------------
+    # PHASE SPREAD (if provided by adapter)
+    # -------------------------------------------------------------
     _label("PHASE SPREAD")
     for w in waves:
-        norm = min(1.0, abs(float(w.phase_spread)) / math.pi)
+        ps = float(getattr(w, "phase_spread", 0.0))
+        norm = min(1.0, abs(ps) / math.pi)
         print(_bar(norm))
 
+    # -------------------------------------------------------------
+    # BUFFER PROXIMITY (if provided by adapter)
+    # -------------------------------------------------------------
     _label("BUFFER PROXIMITY")
     for w in waves:
-        proximity = 1.0 - _clamp01(w.buffer_margin)
+        bm = float(getattr(w, "buffer_margin", 1.0))
+        proximity = 1.0 - _clamp01(bm)
         print(_bar(proximity))
 
+    # -------------------------------------------------------------
+    # PERSISTENCE (if provided by adapter)
+    # -------------------------------------------------------------
     _label("PERSISTENCE")
-    max_p = max((int(w.persistence) for w in waves), default=1)
+    max_p = max((int(getattr(w, "persistence", 0)) for w in waves), default=1)
     max_p = max(max_p, 1)
     for w in waves:
-        print(_bar(int(w.persistence) / max_p))
+        p = int(getattr(w, "persistence", 0))
+        print(_bar(p / max_p))
 
-    if any(getattr(w, "drift", None) is not None for w in waves):
-        _label("DRIFT (ABSOLUTE)")
-        max_d = max((abs(float(w.drift)) for w in waves if w.drift is not None), default=1.0)
-        max_d = max(max_d, 1e-9)
-        for w in waves:
-            d = abs(float(w.drift)) if w.drift is not None else 0.0
-            print(_bar(min(1.0, d / max_d)))
-
+    # -------------------------------------------------------------
+    # AFTERGLOW (if provided by adapter)
+    # -------------------------------------------------------------
     if any(getattr(w, "afterglow", None) is not None for w in waves):
         _label("AFTERGLOW")
         for w in waves:
-            a = _clamp01(w.afterglow) if w.afterglow is not None else 0.0
-            print(_bar(a))
+            a = getattr(w, "afterglow", None)
+            a_val = _clamp01(float(a)) if a is not None else 0.0
+            print(_bar(a_val))
 
     print("═" * 80 + "\n")
-
-
-# EXPLICIT PROHIBITIONS:
-# - no scheduler/loop
-# - no imports of observation/oracle/sage/shepherd/execution
-# - no computation/thresholding/decisions

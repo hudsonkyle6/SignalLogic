@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DOMAIN → HYDRO INGRESS (NATURAL)
+DOMAIN → HYDRO INGRESS (MARKET)
 
 POSTURE:
 - Adapter only
@@ -28,40 +28,36 @@ def main() -> None:
     emitted = 0
 
     for dw in waves:
-        if dw.domain != "natural":
+        if dw.domain != "market":
             continue
 
         packet = HydroPacket(
             t=dw.t,
             packet_id=str(uuid.uuid4()),
-            lane="natural",
+            lane="market",
             domain=dw.domain,
             channel=dw.channel,
             value={
-                "phase_external": dw.phase_external,
-                "phase_field": dw.phase_field,
-                "phase_diff": dw.phase_diff,
+                "pressure": dw.phase_external,
                 "coherence": dw.coherence,
                 "field_cycle": dw.field_cycle,
             },
             provenance={
-                "source": "psr.domain_to_natural_ingress",
+                "source": "psr.domain_to_market_ingress",
                 "domain_wave_ts": dw.t,
                 "extractor": dw.extractor,
             },
             rate=None,
             anomaly_flag=False,
             replay=False,
-            phase=dw.phase_diff,
+            phase=dw.phase_external,
         )
 
-        # 🔒 HYDRO AUTHORITY (UNCHANGED)
         decision = hydro_ingress_gate(packet)
         enqueue_if_admitted(packet, decision)
-
         emitted += 1
 
-    print(f"ADAPTER: emitted {emitted} packets → natural lane ingress")
+    print(f"MARKET INGRESS → emitted {emitted} packets")
 
 
 if __name__ == "__main__":

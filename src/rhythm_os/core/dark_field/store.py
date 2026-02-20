@@ -1,5 +1,3 @@
-# rhythm_os/core/dark_field/store.py
-
 """
 IMMUTABLE DARK FIELD STORE
 
@@ -13,11 +11,10 @@ Rules:
 If this module is imported outside Hydro, that is a violation.
 """
 
-
 from __future__ import annotations
 
 from pathlib import Path
-from datetime import datetime,timezone
+from datetime import datetime, timezone, date
 from typing import Optional
 
 from rhythm_os.core.wave.wave import Wave
@@ -27,8 +24,9 @@ from rhythm_os.core.wave.wave import Wave
 # PATHS (definition only — no side effects here)
 # ---------------------------------------------------------------------
 
-ROOT = Path(__file__).resolve().parents[2]  # SignalLogic/
+ROOT = Path(__file__).resolve().parents[2]  # src/rhythm_os
 DARK_FIELD_DIR = ROOT / "data" / "dark_field"
+PENSTOCK_DIR = DARK_FIELD_DIR / "penstock"
 
 
 # ---------------------------------------------------------------------
@@ -37,17 +35,20 @@ DARK_FIELD_DIR = ROOT / "data" / "dark_field"
 
 def _daily_file(anchor_date: date) -> Path:
     """
-    Resolve the daily Dark Field file path for a given date.
-    No filesystem mutation occurs here.
+    Resolve the daily Penstock file path for a given date.
     """
-    return DARK_FIELD_DIR / f"{anchor_date.isoformat()}.jsonl"
+    return PENSTOCK_DIR / f"{anchor_date.isoformat()}.jsonl"
 
 
 # ---------------------------------------------------------------------
 # APPEND-ONLY WRITE (activation boundary)
 # ---------------------------------------------------------------------
 
-def append_wave_from_hydro(wave: Wave, *, anchor_date: Optional[date] = None) -> Path:
+def append_wave_from_hydro(
+    wave: Wave,
+    *,
+    anchor_date: Optional[date] = None
+) -> Path:
     """
     Append a sealed Wave to the Dark Field.
 
@@ -60,27 +61,34 @@ def append_wave_from_hydro(wave: Wave, *, anchor_date: Optional[date] = None) ->
     Ecotone behavior:
     - Directory structure bootstraps lazily on first append.
     """
-    
 
+    # -------------------------------------------------------------
+    # Resolve anchor date from Wave timestamp
+    # -------------------------------------------------------------
     if anchor_date is None:
         try:
-            # Wave.timestamp is ISO-8601 string by contract
             ts = datetime.fromisoformat(wave.timestamp)
         except Exception:
-            # Absolute fallback — should never happen, but stays safe
             ts = datetime.now(timezone.utc)
 
         anchor_date = ts.date()
 
-    
-        
-
+    # -------------------------------------------------------------
+    # Resolve output path
+    # -------------------------------------------------------------
     path = _daily_file(anchor_date)
 
-    # Lazy bootstrap — side effect occurs only on lawful append
+    # Lazy bootstrap — lawful append boundary
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Serialize once, exactly (authority remains with Wave)
+    # -------------------------------------------------------------
+    # Debug (temporary instrumentation)
+    # -------------------------------------------------------------
+    print("PENSTOCK WRITE PATH:", path.resolve())
+
+    # -------------------------------------------------------------
+    # Append-only write
+    # -------------------------------------------------------------
     record = wave.to_json()
 
     with path.open("a", encoding="utf-8") as f:

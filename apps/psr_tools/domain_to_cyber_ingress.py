@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DOMAIN → HYDRO INGRESS (NATURAL)
+DOMAIN → HYDRO INGRESS (CYBER)
 
 POSTURE:
 - Adapter only
@@ -28,15 +28,18 @@ def main() -> None:
     emitted = 0
 
     for dw in waves:
-        if dw.domain != "natural":
+        if dw.domain != "cyber":
             continue
 
         packet = HydroPacket(
             t=dw.t,
             packet_id=str(uuid.uuid4()),
-            lane="natural",
+
+            lane="cyber",
             domain=dw.domain,
             channel=dw.channel,
+
+            # Observational payload (kept for trace)
             value={
                 "phase_external": dw.phase_external,
                 "phase_field": dw.phase_field,
@@ -44,24 +47,29 @@ def main() -> None:
                 "coherence": dw.coherence,
                 "field_cycle": dw.field_cycle,
             },
+
             provenance={
-                "source": "psr.domain_to_natural_ingress",
+                "source": "psr.domain_to_cyber_ingress",
                 "domain_wave_ts": dw.t,
                 "extractor": dw.extractor,
             },
+
             rate=None,
             anomaly_flag=False,
             replay=False,
+
+            # Rhythm coupling: use phase_diff as phase transport
             phase=dw.phase_diff,
+
+            # Explicit coherence transport
+            coherence=dw.coherence,
         )
 
-        # 🔒 HYDRO AUTHORITY (UNCHANGED)
         decision = hydro_ingress_gate(packet)
         enqueue_if_admitted(packet, decision)
-
         emitted += 1
 
-    print(f"ADAPTER: emitted {emitted} packets → natural lane ingress")
+    print(f"CYBER INGRESS → emitted {emitted} packets")
 
 
 if __name__ == "__main__":
