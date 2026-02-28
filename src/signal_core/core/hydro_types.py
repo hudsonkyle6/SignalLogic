@@ -52,6 +52,13 @@ class HydroPacket:
     # True phase coherence (0–1)
     coherence: Optional[float] = None
 
+    # ─────────────────────────────
+    # Temporal anchor (stamped at ingress throat)
+    # ─────────────────────────────
+    diurnal_phase: Optional[float] = None       # position in 24h cycle [0, 1]
+    semi_diurnal_phase: Optional[float] = None  # position in 12h cycle [0, 1]
+    long_wave_phase: Optional[float] = None     # position in ~28d cycle [0, 1]
+
 
 @dataclass(frozen=True)
 class IngressDecision:
