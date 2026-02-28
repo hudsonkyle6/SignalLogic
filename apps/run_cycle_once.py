@@ -221,12 +221,22 @@ def main() -> None:
         required=True
     )
 
+    # ---------------------------------------------------------------
+    # 6) TURBINE SUMMARY (READ-ONLY — closes observation loop)
+    # ---------------------------------------------------------------
+
+    run_module(
+        "TURBINE → CONVERGENCE SUMMARY",
+        "src.signal_core.core.hydro_turbine_summary",
+        required=False
+    )
+
     print("\n" + "=" * 72)
     print("=== END SIGNAL CYCLE ===")
     print("=" * 72)
 
     # ---------------------------------------------------------------
-    # 6) OPTIONAL SCOPE
+    # 7) OPTIONAL SCOPE
     # ---------------------------------------------------------------
 
     if prompt_scope(timeout_sec=60):

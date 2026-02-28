@@ -59,7 +59,7 @@ class TurbineObservation:
     semi_diurnal_phase: float
     long_wave_phase: float
     dominant_hz: float
-    aligned_domain_count: int   # how many recent turbine packets share this phase
+    aligned_domains: List[str]  # other domains sharing this phase window
     convergence_note: str       # human-readable pattern summary
 
 
@@ -127,7 +127,7 @@ def _append_observation(obs: TurbineObservation) -> None:
         "semi_diurnal_phase": obs.semi_diurnal_phase,
         "long_wave_phase": obs.long_wave_phase,
         "dominant_hz": obs.dominant_hz,
-        "aligned_domain_count": obs.aligned_domain_count,
+        "aligned_domains": obs.aligned_domains,
         "convergence_note": obs.convergence_note,
     }
 
@@ -141,37 +141,50 @@ def _append_observation(obs: TurbineObservation) -> None:
 
 def _assess_convergence(
     anchor: TemporalAnchor,
+    current_domain: str,
     history: List[dict],
-) -> tuple[int, str]:
+) -> tuple[List[str], str]:
     """
-    Count how many recent turbine packets share the same diurnal phase window
-    as the current packet, and summarise what domains they came from.
+    Find which OTHER domains have recent turbine packets within the
+    convergence window of the current packet's diurnal phase.
 
-    Returns (aligned_count, note_string).
+    Cross-domain convergence (e.g. natural + system at the same phase)
+    is a stronger signal than same-domain clustering.
+
+    Returns (aligned_domains, note_string).
     """
     if not history:
-        return 0, "no_history"
+        return [], "no_history"
 
-    aligned = [
-        h for h in history
-        if _circular_distance(
-            anchor.diurnal_phase,
-            float(h.get("diurnal_phase", -1)),
-        ) <= CONVERGENCE_WINDOW
-    ]
+    # Group most-recent observation per domain (excluding current domain)
+    latest_by_domain: dict[str, dict] = {}
+    for h in history:
+        d = h.get("domain", "unknown")
+        if d == current_domain:
+            continue
+        if d not in latest_by_domain:
+            latest_by_domain[d] = h
 
-    if not aligned:
-        return 0, "isolated"
+    aligned_domains: List[str] = []
+    for domain, rec in latest_by_domain.items():
+        try:
+            rec_phase = float(rec["diurnal_phase"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if _circular_distance(anchor.diurnal_phase, rec_phase) <= CONVERGENCE_WINDOW:
+            aligned_domains.append(domain)
 
-    domains = sorted({h.get("domain", "?") for h in aligned})
-    count = len(aligned)
+    aligned_domains.sort()
 
-    if count < 3:
-        note = f"weak:{','.join(domains)}"
+    if not aligned_domains:
+        return [], "isolated"
+
+    if len(aligned_domains) == 1:
+        note = f"weak:{aligned_domains[0]}"
     else:
-        note = f"convergence:{','.join(domains)}:{count}"
+        note = f"convergence:{','.join(aligned_domains)}"
 
-    return count, note
+    return aligned_domains, note
 
 
 # ------------------------------------------------------------
@@ -206,7 +219,7 @@ def process_turbine(packet: HydroPacket, route_reason: str) -> TurbineObservatio
         anchor = compute_anchor(float(packet.t), domain=packet.domain)
 
     history = _load_recent_turbine()
-    aligned_count, convergence_note = _assess_convergence(anchor, history)
+    aligned_domains, convergence_note = _assess_convergence(anchor, packet.domain, history)
 
     obs = TurbineObservation(
         t=float(packet.t),
@@ -218,7 +231,7 @@ def process_turbine(packet: HydroPacket, route_reason: str) -> TurbineObservatio
         semi_diurnal_phase=anchor.semi_diurnal_phase,
         long_wave_phase=anchor.long_wave_phase,
         dominant_hz=anchor.dominant_hz,
-        aligned_domain_count=aligned_count,
+        aligned_domains=aligned_domains,
         convergence_note=convergence_note,
     )
 

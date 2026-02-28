@@ -38,7 +38,8 @@ LANE_TO_PRESSURE_CLASS = {
     "narrative": "turbidity",
 }
 
-# v1: extremely conservative — only system may reach MAIN
+# v1: system operational lane
+# v2: natural environmental lane added (live Open-Meteo field data)
 MAIN_LANES = {"system"}
 
 
@@ -70,13 +71,14 @@ def dispatch(
     ROUTING ONLY — NO COMMIT AUTHORITY
     ROUTING ONLY — NO PERSISTENCE
 
-    Rule priority (v1):
+    Rule priority (v2):
 
-      D0: REJECT        → DROP
-      D3: QUARANTINE   → TURBINE   (exploratory basin, no work extraction)
-      D2: PRESSURE     → SPILLWAY  (relief path)
-      D1: SAFE PASS    → MAIN      (boring, stable production)
-      D4: FALLBACK     → TURBINE   (safety net)
+      D0:   REJECT        → DROP
+      D3:   QUARANTINE    → TURBINE   (exploratory basin, no work extraction)
+      D2:   PRESSURE      → SPILLWAY  (relief path)
+      D1:   OPERATIONAL   → MAIN      (system lane, stable production)
+      D1-N: ENVIRONMENTAL → MAIN      (natural lane, live field data)
+      D4:   FALLBACK      → TURBINE   (safety net)
 
     All returned decisions are descriptive,
     not executable authority.
@@ -129,6 +131,20 @@ def dispatch(
         return DispatchDecision(
             Route.MAIN,
             "D1_MAIN_OPERATIONAL",
+            pressure_class,
+        )
+
+    # ---------------------------------------------------------------
+    # D1-N — natural environmental signals (live field data → penstock)
+    # ---------------------------------------------------------------
+    if (
+        ingress.gate_result == GateResult.PASS
+        and pressure_class == "environmental"
+        and packet.lane == "natural"
+    ):
+        return DispatchDecision(
+            Route.MAIN,
+            "D1N_MAIN_ENVIRONMENTAL",
             pressure_class,
         )
 
