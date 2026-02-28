@@ -61,6 +61,8 @@ class CycleResult:
     spillway_quarantined: int
     spillway_hold: int
     convergence_summary: Optional[Dict[str, Any]] = field(default=None)
+    # ReadinessStatus attached by run_full_cycle(); None when called directly.
+    baseline_status: Optional[Any] = field(default=None)
 
 
 # ---------------------------------------------------------------------

@@ -31,5 +31,8 @@ BUS_DIR = DATA_DIR / "bus"
 # Natural Dark Field (raw natural-lane records for PSR projection)
 NATURAL_DIR = DATA_DIR / "dark_field" / "natural"
 
+# System meter records (hydro_meter output — one file per day, append-only)
+METERS_DIR = DATA_DIR / "dark_field" / "meters"
+
 # Mandates (human governance files, JSON)
 MANDATES_DIR = DATA_DIR / "mandates"

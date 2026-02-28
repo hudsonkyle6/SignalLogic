@@ -37,7 +37,7 @@ DEFAULT_INTERVAL_S = 2.0
 DEFAULT_WINDOW_S = 60.0
 DEFAULT_MIN_POINTS = 10
 
-DEFAULT_OUT_DIR = Path("src/rhythm_os/data/dark_field/meters")  # local append-only
+from rhythm_os.runtime.paths import METERS_DIR as DEFAULT_OUT_DIR
 
 
 # ==============================================================================

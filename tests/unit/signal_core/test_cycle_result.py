@@ -157,7 +157,11 @@ class TestRunFullCycle:
         monkeypatch.setattr(run_mod, "_hydro_daily", lambda: calls.append("daily") or expected)
         result = run_full_cycle()
         assert "daily" in calls
-        assert result is expected
+        # run_full_cycle attaches baseline_status via dataclasses.replace(),
+        # so result is a new object — check core fields match instead of identity
+        assert result.cycle_ts == expected.cycle_ts
+        assert result.committed == expected.committed
+        assert result.packets_drained == expected.packets_drained
 
     def test_observe_runs_before_drain(self, monkeypatch):
         order = []
