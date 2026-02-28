@@ -51,3 +51,6 @@ METERS_DIR = DATA_DIR / "dark_field" / "meters"
 
 # Mandates (human governance files, JSON)
 MANDATES_DIR = DATA_DIR / "mandates"
+
+# Scar store — domain-specific pressure memory (one JSONL per domain)
+SCARS_DIR = DATA_DIR / "scars"

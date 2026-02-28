@@ -23,6 +23,7 @@ from typing import Optional, Dict, Any
 
 from .hydro_types import HydroPacket, DispatchDecision
 from rhythm_os.runtime.seasonal_prior import compute_seasonal_prior
+from rhythm_os.core.memory.scar import get_attenuation, pattern_key as _pattern_key
 
 
 # ---------------------------------------------------------------------------
@@ -55,6 +56,41 @@ def annotate_packet(packet: HydroPacket) -> HydroPacket:
             "pattern_confidence": prior.pattern_confidence,
             "forest_proximity": prior.forest_proximity,
             "afterglow_decay": prior.afterglow_decay,
+        }
+    )
+
+
+# ---------------------------------------------------------------------------
+# Scar-based attenuation
+# ---------------------------------------------------------------------------
+
+def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
+    """
+    Reduce forest_proximity for patterns the system has already survived.
+
+    Reads the scar store (domain-specific, read-only from this posture) and
+    applies a pressure-weighted attenuation to forest_proximity.  Novel
+    patterns are unaffected.  Familiar territory carries less weight each
+    time the system encounters it without being destabilised.
+
+    POSTURE: TRIBUTARY — read-only.  Scars are written by Hydro, not Lighthouse.
+    """
+    if packet.forest_proximity is None:
+        return packet
+
+    try:
+        key         = _pattern_key(packet.seasonal_band, packet.channel)
+        attenuation = get_attenuation(packet.domain, key)
+    except Exception:
+        return packet  # fail-open — scar read is informational only
+
+    if attenuation <= 0.0:
+        return packet
+
+    return HydroPacket(
+        **{
+            **packet.__dict__,
+            "forest_proximity": packet.forest_proximity * (1.0 - attenuation),
         }
     )
 
