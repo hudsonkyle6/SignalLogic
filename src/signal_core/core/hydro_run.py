@@ -20,9 +20,14 @@ Usage:
 from __future__ import annotations
 
 import dataclasses
+import sys
 
+from signal_core.core.log import configure, get_logger
 from signal_core.core.run_cycle_once import run_cycle_once
 from signal_core.core.hydro_run_daily import main as _hydro_daily, CycleResult
+
+configure()
+log = get_logger(__name__)
 
 
 def run_full_cycle() -> CycleResult:
@@ -59,23 +64,80 @@ def run_full_cycle() -> CycleResult:
     return result
 
 
-def main() -> None:
-    result = run_full_cycle()
-    bs = result.baseline_status
+def _health_check() -> int:
+    """Return 0 if system is warm/ready, 1 if cold/degraded, 2 on error."""
+    try:
+        from rhythm_os.runtime.readiness import check_readiness
+        from rhythm_os.runtime.deploy_config import get_baseline_requirements
+        status = check_readiness(**get_baseline_requirements())
+        return 0 if status.overall_ready else 1
+    except Exception:
+        log.exception("health check failed")
+        return 2
 
-    print(f"\nFULL CYCLE COMPLETE")
-    print(f"  drained:     {result.packets_drained}")
-    print(f"  rejected:    {result.rejected}")
-    print(f"  committed:   {result.committed}")
-    print(f"  turbine:     {result.turbine_obs}")
-    print(f"  quarantined: {result.spillway_quarantined}")
-    print(f"  hold:        {result.spillway_hold}")
-    if result.convergence_summary:
-        ev = result.convergence_summary.get("convergence_event_count", 0)
-        strong = result.convergence_summary.get("strong_events", 0)
-        print(f"  convergence: {ev} events ({strong} strong)")
-    if bs:
-        print(f"\nBASELINE:  {bs.summary()}")
+
+def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description="SignalLogic — full observation cycle")
+    ap.add_argument(
+        "--health",
+        action="store_true",
+        help="check system readiness and exit 0 (warm), 1 (cold), 2 (error)",
+    )
+    ap.add_argument(
+        "--loop",
+        type=int,
+        default=0,
+        metavar="SECONDS",
+        help="run cycles on a schedule every N seconds; 0 = run once and exit",
+    )
+    args = ap.parse_args()
+
+    if args.health:
+        sys.exit(_health_check())
+
+    import signal as _signal
+    import threading
+
+    _stop = threading.Event()
+    _signal.signal(_signal.SIGTERM, lambda *_: _stop.set())
+    _signal.signal(_signal.SIGINT, lambda *_: _stop.set())
+
+    def _run_once() -> None:
+        result = run_full_cycle()
+        bs = result.baseline_status
+        log.info(
+            "cycle complete",
+            extra={} if True else None,
+        )
+        log.info(
+            "full cycle complete — drained=%d rejected=%d committed=%d "
+            "turbine=%d quarantined=%d hold=%d",
+            result.packets_drained,
+            result.rejected,
+            result.committed,
+            result.turbine_obs,
+            result.spillway_quarantined,
+            result.spillway_hold,
+        )
+        if result.convergence_summary:
+            ev = result.convergence_summary.get("convergence_event_count", 0)
+            strong = result.convergence_summary.get("strong_events", 0)
+            log.info("convergence events=%d strong=%d", ev, strong)
+        if bs:
+            log.info("baseline %s", bs.summary())
+
+    if args.loop > 0:
+        log.info("signallogic starting loop interval=%ds", args.loop)
+        while not _stop.is_set():
+            try:
+                _run_once()
+            except Exception:
+                log.exception("cycle failed")
+            _stop.wait(timeout=args.loop)
+        log.info("signallogic stopped")
+    else:
+        _run_once()
 
 
 if __name__ == "__main__":

@@ -26,6 +26,10 @@ import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any
 
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
+
 from rhythm_os.core.wave.wave import Wave
 from rhythm_os.core.dark_field.store import append_wave_from_hydro
 from rhythm_os.runtime.temporal_anchor import compute_anchor
@@ -149,7 +153,7 @@ def main() -> CycleResult:
 
     packets: List[HydroPacket] = drain_queue()
 
-    print(f"HYDRO: drained={len(packets)}")
+    log.info("hydro drained=%d", len(packets))
 
     rejected = 0
     committed = 0
@@ -165,7 +169,7 @@ def main() -> CycleResult:
         packet = annotate_packet(packet)
 
         ingress = hydro_ingress_gate(packet)
-        print(f"INGRESS: {ingress.gate_result.value} {ingress.reason}")
+        log.debug("ingress result=%s reason=%s", ingress.gate_result.value, ingress.reason)
 
         # -------------------------------------------------------------
         # D0 — REJECT
@@ -175,9 +179,13 @@ def main() -> CycleResult:
             continue
 
         decision = dispatch(packet, ingress)
-        print(f"DISPATCH: {decision.route.value} {decision.rule_id}"
-              + (f" [observe band={packet.seasonal_band} fp={packet.forest_proximity:.2f}]"
-                 if decision.observe and packet.seasonal_band else ""))
+        log.debug(
+            "dispatch route=%s rule=%s%s",
+            decision.route.value,
+            decision.rule_id,
+            f" band={packet.seasonal_band} fp={packet.forest_proximity:.2f}"
+            if decision.observe and packet.seasonal_band else "",
+        )
 
         # -------------------------------------------------------------
         # MAIN — sole penstock authority
@@ -187,12 +195,16 @@ def main() -> CycleResult:
             commit_packet(packet)
             append_audit(packet, ingress.gate_result.value, "MAIN")
             committed += 1
-            print(f"COMMIT: OK (MAIN) decay={packet.afterglow_decay}")
+            log.info("commit route=MAIN decay=%s", packet.afterglow_decay)
             if decision.observe:
                 obs = process_turbine(packet, f"{decision.rule_id}_OBSERVED")
                 turbine_obs += 1
-                print(f"TURBINE: observe band={packet.seasonal_band} "
-                      f"fp={packet.forest_proximity:.2f} {obs.convergence_note}")
+                log.debug(
+                    "turbine observe band=%s fp=%.2f note=%s",
+                    packet.seasonal_band,
+                    packet.forest_proximity,
+                    obs.convergence_note,
+                )
             continue
 
         # -------------------------------------------------------------
@@ -202,7 +214,12 @@ def main() -> CycleResult:
             obs = process_turbine(packet, decision.rule_id)
             append_audit(packet, ingress.gate_result.value, "TURBINE")
             turbine_obs += 1
-            print(f"TURBINE: {obs.convergence_note} phase={obs.diurnal_phase:.3f} ({decision.rule_id})")
+            log.debug(
+                "turbine note=%s phase=%.3f rule=%s",
+                obs.convergence_note,
+                obs.diurnal_phase,
+                decision.rule_id,
+            )
             continue
 
         # -------------------------------------------------------------
@@ -210,15 +227,15 @@ def main() -> CycleResult:
         # -------------------------------------------------------------
         if decision.route.name == "SPILLWAY":
             spill = assess_spillway(packet)
-            print(f"SPILLWAY: {spill.route.value} {spill.reason}")
+            log.debug("spillway route=%s reason=%s", spill.route.value, spill.reason)
 
             if spill.route == SpillwayRoute.RETURN:
                 obs = process_turbine(packet, "SL_RETURN_TURBINE")
                 turbine_obs += 1
-                print(f"TURBINE (spillway return): {obs.convergence_note}")
+                log.debug("turbine spillway-return note=%s", obs.convergence_note)
             elif spill.route == SpillwayRoute.QUARANTINE:
                 spillway_quarantined += 1
-                print(f"ALERT: packet={packet.packet_id} quarantined by auxiliary lighthouse")
+                log.warning("quarantine packet_id=%s", packet.packet_id)
             elif spill.route == SpillwayRoute.HOLD:
                 spillway_hold += 1
             # HOLD → no further action this cycle; packet stays in spillway basin
@@ -227,7 +244,7 @@ def main() -> CycleResult:
         # -------------------------------------------------------------
         # DROP — nothing to do
         # -------------------------------------------------------------
-        print("COMMIT: SKIP (DROP route)")
+        log.debug("drop packet_id=%s", packet.packet_id)
 
     # -----------------------------------------------------------------
     # Post-cycle: turbine convergence summary
@@ -248,7 +265,12 @@ def main() -> CycleResult:
 
 
 if __name__ == "__main__":
+    from signal_core.core.log import configure
+    configure()
     result = main()
-    print(f"\nCYCLE COMPLETE: committed={result.committed} "
-          f"turbine={result.turbine_obs} "
-          f"quarantined={result.spillway_quarantined}")
+    log.info(
+        "cycle complete committed=%d turbine=%d quarantined=%d",
+        result.committed,
+        result.turbine_obs,
+        result.spillway_quarantined,
+    )

@@ -18,14 +18,17 @@ from datetime import datetime, timezone, date
 from typing import Optional
 
 from rhythm_os.core.wave.wave import Wave
+from rhythm_os.runtime.paths import DATA_DIR
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------
 # PATHS (definition only — no side effects here)
 # ---------------------------------------------------------------------
 
-ROOT = Path(__file__).resolve().parents[2]  # src/rhythm_os
-DARK_FIELD_DIR = ROOT / "data" / "dark_field"
+DARK_FIELD_DIR = DATA_DIR / "dark_field"
 PENSTOCK_DIR = DARK_FIELD_DIR / "penstock"
 
 
@@ -81,10 +84,7 @@ def append_wave_from_hydro(
     # Lazy bootstrap — lawful append boundary
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    # -------------------------------------------------------------
-    # Debug (temporary instrumentation)
-    # -------------------------------------------------------------
-    print("PENSTOCK WRITE PATH:", path.resolve())
+    log.debug("penstock write path=%s", path.resolve())
 
     # -------------------------------------------------------------
     # Append-only write

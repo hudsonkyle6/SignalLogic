@@ -1,0 +1,70 @@
+# SignalLogic — production compose
+#
+# Services:
+#   meter    — continuous system telemetry (runs forever, restarted on crash)
+#   cycle    — full observe+commit cycle on a schedule (runs forever via --loop)
+#   dashboard — one-shot snapshot; run manually with: docker compose run dashboard
+#
+# Quick start:
+#   cp deployment.yaml.example deployment.yaml   # edit location, channels, etc.
+#   docker compose up -d
+#
+# View logs:
+#   docker compose logs -f meter
+#   docker compose logs -f cycle
+
+x-common: &common
+  build: .
+  environment:
+    LOG_FORMAT: json
+    LOG_LEVEL: INFO
+    SIGNALLOGIC_DATA: /data
+    SIGNALLOGIC_CONFIG: /config/deployment.yaml
+  volumes:
+    - signallogic_data:/data
+    - ./deployment.yaml:/config/deployment.yaml:ro
+  restart: unless-stopped
+
+services:
+
+  # ── Meter ────────────────────────────────────────────────────────────────────
+  # Samples CPU, network, and process telemetry every 2 seconds.
+  # Write one JSONL file per UTC day to SIGNALLOGIC_DATA/dark_field/meters/.
+  meter:
+    <<: *common
+    command: signallogic-meter --interval 2 --window 60
+    healthcheck:
+      test: ["CMD", "signallogic-run", "--health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  # ── Cycle runner ─────────────────────────────────────────────────────────────
+  # Runs a full observe→gate→commit cycle every 60 seconds.
+  # Adjust --loop to your desired cadence (minimum meaningful: 30s).
+  cycle:
+    <<: *common
+    command: signallogic-run --loop 60
+    depends_on:
+      - meter
+    healthcheck:
+      test: ["CMD", "signallogic-run", "--health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  # ── Dashboard (manual) ───────────────────────────────────────────────────────
+  # Not a long-running service — invoke on demand:
+  #   docker compose run --rm dashboard
+  dashboard:
+    <<: *common
+    command: signallogic-dashboard --snapshot
+    restart: "no"
+    stdin_open: true
+    tty: true
+
+volumes:
+  signallogic_data:
+    driver: local
