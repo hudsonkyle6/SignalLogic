@@ -45,6 +45,19 @@ from signal_core.core.lighthouse import annotate_packet, attenuate_with_scars
 from rhythm_os.core.memory.scar import write_scar, apply_all_decay, pattern_key as _scar_pattern_key
 from signal_core.core.spillway_lighthouse import assess_spillway, SpillwayRoute
 
+# ---------------------------------------------------------------------
+# Scar pressure constants
+# ---------------------------------------------------------------------
+
+# Base pressure added to the compound scar (forest edge + anomaly together).
+# Kept separate from the fp component so the two addends are explicit at the call site.
+_COMPOUND_SCAR_BASE_PRESSURE = 0.30
+
+# Pressure written per strong convergence event per domain.
+# Intentionally small — inert on its own; only meaningful when compounding
+# with an existing forest_proximity scar on the same domain.
+_CONVERGENCE_SCAR_PRESSURE = 0.15
+
 
 # ---------------------------------------------------------------------
 # Structured cycle result
@@ -277,7 +290,7 @@ def main() -> CycleResult:
                 write_scar(
                     domain              = packet.domain,
                     key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta      = fp + 0.3,
+                    pressure_delta      = fp + _COMPOUND_SCAR_BASE_PRESSURE,
                     changed             = True,
                     trigger             = "compound",
                     pattern_confidence  = float(packet.pattern_confidence or 1.0),
@@ -324,7 +337,7 @@ def main() -> CycleResult:
             write_scar(
                 domain             = domain,
                 key                = conv_key,
-                pressure_delta     = 0.15,
+                pressure_delta     = _CONVERGENCE_SCAR_PRESSURE,
                 changed            = False,
                 trigger            = "convergence",
                 pattern_confidence = 1.0,   # convergence is phase-based, not seasonal

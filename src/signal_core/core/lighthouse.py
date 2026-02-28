@@ -25,6 +25,12 @@ from .hydro_types import HydroPacket, DispatchDecision
 from rhythm_os.runtime.seasonal_prior import compute_seasonal_prior
 from rhythm_os.core.memory.scar import get_attenuation, pattern_key as _pattern_key
 
+# Minimum pattern_confidence regardless of what the seasonal prior returns.
+# Without this floor, a near-zero upstream confidence would cause scars to
+# accumulate pressure they can never shed (decay_rate → 0), eventually
+# blinding the system to familiar patterns at the worst possible moment.
+_MIN_PATTERN_CONFIDENCE = 0.15
+
 
 # ---------------------------------------------------------------------------
 # Pre-gate annotation
@@ -49,11 +55,13 @@ def annotate_packet(packet: HydroPacket) -> HydroPacket:
     except Exception:
         return packet  # fail-open: seasonal context is informational only
 
+    confidence = max(float(prior.pattern_confidence), _MIN_PATTERN_CONFIDENCE)
+
     return HydroPacket(
         **{
             **packet.__dict__,
             "seasonal_band": prior.seasonal_band,
-            "pattern_confidence": prior.pattern_confidence,
+            "pattern_confidence": confidence,
             "forest_proximity": prior.forest_proximity,
             "afterglow_decay": prior.afterglow_decay,
         }

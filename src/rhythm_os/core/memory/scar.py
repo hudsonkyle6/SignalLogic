@@ -54,12 +54,13 @@ class Scar:
     domain:              str
     pattern_key:         str    # "{seasonal_band}:{channel}"
     pressure:            float  # [0, MAX_PRESSURE]
-    changed:             bool   # did this encounter alter system state?
+    changed:             bool   # did THIS encounter alter system state?
     trigger:             str    # "forest_proximity" | "anomaly" | "compound"
     first_seen:          float  # unix timestamp
     last_reinforced:     float  # unix timestamp
     decay_rate:          float
     reinforcement_count: int
+    ever_changed:        bool = False  # has any encounter ever flagged a change?
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -177,11 +178,12 @@ def write_scar(
             domain              = domain,
             pattern_key         = key,
             pressure            = min(existing.pressure + pressure_delta, MAX_PRESSURE),
-            changed             = changed or existing.changed,
+            changed             = changed,                          # current encounter only
+            ever_changed        = changed or existing.ever_changed, # accumulated history
             trigger             = trigger,
             first_seen          = existing.first_seen,
             last_reinforced     = now,
-            decay_rate          = decay_rate,   # update to current season's confidence
+            decay_rate          = decay_rate,
             reinforcement_count = existing.reinforcement_count + 1,
         )
     else:
@@ -191,6 +193,7 @@ def write_scar(
             pattern_key         = key,
             pressure            = min(pressure_delta, MAX_PRESSURE),
             changed             = changed,
+            ever_changed        = changed,
             trigger             = trigger,
             first_seen          = now,
             last_reinforced     = now,
@@ -227,6 +230,7 @@ def apply_decay(domain: str) -> int:
             pattern_key         = scar.pattern_key,
             pressure            = new_pressure,
             changed             = scar.changed,
+            ever_changed        = scar.ever_changed,
             trigger             = scar.trigger,
             first_seen          = scar.first_seen,
             last_reinforced     = scar.last_reinforced,
