@@ -5,28 +5,51 @@ description = "Rhythmic, antifragile operating system for signal observation and
 readme = "README.md"
 requires-python = ">=3.11"
 
+# Core runtime — Gen2 critical path only (no pandas/numpy required).
+# pandas + numpy are needed for Gen1 analytics tools (see [analytics] extra).
 dependencies = [
-    "pydantic>=2.0",
     "pyyaml>=6.0",
-    "pandas>=2.0",
-    "numpy>=1.26",
+    "requests>=2.28",
     "rich>=13.0",
     "psutil>=5.9",
 ]
 
 [project.optional-dependencies]
+# Gen1 analytics: coupling memory, PSR market transforms, tide engine
+analytics = [
+    "pandas>=2.0",
+    "numpy>=1.26",
+]
+# Testing
 test = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
 ]
-dashboard = [
-    "rich>=13.0",
-    "psutil>=5.9",
+# Full install (analytics + testing)
+all = [
+    "pandas>=2.0",
+    "numpy>=1.26",
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
 ]
+
+# ─── CLI entry points ────────────────────────────────────────────────────────
+# After `pip install signal-logic`, these commands are available system-wide:
+#   signallogic-run       — one full observe + commit cycle
+#   signallogic-dashboard — helix three-tier dashboard (snapshot/watch/animate)
+#   signallogic-meter     — continuous system telemetry background process
+[project.scripts]
+signallogic-run       = "signal_core.core.hydro_run:main"
+signallogic-dashboard = "signal_core.core.dashboard.helix_dashboard:main"
+signallogic-meter     = "signal_core.core.instruments.hydro_meter:main"
 
 [build-system]
 requires = ["hatchling>=1.0"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+# Both packages must be listed — rhythm_os is the runtime layer
+packages = ["src/signal_core", "src/rhythm_os"]
 
 [tool.ruff]
 line-length = 88
@@ -42,6 +65,3 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "--tb=short"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/signal_core"]

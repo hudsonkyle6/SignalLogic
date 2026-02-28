@@ -20,8 +20,14 @@ Freeze Record:
 
 
 from __future__ import annotations
-import pandas as pd
-import numpy as np
+try:
+    import pandas as pd
+    import numpy as np
+except ImportError as _e:
+    raise ImportError(
+        "numpy and pandas are required for ghost memory analytics. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 
 
 # =====================================================================

@@ -1,6 +1,12 @@
 from pathlib import Path
 import math
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError as _e:
+    raise ImportError(
+        "pandas is required for market transform analytics. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 from typing import List
 from datetime import datetime
 

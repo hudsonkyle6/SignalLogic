@@ -25,8 +25,14 @@ Notes:
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
-import numpy as np
-import pandas as pd
+try:
+    import numpy as np
+    import pandas as pd
+except ImportError as _e:
+    raise ImportError(
+        "numpy and pandas are required for coupling analytics. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 
 
 # ======================================================================

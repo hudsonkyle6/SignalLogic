@@ -59,7 +59,7 @@ def run_full_cycle() -> CycleResult:
     return result
 
 
-if __name__ == "__main__":
+def main() -> None:
     result = run_full_cycle()
     bs = result.baseline_status
 
@@ -76,3 +76,7 @@ if __name__ == "__main__":
         print(f"  convergence: {ev} events ({strong} strong)")
     if bs:
         print(f"\nBASELINE:  {bs.summary()}")
+
+
+if __name__ == "__main__":
+    main()

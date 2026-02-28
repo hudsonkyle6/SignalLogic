@@ -21,8 +21,14 @@ Freeze Record:
 
 from __future__ import annotations
 from pathlib import Path
-import pandas as pd
-import numpy as np
+try:
+    import pandas as pd
+    import numpy as np
+except ImportError as _e:
+    raise ImportError(
+        "numpy and pandas are required for memory analytics. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 
 ROOT = Path(__file__).resolve().parents[2]
 

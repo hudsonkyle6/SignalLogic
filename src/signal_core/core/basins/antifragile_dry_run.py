@@ -23,7 +23,13 @@ from pathlib import Path
 from collections import defaultdict
 from statistics import mean
 
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError as _e:
+    raise ImportError(
+        "pandas is required for antifragile dry-run analytics. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 
 # ---- Canonical antifragile math ----
 from rhythm_os.domain.antifragile.drift import compute_drift_index
