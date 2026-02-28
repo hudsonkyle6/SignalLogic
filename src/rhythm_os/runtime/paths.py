@@ -54,3 +54,6 @@ MANDATES_DIR = DATA_DIR / "mandates"
 
 # Scar store — domain-specific pressure memory (one JSONL per domain)
 SCARS_DIR = DATA_DIR / "scars"
+
+# Control signal channel — real-time dispatch decisions for downstream consumers
+CONTROL_PATH = DATA_DIR / "dark_field" / "control" / "signals.jsonl"

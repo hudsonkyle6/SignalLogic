@@ -177,42 +177,21 @@ def _log_report(summary: Dict[str, Any]) -> None:
 # Entry point
 # ------------------------------------------------------------
 
-def _today_summary_exists() -> bool:
-    """Return True if summary.jsonl already has an entry for today's UTC date."""
-    today = datetime.now(timezone.utc).date().isoformat()
-    path = TURBINE_DIR / "summary.jsonl"
-    if not path.exists():
-        return False
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            if json.loads(line).get("date") == today:
-                return True
-        except Exception:
-            continue
-    return False
-
-
 def run_turbine_summary() -> Dict[str, Any]:
     """
     Read today's turbine observations, build convergence summary,
     append to summary.jsonl, and print report.
 
-    If a summary for today's date is already present in summary.jsonl
-    (e.g. from an earlier cycle run), the append is skipped to prevent
-    duplicate entries — but the summary is still rebuilt fresh from the
-    current turbine file and returned so callers see up-to-date events.
+    Always appends — summary.jsonl is a rolling time-series of cycle snapshots,
+    not a once-per-day record.  This is correct for real-time loop operation
+    (--loop N) where the system runs many cycles per day and callers need the
+    most recent convergence state surfaced in the persistent log.
 
     Returns the summary dict for inspection.
     """
     records = _load_today_turbine()
     summary = build_summary(records)
-    if not _today_summary_exists():
-        _append_summary(summary)
-    else:
-        log.debug("turbine summary already written for date=%s, skipping append", summary["date"])
+    _append_summary(summary)
     _log_report(summary)
     return summary
 

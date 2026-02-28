@@ -44,6 +44,7 @@ from signal_core.core.hydro_turbine_summary import run_turbine_summary
 from signal_core.core.lighthouse import annotate_packet, attenuate_with_scars
 from rhythm_os.core.memory.scar import write_scar, apply_all_decay, pattern_key as _scar_pattern_key
 from signal_core.core.spillway_lighthouse import assess_spillway, SpillwayRoute
+from signal_core.core.control_signal import emit_control_signal
 
 # ---------------------------------------------------------------------
 # Scar pressure constants
@@ -211,6 +212,7 @@ def main() -> CycleResult:
         # -------------------------------------------------------------
         if decision.route.name == "MAIN":
             commit_packet(packet)
+            emit_control_signal(packet, decision)
             append_audit(packet, ingress.gate_result.value, "MAIN")
             committed += 1
             log.info("commit route=MAIN decay=%s", packet.afterglow_decay)

@@ -37,11 +37,16 @@ from rhythm_os.runtime.paths import SCARS_DIR
 # Pressure constants
 # ---------------------------------------------------------------------------
 
-DECAY_RATE_DEFAULT = 0.05   # 5 % pressure lost per cycle
+DECAY_RATE_DEFAULT = 0.05   # 5 % pressure lost per reference cycle
 PRUNE_THRESHOLD    = 0.01   # prune scars below this pressure
 MAX_PRESSURE       = 2.0    # cap on accumulated pressure
 MAX_ATTENUATION    = 0.85   # maximum forest_proximity reduction
                             # (never fully suppress — stay alert, not blind)
+
+# One decay "tick" = one hour of real elapsed time.
+# Keeps decay semantics stable whether the system runs every second or once a day.
+# pressure *= (1 - rate) ** (elapsed_seconds / _REFERENCE_CYCLE_SECONDS)
+_REFERENCE_CYCLE_SECONDS: float = 3600.0
 
 
 # ---------------------------------------------------------------------------
@@ -60,7 +65,8 @@ class Scar:
     last_reinforced:     float  # unix timestamp
     decay_rate:          float
     reinforcement_count: int
-    ever_changed:        bool = False  # has any encounter ever flagged a change?
+    ever_changed:        bool  = False  # has any encounter ever flagged a change?
+    last_decayed:        float = 0.0   # wall-clock time decay was last applied (0 = never)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -188,6 +194,7 @@ def write_scar(
             trigger             = trigger,
             first_seen          = existing.first_seen,
             last_reinforced     = now,
+            last_decayed        = now,  # reset baseline — pressure is accurate as of now
             decay_rate          = decay_rate,
             reinforcement_count = existing.reinforcement_count + 1,
         )
@@ -202,6 +209,7 @@ def write_scar(
             trigger             = trigger,
             first_seen          = now,
             last_reinforced     = now,
+            last_decayed        = now,
             decay_rate          = decay_rate,
             reinforcement_count = 1,
         )
@@ -212,11 +220,19 @@ def write_scar(
 
 def apply_decay(domain: str) -> int:
     """
-    Apply one cycle of multiplicative decay to all scars in a domain.
-    Prunes scars whose pressure falls below PRUNE_THRESHOLD.
+    Apply time-proportional multiplicative decay to all scars in a domain.
 
+    Pressure decays continuously based on wall-clock elapsed time since the last
+    decay application (or since creation on first call).  The rate is calibrated
+    in units of _REFERENCE_CYCLE_SECONDS (one hour), so decay semantics are stable
+    whether the system runs every second or once a day.
+
+    Formula: new_pressure = pressure * (1 - decay_rate) ** (elapsed_s / reference_s)
+
+    Prunes scars whose pressure falls below PRUNE_THRESHOLD.
     Returns the number of scars pruned.
     """
+    now = time.time()
     scars = _load_scars(domain)
     if not scars:
         return 0
@@ -225,7 +241,12 @@ def apply_decay(domain: str) -> int:
     active: Dict[str, Scar] = {}
 
     for sid, scar in scars.items():
-        new_pressure = scar.pressure * (1.0 - scar.decay_rate)
+        # Elapsed time since last decay tick (fall back to last_reinforced for old scars)
+        baseline = scar.last_decayed if scar.last_decayed > 0.0 else scar.last_reinforced
+        elapsed_s = max(now - baseline, 0.0)
+        elapsed_cycles = elapsed_s / _REFERENCE_CYCLE_SECONDS
+        new_pressure = scar.pressure * (1.0 - scar.decay_rate) ** elapsed_cycles
+
         if new_pressure < PRUNE_THRESHOLD:
             pruned += 1
             continue
@@ -239,6 +260,7 @@ def apply_decay(domain: str) -> int:
             trigger             = scar.trigger,
             first_seen          = scar.first_seen,
             last_reinforced     = scar.last_reinforced,
+            last_decayed        = now,
             decay_rate          = scar.decay_rate,
             reinforcement_count = scar.reinforcement_count,
         )
