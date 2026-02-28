@@ -28,13 +28,7 @@ from typing import List
 
 from .hydro_types import HydroPacket
 from rhythm_os.runtime.temporal_anchor import compute_anchor, TemporalAnchor
-
-
-# ------------------------------------------------------------
-# Turbine basin (append-only, NOT penstock)
-# ------------------------------------------------------------
-
-TURBINE_DIR = Path("src/rhythm_os/data/dark_field/turbine")
+from rhythm_os.runtime.paths import TURBINE_DIR
 
 # Phase convergence window: how close two phases must be to count as aligned.
 # 0.083 = 1 hour within a 12h semi-diurnal cycle (1/12 of the cycle).

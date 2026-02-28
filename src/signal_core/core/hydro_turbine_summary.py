@@ -20,10 +20,9 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import List, Dict, Any
 
-TURBINE_DIR = Path("src/rhythm_os/data/dark_field/turbine")
+from rhythm_os.runtime.paths import TURBINE_DIR
 CONVERGENCE_WINDOW = 0.083  # must match hydro_turbine.py
 
 

@@ -152,7 +152,7 @@ def emit_antifragile_state(
     if not extractor.get("source"):
         return
 
-    out_path = today_bus_file(bus_dir, t_ref)
+    out_path = today_bus_file(bus_dir=bus_dir, t_ref=t_ref)
 
     # Emit in stable order (unknowns first)
     for ch in channels:
@@ -160,7 +160,7 @@ def emit_antifragile_state(
         if ch == "drift_index" and not emit_drift_if_missing:
             continue
 
-        if has_emission_at_time(bus_dir, t_ref, "antifragile", ch):
+        if has_emission_at_time(bus_dir=bus_dir, t_ref=t_ref, domain="antifragile", channel=ch):
             continue
 
         val = _safe_float(state.get(ch))
