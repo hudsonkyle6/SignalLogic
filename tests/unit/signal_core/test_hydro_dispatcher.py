@@ -11,6 +11,10 @@ Invariants:
 - natural PASS → MAIN (D1-N)
 - unknown/cyber PASS → TURBINE (D4)
 - routing is deterministic (same input → same output)
+- forest_proximity ≥ 0.70 → TURBINE (DLH — forest edge)
+- forest_proximity 0.40–0.69 → MAIN + observe=True
+- forest_proximity < 0.40 → MAIN + observe=False (normal)
+- forest_proximity absent (None) → treated as 0.0 (normal routing)
 """
 from __future__ import annotations
 
@@ -167,3 +171,86 @@ class TestDeterminism:
         original_lane = p.lane
         dispatch(p, _ingress())
         assert p.lane == original_lane
+
+
+# ------------------------------------------------------------------
+# Lighthouse forest_proximity routing (v3)
+# ------------------------------------------------------------------
+
+class TestForestProximityRouting:
+    def test_high_fp_forces_turbine_scout(self):
+        # forest_proximity ≥ 0.70 → TURBINE (forest edge, no penstock commit)
+        p = _packet(lane="system", forest_proximity=0.75)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.TURBINE
+        assert decision.rule_id == "DLH_TURBINE_FOREST_EDGE"
+
+    def test_exactly_at_scout_threshold_forces_turbine(self):
+        p = _packet(lane="system", forest_proximity=0.70)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.TURBINE
+        assert decision.rule_id == "DLH_TURBINE_FOREST_EDGE"
+
+    def test_watch_zone_routes_main_with_observe(self):
+        # 0.40 ≤ fp < 0.70 → MAIN + observe=True
+        p = _packet(lane="system", forest_proximity=0.55)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.MAIN
+        assert decision.observe is True
+
+    def test_at_watch_lower_bound_routes_main_with_observe(self):
+        p = _packet(lane="system", forest_proximity=0.40)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.MAIN
+        assert decision.observe is True
+
+    def test_just_below_watch_routes_main_no_observe(self):
+        p = _packet(lane="system", forest_proximity=0.39)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.MAIN
+        assert decision.observe is False
+
+    def test_low_fp_routes_main_no_observe(self):
+        # forest_proximity < 0.40 → normal routing, no observation
+        p = _packet(lane="system", forest_proximity=0.10)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.MAIN
+        assert decision.observe is False
+
+    def test_no_annotation_treats_as_zero(self):
+        # forest_proximity=None → default 0.0 → normal routing
+        p = _packet(lane="system", forest_proximity=None)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.MAIN
+        assert decision.observe is False
+
+    def test_natural_watch_zone_routes_main_with_observe(self):
+        p = _packet(lane="natural", domain="natural", forest_proximity=0.60)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.MAIN
+        assert decision.observe is True
+        assert decision.rule_id == "D1N_MAIN_ENVIRONMENTAL"
+
+    def test_natural_high_fp_forces_turbine(self):
+        p = _packet(lane="natural", domain="natural", forest_proximity=0.80)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.TURBINE
+        assert decision.rule_id == "DLH_TURBINE_FOREST_EDGE"
+
+    def test_spillway_rule_pre_empts_forest_routing(self):
+        # D2 (pressure) must fire before DL-H forest check
+        p = _packet(lane="system", anomaly_flag=True, forest_proximity=0.80)
+        decision = dispatch(p, _ingress())
+        assert decision.route == Route.SPILLWAY
+        assert decision.rule_id == "D2_SPILLWAY_PRESSURE"
+
+    def test_reject_pre_empts_forest_routing(self):
+        # D0 must always fire first
+        p = _packet(lane="system", forest_proximity=0.90)
+        decision = dispatch(p, _ingress(GateResult.REJECT))
+        assert decision.route == Route.DROP
+
+    def test_observe_false_by_default_no_annotation(self):
+        p = _packet()
+        decision = dispatch(p, _ingress())
+        assert decision.observe is False

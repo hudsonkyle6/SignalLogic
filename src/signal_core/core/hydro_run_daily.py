@@ -33,6 +33,8 @@ from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_dispatcher import dispatch
 from signal_core.core.hydro_audit import append_audit
 from signal_core.core.hydro_turbine import process_turbine
+from signal_core.core.lighthouse import annotate_packet
+from signal_core.core.spillway_lighthouse import assess_spillway, SpillwayRoute
 
 
 # ---------------------------------------------------------------------
@@ -77,6 +79,9 @@ def commit_packet(packet: HydroPacket) -> None:
         "long_wave": long_wave_phase,
     }
 
+    # Use Lighthouse afterglow_decay if available; fall back to stable default.
+    afterglow_decay = float(packet.afterglow_decay) if packet.afterglow_decay is not None else 0.5
+
     wave = Wave.create(
         text=json.dumps(
             packet.__dict__,
@@ -87,7 +92,7 @@ def commit_packet(packet: HydroPacket) -> None:
         phase=diurnal_phase,        # position in the dominant daily cycle
         frequency=dominant_hz,      # anchor frequency for this domain
         amplitude=amplitude,        # coherence carrier
-        afterglow_decay=0.5,
+        afterglow_decay=afterglow_decay,
         couplings=couplings,
     )
 
@@ -119,6 +124,12 @@ def main() -> None:
         return
 
     for packet in packets:
+        # ---------------------------------------------------------
+        # Lighthouse annotation — stamp seasonal context BEFORE gate.
+        # Gate is blind to these fields; dispatcher uses forest_proximity.
+        # ---------------------------------------------------------
+        packet = annotate_packet(packet)
+
         ingress = hydro_ingress_gate(packet)
         print(f"INGRESS: {ingress.gate_result.value} {ingress.reason}")
 
@@ -129,15 +140,22 @@ def main() -> None:
             continue
 
         decision = dispatch(packet, ingress)
-        print(f"DISPATCH: {decision.route.value} {decision.rule_id}")
+        print(f"DISPATCH: {decision.route.value} {decision.rule_id}"
+              + (f" [observe band={packet.seasonal_band} fp={packet.forest_proximity:.2f}]"
+                 if decision.observe and packet.seasonal_band else ""))
 
         # -------------------------------------------------------------
         # MAIN — sole penstock authority
+        # When observe=True (watch zone), also send to Turbine.
         # -------------------------------------------------------------
         if decision.route.name == "MAIN":
             commit_packet(packet)
             append_audit(packet, ingress.gate_result.value, "MAIN")
-            print("COMMIT: OK (MAIN)")
+            print(f"COMMIT: OK (MAIN) decay={packet.afterglow_decay}")
+            if decision.observe:
+                obs = process_turbine(packet, f"{decision.rule_id}_OBSERVED")
+                print(f"TURBINE: observe band={packet.seasonal_band} "
+                      f"fp={packet.forest_proximity:.2f} {obs.convergence_note}")
             continue
 
         # -------------------------------------------------------------
@@ -150,9 +168,24 @@ def main() -> None:
             continue
 
         # -------------------------------------------------------------
-        # SPILLWAY / DROP
+        # SPILLWAY — auxiliary lighthouse second look
         # -------------------------------------------------------------
-        print("COMMIT: SKIP (non-penstock route)")
+        if decision.route.name == "SPILLWAY":
+            spill = assess_spillway(packet)
+            print(f"SPILLWAY: {spill.route.value} {spill.reason}")
+
+            if spill.route == SpillwayRoute.RETURN:
+                obs = process_turbine(packet, "SL_RETURN_TURBINE")
+                print(f"TURBINE (spillway return): {obs.convergence_note}")
+            elif spill.route == SpillwayRoute.QUARANTINE:
+                print(f"ALERT: packet={packet.packet_id} quarantined by auxiliary lighthouse")
+            # HOLD → no further action this cycle; packet stays in spillway basin
+            continue
+
+        # -------------------------------------------------------------
+        # DROP — nothing to do
+        # -------------------------------------------------------------
+        print("COMMIT: SKIP (DROP route)")
 
 
 if __name__ == "__main__":
