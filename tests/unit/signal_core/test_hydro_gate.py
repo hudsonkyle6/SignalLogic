@@ -133,3 +133,18 @@ class TestReplay:
         old = time.time() - (25 * 3600)
         result = hydro_ingress_gate(_packet(t=old, replay=True))
         assert result.gate_result == GateResult.PASS
+
+
+# ------------------------------------------------------------------
+# Legibility exception branch (_is_legible: str() raises)
+# ------------------------------------------------------------------
+
+class TestLegibilityException:
+    def test_unrepresentable_value_quarantined(self):
+        class BadStr:
+            def __str__(self):
+                raise RuntimeError("cannot stringify")
+
+        result = hydro_ingress_gate(_packet(value=BadStr()))
+        assert result.gate_result == GateResult.QUARANTINE
+        assert "LEGIBILITY" in result.reason
