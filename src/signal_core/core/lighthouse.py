@@ -87,10 +87,16 @@ def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
     if attenuation <= 0.0:
         return packet
 
+    # Scale attenuation by pattern_confidence.
+    # High confidence (stable season): trust the scar memory — full attenuation.
+    # Low confidence (transition): stay alert even on familiar patterns — reduced attenuation.
+    confidence = float(packet.pattern_confidence) if packet.pattern_confidence is not None else 1.0
+    effective_attenuation = attenuation * confidence
+
     return HydroPacket(
         **{
             **packet.__dict__,
-            "forest_proximity": packet.forest_proximity * (1.0 - attenuation),
+            "forest_proximity": packet.forest_proximity * (1.0 - effective_attenuation),
         }
     )
 

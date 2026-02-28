@@ -233,11 +233,12 @@ def main() -> CycleResult:
             if decision.rule_id == "DLH_TURBINE_FOREST_EDGE":
                 fp = float(packet.forest_proximity or 0.0)
                 write_scar(
-                    domain         = packet.domain,
-                    key            = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta = fp,
-                    changed        = True,
-                    trigger        = "forest_proximity",
+                    domain              = packet.domain,
+                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta      = fp,
+                    changed             = True,
+                    trigger             = "forest_proximity",
+                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
                 )
 
             continue
@@ -250,13 +251,13 @@ def main() -> CycleResult:
             # Write before the second-look so reinforcement reflects the
             # initial dispatch pressure, not the spillway outcome.
             if bool(packet.anomaly_flag):
-                fp = float(packet.forest_proximity or 0.0)
                 write_scar(
-                    domain         = packet.domain,
-                    key            = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta = 0.5,
-                    changed        = True,
-                    trigger        = "anomaly",
+                    domain              = packet.domain,
+                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta      = 0.5,
+                    changed             = True,
+                    trigger             = "anomaly",
+                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
                 )
 
             spill = assess_spillway(packet)
@@ -274,11 +275,12 @@ def main() -> CycleResult:
                 # territory AND detected structural irregularity.
                 fp = float(packet.forest_proximity or 0.0)
                 write_scar(
-                    domain         = packet.domain,
-                    key            = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta = fp + 0.3,
-                    changed        = True,
-                    trigger        = "compound",
+                    domain              = packet.domain,
+                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta      = fp + 0.3,
+                    changed             = True,
+                    trigger             = "compound",
+                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
                 )
             elif spill.route == SpillwayRoute.HOLD:
                 spillway_hold += 1
@@ -304,6 +306,33 @@ def main() -> CycleResult:
     # Always run — returns empty summary if no turbine observations.
     # -----------------------------------------------------------------
     convergence = run_turbine_summary()
+
+    # -----------------------------------------------------------------
+    # Post-cycle: strong convergence → provisional scar
+    # When 3+ domains phase-align (strong event), write a small convergence
+    # marker to each domain's scar store.  The key is phase-bucketed so
+    # convergences at different times of day accumulate independently.
+    # pressure_delta=0.15 is intentionally small — it only meaningfully
+    # attenuates when compounded with existing forest_proximity scars.
+    # -----------------------------------------------------------------
+    for event in convergence.get("convergence_events", []):
+        if event.get("strength") != "strong":
+            continue
+        phase_bucket = int(float(event.get("diurnal_phase", 0)) * 12)
+        conv_key = f"convergence:{phase_bucket}"
+        for domain in event.get("domains", []):
+            write_scar(
+                domain             = domain,
+                key                = conv_key,
+                pressure_delta     = 0.15,
+                changed            = False,
+                trigger            = "convergence",
+                pattern_confidence = 1.0,   # convergence is phase-based, not seasonal
+            )
+            log.debug(
+                "convergence scar domain=%s phase_bucket=%d domains=%s",
+                domain, phase_bucket, ",".join(event.get("domains", [])),
+            )
 
     return CycleResult(
         cycle_ts=cycle_ts,

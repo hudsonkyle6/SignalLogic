@@ -136,12 +136,27 @@ def get_attenuation(domain: str, key: str) -> float:
     return min(scar.pressure / MAX_PRESSURE, MAX_ATTENUATION)
 
 
+def _confidence_decay_rate(pattern_confidence: float) -> float:
+    """
+    Derive decay rate from seasonal pattern_confidence.
+
+    Low confidence (uncertain season) → scars decay slowly — hold the memory.
+    High confidence (stable season)   → scars decay at standard rate — trust current state.
+
+        decay_rate = DECAY_RATE_DEFAULT * max(confidence, 0.2)
+
+    Floor at 0.2 prevents zombie scars during deep-uncertainty periods.
+    """
+    return DECAY_RATE_DEFAULT * max(float(pattern_confidence), 0.2)
+
+
 def write_scar(
-    domain:         str,
-    key:            str,
-    pressure_delta: float,
-    changed:        bool,
-    trigger:        str,
+    domain:             str,
+    key:                str,
+    pressure_delta:     float,
+    changed:            bool,
+    trigger:            str,
+    pattern_confidence: float = 1.0,
 ) -> Scar:
     """
     Create or reinforce a scar for (domain, key).
@@ -152,6 +167,8 @@ def write_scar(
     scars = _load_scars(domain)
     sid   = _scar_id(domain, key)
     now   = time.time()
+
+    decay_rate = _confidence_decay_rate(pattern_confidence)
 
     if sid in scars:
         existing = scars[sid]
@@ -164,7 +181,7 @@ def write_scar(
             trigger             = trigger,
             first_seen          = existing.first_seen,
             last_reinforced     = now,
-            decay_rate          = existing.decay_rate,
+            decay_rate          = decay_rate,   # update to current season's confidence
             reinforcement_count = existing.reinforcement_count + 1,
         )
     else:
@@ -177,7 +194,7 @@ def write_scar(
             trigger             = trigger,
             first_seen          = now,
             last_reinforced     = now,
-            decay_rate          = DECAY_RATE_DEFAULT,
+            decay_rate          = decay_rate,
             reinforcement_count = 1,
         )
 
