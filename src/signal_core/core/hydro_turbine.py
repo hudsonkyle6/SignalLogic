@@ -1,0 +1,226 @@
+"""
+POSTURE: TURBINE (EXPLORATORY BASIN)
+
+Receives packets routed to the TURBINE channel.
+
+Authority:
+  - DOES observe cross-domain phase patterns
+  - DOES append observations to turbine basin (NOT penstock)
+  - DOES NOT commit to penstock
+  - DOES NOT mutate packets
+  - DOES NOT make execution decisions
+
+The Turbine detects emergent phase convergence — moments where signals
+from multiple domains cluster at the same position in the anchor cycles.
+This is an observatory, not a decision engine.
+
+Convergence across domains at the same diurnal phase is a signal.
+The strength of that signal increases with the number of aligned domains.
+"""
+
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import List
+
+from .hydro_types import HydroPacket
+from rhythm_os.runtime.temporal_anchor import compute_anchor, TemporalAnchor
+
+
+# ------------------------------------------------------------
+# Turbine basin (append-only, NOT penstock)
+# ------------------------------------------------------------
+
+TURBINE_DIR = Path("src/rhythm_os/data/dark_field/turbine")
+
+# Phase convergence window: how close two phases must be to count as aligned.
+# 0.083 = 1 hour within a 12h semi-diurnal cycle (1/12 of the cycle).
+CONVERGENCE_WINDOW = 0.083
+
+
+# ------------------------------------------------------------
+# Observation record
+# ------------------------------------------------------------
+
+@dataclass(frozen=True)
+class TurbineObservation:
+    """
+    A single turbine observation. Records what was seen, not what was decided.
+    """
+    t: float
+    packet_id: str
+    domain: str
+    lane: str
+    route_reason: str           # D3_TURBINE_EXPLORATORY or D4_SAFE_FALLBACK
+    diurnal_phase: float
+    semi_diurnal_phase: float
+    long_wave_phase: float
+    dominant_hz: float
+    aligned_domain_count: int   # how many recent turbine packets share this phase
+    convergence_note: str       # human-readable pattern summary
+
+
+# ------------------------------------------------------------
+# Phase geometry
+# ------------------------------------------------------------
+
+def _circular_distance(a: float, b: float) -> float:
+    """
+    Shortest arc between two phases in [0, 1].
+    Returns a value in [0, 0.5].
+    """
+    d = abs(a - b)
+    return min(d, 1.0 - d)
+
+
+# ------------------------------------------------------------
+# History I/O
+# ------------------------------------------------------------
+
+def _load_recent_turbine(*, max_records: int = 100) -> List[dict]:
+    """
+    Load recent turbine observations for convergence comparison.
+    Read-only. Best-effort. Malformed lines are skipped.
+    """
+    out: List[dict] = []
+    if not TURBINE_DIR.exists():
+        return out
+
+    for f in sorted(TURBINE_DIR.glob("*.jsonl"), reverse=True):
+        try:
+            lines = f.read_text(encoding="utf-8").splitlines()
+            for line in reversed(lines):
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    out.append(json.loads(line))
+                except Exception:
+                    continue
+                if len(out) >= max_records:
+                    return out
+        except Exception:
+            continue
+
+    return out
+
+
+def _append_observation(obs: TurbineObservation) -> None:
+    """
+    Append a turbine observation to the daily basin file.
+    Append-only. No overwrite. No reads.
+    """
+    TURBINE_DIR.mkdir(parents=True, exist_ok=True)
+    today = datetime.now(timezone.utc).date().isoformat()
+    path = TURBINE_DIR / f"{today}.jsonl"
+
+    record = {
+        "t": obs.t,
+        "packet_id": obs.packet_id,
+        "domain": obs.domain,
+        "lane": obs.lane,
+        "route_reason": obs.route_reason,
+        "diurnal_phase": obs.diurnal_phase,
+        "semi_diurnal_phase": obs.semi_diurnal_phase,
+        "long_wave_phase": obs.long_wave_phase,
+        "dominant_hz": obs.dominant_hz,
+        "aligned_domain_count": obs.aligned_domain_count,
+        "convergence_note": obs.convergence_note,
+    }
+
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(record, sort_keys=True, separators=(",", ":")) + "\n")
+
+
+# ------------------------------------------------------------
+# Convergence assessment
+# ------------------------------------------------------------
+
+def _assess_convergence(
+    anchor: TemporalAnchor,
+    history: List[dict],
+) -> tuple[int, str]:
+    """
+    Count how many recent turbine packets share the same diurnal phase window
+    as the current packet, and summarise what domains they came from.
+
+    Returns (aligned_count, note_string).
+    """
+    if not history:
+        return 0, "no_history"
+
+    aligned = [
+        h for h in history
+        if _circular_distance(
+            anchor.diurnal_phase,
+            float(h.get("diurnal_phase", -1)),
+        ) <= CONVERGENCE_WINDOW
+    ]
+
+    if not aligned:
+        return 0, "isolated"
+
+    domains = sorted({h.get("domain", "?") for h in aligned})
+    count = len(aligned)
+
+    if count < 3:
+        note = f"weak:{','.join(domains)}"
+    else:
+        note = f"convergence:{','.join(domains)}:{count}"
+
+    return count, note
+
+
+# ------------------------------------------------------------
+# Public entry point
+# ------------------------------------------------------------
+
+def process_turbine(packet: HydroPacket, route_reason: str) -> TurbineObservation:
+    """
+    Process a TURBINE-routed packet.
+
+    1. Compute (or recover) temporal anchor from packet timestamp.
+    2. Load recent turbine history.
+    3. Assess phase convergence across domains.
+    4. Append observation to turbine basin.
+    5. Return observation (no side effects beyond the append).
+    """
+    # Prefer anchor phases already stamped on the packet by the throat;
+    # fall back to computing from the raw timestamp.
+    if (
+        packet.diurnal_phase is not None
+        and packet.semi_diurnal_phase is not None
+        and packet.long_wave_phase is not None
+    ):
+        anchor = TemporalAnchor(
+            t=float(packet.t),
+            diurnal_phase=packet.diurnal_phase,
+            semi_diurnal_phase=packet.semi_diurnal_phase,
+            long_wave_phase=packet.long_wave_phase,
+            dominant_hz=compute_anchor(float(packet.t), domain=packet.domain).dominant_hz,
+        )
+    else:
+        anchor = compute_anchor(float(packet.t), domain=packet.domain)
+
+    history = _load_recent_turbine()
+    aligned_count, convergence_note = _assess_convergence(anchor, history)
+
+    obs = TurbineObservation(
+        t=float(packet.t),
+        packet_id=packet.packet_id,
+        domain=packet.domain,
+        lane=packet.lane,
+        route_reason=route_reason,
+        diurnal_phase=anchor.diurnal_phase,
+        semi_diurnal_phase=anchor.semi_diurnal_phase,
+        long_wave_phase=anchor.long_wave_phase,
+        dominant_hz=anchor.dominant_hz,
+        aligned_domain_count=aligned_count,
+        convergence_note=convergence_note,
+    )
+
+    _append_observation(obs)
+    return obs

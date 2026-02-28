@@ -25,12 +25,14 @@ from typing import List
 
 from rhythm_os.core.wave.wave import Wave
 from rhythm_os.core.dark_field.store import append_wave_from_hydro
+from rhythm_os.runtime.temporal_anchor import compute_anchor
 
 from signal_core.core.hydro_types import HydroPacket, GateResult
 from signal_core.core.hydro_ingress_queue import drain_queue
 from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_dispatcher import dispatch
 from signal_core.core.hydro_audit import append_audit
+from signal_core.core.hydro_turbine import process_turbine
 
 
 # ---------------------------------------------------------------------
@@ -42,6 +44,7 @@ def commit_packet(packet: HydroPacket) -> None:
     Commit a single packet to the penstock as a sealed Wave.
 
     Packet coherence is mapped into Wave amplitude.
+    Temporal anchor phases are carried into Wave frequency and couplings.
     No inference. No transformation beyond clamping.
     """
 
@@ -52,10 +55,27 @@ def commit_packet(packet: HydroPacket) -> None:
         amplitude = 0.0
 
     # Clamp to [0,1]
-    if amplitude < 0.0:
-        amplitude = 0.0
-    if amplitude > 1.0:
-        amplitude = 1.0
+    amplitude = max(0.0, min(1.0, amplitude))
+
+    # Prefer anchor phases stamped at the throat; compute from timestamp if absent.
+    if packet.diurnal_phase is not None:
+        diurnal_phase = float(packet.diurnal_phase)
+        semi_diurnal_phase = float(packet.semi_diurnal_phase or 0.0)
+        long_wave_phase = float(packet.long_wave_phase or 0.0)
+        anchor = compute_anchor(float(packet.t), domain=packet.domain)
+        dominant_hz = anchor.dominant_hz
+    else:
+        anchor = compute_anchor(float(packet.t), domain=packet.domain)
+        diurnal_phase = anchor.diurnal_phase
+        semi_diurnal_phase = anchor.semi_diurnal_phase
+        long_wave_phase = anchor.long_wave_phase
+        dominant_hz = anchor.dominant_hz
+
+    # Couplings carry the secondary anchor phases alongside the wave.
+    couplings = {
+        "semi_diurnal": semi_diurnal_phase,
+        "long_wave": long_wave_phase,
+    }
 
     wave = Wave.create(
         text=json.dumps(
@@ -64,11 +84,11 @@ def commit_packet(packet: HydroPacket) -> None:
             separators=(",", ":"),
         ),
         signal_type=f"{packet.domain}::{packet.lane}::{packet.channel}",
-        phase=float(getattr(packet, "phase", 0.0) or 0.0),
-        frequency=1.0,
-        amplitude=amplitude,  # coherence carrier
+        phase=diurnal_phase,        # position in the dominant daily cycle
+        frequency=dominant_hz,      # anchor frequency for this domain
+        amplitude=amplitude,        # coherence carrier
         afterglow_decay=0.5,
-        couplings={},
+        couplings=couplings,
     )
 
     append_wave_from_hydro(wave)
@@ -121,11 +141,12 @@ def main() -> None:
             continue
 
         # -------------------------------------------------------------
-        # TURBINE — exploratory, non-penstock
+        # TURBINE — exploratory basin, phase convergence detection
         # -------------------------------------------------------------
         if decision.route.name == "TURBINE":
+            obs = process_turbine(packet, decision.rule_id)
             append_audit(packet, ingress.gate_result.value, "TURBINE")
-            print("COMMIT: SKIP (TURBINE)")
+            print(f"TURBINE: {obs.convergence_note} phase={obs.diurnal_phase:.3f} ({decision.rule_id})")
             continue
 
         # -------------------------------------------------------------
