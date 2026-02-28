@@ -1,0 +1,26 @@
+# SignalLogic Deployment Manifest
+# Copy and edit this file for each deployment instance.
+# Searched automatically at startup (walk up from package root).
+# Override path with: SIGNALLOGIC_CONFIG=/path/to/deployment.yaml
+
+deployment:
+  name: "SignalLogic"
+  version: "1"
+
+location:
+  lat: 42.9876
+  lon: -71.8126
+  label: "Southern NH"
+  timezone: "UTC"
+
+baseline:
+  # Minimum observations before each tier is considered "warm".
+  # The system runs in all modes regardless — these thresholds only
+  # affect the readiness flag shown in CycleResult and the dashboard.
+  min_meter_cycles: 30        # ~1 minute at 2s hydro_meter interval
+  min_natural_records: 4      # ~4 emit_natural_raw_once calls
+
+domain:
+  # List domain-specific channel names active for this deployment.
+  # Example: ["cold_storage", "compressor_1", "hvac"]
+  channels: []

@@ -10,12 +10,10 @@ Append-only queue reader/drainer.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import List
 
 from .hydro_types import HydroPacket
-
-QUEUE_PATH = Path("src/rhythm_os/data/dark_field/hydro/ingress.jsonl")
+from rhythm_os.runtime.paths import QUEUE_PATH
 
 
 def drain_queue(*, max_items: int | None = None) -> List[HydroPacket]:

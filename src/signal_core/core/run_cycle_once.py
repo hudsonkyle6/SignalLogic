@@ -19,35 +19,21 @@ See rhythm_os/TWO_WATERS.md
 
 from __future__ import annotations
 
-import uuid
-from datetime import datetime, timezone
-
 from signal_core.core.hydro_types import HydroPacket, GateResult
 from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_ingress_throat import enqueue_if_admitted
 from signal_core.core.hydro_dispatcher import dispatch
+from signal_core.core.instruments.system_observe import sample_once
 
 
 def observe_once() -> HydroPacket:
     """
-    Produce a single observational packet.
+    Produce a single system-metrics observational packet.
 
-    This is a bootstrap observer.
-    Future observers will replace this.
+    Reads live CPU, memory, network, and frequency via psutil.
+    Falls back to a minimal bootstrap packet if psutil is unavailable.
     """
-    return HydroPacket(
-        t=datetime.now(timezone.utc).timestamp(),
-        packet_id=str(uuid.uuid4()),
-        lane="system",
-        domain="core",
-        channel="bootstrap",
-        value={"demo": True},
-        provenance={"source": "run_cycle_once"},
-        rate=0.1,
-        anomaly_flag=False,
-        replay=False,
-        phase=None,
-    )
+    return sample_once()
 
 
 def run_cycle_once() -> None:

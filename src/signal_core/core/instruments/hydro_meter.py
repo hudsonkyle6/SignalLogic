@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import json
 import os
+import signal
+import threading
 import time
 import math
 import platform
@@ -28,6 +30,11 @@ from typing import Dict, Optional, List, Any, Tuple
 
 import psutil  # pip install psutil
 
+from signal_core.core.log import configure, get_logger
+
+configure()
+log = get_logger(__name__)
+
 
 # ==============================================================================
 # CONFIG
@@ -37,7 +44,7 @@ DEFAULT_INTERVAL_S = 2.0
 DEFAULT_WINDOW_S = 60.0
 DEFAULT_MIN_POINTS = 10
 
-DEFAULT_OUT_DIR = Path("src/rhythm_os/data/dark_field/meters")  # local append-only
+from rhythm_os.runtime.paths import METERS_DIR as DEFAULT_OUT_DIR
 
 
 # ==============================================================================
@@ -438,13 +445,19 @@ def emit_packets(
     out_dir: Path,
     runner: str = "hydro_meter",
     version: str = "v1",
+    stop_event: Optional[threading.Event] = None,
 ) -> None:
+    if stop_event is None:
+        stop_event = threading.Event()
+
     safe_mkdir(out_dir)
 
     host = platform.node() or "unknown_host"
     os_name = platform.system().lower()
 
-    while True:
+    log.info("hydro_meter started out_dir=%s interval=%.1fs", out_dir, meters[0].interval_s if meters else DEFAULT_INTERVAL_S)
+
+    while not stop_event.is_set():
         t0 = time.time()
 
         for m in meters:
@@ -479,10 +492,12 @@ def emit_packets(
             path = out_dir / f"{day}.jsonl"
             append_jsonl(path, pkt)
 
-        # interval control
+        # interval control — use stop_event.wait() so SIGTERM wakes us immediately
         dt = time.time() - t0
         sleep_s = max(0.0, meters[0].interval_s - dt) if meters else DEFAULT_INTERVAL_S
-        time.sleep(sleep_s)
+        stop_event.wait(timeout=sleep_s)
+
+    log.info("hydro_meter stopped")
 
 
 def main() -> None:
@@ -500,8 +515,12 @@ def main() -> None:
     ifaces = [s.strip() for s in args.ifaces.split(",") if s.strip()] or None
     procs = [s.strip() for s in args.procs.split(",") if s.strip()] or None
 
+    stop_event = threading.Event()
+    signal.signal(signal.SIGTERM, lambda *_: stop_event.set())
+    signal.signal(signal.SIGINT, lambda *_: stop_event.set())
+
     meters = build_meters(args.interval, args.window, args.min_points, ifaces, procs)
-    emit_packets(meters, Path(args.out))
+    emit_packets(meters, Path(args.out), stop_event=stop_event)
 
 
 if __name__ == "__main__":

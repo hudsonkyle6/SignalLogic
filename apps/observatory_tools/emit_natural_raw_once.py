@@ -9,14 +9,16 @@ from typing import Any, Dict, Optional
 import requests
 
 from rhythm_os.runtime.temporal_anchor import compute_anchor, SEMI_DIURNAL_PERIOD_S
+from rhythm_os.runtime.deploy_config import get_location
 
 # ---------------------------------------------------------------------
-# Observatory coordinates
-# Southern New Hampshire — primary field site
+# Observatory coordinates — loaded from deployment.yaml at startup.
+# Override the file or set SIGNALLOGIC_CONFIG to change location.
 # ---------------------------------------------------------------------
 
-LAT: float = 42.9876
-LON: float = -71.8126
+_lat, _lon, _label = get_location()
+LAT: float = _lat
+LON: float = _lon
 
 # ---------------------------------------------------------------------
 # Open-Meteo (no API key, no rate limit for reasonable use)
@@ -49,7 +51,7 @@ _T_LOW:  float = -25.0
 _T_HIGH: float = 38.0
 _T_SPAN: float = _T_HIGH - _T_LOW
 
-OUT_DIR = Path("src/rhythm_os/data/dark_field/natural")
+from rhythm_os.runtime.paths import NATURAL_DIR as OUT_DIR
 
 
 # ---------------------------------------------------------------------

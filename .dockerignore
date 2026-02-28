@@ -1,0 +1,26 @@
+.git
+.github
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.venv
+venv
+env
+.env
+dist
+build
+*.log
+
+# Data written at runtime — never bake into image
+src/rhythm_os/data/
+
+# Dev/test extras
+tests/
+docs/
+apps/
+config/
+*.md
+.pytest_cache
+.mypy_cache
+.ruff_cache

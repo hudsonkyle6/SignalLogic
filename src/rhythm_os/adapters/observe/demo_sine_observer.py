@@ -9,7 +9,13 @@ Purpose:
 
 import time
 import math
-import numpy as np
+try:
+    import numpy as np
+except ImportError as _e:
+    raise ImportError(
+        "numpy is required for the demo sine observer. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 from pathlib import Path
 
 from rhythm_os.adapters.observe.phase_extractor import extract_external_phase

@@ -5,8 +5,14 @@ import time
 from typing import List
 from dataclasses import dataclass
 
-import numpy as np
-from scipy.signal import hilbert
+try:
+    import numpy as np
+    from scipy.signal import hilbert
+except ImportError as _e:
+    raise ImportError(
+        "numpy and scipy are required for synthetic signal generation. "
+        "Install with: pip install 'signal-logic[analytics]' scipy"
+    ) from _e
 
 from rhythm_os.core.field import compute_field
 from rhythm_os.psr.domain_wave import DomainWave

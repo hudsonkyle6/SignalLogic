@@ -20,10 +20,12 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import List, Dict, Any
 
-TURBINE_DIR = Path("src/rhythm_os/data/dark_field/turbine")
+from rhythm_os.runtime.paths import TURBINE_DIR
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
 CONVERGENCE_WINDOW = 0.083  # must match hydro_turbine.py
 
 
@@ -153,24 +155,22 @@ def _append_summary(summary: Dict[str, Any]) -> None:
 # Print report
 # ------------------------------------------------------------
 
-def _print_report(summary: Dict[str, Any]) -> None:
-    print("\n" + "=" * 60)
-    print("  TURBINE BASIN SUMMARY")
-    print("=" * 60)
-    print(f"  Date:          {summary['date']}")
-    print(f"  Observations:  {summary['total_turbine_observations']}")
-    print(f"  Domains:       {', '.join(sorted(summary['domains_observed'].keys())) or 'none'}")
-    print(f"  Events:        {summary['convergence_event_count']}  ({summary['strong_events']} strong)")
-
-    if summary["convergence_events"]:
-        print("\n  Convergence Events:")
-        for ev in summary["convergence_events"]:
-            tag = "[STRONG]" if ev["strength"] == "strong" else "[weak]  "
-            print(f"    {tag} phase={ev['diurnal_phase']:.3f}  domains={','.join(ev['domains'])}")
-    else:
-        print("\n  No cross-domain convergence detected this cycle.")
-
-    print("=" * 60)
+def _log_report(summary: Dict[str, Any]) -> None:
+    log.info(
+        "turbine summary date=%s observations=%d events=%d strong=%d domains=%s",
+        summary["date"],
+        summary["total_turbine_observations"],
+        summary["convergence_event_count"],
+        summary["strong_events"],
+        ",".join(sorted(summary["domains_observed"].keys())) or "none",
+    )
+    for ev in summary.get("convergence_events", []):
+        log.info(
+            "convergence strength=%s phase=%.3f domains=%s",
+            ev["strength"],
+            ev["diurnal_phase"],
+            ",".join(ev["domains"]),
+        )
 
 
 # ------------------------------------------------------------
@@ -187,7 +187,7 @@ def run_turbine_summary() -> Dict[str, Any]:
     records = _load_today_turbine()
     summary = build_summary(records)
     _append_summary(summary)
-    _print_report(summary)
+    _log_report(summary)
     return summary
 
 

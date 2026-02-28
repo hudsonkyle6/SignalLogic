@@ -1,5 +1,11 @@
 import math
-import numpy as np
+try:
+    import numpy as np
+except ImportError as _e:
+    raise ImportError(
+        "numpy is required for phase extraction. "
+        "Install with: pip install 'signal-logic[analytics]'"
+    ) from _e
 from typing import List, Tuple, Dict, Optional
 
 try:

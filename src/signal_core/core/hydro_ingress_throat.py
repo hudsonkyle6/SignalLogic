@@ -14,14 +14,10 @@ from __future__ import annotations
 
 import json
 import time
-from pathlib import Path
 
 from .hydro_types import HydroPacket, IngressDecision, GateResult
 from rhythm_os.runtime.temporal_anchor import compute_anchor
-
-
-# Canonical ingress queue (append-only)
-QUEUE_PATH = Path("src/rhythm_os/data/dark_field/hydro/ingress.jsonl")
+from rhythm_os.runtime.paths import QUEUE_PATH
 
 
 def enqueue_if_admitted(
