@@ -23,13 +23,26 @@ from typing import Optional, Dict, Any
 
 from .hydro_types import HydroPacket, DispatchDecision
 from rhythm_os.runtime.seasonal_prior import compute_seasonal_prior
-from rhythm_os.core.memory.scar import get_attenuation, pattern_key as _pattern_key
+from rhythm_os.core.memory.scar import get_scar, pattern_key as _pattern_key
 
 # Minimum pattern_confidence regardless of what the seasonal prior returns.
 # Without this floor, a near-zero upstream confidence would cause scars to
 # accumulate pressure they can never shed (decay_rate → 0), eventually
 # blinding the system to familiar patterns at the worst possible moment.
 _MIN_PATTERN_CONFIDENCE = 0.15
+
+# Attenuation reduction factors when a scar's history flags are set.
+# Applied multiplicatively on top of the confidence-weighted base attenuation.
+#
+# ever_changed=True: pattern has previously triggered action — stay more alert
+#   even as it becomes familiar.  35% reduction in attenuation.
+# changed=True (implies ever_changed): the last encounter also triggered action.
+#   Additional 20% reduction — recent significance on top of historical.
+#
+# Combined floor: a scar with both flags active attenuates at 0.65 × 0.80 = 52%
+# of what pressure alone would suggest.  Novel patterns (no scar) are unaffected.
+_HISTORY_FACTOR_EVER_CHANGED = 0.65
+_HISTORY_FACTOR_RECENTLY_CHANGED = 0.80
 
 
 # ---------------------------------------------------------------------------
@@ -87,19 +100,32 @@ def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
         return packet
 
     try:
-        key         = _pattern_key(packet.seasonal_band, packet.channel)
-        attenuation = get_attenuation(packet.domain, key)
+        key  = _pattern_key(packet.seasonal_band, packet.channel)
+        scar = get_scar(packet.domain, key)
     except Exception:
         return packet  # fail-open — scar read is informational only
 
-    if attenuation <= 0.0:
-        return packet
+    if scar is None:
+        return packet  # novel pattern — no attenuation
 
-    # Scale attenuation by pattern_confidence.
-    # High confidence (stable season): trust the scar memory — full attenuation.
-    # Low confidence (transition): stay alert even on familiar patterns — reduced attenuation.
+    raw_attenuation = min(scar.pressure / 2.0, 0.85)  # mirrors MAX_PRESSURE / MAX_ATTENUATION
+
+    # Scale by seasonal confidence.
+    # High confidence: trust the scar memory — full attenuation.
+    # Low confidence (transition): stay alert on familiar patterns — reduced attenuation.
     confidence = float(packet.pattern_confidence) if packet.pattern_confidence is not None else 1.0
-    effective_attenuation = attenuation * confidence
+
+    # Scale by change history.
+    # ever_changed: this pattern has previously triggered action — hold back some
+    #   attenuation so the system doesn't go fully quiet on dangerous territory.
+    # changed (last encounter also triggered): recent significance compounds the wariness.
+    history_factor = 1.0
+    if scar.ever_changed:
+        history_factor *= _HISTORY_FACTOR_EVER_CHANGED
+    if scar.changed:
+        history_factor *= _HISTORY_FACTOR_RECENTLY_CHANGED
+
+    effective_attenuation = raw_attenuation * confidence * history_factor
 
     return HydroPacket(
         **{

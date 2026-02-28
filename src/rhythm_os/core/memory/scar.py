@@ -120,6 +120,12 @@ def _save_scars(domain: str, scars: Dict[str, Scar]) -> None:
 # Public API
 # ---------------------------------------------------------------------------
 
+def get_scar(domain: str, key: str) -> Optional[Scar]:
+    """Return the Scar for (domain, key), or None if no scar exists."""
+    scars = _load_scars(domain)
+    return scars.get(_scar_id(domain, key))
+
+
 def get_attenuation(domain: str, key: str) -> float:
     """
     Return the scar attenuation factor for a pattern in a domain.
@@ -130,8 +136,7 @@ def get_attenuation(domain: str, key: str) -> float:
     The effective forest_proximity after attenuation:
         effective_fp = raw_fp * (1 - attenuation)
     """
-    scars = _load_scars(domain)
-    scar = scars.get(_scar_id(domain, key))
+    scar = get_scar(domain, key)
     if scar is None:
         return 0.0
     return min(scar.pressure / MAX_PRESSURE, MAX_ATTENUATION)
