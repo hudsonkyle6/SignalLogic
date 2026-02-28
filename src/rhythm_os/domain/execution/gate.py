@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from rhythm_os.foundations import ExecutionGateDecision
+from rhythm_os.foundations_runtime.execution_gate import ExecutionGateDecision
 
 
 def evaluate_execution_gate(
