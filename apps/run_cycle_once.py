@@ -5,7 +5,8 @@ ONE FULL SIGNAL CYCLE — BOUNDED OBSERVATION
 Phase 1 Regime:
     - System pressure primary (REAL vitals)
     - Cyber cadence projection
-    - Natural + Market muted
+    - Natural LIVE (Open-Meteo, 42.9876°N 71.8126°W)
+    - Market muted
 
 Temporal integrity preserved.
 Core flow must continue.
@@ -44,7 +45,7 @@ PY = sys.executable
 SYSTEM_OBS_WINDOW_S = 75
 SCOPE_WINDOW_S = 10
 
-ENABLE_NATURAL = False
+ENABLE_NATURAL = True
 ENABLE_MARKET = False
 ENABLE_CYBER = True
 
@@ -220,12 +221,22 @@ def main() -> None:
         required=True
     )
 
+    # ---------------------------------------------------------------
+    # 6) TURBINE SUMMARY (READ-ONLY — closes observation loop)
+    # ---------------------------------------------------------------
+
+    run_module(
+        "TURBINE → CONVERGENCE SUMMARY",
+        "src.signal_core.core.hydro_turbine_summary",
+        required=False
+    )
+
     print("\n" + "=" * 72)
     print("=== END SIGNAL CYCLE ===")
     print("=" * 72)
 
     # ---------------------------------------------------------------
-    # 6) OPTIONAL SCOPE
+    # 7) OPTIONAL SCOPE
     # ---------------------------------------------------------------
 
     if prompt_scope(timeout_sec=60):

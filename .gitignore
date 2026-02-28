@@ -30,6 +30,13 @@ Thumbs.db
 **/*.pub
 
 # ----------------------------
+# Test / Coverage
+# ----------------------------
+.coverage
+.pytest_cache/
+htmlcov/
+
+# ----------------------------
 # Logs / Reports
 # ----------------------------
 **/fieldnotes/logs/**

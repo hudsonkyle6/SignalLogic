@@ -1,8 +1,19 @@
-#C:\Users\SignalADmin\Signal Archive\SignalLogic\src\signal_core\core\lighthouse.py
 """
 POSTURE: TRIBUTARY
 Hypothesis-only. Must not write to Penstock.
 See rhythm_os/TWO_WATERS.md
+
+Two responsibilities:
+
+1. annotate_packet() — PRE-GATE seasonal annotation.
+   Reads seasonal_prior for the packet's timestamp and stamps the packet
+   with seasonal_band, pattern_confidence, forest_proximity, and afterglow_decay.
+   The gate ignores these fields entirely (purely structural).
+   The dispatcher uses forest_proximity to orient routing.
+
+2. illuminate() — POST-DISPATCH structural labeling.
+   Non-authoritative summary of what was observed and where it was routed.
+   No truth claims.
 """
 
 from __future__ import annotations
@@ -11,7 +22,46 @@ from dataclasses import dataclass
 from typing import Optional, Dict, Any
 
 from .hydro_types import HydroPacket, DispatchDecision
+from rhythm_os.runtime.seasonal_prior import compute_seasonal_prior
 
+
+# ---------------------------------------------------------------------------
+# Pre-gate annotation
+# ---------------------------------------------------------------------------
+
+def annotate_packet(packet: HydroPacket) -> HydroPacket:
+    """
+    Stamp seasonal Lighthouse annotations onto the packet BEFORE the gate.
+
+    Returns a NEW (frozen) HydroPacket with seasonal context fields filled.
+    If annotation fails for any reason, returns the original packet unchanged
+    (fail-open — the gate must still decide structurally).
+
+    POSTURE: TRIBUTARY — no authority, no persistence, no side effects.
+    """
+    if packet.seasonal_band is not None:
+        # Already annotated (e.g. re-processed replay packet)
+        return packet
+
+    try:
+        prior = compute_seasonal_prior(float(packet.t))
+    except Exception:
+        return packet  # fail-open: seasonal context is informational only
+
+    return HydroPacket(
+        **{
+            **packet.__dict__,
+            "seasonal_band": prior.seasonal_band,
+            "pattern_confidence": prior.pattern_confidence,
+            "forest_proximity": prior.forest_proximity,
+            "afterglow_decay": prior.afterglow_decay,
+        }
+    )
+
+
+# ---------------------------------------------------------------------------
+# Post-dispatch illumination
+# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class LighthouseSummary:
