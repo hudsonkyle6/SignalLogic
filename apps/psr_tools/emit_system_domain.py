@@ -7,7 +7,7 @@ import math
 import cmath
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from rhythm_os.psr.domain_wave import DomainWave
 
@@ -29,7 +29,6 @@ DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
 
 DOMAIN = "system"
 FIELD_CYCLE = "diurnal_projection"
-CHANNEL = "net_pressure"
 
 
 # ---------------------------------------------------------------------
@@ -68,23 +67,6 @@ def _read_meter_packets(path: Path) -> List[Dict[str, Any]]:
     return packets
 
 
-def _extract_net_samples(
-    pkts: List[Dict[str, Any]]
-) -> List[Tuple[float, float]]:
-    out = []
-    for p in pkts:
-        if str(p.get("lane")) != "net":
-            continue
-        data = p.get("data") or {}
-        try:
-            t = float(p["t"])
-            out_bps = float(data.get("out_rate_bps", 0.0))
-            out.append((t, out_bps))
-        except Exception:
-            continue
-    return out
-
-
 def _wrap_angle(theta: float) -> float:
     while theta <= -math.pi:
         theta += 2 * math.pi
@@ -94,31 +76,73 @@ def _wrap_angle(theta: float) -> float:
 
 
 # ---------------------------------------------------------------------
-# Main
+# Sample extractors
 # ---------------------------------------------------------------------
 
-def main() -> None:
-    meters_path = _meters_path_today()
-    pkts = _read_meter_packets(meters_path)
+def _extract_net_samples(pkts: List[Dict[str, Any]]) -> List[Tuple[float, float]]:
+    out = []
+    for p in pkts:
+        if str(p.get("lane")) != "net":
+            continue
+        data = p.get("data") or {}
+        try:
+            t = float(p["t"])
+            out.append((t, float(data.get("out_rate_bps", 0.0))))
+        except Exception:
+            continue
+    return out
 
-    net = _extract_net_samples(pkts)
 
-    print("SYSTEM DOMAIN net sample count:", len(net))
+def _extract_cpu_util_samples(pkts: List[Dict[str, Any]]) -> List[Tuple[float, float]]:
+    out = []
+    for p in pkts:
+        if str(p.get("lane")) != "cpu" or str(p.get("channel")) != "cpu:util":
+            continue
+        data = p.get("data") or {}
+        try:
+            t = float(p["t"])
+            out.append((t, float(data.get("cpu_percent_mean", 0.0))))
+        except Exception:
+            continue
+    return out
 
-    if len(net) < 3:
-        raise RuntimeError("Not enough net samples")
 
-    # -------------------------------------------------------------
-    # External phase projection
-    # -------------------------------------------------------------
+def _extract_proc_samples(pkts: List[Dict[str, Any]]) -> List[Tuple[float, float]]:
+    """Aggregate cpu_rate_core_equiv across all proc channels at each timestamp."""
+    by_t: Dict[float, float] = {}
+    for p in pkts:
+        if str(p.get("lane")) != "proc":
+            continue
+        data = p.get("data") or {}
+        try:
+            t = float(p["t"])
+            val = float(data.get("cpu_rate_core_equiv", 0.0))
+            by_t[t] = by_t.get(t, 0.0) + val
+        except Exception:
+            continue
+    return sorted(by_t.items())
+
+
+# ---------------------------------------------------------------------
+# Phasor projection
+# ---------------------------------------------------------------------
+
+def _project(
+    samples: List[Tuple[float, float]],
+    channel: str,
+    extractor_source: str,
+    extra_extractor: Optional[Dict[str, Any]] = None,
+) -> Optional[DomainWave]:
+    if len(samples) < 3:
+        return None
 
     Z = 0j
     mag_sum = 0.0
 
-    for t, out_bps in net:
+    for t, val in samples:
         phase = OMEGA * t
-        Z += out_bps * cmath.exp(1j * phase)
-        mag_sum += abs(out_bps)
+        Z += val * cmath.exp(1j * phase)
+        mag_sum += abs(val)
 
     if mag_sum == 0:
         coherence = 0.0
@@ -127,38 +151,38 @@ def main() -> None:
         coherence = abs(Z) / mag_sum
         phase_external = cmath.phase(Z)
 
-    # -------------------------------------------------------------
-    # Field phase at latest timestamp
-    # -------------------------------------------------------------
-
-    ts = net[-1][0]
+    ts = samples[-1][0]
     phase_field = (OMEGA * ts) % (2 * math.pi)
     phase_diff = _wrap_angle(phase_external - phase_field)
 
-    # -------------------------------------------------------------
-    # Emit DomainWave
-    # -------------------------------------------------------------
+    extractor: Dict[str, Any] = {
+        "source": extractor_source,
+        "projection": "diurnal",
+        "samples": len(samples),
+        "version": "v1",
+    }
+    if extra_extractor:
+        extractor.update(extra_extractor)
 
-    dw = DomainWave(
+    return DomainWave(
         t=ts,
         domain=DOMAIN,
-        channel=CHANNEL,
+        channel=channel,
         field_cycle=FIELD_CYCLE,
         phase_external=phase_external,
         phase_field=phase_field,
         phase_diff=phase_diff,
         coherence=coherence,
-        extractor={
-            "source": "emit_system_domain",
-            "projection": "diurnal",
-            "samples": len(net),
-            "version": "v4_sovereign_only",
-        },
+        extractor=extractor,
     )
 
-    out_path = _domain_path_today()
-    out_path.parent.mkdir(parents=True, exist_ok=True)
 
+# ---------------------------------------------------------------------
+# Emit
+# ---------------------------------------------------------------------
+
+def _emit_wave(dw: DomainWave, out_path: Path) -> None:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("a", encoding="utf-8") as f:
         f.write(json.dumps({
             "t": dw.t,
@@ -172,11 +196,37 @@ def main() -> None:
             "extractor": dw.extractor,
         }, separators=(",", ":"), ensure_ascii=False) + "\n")
 
-    print(
-        f"SYSTEM DOMAIN EMITTED → "
-        f"phase_diff={phase_diff:.3f} "
-        f"coherence={coherence:.3f}"
-    )
+
+# ---------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------
+
+def main() -> None:
+    meters_path = _meters_path_today()
+    pkts = _read_meter_packets(meters_path)
+    out_path = _domain_path_today()
+
+    channels = [
+        ("net_pressure",  _extract_net_samples(pkts),      "emit_system_domain.net"),
+        ("cpu_pressure",  _extract_cpu_util_samples(pkts),  "emit_system_domain.cpu"),
+        ("proc_pressure", _extract_proc_samples(pkts),      "emit_system_domain.proc"),
+    ]
+
+    emitted = 0
+    for channel, samples, src in channels:
+        print(f"SYSTEM DOMAIN [{channel}] sample count: {len(samples)}")
+        dw = _project(samples, channel=channel, extractor_source=src)
+        if dw is None:
+            print(f"SYSTEM DOMAIN [{channel}] skipped (insufficient samples)")
+            continue
+        _emit_wave(dw, out_path)
+        print(
+            f"SYSTEM DOMAIN [{channel}] → "
+            f"phase_diff={dw.phase_diff:.3f} coherence={dw.coherence:.3f}"
+        )
+        emitted += 1
+
+    print(f"SYSTEM DOMAIN EMITTED → {emitted} channels")
 
 
 if __name__ == "__main__":
