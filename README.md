@@ -2,69 +2,117 @@
 
 Rhythmic, antifragile operating system for signal observation, governance, and execution.
 
-This repository contains the executable kernel (`signal_core`), the physics substrate (`rhythm_os`), and the archival doctrine layer (`signal_light_press`). Documentation and canon live alongside code, but are treated as non-executable memory.
+Not alerting. Not metrics. Phase alignment across domains.
 
 ---
 
-## Architecture
+## What it is
+
+Signals from unrelated domains — system, market, weather, cyber — are projected onto shared oscillatory clocks. When they arrive at the same phase simultaneously, that is convergence. Convergence is recorded, not acted on.
+
+This distinction is the system's sovereignty line. It prevents the stack from becoming a brittle control system.
+
+---
+
+## Design laws
+
+| Law | Statement |
+|---|---|
+| **Append-only truth** | The penstock is never mutated. History is sovereign. |
+| **Deterministic field** | Same time input → same field output, always. No randomness, no historical lookup. |
+| **No backflow** | The Turbine observes. It never influences the Gate or the Penstock. |
+| **Oracle has no authority** | The Oracle describes phase geometry only. It makes zero decisions. |
+| **Antifragile tracking** | Drift, brittleness, strain, and unknowns index are recorded every cycle. |
+
+---
+
+## Hydro cycle
 
 ```
-signal_core/    — Hydro orchestrator: observe → gate → dispatch → commit → turbine
-rhythm_os/      — Physics substrate: oscillatory field models, memory, antifragile state
-apps/           — Oracle layers, ML prediction, PSR tools, signal scope
-tests/          — Unit test suite (pytest)
+Observe → Gate → Dispatch → Commit → Turbine
+```
+
+| Step | Role |
+|---|---|
+| **Observe** | Collect packets from all active domains |
+| **Gate** | Structurally validate and enqueue |
+| **Dispatch** | Route to dispatch lanes: main, spillway, or reject |
+| **Commit** | Seal validated Waves and append to the penstock (the immutable JSONL ledger) |
+| **Turbine** | Read the committed record; detect cross-domain phase convergence |
+
+The penstock is not a lane — it is the ledger. Lanes are dispatch routes. The Turbine is a reader, not a writer.
+
+---
+
+## Clock architecture
+
+**Field clocks** — universal slow reference, computed from time alone:
+
+| Clock | Period |
+|---|---|
+| Longwave | multi-year |
+| Seasonal | ~365 days |
+| Diurnal | 24 hours |
+| Semi-diurnal | 12 hours |
+
+**Domain stacks** — local fast probe clocks, defined per domain:
+
+| Domain | Example stack |
+|---|---|
+| Cyber | burst → minute → session |
+| Maritime | tide cycle → voyage → seasonal |
+| Market | intraday → weekly → quarterly |
+
+Field clocks are the reference layer. Domain stacks are how each domain speaks to that reference.
+
+---
+
+## Memory architecture
+
+| Layer | Type | Description |
+|---|---|---|
+| **Scar** | Persistent | Long-decay historical imprints — what events left marks |
+| **Ghost** | Ephemeral | Per-cycle change detection — what shifted right now |
+| **Afterglow** | Resonance | Delayed activation — signals still echoing after an event |
+
+---
+
+## Key concepts
+
+| Concept | Description |
+|---|---|
+| **Wave** | Immutable record: `(domain, channel, phase_external, phase_field, phase_diff, coherence)` |
+| **Field** | Deterministic sovereign oscillatory field. Input: time. Output: phase. |
+| **Penstock** | Append-only JSONL ledger. Committed Waves are sealed and never rewritten. |
+| **Turbine** | Cross-domain convergence detector. Observes only — no write authority. |
+| **Oracle** | Describes phase alignment geometry. No decision authority. |
+| **Antifragile state** | Drift, brittleness, strain, and unknowns index tracked per cycle. |
+
+---
+
+## Packages
+
+```
+signal_core/    — Hydro orchestrator (observe → gate → dispatch → commit → turbine)
+rhythm_os/      — Physics substrate (field, wave, memory, antifragile, PSR transforms)
+apps/           — Oracle layers, scope tools, PSR ingress
 config/         — YAML contracts (oracle, governance, deployment)
+signal_light_press/ — Archival doctrine (non-executable memory)
 ```
-
-**Core cycle:**
-
-1. **Observe** — collect packets from multiple domains (system, market, natural, cyber)
-2. **Gate** — structurally validate and enqueue
-3. **Dispatch** — route to lanes (penstock, turbine, spillway, reject)
-4. **Commit** — append validated waves to the append-only JSONL penstock
-5. **Turbine** — detect cross-domain phase convergence
-6. **Dashboard** — three-tier visualization (snapshot / watch / animate)
-
-Phase computation is deterministic and pure (time-only input). The penstock is append-only; history is never rewritten.
 
 ---
 
-## Quick Start
+## Quick start
 
-**Install (core):**
 ```bash
 pip install -e .
-```
+pip install -e ".[analytics]"   # adds pandas/numpy for memory modules and market transforms
 
-**Install with analytics extras** (pandas/numpy required for memory modules and market transforms):
-```bash
-pip install -e ".[analytics]"
-```
-
-**Run a single cycle:**
-```bash
-signallogic-run
-```
-
-**Run in cadence loop (every 60 s):**
-```bash
-signallogic-run --loop 60
-```
-
-**Check system readiness:**
-```bash
-signallogic-run --health
-# exit 0 = warm, 1 = cold, 2 = error
-```
-
-**Launch the dashboard:**
-```bash
-signallogic-dashboard
-```
-
-**Start background telemetry:**
-```bash
-signallogic-meter
+signallogic-run                  # single cycle
+signallogic-run --loop 60        # cadence every 60 s
+signallogic-run --health         # exit 0=warm  1=cold  2=error
+signallogic-dashboard            # three-tier visualization (snapshot / watch / animate)
+signallogic-meter                # background continuous telemetry
 ```
 
 ---
@@ -72,51 +120,21 @@ signallogic-meter
 ## Docker
 
 ```bash
-# Build and start all services
 docker compose up --build
 
-# Services:
-#   meter     — continuous telemetry (2 s samples)
-#   cycle     — full cycle loop (60 s interval)
-#   dashboard — manual / on-demand
+# meter     — continuous telemetry (2 s samples)
+# cycle     — full cycle loop (60 s interval)
+# dashboard — manual / on-demand
 ```
 
 ---
 
-## Development
+## Status
 
-**Requirements:** Python 3.11+
+Python 3.11+ — pytest — 486 passing — 51% coverage
 
 ```bash
-# Install with test dependencies
 pip install -e ".[all]"
-
-# Run tests
 pytest
-
-# Run tests with coverage
 pytest --cov=src --cov-report=term-missing
 ```
-
----
-
-## Key Concepts
-
-| Concept | Description |
-|---|---|
-| **Penstock** | Append-only JSONL store. Committed waves are immutable. |
-| **Field** | Deterministic sovereign oscillatory field computed from time alone. |
-| **Wave** | Immutable record: `(domain, channel, phase_external, phase_field, phase_diff, coherence)`. |
-| **Turbine** | Cross-domain convergence detector. Observes only — no authority. |
-| **Antifragile state** | Tracks drift, brittleness, strain, and unknowns index per cycle. |
-| **Oracle** | Describes phase alignment geometry. No decision authority. |
-| **Ghost / Afterglow** | Ephemeral and persistent memory layers (analytics extra). |
-
----
-
-## Packages
-
-| Package | Purpose |
-|---|---|
-| `signal_core` | Hydro pipeline, dashboard, telemetry meter |
-| `rhythm_os` | Field, wave, memory, antifragile domain, PSR transforms, runtime bus |
