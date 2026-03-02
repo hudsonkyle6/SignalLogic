@@ -11,6 +11,7 @@ Invariants:
 - Packets without coherence in value emit coherence=None
 - Files rotate daily: signals-YYYY-MM-DD.jsonl written inside CONTROL_DIR
 """
+
 from __future__ import annotations
 
 import json
@@ -28,6 +29,7 @@ from signal_core.core.hydro_types import HydroPacket, DispatchDecision, Route
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _packet(**overrides) -> HydroPacket:
     defaults = dict(
@@ -73,6 +75,7 @@ def _find_signal_files(directory: Path) -> List[Path]:
 # Tests
 # ---------------------------------------------------------------------------
 
+
 class TestEmitControlSignal:
     def test_creates_file_on_first_emit(self, tmp_path, monkeypatch):
         monkeypatch.setattr(cs_mod, "CONTROL_DIR", tmp_path / "control")
@@ -99,8 +102,7 @@ class TestEmitControlSignal:
 
         files = _find_signal_files(tmp_path)
         total_lines = sum(
-            len(f.read_text(encoding="utf-8").strip().splitlines())
-            for f in files
+            len(f.read_text(encoding="utf-8").strip().splitlines()) for f in files
         )
         assert total_lines == 5
 
@@ -112,9 +114,20 @@ class TestEmitControlSignal:
         [path] = _find_signal_files(tmp_path)
         record = json.loads(path.read_text(encoding="utf-8").strip())
         expected_fields = [
-            "ts", "packet_id", "t", "domain", "lane", "channel",
-            "route", "rule_id", "pressure_class", "observe",
-            "forest_proximity", "seasonal_band", "coherence", "diurnal_phase",
+            "ts",
+            "packet_id",
+            "t",
+            "domain",
+            "lane",
+            "channel",
+            "route",
+            "rule_id",
+            "pressure_class",
+            "observe",
+            "forest_proximity",
+            "seasonal_band",
+            "coherence",
+            "diurnal_phase",
         ]
         for field in expected_fields:
             assert field in record, f"Missing field: {field}"
@@ -122,7 +135,9 @@ class TestEmitControlSignal:
     def test_route_value_matches_decision(self, tmp_path, monkeypatch):
         monkeypatch.setattr(cs_mod, "CONTROL_DIR", tmp_path)
 
-        emit_control_signal(_packet(), _decision(route=Route.MAIN, rule_id="D1_MAIN_OPERATIONAL"))
+        emit_control_signal(
+            _packet(), _decision(route=Route.MAIN, rule_id="D1_MAIN_OPERATIONAL")
+        )
 
         [path] = _find_signal_files(tmp_path)
         record = json.loads(path.read_text(encoding="utf-8").strip())
@@ -199,6 +214,7 @@ class TestEmitControlSignal:
         assert path.name.startswith("signals-")
         assert path.suffix == ".jsonl"
         # Date portion must be parseable
-        date_part = path.stem[len("signals-"):]
+        date_part = path.stem[len("signals-") :]
         from datetime import date
+
         date.fromisoformat(date_part)  # raises ValueError if malformed

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
+
 
 def _load_yaml_minimal(text: str) -> Dict[str, Any]:
     """
@@ -11,6 +12,7 @@ def _load_yaml_minimal(text: str) -> Dict[str, Any]:
     """
     try:
         import yaml  # type: ignore
+
         return yaml.safe_load(text) or {}
     except Exception:
         pass
@@ -25,7 +27,11 @@ def _load_yaml_minimal(text: str) -> Dict[str, Any]:
         else:
             raise ValueError("Invalid container for kv")
 
-    lines = [ln.rstrip("\n") for ln in text.splitlines() if ln.strip() and not ln.strip().startswith("#")]
+    lines = [
+        ln.rstrip("\n")
+        for ln in text.splitlines()
+        if ln.strip() and not ln.strip().startswith("#")
+    ]
     for ln in lines:
         indent = len(ln) - len(ln.lstrip(" "))
         while stack and indent < stack[-1][0]:
@@ -57,7 +63,9 @@ def _load_yaml_minimal(text: str) -> Dict[str, Any]:
                     if not inner:
                         v = []
                     else:
-                        parts = [p.strip().strip('"').strip("'") for p in inner.split(",")]
+                        parts = [
+                            p.strip().strip('"').strip("'") for p in inner.split(",")
+                        ]
                         v = parts
                 else:
                     v = rest.strip('"').strip("'")
@@ -70,6 +78,7 @@ def _load_yaml_minimal(text: str) -> Dict[str, Any]:
 
     # Fix any dicts that should be lists if policy defines them that way (we keep it simple)
     return root
+
 
 @dataclass
 class Policy:
@@ -106,6 +115,7 @@ class Policy:
     @property
     def slp_required_keys(self) -> List[str]:
         return list(self.raw["slp"]["required_header_keys"])
+
 
 def load_policy(path: Path) -> Policy:
     text = path.read_text(encoding="utf-8")

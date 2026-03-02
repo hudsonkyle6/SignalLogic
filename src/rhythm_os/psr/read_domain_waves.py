@@ -49,8 +49,7 @@ def read_today() -> List[DomainWave]:
                     phase_field=float(d["phase_field"]),
                     phase_diff=float(d["phase_diff"]),
                     coherence=(
-                        None if d.get("coherence") is None
-                        else float(d["coherence"])
+                        None if d.get("coherence") is None else float(d["coherence"])
                     ),
                     extractor=dict(d.get("extractor", {})),
                 )

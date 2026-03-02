@@ -16,10 +16,10 @@ Invariants:
 - forest_proximity < 0.40 → MAIN + observe=False (normal)
 - forest_proximity absent (None) → treated as 0.0 (normal routing)
 """
+
 from __future__ import annotations
 
 import time
-import pytest
 
 from signal_core.core.hydro_dispatcher import dispatch
 from signal_core.core.hydro_types import (
@@ -49,13 +49,16 @@ def _packet(**overrides) -> HydroPacket:
     return HydroPacket(**defaults)
 
 
-def _ingress(result: GateResult = GateResult.PASS, reason: str = "G5_PASS") -> IngressDecision:
+def _ingress(
+    result: GateResult = GateResult.PASS, reason: str = "G5_PASS"
+) -> IngressDecision:
     return IngressDecision(gate_result=result, reason=reason)
 
 
 # ------------------------------------------------------------------
 # D0 — REJECT → DROP
 # ------------------------------------------------------------------
+
 
 class TestD0Reject:
     def test_rejected_packet_drops(self):
@@ -67,6 +70,7 @@ class TestD0Reject:
 # ------------------------------------------------------------------
 # D3 — QUARANTINE / replay → TURBINE
 # ------------------------------------------------------------------
+
 
 class TestD3Turbine:
     def test_quarantined_packet_goes_to_turbine(self):
@@ -83,6 +87,7 @@ class TestD3Turbine:
 # ------------------------------------------------------------------
 # D2 — pressure relief → SPILLWAY
 # ------------------------------------------------------------------
+
 
 class TestD2Spillway:
     def test_high_rate_goes_to_spillway(self):
@@ -105,6 +110,7 @@ class TestD2Spillway:
 # D1 — operational → MAIN
 # ------------------------------------------------------------------
 
+
 class TestD1Main:
     def test_system_pass_goes_to_main(self):
         decision = dispatch(_packet(lane="system"), _ingress())
@@ -126,6 +132,7 @@ class TestD1Main:
 # D1-N — natural environmental → MAIN
 # ------------------------------------------------------------------
 
+
 class TestD1NEnvironmental:
     def test_natural_pass_goes_to_main(self):
         decision = dispatch(_packet(lane="natural", domain="natural"), _ingress())
@@ -136,6 +143,7 @@ class TestD1NEnvironmental:
 # ------------------------------------------------------------------
 # D4 — fallback → TURBINE
 # ------------------------------------------------------------------
+
 
 class TestD4Fallback:
     def test_cyber_pass_falls_to_turbine(self):
@@ -157,6 +165,7 @@ class TestD4Fallback:
 # Determinism
 # ------------------------------------------------------------------
 
+
 class TestDeterminism:
     def test_same_input_same_route(self):
         p = _packet(lane="system", rate=None)
@@ -176,6 +185,7 @@ class TestDeterminism:
 # ------------------------------------------------------------------
 # Lighthouse forest_proximity routing (v3)
 # ------------------------------------------------------------------
+
 
 class TestForestProximityRouting:
     def test_high_fp_forces_turbine_scout(self):

@@ -2,14 +2,13 @@
 
 import pandas as pd
 from pathlib import Path
-from ...kernel.wave import Wave  # three dots for one level up
-from ...kernel.codex import Codex
 
 ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "data"
 
 LEDGER = DATA / "human" / "human_ledger.csv"
 WEEKLY = DATA / "human" / "weekly_signatures.csv"
+
 
 def run_weekly_wrapper():
     ledger = pd.read_csv(LEDGER)
@@ -36,6 +35,7 @@ def run_weekly_wrapper():
     print(f" AvgAmplitude:   {last_week['AvgAmplitude']}")
     print(f" AvgResonance:   {last_week['AvgResonance']}")
     print("══════════════════════════════════════")
+
 
 if __name__ == "__main__":
     run_weekly_wrapper()

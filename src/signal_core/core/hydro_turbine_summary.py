@@ -33,6 +33,7 @@ CONVERGENCE_WINDOW = 0.083  # must match hydro_turbine.py
 # Loader
 # ------------------------------------------------------------
 
+
 def _load_today_turbine() -> List[dict]:
     today = datetime.now(timezone.utc).date().isoformat()
     path = TURBINE_DIR / f"{today}.jsonl"
@@ -54,6 +55,7 @@ def _load_today_turbine() -> List[dict]:
 # Phase bucketing
 # ------------------------------------------------------------
 
+
 def _phase_bucket(phase: float, buckets: int = 12) -> int:
     """Quantise diurnal phase [0,1] into N equal buckets (default 12 = 2h each)."""
     return int(phase * buckets) % buckets
@@ -67,6 +69,7 @@ def _circular_distance(a: float, b: float) -> float:
 # ------------------------------------------------------------
 # Convergence event detection
 # ------------------------------------------------------------
+
 
 def _find_convergence_events(records: List[dict]) -> List[Dict[str, Any]]:
     """
@@ -105,17 +108,20 @@ def _find_convergence_events(records: List[dict]) -> List[Dict[str, Any]]:
 
         if len(cluster_domains) >= 2:
             for idx in [i] + [
-                j for j, r in enumerate(sorted_recs)
+                j
+                for j, r in enumerate(sorted_recs)
                 if r.get("domain") in cluster_domains and j != i
             ]:
                 used.add(idx)
 
-            events.append({
-                "diurnal_phase": round(anchor_phase, 4),
-                "domains": sorted(cluster_domains.keys()),
-                "domain_count": len(cluster_domains),
-                "strength": "strong" if len(cluster_domains) >= 3 else "weak",
-            })
+            events.append(
+                {
+                    "diurnal_phase": round(anchor_phase, 4),
+                    "domains": sorted(cluster_domains.keys()),
+                    "domain_count": len(cluster_domains),
+                    "strength": "strong" if len(cluster_domains) >= 3 else "weak",
+                }
+            )
 
     return events
 
@@ -123,6 +129,7 @@ def _find_convergence_events(records: List[dict]) -> List[Dict[str, Any]]:
 # ------------------------------------------------------------
 # Summary builder
 # ------------------------------------------------------------
+
 
 def build_summary(records: List[dict]) -> Dict[str, Any]:
     now = datetime.now(timezone.utc)
@@ -155,6 +162,7 @@ def _append_summary(summary: Dict[str, Any]) -> None:
 # Print report
 # ------------------------------------------------------------
 
+
 def _log_report(summary: Dict[str, Any]) -> None:
     log.info(
         "turbine summary date=%s observations=%d events=%d strong=%d domains=%s",
@@ -176,6 +184,7 @@ def _log_report(summary: Dict[str, Any]) -> None:
 # ------------------------------------------------------------
 # Entry point
 # ------------------------------------------------------------
+
 
 def run_turbine_summary() -> Dict[str, Any]:
     """

@@ -2,8 +2,6 @@ import sys
 from pathlib import Path
 
 import pandas as pd
-from ...kernel.wave import Wave  # three dots for one level up
-from ...kernel.codex import Codex
 
 ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "data"
@@ -32,13 +30,9 @@ def build_pattern_alignment():
     ensure_human_dirs()
 
     if not JOURNAL_PATH.exists():
-        raise FileNotFoundError(
-            f"signal_journal.csv not found at {JOURNAL_PATH}."
-        )
+        raise FileNotFoundError(f"signal_journal.csv not found at {JOURNAL_PATH}.")
     if not HUMAN_LEDGER_PATH.exists():
-        raise FileNotFoundError(
-            f"human_ledger.csv not found at {HUMAN_LEDGER_PATH}."
-        )
+        raise FileNotFoundError(f"human_ledger.csv not found at {HUMAN_LEDGER_PATH}.")
     if not TIDE_PATH.exists():
         raise FileNotFoundError(
             f"tide_index.csv not found at {TIDE_PATH}. Run the Tide Engine."

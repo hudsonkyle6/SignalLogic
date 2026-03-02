@@ -24,19 +24,21 @@ TAU = 2.0 * math.pi
 # Immutable Field Sample (Observatory-facing)
 # ---------------------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class FieldSample:
-    t: float                          # UTC timestamp (seconds)
-    phases: Dict[str, float]          # radians [0, 2π)
-    phasors: Dict[str, complex]       # e^{jϕ}
-    composite: complex                # Σ phasors
-    coherence: float                  # |Σ| / N
-    reference_phase: float            # atan2(Im(Σ), Re(Σ)) — derived, safe
+    t: float  # UTC timestamp (seconds)
+    phases: Dict[str, float]  # radians [0, 2π)
+    phasors: Dict[str, complex]  # e^{jϕ}
+    composite: complex  # Σ phasors
+    coherence: float  # |Σ| / N
+    reference_phase: float  # atan2(Im(Σ), Re(Σ)) — derived, safe
 
 
 # ---------------------------------------------------------------------
 # Core computation — PURE PHYSICS
 # ---------------------------------------------------------------------
+
 
 def _phase(t: float, T: float) -> float:
     """Phase in radians for period T at time t."""
@@ -85,6 +87,7 @@ def compute_field(t: float) -> FieldSample:
 # ---------------------------------------------------------------------
 # Field → Wave Materialization (Read-only)
 # ---------------------------------------------------------------------
+
 
 def materialize_field_waves(field: FieldSample) -> Dict[str, FieldWave]:
     """

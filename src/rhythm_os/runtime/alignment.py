@@ -1,7 +1,8 @@
-#alignment.py
+# alignment.py
 from __future__ import annotations
 
 from rhythm_os.runtime.cycle_id import compute_cycle_id
+
 """
 Alignment Layer Runtime (Oracle geometry)
 
@@ -64,11 +65,15 @@ def emit_convergence_summary(
         phase_diff=conv_code,
         coherence=None,
         extractor={
-            "cycle_id": compute_cycle_id(t_ref=t_ref, runner="run_cycle_once", version="v1"),
+            "cycle_id": compute_cycle_id(
+                t_ref=t_ref, runner="run_cycle_once", version="v1"
+            ),
             "within_deg": str(summary.within_deg),
             "active": str(summary.active),
             "within_count": str(summary.within_count),
-            "mean_coherence": str(summary.mean_coherence) if summary.mean_coherence is not None else "none",
+            "mean_coherence": str(summary.mean_coherence)
+            if summary.mean_coherence is not None
+            else "none",
             "convergence": str(summary.convergence),
             "note": str(summary.note),
             "method": "describe_alignment + summarize_convergence",

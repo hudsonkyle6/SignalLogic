@@ -35,6 +35,7 @@ FIELD_CYCLE = "diurnal_projection"
 # Utilities
 # ---------------------------------------------------------------------
 
+
 def _today_str() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
@@ -44,9 +45,7 @@ def _meters_path_today() -> Path:
     path = METERS_DIR / f"{today}.jsonl"
 
     if not path.exists():
-        raise FileNotFoundError(
-            f"No sovereign meter file for today: {path}"
-        )
+        raise FileNotFoundError(f"No sovereign meter file for today: {path}")
 
     print("SYSTEM DOMAIN reading sovereign meters file:", path)
     print("SYSTEM DOMAIN mtime:", path.stat().st_mtime)
@@ -78,6 +77,7 @@ def _wrap_angle(theta: float) -> float:
 # ---------------------------------------------------------------------
 # Sample extractors
 # ---------------------------------------------------------------------
+
 
 def _extract_net_samples(pkts: List[Dict[str, Any]]) -> List[Tuple[float, float]]:
     out = []
@@ -126,6 +126,7 @@ def _extract_proc_samples(pkts: List[Dict[str, Any]]) -> List[Tuple[float, float
 # ---------------------------------------------------------------------
 # Phasor projection
 # ---------------------------------------------------------------------
+
 
 def _project(
     samples: List[Tuple[float, float]],
@@ -181,25 +182,34 @@ def _project(
 # Emit
 # ---------------------------------------------------------------------
 
+
 def _emit_wave(dw: DomainWave, out_path: Path) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("a", encoding="utf-8") as f:
-        f.write(json.dumps({
-            "t": dw.t,
-            "domain": dw.domain,
-            "channel": dw.channel,
-            "field_cycle": dw.field_cycle,
-            "phase_external": dw.phase_external,
-            "phase_field": dw.phase_field,
-            "phase_diff": dw.phase_diff,
-            "coherence": dw.coherence,
-            "extractor": dw.extractor,
-        }, separators=(",", ":"), ensure_ascii=False) + "\n")
+        f.write(
+            json.dumps(
+                {
+                    "t": dw.t,
+                    "domain": dw.domain,
+                    "channel": dw.channel,
+                    "field_cycle": dw.field_cycle,
+                    "phase_external": dw.phase_external,
+                    "phase_field": dw.phase_field,
+                    "phase_diff": dw.phase_diff,
+                    "coherence": dw.coherence,
+                    "extractor": dw.extractor,
+                },
+                separators=(",", ":"),
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
 
 
 # ---------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------
+
 
 def main() -> None:
     meters_path = _meters_path_today()
@@ -207,9 +217,9 @@ def main() -> None:
     out_path = _domain_path_today()
 
     channels = [
-        ("net_pressure",  _extract_net_samples(pkts),      "emit_system_domain.net"),
-        ("cpu_pressure",  _extract_cpu_util_samples(pkts),  "emit_system_domain.cpu"),
-        ("proc_pressure", _extract_proc_samples(pkts),      "emit_system_domain.proc"),
+        ("net_pressure", _extract_net_samples(pkts), "emit_system_domain.net"),
+        ("cpu_pressure", _extract_cpu_util_samples(pkts), "emit_system_domain.cpu"),
+        ("proc_pressure", _extract_proc_samples(pkts), "emit_system_domain.proc"),
     ]
 
     emitted = 0

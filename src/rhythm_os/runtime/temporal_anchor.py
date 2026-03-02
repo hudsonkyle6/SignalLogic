@@ -26,8 +26,8 @@ from dataclasses import dataclass
 # ------------------------------------------------------------
 
 LONG_WAVE_PERIOD_S: float = 28.0 * 24.0 * 3600.0  # Mf constituent (~28 day)
-DIURNAL_PERIOD_S: float = 24.0 * 3600.0             # K1 constituent (24 h)
-SEMI_DIURNAL_PERIOD_S: float = 12.0 * 3600.0        # M2 constituent (12 h)
+DIURNAL_PERIOD_S: float = 24.0 * 3600.0  # K1 constituent (24 h)
+SEMI_DIURNAL_PERIOD_S: float = 12.0 * 3600.0  # M2 constituent (12 h)
 
 # Frequencies (Hz)
 LONG_WAVE_HZ: float = 1.0 / LONG_WAVE_PERIOD_S
@@ -36,16 +36,16 @@ SEMI_DIURNAL_HZ: float = 1.0 / SEMI_DIURNAL_PERIOD_S
 
 # Domain → dominant anchor frequency
 _DOMAIN_DOMINANT_HZ: dict[str, float] = {
-    "natural":     SEMI_DIURNAL_HZ,   # atmospheric/tidal 12h rhythm
+    "natural": SEMI_DIURNAL_HZ,  # atmospheric/tidal 12h rhythm
     "environment": SEMI_DIURNAL_HZ,
-    "system":      DIURNAL_HZ,        # operational daily rhythm
-    "ops":         DIURNAL_HZ,
-    "internal":    DIURNAL_HZ,
-    "market":      DIURNAL_HZ,        # trading-day rhythm
-    "finance":     DIURNAL_HZ,
-    "cyber":       DIURNAL_HZ,
-    "project":     DIURNAL_HZ,
-    "narrative":   LONG_WAVE_HZ,      # narrative/doctrinal long-wave
+    "system": DIURNAL_HZ,  # operational daily rhythm
+    "ops": DIURNAL_HZ,
+    "internal": DIURNAL_HZ,
+    "market": DIURNAL_HZ,  # trading-day rhythm
+    "finance": DIURNAL_HZ,
+    "cyber": DIURNAL_HZ,
+    "project": DIURNAL_HZ,
+    "narrative": LONG_WAVE_HZ,  # narrative/doctrinal long-wave
 }
 
 _DEFAULT_DOMINANT_HZ: float = DIURNAL_HZ
@@ -54,6 +54,7 @@ _DEFAULT_DOMINANT_HZ: float = DIURNAL_HZ
 # ------------------------------------------------------------
 # TemporalAnchor
 # ------------------------------------------------------------
+
 
 @dataclass(frozen=True)
 class TemporalAnchor:
@@ -75,6 +76,7 @@ class TemporalAnchor:
 # ------------------------------------------------------------
 # Factory
 # ------------------------------------------------------------
+
 
 def compute_anchor(t: float, *, domain: str = "system") -> TemporalAnchor:
     """

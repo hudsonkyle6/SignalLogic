@@ -17,6 +17,7 @@ continue to work without any config change.
 Usage:
     from rhythm_os.runtime.paths import TURBINE_DIR, QUEUE_PATH, BUS_DIR
 """
+
 from __future__ import annotations
 
 import os

@@ -10,6 +10,7 @@ Invariants:
 - Couplings are immutable (MappingProxyType) after construction
 - Boundary values (zero amplitude, empty couplings) are handled
 """
+
 from __future__ import annotations
 
 import json
@@ -20,8 +21,6 @@ from rhythm_os.core.wave.wave import (
     Wave,
     _fmt_float,
     _canonical_couplings,
-    _hash_wave_payload,
-    _canonical_wave_payload,
 )
 
 FIXED_TS = "2025-01-15T12:00:00+00:00"
@@ -46,6 +45,7 @@ def _wave(**overrides) -> Wave:
 # _fmt_float
 # ------------------------------------------------------------------
 
+
 class TestFmtFloat:
     def test_basic_float(self):
         assert _fmt_float(1.5) == "1.5"
@@ -65,6 +65,7 @@ class TestFmtFloat:
 # _canonical_couplings
 # ------------------------------------------------------------------
 
+
 class TestCanonicalCouplings:
     def test_empty(self):
         assert _canonical_couplings({}) == {}
@@ -81,6 +82,7 @@ class TestCanonicalCouplings:
 # ------------------------------------------------------------------
 # Wave.create — basic construction
 # ------------------------------------------------------------------
+
 
 class TestWaveCreate:
     def test_returns_wave(self):
@@ -120,6 +122,7 @@ class TestWaveCreate:
 # ------------------------------------------------------------------
 # Deterministic hashing
 # ------------------------------------------------------------------
+
 
 class TestDeterministicHash:
     def test_same_params_same_hash(self):
@@ -167,6 +170,7 @@ class TestDeterministicHash:
 # verify_integrity
 # ------------------------------------------------------------------
 
+
 class TestVerifyIntegrity:
     def test_fresh_wave_passes(self):
         w = _wave()
@@ -193,6 +197,7 @@ class TestVerifyIntegrity:
 # Serialization round-trip
 # ------------------------------------------------------------------
 
+
 class TestSerialization:
     def test_to_json_produces_valid_json(self):
         w = _wave()
@@ -202,9 +207,17 @@ class TestSerialization:
     def test_to_json_contains_all_fields(self):
         w = _wave()
         parsed = json.loads(w.to_json())
-        for field in ("signal_type", "phase", "frequency", "amplitude",
-                      "afterglow_decay", "timestamp", "couplings",
-                      "text_content", "integrity_hash"):
+        for field in (
+            "signal_type",
+            "phase",
+            "frequency",
+            "amplitude",
+            "afterglow_decay",
+            "timestamp",
+            "couplings",
+            "text_content",
+            "integrity_hash",
+        ):
             assert field in parsed
 
     def test_round_trip_preserves_hash(self):

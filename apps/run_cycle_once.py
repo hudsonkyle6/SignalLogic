@@ -29,10 +29,10 @@ sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 # ─── Paths and environment ────────────────────────────────────────────────────
 
 ROOT = Path(__file__).resolve().parents[1]
-PY   = sys.executable
+PY = sys.executable
 
 BASE_ENV = os.environ.copy()
-BASE_ENV["PYTHONUTF8"]       = "1"
+BASE_ENV["PYTHONUTF8"] = "1"
 BASE_ENV["PYTHONIOENCODING"] = "utf-8"
 
 _existing = BASE_ENV.get("PYTHONPATH", "")
@@ -45,17 +45,19 @@ BASE_ENV["PYTHONPATH"] = os.pathsep.join(
 SYSTEM_OBS_WINDOW_S = 75
 
 ENABLE_NATURAL = True
-ENABLE_MARKET  = True
-ENABLE_CYBER   = True
+ENABLE_MARKET = True
+ENABLE_CYBER = True
 
 
 # ─── Exceptions ───────────────────────────────────────────────────────────────
+
 
 class _CycleFailed(Exception):
     pass
 
 
 # ─── Silent step runner ───────────────────────────────────────────────────────
+
 
 def _run_step(module_path: str, required: bool = True) -> bool:
     """Run a Python module as a subprocess. All output suppressed."""
@@ -74,6 +76,7 @@ def _run_step(module_path: str, required: bool = True) -> bool:
 
 
 # ─── Cycle steps (runs in background thread) ─────────────────────────────────
+
 
 def _run_cycle_steps(set_status) -> None:
     """
@@ -102,7 +105,9 @@ def _run_cycle_steps(set_status) -> None:
     # ── 2. Natural observation ─────────────────────────────────────────────────
     if ENABLE_NATURAL:
         set_status("OBSERVATORY → NATURAL RAW")
-        natural_ok = _run_step("apps.observatory_tools.emit_natural_raw_once", required=False)
+        natural_ok = _run_step(
+            "apps.observatory_tools.emit_natural_raw_once", required=False
+        )
         if natural_ok:
             set_status("PSR → NATURAL DOMAIN")
             _run_step("apps.psr_tools.emit_natural_domain", required=False)
@@ -112,7 +117,9 @@ def _run_cycle_steps(set_status) -> None:
     # ── 3. Market ─────────────────────────────────────────────────────────────
     if ENABLE_MARKET:
         set_status("OBSERVATORY → MARKET RAW")
-        market_ok = _run_step("apps.observatory_tools.emit_market_raw_once", required=False)
+        market_ok = _run_step(
+            "apps.observatory_tools.emit_market_raw_once", required=False
+        )
         if market_ok:
             set_status("PSR → MARKET DOMAIN")
             domain_ok = _run_step("apps.psr_tools.observe_market_daily", required=False)
@@ -142,6 +149,7 @@ def _run_cycle_steps(set_status) -> None:
 
 # ─── Helix live driver (main entry point) ────────────────────────────────────
 
+
 def _run_with_helix(interval_s: int = 0) -> None:
     """
     Run observation cycles under the rotating helix display.
@@ -153,9 +161,11 @@ def _run_with_helix(interval_s: int = 0) -> None:
     """
     try:
         from signal_core.core.dashboard.helix_dashboard import (
-            _build_display, _load_last_cycle_result, _HAS_RICH,
+            _build_display,
+            _load_last_cycle_result,
+            _HAS_RICH,
         )
-    except Exception as exc:
+    except Exception:
         _run_text_mode(interval_s)
         return
 
@@ -168,7 +178,7 @@ def _run_with_helix(interval_s: int = 0) -> None:
 
     stop = threading.Event()
     _signal.signal(_signal.SIGTERM, lambda *_: stop.set())
-    _signal.signal(_signal.SIGINT,  lambda *_: stop.set())
+    _signal.signal(_signal.SIGINT, lambda *_: stop.set())
 
     status_ref = [""]
     failed_ref = [None]
@@ -187,7 +197,7 @@ def _run_with_helix(interval_s: int = 0) -> None:
             cycle_done.set()
 
     console = Console()
-    fps     = 8.0
+    fps = 8.0
     frame_s = 1.0 / fps
     rotation = 0.0
     cycle_num = 0
@@ -205,11 +215,13 @@ def _run_with_helix(interval_s: int = 0) -> None:
 
             # ── Helix drives while cycle runs ─────────────────────────────────
             while not cycle_done.is_set() and not stop.is_set():
-                live.update(_build_display(
-                    rotation=rotation,
-                    cycle_result=_load_last_cycle_result(),
-                    status_text=status_ref[0],
-                ))
+                live.update(
+                    _build_display(
+                        rotation=rotation,
+                        cycle_result=_load_last_cycle_result(),
+                        status_text=status_ref[0],
+                    )
+                )
                 time.sleep(frame_s)
                 rotation += 0.08
 
@@ -218,11 +230,13 @@ def _run_with_helix(interval_s: int = 0) -> None:
             if interval_s <= 0 or stop.is_set():
                 # Single-run: show final state for a moment then exit
                 for _ in range(int(fps * 2)):
-                    live.update(_build_display(
-                        rotation=rotation,
-                        cycle_result=_load_last_cycle_result(),
-                        status_text=status_ref[0],
-                    ))
+                    live.update(
+                        _build_display(
+                            rotation=rotation,
+                            cycle_result=_load_last_cycle_result(),
+                            status_text=status_ref[0],
+                        )
+                    )
                     time.sleep(frame_s)
                     rotation += 0.08
                 break
@@ -233,11 +247,13 @@ def _run_with_helix(interval_s: int = 0) -> None:
             while time.monotonic() < end and not stop.is_set():
                 remaining = int(end - time.monotonic())
                 mins, secs = divmod(remaining, 60)
-                live.update(_build_display(
-                    rotation=rotation,
-                    cycle_result=last_result,
-                    status_text=f"Next cycle in  —  {mins:02d}:{secs:02d}",
-                ))
+                live.update(
+                    _build_display(
+                        rotation=rotation,
+                        cycle_result=last_result,
+                        status_text=f"Next cycle in  —  {mins:02d}:{secs:02d}",
+                    )
+                )
                 time.sleep(frame_s)
                 rotation += 0.08
 
@@ -246,7 +262,7 @@ def _run_text_mode(interval_s: int = 0) -> None:
     """Fallback when rich is unavailable."""
     stop = threading.Event()
     _signal.signal(_signal.SIGTERM, lambda *_: stop.set())
-    _signal.signal(_signal.SIGINT,  lambda *_: stop.set())
+    _signal.signal(_signal.SIGINT, lambda *_: stop.set())
 
     cycle = 0
     while not stop.is_set():

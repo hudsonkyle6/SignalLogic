@@ -17,5 +17,6 @@ class ExecutionGateDecision:
     - persists nothing
     - describes only whether execution may exist
     """
+
     state: GateState
     reason: str

@@ -24,8 +24,7 @@ import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from ...kernel.wave import Wave  # three dots for one level up
-from ...kernel.codex import Codex
+
 # -------------------------------------------------
 # Observability window configuration (AUD-safe)
 # -------------------------------------------------
@@ -52,7 +51,6 @@ CANON_COLS = [
     "DaysLogged",
     "Season",
     "InnerSeason",
-
     # Weekly means
     "AvgBodyLoad",
     "AvgClarity",
@@ -62,14 +60,12 @@ CANON_COLS = [
     "AvgEnvFeel",
     "AvgResonance",
     "AvgAmplitude",
-
     # Observability windows (non-authoritative)
     "AvgBodyLoadWindow",
     "AvgClarityWindow",
     "AvgStressWindow",
     "AvgResonanceWindow",
     "AvgAmplitudeWindow",
-
     # Weekly descriptors
     "DecisionState_Mode",
     "HighPoint",
@@ -77,6 +73,7 @@ CANON_COLS = [
     "ClarityTrend",
     "StressTrend",
 ]
+
 
 # -------------------------------------------------
 # Helpers
@@ -90,8 +87,10 @@ def _safe_read_csv(path: Path) -> pd.DataFrame:
         print(f"⚠ Could not read {path}: {e}", file=sys.stderr)
         return pd.DataFrame()
 
+
 def _to_float(s: pd.Series) -> pd.Series:
     return pd.to_numeric(s, errors="coerce")
+
 
 def _mode(series: pd.Series) -> str:
     if series is None or series.empty:
@@ -99,13 +98,16 @@ def _mode(series: pd.Series) -> str:
     m = series.dropna().astype(str).mode()
     return m.iloc[0] if not m.empty else ""
 
+
 def _week_end_date(dts: pd.Series) -> str:
     mx = pd.to_datetime(dts, errors="coerce").max()
     return mx.strftime("%Y-%m-%d") if pd.notna(mx) else ""
 
+
 def _latest(series: pd.Series):
     s = series.dropna()
     return float(s.iloc[-1]) if not s.empty else np.nan
+
 
 # -------------------------------------------------
 # Main builder
@@ -194,8 +196,16 @@ def build_weekly_signatures() -> None:
         }
 
         # Season resolution (last known)
-        season = g["Season"].dropna().astype(str).iloc[-1] if "Season" in g.columns and g["Season"].notna().any() else ""
-        inner = g["InnerSeason"].dropna().astype(str).iloc[-1] if g["InnerSeason"].notna().any() else season
+        season = (
+            g["Season"].dropna().astype(str).iloc[-1]
+            if "Season" in g.columns and g["Season"].notna().any()
+            else ""
+        )
+        inner = (
+            g["InnerSeason"].dropna().astype(str).iloc[-1]
+            if g["InnerSeason"].notna().any()
+            else season
+        )
 
         # High / Low points
         hp = ""
@@ -212,11 +222,23 @@ def build_weekly_signatures() -> None:
         stress_trend = "flat"
         first_cl = _to_float(g["Clarity"].iloc[0])
         if pd.notna(first_cl) and pd.notna(means["AvgClarity"]):
-            clarity_trend = "up" if means["AvgClarity"] > float(first_cl) else "down" if means["AvgClarity"] < float(first_cl) else "flat"
+            clarity_trend = (
+                "up"
+                if means["AvgClarity"] > float(first_cl)
+                else "down"
+                if means["AvgClarity"] < float(first_cl)
+                else "flat"
+            )
 
         first_st = _to_float(g["StressLevel"].iloc[0])
         if pd.notna(first_st) and pd.notna(means["AvgStress"]):
-            stress_trend = "up" if means["AvgStress"] > float(first_st) else "down" if means["AvgStress"] < float(first_st) else "flat"
+            stress_trend = (
+                "up"
+                if means["AvgStress"] > float(first_st)
+                else "down"
+                if means["AvgStress"] < float(first_st)
+                else "flat"
+            )
 
         # Decision mode
         dec_mode = _mode(g["DecisionState"]) if "DecisionState" in g.columns else ""
@@ -262,6 +284,7 @@ def build_weekly_signatures() -> None:
     print(f"📘 Weekly Signatures rebuilt → {WEEKLY_PATH}")
     print(f"   Weeks: {len(out)}")
 
+
 # -------------------------------------------------
 # Entry point
 # -------------------------------------------------
@@ -271,4 +294,3 @@ if __name__ == "__main__":
     except Exception as e:
         print("❌ Error:", e)
         sys.exit(1)
-  

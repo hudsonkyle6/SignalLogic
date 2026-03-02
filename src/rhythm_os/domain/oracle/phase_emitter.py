@@ -1,4 +1,4 @@
-#phase_emitter.py
+# phase_emitter.py
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -30,6 +30,7 @@ class OraclePhase:
     Grants no authority.
     Shepherd must ignore this output.
     """
+
     phase_label: Optional[PhaseLabel]
     phase_confidence: Optional[float]
     emitted_at: str

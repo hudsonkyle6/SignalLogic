@@ -8,6 +8,7 @@ Covers:
   - rhythm_os.core.memory.afterglow: compute_memory_fields
   - rhythm_os.core.memory.ghost: inject_ghost_layer, compute_ghost_metrics
 """
+
 from __future__ import annotations
 
 import pytest
@@ -27,23 +28,27 @@ from rhythm_os.core.memory.ghost import (  # noqa: E402
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _base_df(n: int = 30) -> "pd.DataFrame":
     """Build a minimal DataFrame with columns used by afterglow/ghost."""
     dates = pd.date_range("2024-01-01", periods=n, freq="D")
     rng = np.random.default_rng(42)
-    return pd.DataFrame({
-        "Date": dates,
-        "ResonanceValue": rng.uniform(0.3, 0.9, n),
-        "Amplitude": rng.uniform(0.1, 0.5, n),
-        "HSTResDrift": rng.uniform(-0.2, 0.2, n),
-        "WVI": rng.uniform(0.0, 0.8, n),
-        "VIXClose": rng.uniform(12.0, 35.0, n),
-    })
+    return pd.DataFrame(
+        {
+            "Date": dates,
+            "ResonanceValue": rng.uniform(0.3, 0.9, n),
+            "Amplitude": rng.uniform(0.1, 0.5, n),
+            "HSTResDrift": rng.uniform(-0.2, 0.2, n),
+            "WVI": rng.uniform(0.0, 0.8, n),
+            "VIXClose": rng.uniform(12.0, 35.0, n),
+        }
+    )
 
 
 # ---------------------------------------------------------------------------
 # compute_memory_fields (afterglow)
 # ---------------------------------------------------------------------------
+
 
 class TestComputeMemoryFields:
     def test_empty_df_returns_empty(self):
@@ -97,13 +102,15 @@ class TestComputeMemoryFields:
     def test_constant_series_no_crash(self):
         """Constant signals should not raise (normalize handles zero span)."""
         n = 20
-        df = pd.DataFrame({
-            "Date": pd.date_range("2024-01-01", periods=n, freq="D"),
-            "ResonanceValue": [0.5] * n,
-            "Amplitude": [0.3] * n,
-            "HSTResDrift": [0.0] * n,
-            "WVI": [0.2] * n,
-        })
+        df = pd.DataFrame(
+            {
+                "Date": pd.date_range("2024-01-01", periods=n, freq="D"),
+                "ResonanceValue": [0.5] * n,
+                "Amplitude": [0.3] * n,
+                "HSTResDrift": [0.0] * n,
+                "WVI": [0.2] * n,
+            }
+        )
         result = compute_memory_fields(df)
         assert "EventIntensity" in result.columns
 
@@ -111,6 +118,7 @@ class TestComputeMemoryFields:
 # ---------------------------------------------------------------------------
 # inject_ghost_layer
 # ---------------------------------------------------------------------------
+
 
 class TestInjectGhostLayer:
     def test_empty_df_returns_empty(self):
@@ -155,6 +163,7 @@ class TestInjectGhostLayer:
 # compute_ghost_metrics
 # ---------------------------------------------------------------------------
 
+
 class TestComputeGhostMetrics:
     def test_empty_df_returns_empty(self):
         empty = pd.DataFrame()
@@ -180,7 +189,9 @@ class TestComputeGhostMetrics:
     def test_stability_index_plus_instability_equals_one(self):
         df = _base_df(40)
         result = compute_ghost_metrics(df)
-        diff = (result["GhostStabilityIndex"] + result["GhostInstabilityRaw"] - 1.0).abs()
+        diff = (
+            result["GhostStabilityIndex"] + result["GhostInstabilityRaw"] - 1.0
+        ).abs()
         assert (diff < 1e-9).all()
 
     def test_governor_bounded(self):

@@ -36,6 +36,7 @@ TIDE_PATH = DATA / "human" / "tide_state.csv"
 # Utilities
 # ---------------------------------------------------------------------
 
+
 def _read_csv_safe(path: Path) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
@@ -54,7 +55,9 @@ def _to_iso_date(val) -> Optional[str]:
     return ts.strftime("%Y-%m-%d")
 
 
-def _upsert_by_date(path: Path, row: Dict[str, Any], date_col: str = "Date") -> pd.DataFrame:
+def _upsert_by_date(
+    path: Path, row: Dict[str, Any], date_col: str = "Date"
+) -> pd.DataFrame:
     df = _read_csv_safe(path)
     d = _to_iso_date(row.get(date_col))
     if d is None:
@@ -75,7 +78,7 @@ def _upsert_by_date(path: Path, row: Dict[str, Any], date_col: str = "Date") -> 
         if k not in df.columns:
             df[k] = pd.NA
 
-    mask = (df[date_col] == d)
+    mask = df[date_col] == d
     if mask.any():
         idx = df.index[mask][0]
         for k, v in row.items():
@@ -163,6 +166,7 @@ def _classify_windows(ohi: float, macro_open: float) -> Tuple[str, str]:
 # Main
 # ---------------------------------------------------------------------
 
+
 def run_oracle_layer3() -> None:
     print("══════════════════════════════════════")
     print("   🔭 ORACLE OS — LAYER 3 (HORIZON)")
@@ -176,7 +180,9 @@ def run_oracle_layer3() -> None:
     # Normalize oracle Date and take latest
     if "Date" in oracle_df.columns:
         oracle_df["Date"] = pd.to_datetime(oracle_df["Date"], errors="coerce")
-        oracle_df = oracle_df.dropna(subset=["Date"]).sort_values("Date").reset_index(drop=True)
+        oracle_df = (
+            oracle_df.dropna(subset=["Date"]).sort_values("Date").reset_index(drop=True)
+        )
 
     row = oracle_df.iloc[-1]
     date = _to_iso_date(_safe_get(row, "Date", None)) or "N/A"
@@ -264,4 +270,3 @@ def run_oracle_layer3() -> None:
 
 if __name__ == "__main__":
     run_oracle_layer3()
-

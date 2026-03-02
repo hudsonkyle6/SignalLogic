@@ -7,8 +7,7 @@ from datetime import timedelta
 
 import numpy as np
 import pandas as pd
-from ...kernel.wave import Wave  # three dots for one level up
-from ...kernel.codex import Codex
+
 ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "data"
 
@@ -21,6 +20,7 @@ TIDE_PATH = DATA_DIR / "human" / "tide_state.csv"
 # ---------------------------------------------------------------------
 # SAFE LOADERS
 # ---------------------------------------------------------------------
+
 
 def _safe_read_csv(path: Path) -> pd.DataFrame:
     if not path.exists():
@@ -51,7 +51,9 @@ def _normalize_0_1(x, min_val, max_val) -> float:
     return float(np.clip((x - min_val) / (max_val - min_val), 0.0, 1.0))
 
 
-def _recent_window(df: pd.DataFrame, date_col: str, end_date: pd.Timestamp, days: int) -> pd.DataFrame:
+def _recent_window(
+    df: pd.DataFrame, date_col: str, end_date: pd.Timestamp, days: int
+) -> pd.DataFrame:
     if df.empty or date_col not in df.columns:
         return df.iloc[0:0].copy()
     if not np.issubdtype(df[date_col].dtype, np.datetime64):
@@ -70,6 +72,7 @@ def _mean_numeric(df: pd.DataFrame, col: str) -> float:
 # ---------------------------------------------------------------------
 # MAIN ENGINE
 # ---------------------------------------------------------------------
+
 
 def run_tide_engine() -> dict:
     print("══════════════════════════════════════")
@@ -135,16 +138,28 @@ def run_tide_engine() -> dict:
     inner_season = "Unknown"
 
     if source == "ledger_7d":
-        if "Season" in human_window.columns and not human_window["Season"].dropna().empty:
+        if (
+            "Season" in human_window.columns
+            and not human_window["Season"].dropna().empty
+        ):
             season = str(human_window["Season"].dropna().iloc[-1])
-        if "InnerSeason" in human_window.columns and not human_window["InnerSeason"].dropna().empty:
+        if (
+            "InnerSeason" in human_window.columns
+            and not human_window["InnerSeason"].dropna().empty
+        ):
             inner_season = str(human_window["InnerSeason"].dropna().iloc[-1])
         else:
             inner_season = season
     elif source == "weekly_signatures":
-        if "Season" in human_window.columns and not human_window["Season"].dropna().empty:
+        if (
+            "Season" in human_window.columns
+            and not human_window["Season"].dropna().empty
+        ):
             season = str(human_window["Season"].dropna().iloc[-1])
-        if "InnerSeason" in human_window.columns and not human_window["InnerSeason"].dropna().empty:
+        if (
+            "InnerSeason" in human_window.columns
+            and not human_window["InnerSeason"].dropna().empty
+        ):
             inner_season = str(human_window["InnerSeason"].dropna().iloc[-1])
         else:
             inner_season = season
@@ -181,14 +196,30 @@ def run_tide_engine() -> dict:
         print("⚠️  No recent world data in last 30 days — aborting Tide.")
         return {}
 
-    world_res_mean = float(pd.to_numeric(world_30.get("ResonanceValue"), errors="coerce").mean())
-    world_res_std = float(pd.to_numeric(world_30.get("ResonanceValue"), errors="coerce").std(ddof=0))
+    world_res_mean = float(
+        pd.to_numeric(world_30.get("ResonanceValue"), errors="coerce").mean()
+    )
+    world_res_std = float(
+        pd.to_numeric(world_30.get("ResonanceValue"), errors="coerce").std(ddof=0)
+    )
 
-    world_amp_mean = float(pd.to_numeric(world_30.get("Amplitude"), errors="coerce").mean())
-    world_amp_std = float(pd.to_numeric(world_30.get("Amplitude"), errors="coerce").std(ddof=0))
+    world_amp_mean = float(
+        pd.to_numeric(world_30.get("Amplitude"), errors="coerce").mean()
+    )
+    world_amp_std = float(
+        pd.to_numeric(world_30.get("Amplitude"), errors="coerce").std(ddof=0)
+    )
 
-    drift_mean = float(pd.to_numeric(world_30.get("HSTResDrift"), errors="coerce").mean()) if "HSTResDrift" in world_30.columns else 0.0
-    vix_mean = float(pd.to_numeric(world_30.get("VIXClose"), errors="coerce").mean()) if "VIXClose" in world_30.columns else 20.0
+    drift_mean = (
+        float(pd.to_numeric(world_30.get("HSTResDrift"), errors="coerce").mean())
+        if "HSTResDrift" in world_30.columns
+        else 0.0
+    )
+    vix_mean = (
+        float(pd.to_numeric(world_30.get("VIXClose"), errors="coerce").mean())
+        if "VIXClose" in world_30.columns
+        else 20.0
+    )
 
     # -----------------------------------------------------------------
     # Normalization
@@ -202,16 +233,30 @@ def run_tide_engine() -> dict:
     drift_norm = _normalize_0_1(abs(drift_mean), 0.0, 0.5)
     vix_norm = _normalize_0_1(vix_mean, 10.0, 40.0)
 
-    seasonal_load_index = float(np.mean([body_norm, stress_norm, vol_norm, amp_vol_norm]))
-    environmental_pressure = float(np.mean([vol_norm, amp_vol_norm, drift_norm, vix_norm]))
-    energy_window = float(np.clip(clarity_norm - 0.5 * (body_norm + stress_norm), 0.0, 1.0))
+    seasonal_load_index = float(
+        np.mean([body_norm, stress_norm, vol_norm, amp_vol_norm])
+    )
+    environmental_pressure = float(
+        np.mean([vol_norm, amp_vol_norm, drift_norm, vix_norm])
+    )
+    energy_window = float(
+        np.clip(clarity_norm - 0.5 * (body_norm + stress_norm), 0.0, 1.0)
+    )
 
     # -----------------------------------------------------------------
     # Macro State
     # -----------------------------------------------------------------
-    if energy_window > 0.6 and seasonal_load_index < 0.5 and environmental_pressure < 0.6:
+    if (
+        energy_window > 0.6
+        and seasonal_load_index < 0.5
+        and environmental_pressure < 0.6
+    ):
         macro_state = "EXPANDING"
-    elif energy_window < 0.3 or seasonal_load_index > 0.7 or environmental_pressure > 0.75:
+    elif (
+        energy_window < 0.3
+        or seasonal_load_index > 0.7
+        or environmental_pressure > 0.75
+    ):
         macro_state = "CONTRACTING"
     else:
         macro_state = "TRANSITION"

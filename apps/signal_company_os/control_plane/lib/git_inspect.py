@@ -5,11 +5,13 @@ import subprocess
 from pathlib import Path
 from typing import Any, Dict
 
+
 def run_git(cmd: list[str], cwd: Path) -> str:
     p = subprocess.run(["git", *cmd], cwd=cwd, capture_output=True, text=True)
     if p.returncode != 0:
         return f"[GIT ERROR] git {' '.join(cmd)}\n{p.stderr.strip()}"
     return p.stdout.strip()
+
 
 def inspect_git(repo_root: Path, out_dir: Path) -> Dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -23,10 +25,14 @@ def inspect_git(repo_root: Path, out_dir: Path) -> Dict[str, Any]:
         "diff_name_status": run_git(["diff", "--name-status"], repo_root),
         "diff_check": run_git(["diff", "--check"], repo_root),
         "untracked": run_git(["ls-files", "--others", "--exclude-standard"], repo_root),
-        "rename_detect": run_git(["diff", "--find-renames", "--name-status"], repo_root),
+        "rename_detect": run_git(
+            ["diff", "--find-renames", "--name-status"], repo_root
+        ),
     }
 
-    (out_dir / "git_report.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
+    (out_dir / "git_report.json").write_text(
+        json.dumps(data, indent=2), encoding="utf-8"
+    )
 
     md = []
     md.append("# Git Ledger Report")

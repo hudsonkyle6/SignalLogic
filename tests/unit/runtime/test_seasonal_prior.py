@@ -12,6 +12,7 @@ Invariants:
 - High-confidence months have lower afterglow_decay (memory holds longer)
 - compute_seasonal_prior is pure (same input → same output)
 """
+
 from __future__ import annotations
 
 import pytest
@@ -21,26 +22,27 @@ from rhythm_os.runtime.seasonal_prior import (
     compute_seasonal_prior,
     SeasonalPrior,
     _doy,
-    _month_idx,
     _seasonal_phase,
     _afterglow_decay_from_confidence,
     _forest_proximity_from_confidence,
 )
+
 
 # Representative timestamps for each month (2025)
 def _ts(month: int, day: int = 15) -> float:
     return datetime(2025, month, day, 12, 0, 0, tzinfo=timezone.utc).timestamp()
 
 
-WINTER_TS    = _ts(1)   # January — deep winter, stable
-SPRING_TS    = _ts(4)   # April — spring transition
-SUMMER_TS    = _ts(7)   # July — deep summer, stable
-FALL_TS      = _ts(10)  # October — fall transition
+WINTER_TS = _ts(1)  # January — deep winter, stable
+SPRING_TS = _ts(4)  # April — spring transition
+SUMMER_TS = _ts(7)  # July — deep summer, stable
+FALL_TS = _ts(10)  # October — fall transition
 
 
 # ------------------------------------------------------------------
 # _doy
 # ------------------------------------------------------------------
+
 
 class TestDoy:
     def test_january_1(self):
@@ -59,6 +61,7 @@ class TestDoy:
 # ------------------------------------------------------------------
 # _seasonal_phase
 # ------------------------------------------------------------------
+
 
 class TestSeasonalPhase:
     def test_january_1_near_zero(self):
@@ -81,6 +84,7 @@ class TestSeasonalPhase:
 # _afterglow_decay_from_confidence
 # ------------------------------------------------------------------
 
+
 class TestAfterglowDecay:
     def test_high_confidence_low_decay(self):
         assert _afterglow_decay_from_confidence(0.85) <= 0.35
@@ -96,13 +100,14 @@ class TestAfterglowDecay:
     def test_monotonically_decreasing(self):
         # Higher confidence → lower decay
         d_high = _afterglow_decay_from_confidence(0.82)
-        d_low  = _afterglow_decay_from_confidence(0.55)
+        d_low = _afterglow_decay_from_confidence(0.55)
         assert d_high < d_low
 
 
 # ------------------------------------------------------------------
 # _forest_proximity_from_confidence
 # ------------------------------------------------------------------
+
 
 class TestForestProximity:
     def test_high_confidence_low_proximity(self):
@@ -120,6 +125,7 @@ class TestForestProximity:
 # ------------------------------------------------------------------
 # compute_seasonal_prior
 # ------------------------------------------------------------------
+
 
 class TestComputeSeasonalPrior:
     def test_returns_seasonal_prior_dataclass(self):
@@ -143,8 +149,9 @@ class TestComputeSeasonalPrior:
     def test_pressure_in_plausible_range(self):
         for ts in [WINTER_TS, SPRING_TS, SUMMER_TS, FALL_TS]:
             r = compute_seasonal_prior(ts)
-            assert 1005.0 <= r.expected_pressure_hpa <= 1030.0, \
+            assert 1005.0 <= r.expected_pressure_hpa <= 1030.0, (
                 f"Pressure {r.expected_pressure_hpa} out of range for ts={ts}"
+            )
 
     def test_confidence_in_range(self):
         for ts in [WINTER_TS, SPRING_TS, SUMMER_TS, FALL_TS]:
@@ -188,7 +195,7 @@ class TestComputeSeasonalPrior:
         winter = compute_seasonal_prior(WINTER_TS)
         spring = compute_seasonal_prior(SPRING_TS)
         summer = compute_seasonal_prior(SUMMER_TS)
-        fall   = compute_seasonal_prior(FALL_TS)
+        fall = compute_seasonal_prior(FALL_TS)
         assert winter.forest_proximity < spring.forest_proximity
         assert summer.forest_proximity < fall.forest_proximity
 
@@ -196,7 +203,7 @@ class TestComputeSeasonalPrior:
         winter = compute_seasonal_prior(WINTER_TS)
         spring = compute_seasonal_prior(SPRING_TS)
         summer = compute_seasonal_prior(SUMMER_TS)
-        fall   = compute_seasonal_prior(FALL_TS)
+        fall = compute_seasonal_prior(FALL_TS)
         assert winter.afterglow_decay < spring.afterglow_decay
         assert summer.afterglow_decay < fall.afterglow_decay
 

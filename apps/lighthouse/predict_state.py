@@ -37,7 +37,9 @@ def predict_state():
     enc_path = MODEL_DIR / "state_label_encoder.joblib"
 
     if not model_path.exists() or not enc_path.exists():
-        raise FileNotFoundError("State model or label encoder not found in data/models.")
+        raise FileNotFoundError(
+            "State model or label encoder not found in data/models."
+        )
 
     model = joblib.load(model_path)
     label_enc = joblib.load(enc_path)
@@ -83,4 +85,3 @@ def predict_state():
 
 if __name__ == "__main__":
     predict_state()
-

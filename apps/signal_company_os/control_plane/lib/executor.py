@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import fnmatch
 from pathlib import Path
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List
+
 
 def _norm_glob(p: Path) -> str:
     return str(p.as_posix())
+
 
 def _matches_any_glob(path: Path, globs: List[str]) -> bool:
     s = _norm_glob(path)
@@ -16,6 +18,7 @@ def _matches_any_glob(path: Path, globs: List[str]) -> bool:
             return True
     return False
 
+
 def _assert_under_root(root: Path, target: Path):
     root = root.resolve()
     target = target.resolve()
@@ -23,6 +26,7 @@ def _assert_under_root(root: Path, target: Path):
         target.relative_to(root)
     except ValueError:
         raise RuntimeError(f"Refusing operation outside root: {target}")
+
 
 def _assert_not_never_touch(repo_root: Path, target: Path, never_touch: List[str]):
     # match against repo-relative posix
@@ -36,7 +40,10 @@ def _assert_not_never_touch(repo_root: Path, target: Path, never_touch: List[str
     if _matches_any_glob(rel, never_touch):
         raise RuntimeError(f"Refusing touch (never_touch): {rel}")
 
-def apply_ops(plan_root: Path, repo_root: Path, never_touch: List[str], ops: List[Dict[str, Any]]) -> List[str]:
+
+def apply_ops(
+    plan_root: Path, repo_root: Path, never_touch: List[str], ops: List[Dict[str, Any]]
+) -> List[str]:
     """
     Apply mkdir/move with:
     - no overwrites

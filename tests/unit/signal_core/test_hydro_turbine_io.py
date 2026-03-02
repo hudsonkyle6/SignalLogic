@@ -10,10 +10,10 @@ Invariants:
 - process_turbine falls back to compute_anchor when phases are absent
 - _assess_convergence skips history records with missing/bad diurnal_phase
 """
+
 from __future__ import annotations
 
 import json
-import time
 import pytest
 
 import signal_core.core.hydro_turbine as turbine_mod
@@ -35,6 +35,7 @@ T_FIXED = 1705320000.0
 # Helpers
 # ------------------------------------------------------------------
 
+
 def _make_packet(**overrides) -> HydroPacket:
     defaults = dict(
         t=T_FIXED,
@@ -52,7 +53,9 @@ def _make_packet(**overrides) -> HydroPacket:
     return HydroPacket(**defaults)
 
 
-def _make_obs(domain: str = "system", aligned_domains=None, note: str = "isolated") -> TurbineObservation:
+def _make_obs(
+    domain: str = "system", aligned_domains=None, note: str = "isolated"
+) -> TurbineObservation:
     anchor = compute_anchor(T_FIXED, domain=domain)
     return TurbineObservation(
         t=T_FIXED,
@@ -72,6 +75,7 @@ def _make_obs(domain: str = "system", aligned_domains=None, note: str = "isolate
 # ------------------------------------------------------------------
 # _load_recent_turbine
 # ------------------------------------------------------------------
+
 
 class TestLoadRecentTurbine:
     def test_returns_empty_when_dir_absent(self, tmp_path, monkeypatch):
@@ -111,7 +115,10 @@ class TestLoadRecentTurbine:
     def test_respects_max_records(self, tmp_path, monkeypatch):
         monkeypatch.setattr(turbine_mod, "TURBINE_DIR", tmp_path)
         f = tmp_path / "2024-01-01.jsonl"
-        lines = [json.dumps({"domain": "system", "diurnal_phase": i / 100}) for i in range(20)]
+        lines = [
+            json.dumps({"domain": "system", "diurnal_phase": i / 100})
+            for i in range(20)
+        ]
         f.write_text("\n".join(lines) + "\n", encoding="utf-8")
         result = _load_recent_turbine(max_records=5)
         assert len(result) == 5
@@ -152,6 +159,7 @@ class TestLoadRecentTurbine:
 # ------------------------------------------------------------------
 # _append_observation
 # ------------------------------------------------------------------
+
 
 class TestAppendObservation:
     def test_creates_file_and_appends_valid_json(self, tmp_path, monkeypatch):
@@ -194,6 +202,7 @@ class TestAppendObservation:
 # _assess_convergence — malformed history records
 # ------------------------------------------------------------------
 
+
 class TestAssessConvergenceMalformed:
     def test_skips_record_with_missing_diurnal_phase(self):
         anchor = compute_anchor(T_FIXED, domain="system")
@@ -232,6 +241,7 @@ class TestAssessConvergenceMalformed:
 # process_turbine
 # ------------------------------------------------------------------
 
+
 class TestProcessTurbine:
     def test_uses_prestamped_phases_from_packet(self, tmp_path, monkeypatch):
         monkeypatch.setattr(turbine_mod, "TURBINE_DIR", tmp_path)
@@ -250,7 +260,9 @@ class TestProcessTurbine:
         assert obs.packet_id == "pkt-test-001"
         assert obs.route_reason == "D3_TURBINE_EXPLORATORY"
 
-    def test_falls_back_to_compute_anchor_when_phases_absent(self, tmp_path, monkeypatch):
+    def test_falls_back_to_compute_anchor_when_phases_absent(
+        self, tmp_path, monkeypatch
+    ):
         monkeypatch.setattr(turbine_mod, "TURBINE_DIR", tmp_path)
         monkeypatch.setattr(turbine_mod, "_load_recent_turbine", lambda **_: [])
 
@@ -279,7 +291,9 @@ class TestProcessTurbine:
         anchor = compute_anchor(T_FIXED, domain="system")
         nearby = (anchor.diurnal_phase + CONVERGENCE_WINDOW * 0.5) % 1.0
         fake_history = [{"domain": "natural", "diurnal_phase": nearby}]
-        monkeypatch.setattr(turbine_mod, "_load_recent_turbine", lambda **_: fake_history)
+        monkeypatch.setattr(
+            turbine_mod, "_load_recent_turbine", lambda **_: fake_history
+        )
 
         packet = _make_packet()
         obs = process_turbine(packet, route_reason="D3_TURBINE_EXPLORATORY")

@@ -10,10 +10,10 @@ Invariants:
 - run_turbine_summary returns a dict with expected keys
 - Multiple run_turbine_summary calls in one day produce multiple summary lines
 """
+
 from __future__ import annotations
 
 import json
-import pytest
 
 import signal_core.core.hydro_turbine_summary as ts_mod
 from signal_core.core.hydro_turbine_summary import (
@@ -28,6 +28,7 @@ from signal_core.core.hydro_turbine_summary import (
 # ---------------------------------------------------------------------------
 # _phase_bucket
 # ---------------------------------------------------------------------------
+
 
 class TestPhaseBucket:
     def test_zero_maps_to_zero(self):
@@ -46,6 +47,7 @@ class TestPhaseBucket:
 # ---------------------------------------------------------------------------
 # _find_convergence_events
 # ---------------------------------------------------------------------------
+
 
 def _rec(domain: str, phase: float) -> dict:
     return {"domain": domain, "diurnal_phase": phase}
@@ -96,6 +98,7 @@ class TestFindConvergenceEvents:
 # build_summary
 # ---------------------------------------------------------------------------
 
+
 class TestBuildSummary:
     def test_empty_records(self):
         s = build_summary([])
@@ -130,6 +133,7 @@ class TestBuildSummary:
 # ---------------------------------------------------------------------------
 # run_turbine_summary — always appends (no dedup guard)
 # ---------------------------------------------------------------------------
+
 
 class TestRunTurbineSummaryAlwaysAppends:
     def test_first_call_appends_summary(self, tmp_path, monkeypatch):
@@ -172,9 +176,13 @@ class TestRunTurbineSummaryAlwaysAppends:
         result = run_turbine_summary()
 
         for key in [
-            "ts", "date", "total_turbine_observations",
-            "domains_observed", "convergence_events",
-            "convergence_event_count", "strong_events",
+            "ts",
+            "date",
+            "total_turbine_observations",
+            "domains_observed",
+            "convergence_events",
+            "convergence_event_count",
+            "strong_events",
         ]:
             assert key in result, f"Missing key: {key}"
 
@@ -192,11 +200,14 @@ class TestRunTurbineSummaryAlwaysAppends:
         monkeypatch.setattr(ts_mod, "TURBINE_DIR", tmp_path)
 
         from datetime import datetime, timezone
+
         today = datetime.now(timezone.utc).date().isoformat()
         obs_file = tmp_path / f"{today}.jsonl"
         obs_file.write_text(
-            json.dumps({"domain": "system", "diurnal_phase": 0.3}) + "\n"
-            + json.dumps({"domain": "natural", "diurnal_phase": 0.32}) + "\n",
+            json.dumps({"domain": "system", "diurnal_phase": 0.3})
+            + "\n"
+            + json.dumps({"domain": "natural", "diurnal_phase": 0.32})
+            + "\n",
             encoding="utf-8",
         )
 

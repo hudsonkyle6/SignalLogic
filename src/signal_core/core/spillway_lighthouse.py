@@ -36,9 +36,10 @@ from .hydro_types import HydroPacket
 # Spillway routing outcomes
 # ---------------------------------------------------------------------------
 
+
 class SpillwayRoute(str, Enum):
-    RETURN     = "RETURN"      # → Turbine re-entry for phase observation
-    HOLD       = "HOLD"        # → Stay in spillway; review next cycle
+    RETURN = "RETURN"  # → Turbine re-entry for phase observation
+    HOLD = "HOLD"  # → Stay in spillway; review next cycle
     QUARANTINE = "QUARANTINE"  # → Isolated; no re-entry; alert
 
 
@@ -58,6 +59,7 @@ _FOREST_EDGE = 0.70  # forest_proximity at or above this = near edge
 # ---------------------------------------------------------------------------
 # Assessment
 # ---------------------------------------------------------------------------
+
 
 def assess_spillway(packet: HydroPacket) -> SpillwayDecision:
     """

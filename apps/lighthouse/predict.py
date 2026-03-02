@@ -4,7 +4,6 @@ Lighthouse — Combined Daily Prediction Output
 
 from __future__ import annotations
 
-import pandas as pd
 from pathlib import Path
 
 from rhythm_os.lighthouse.predict_state import predict_state

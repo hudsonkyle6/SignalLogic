@@ -17,7 +17,9 @@ def load_latest_mandate(mandates_dir: Path) -> Optional[Mandate]:
     if not mandates_dir.exists() or not mandates_dir.is_dir():
         return None
 
-    candidates = sorted(mandates_dir.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
+    candidates = sorted(
+        mandates_dir.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True
+    )
     if not candidates:
         return None
 

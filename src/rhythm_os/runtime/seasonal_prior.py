@@ -80,24 +80,25 @@ _MONTHLY_CONFIDENCE = (
 
 # Monthly seasonal bands:
 _MONTHLY_BAND = (
-    "winter",            # Jan
-    "winter",            # Feb
-    "spring_transition", # Mar
-    "spring_transition", # Apr
-    "spring_transition", # May
-    "summer",            # Jun
-    "summer",            # Jul
-    "summer",            # Aug
-    "fall_transition",   # Sep
-    "fall_transition",   # Oct
-    "fall_transition",   # Nov
-    "winter",            # Dec
+    "winter",  # Jan
+    "winter",  # Feb
+    "spring_transition",  # Mar
+    "spring_transition",  # Apr
+    "spring_transition",  # May
+    "summer",  # Jun
+    "summer",  # Jul
+    "summer",  # Aug
+    "fall_transition",  # Sep
+    "fall_transition",  # Oct
+    "fall_transition",  # Nov
+    "winter",  # Dec
 )
 
 
 # ---------------------------------------------------------------------------
 # SeasonalPrior
 # ---------------------------------------------------------------------------
+
 
 @dataclass(frozen=True)
 class SeasonalPrior:
@@ -106,17 +107,19 @@ class SeasonalPrior:
 
     All values are read-only annotations. No authority over routing or commits.
     """
-    seasonal_band: str          # "winter" | "spring_transition" | "summer" | "fall_transition"
-    seasonal_phase: float       # [0, 1] — fractional position in the annual cycle
+
+    seasonal_band: str  # "winter" | "spring_transition" | "summer" | "fall_transition"
+    seasonal_phase: float  # [0, 1] — fractional position in the annual cycle
     expected_pressure_hpa: float
-    pattern_confidence: float   # [0, 1] — stability of the current seasonal pattern
-    afterglow_decay: float      # [0.2, 0.9] — wave memory decay rate for this season
-    forest_proximity: float     # [0, 1] — 0 = pasture center, 1 = forest edge
+    pattern_confidence: float  # [0, 1] — stability of the current seasonal pattern
+    afterglow_decay: float  # [0.2, 0.9] — wave memory decay rate for this season
+    forest_proximity: float  # [0, 1] — 0 = pasture center, 1 = forest edge
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _doy(t: float) -> int:
     """Unix timestamp → day-of-year [1, 366]."""
@@ -137,13 +140,14 @@ def _interp_monthly(table: tuple, t: float) -> float:
     boundaries.
     """
     dt = datetime.fromtimestamp(t, tz=timezone.utc)
-    m0 = dt.month - 1                    # 0-based current month
+    m0 = dt.month - 1  # 0-based current month
     # Fractional progress through the current month (0 = start, 1 = end)
     import calendar
+
     days_in_month = calendar.monthrange(dt.year, dt.month)[1]
     frac = (dt.day - 1 + dt.hour / 24.0) / days_in_month
 
-    m1 = (m0 + 1) % 12                  # next month (wraps Dec → Jan)
+    m1 = (m0 + 1) % 12  # next month (wraps Dec → Jan)
     v0 = table[m0]
     v1 = table[m1]
 
@@ -159,7 +163,7 @@ def _seasonal_phase(t: float) -> float:
     """
     dt = datetime.fromtimestamp(t, tz=timezone.utc)
     # Use day-of-year including fractional hour
-    doy_frac = (_doy(t) - 1 + dt.hour / 24.0)
+    doy_frac = _doy(t) - 1 + dt.hour / 24.0
     days_in_year = 366.0 if _is_leap(dt.year) else 365.0
     return doy_frac / days_in_year
 
@@ -201,6 +205,7 @@ def _forest_proximity_from_confidence(confidence: float) -> float:
 # ---------------------------------------------------------------------------
 # Public entry point
 # ---------------------------------------------------------------------------
+
 
 def compute_seasonal_prior(t: float) -> SeasonalPrior:
     """

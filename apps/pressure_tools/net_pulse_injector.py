@@ -27,6 +27,7 @@ METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
 # --- add imports at top ---
 import random
 
+
 # --- extend Profile ---
 @dataclass(frozen=True)
 class Profile:
@@ -39,10 +40,10 @@ class Profile:
 
     # fragmentation controls (defaults for existing profiles)
     sources: int = 1
-    period_jitter_frac: float = 0.0     # per-source period perturbation
+    period_jitter_frac: float = 0.0  # per-source period perturbation
     phase_offsets: tuple[float, ...] = ()  # radians, len>=sources optional
     ts_jitter_ms: float = 0.0
-    out_of_order_every: int = 0         # every N emits, step timestamp backwards
+    out_of_order_every: int = 0  # every N emits, step timestamp backwards
     out_of_order_backstep_s: float = 0.0
 
 
@@ -56,7 +57,6 @@ PROFILES = {
         jitter_frac=0.02,
         interval_s=0.02,
     ),
-
     "pulse_5s": Profile(
         name="pulse_5s",
         base_bps=200_000,
@@ -65,7 +65,6 @@ PROFILES = {
         jitter_frac=0.02,
         interval_s=0.02,
     ),
-
     "burst": Profile(
         name="burst",
         base_bps=100_000,
@@ -74,7 +73,6 @@ PROFILES = {
         jitter_frac=0.05,
         interval_s=0.05,
     ),
-
     # 🔥 Phase fragmentation profile
     "fragment_5s": Profile(
         name="fragment_5s",
@@ -83,19 +81,17 @@ PROFILES = {
         pulse_period_s=5.0,
         jitter_frac=0.25,
         interval_s=0.02,
-
         sources=3,
         period_jitter_frac=0.1,
         ts_jitter_ms=20.0,
     ),
-
 }
-
 
 
 # -------------------------
 # Helpers
 # -------------------------
+
 
 def _now() -> float:
     return time.time()
@@ -111,6 +107,7 @@ def _jitter(mult: float, frac: float, t: float) -> float:
 # -------------------------
 # Waveform Generators
 # -------------------------
+
 
 def wave_sine(t: float, period: float) -> float:
     return 0.5 * (1.0 + math.sin(2.0 * math.pi * t / period))
@@ -141,10 +138,13 @@ def wave_step(t: float, start: float) -> float:
 # Emission
 # -------------------------
 
+
 def emit_for(duration_s: float, profile: Profile) -> Path:
     METERS_DIR.mkdir(parents=True, exist_ok=True)
 
-    host = os.environ.get("COMPUTERNAME") or os.environ.get("HOSTNAME") or "unknown-host"
+    host = (
+        os.environ.get("COMPUTERNAME") or os.environ.get("HOSTNAME") or "unknown-host"
+    )
     run_id = uuid4().hex[:10]
     out_path = METERS_DIR / f"sim_net_pressure_{profile.name}_{run_id}.jsonl"
 
@@ -154,7 +154,11 @@ def emit_for(duration_s: float, profile: Profile) -> Path:
     offsets = []
     for k in range(src_n):
         pj = profile.period_jitter_frac
-        p = profile.pulse_period_s * (1.0 + (random.random() * 2 - 1) * pj) if pj > 0 else profile.pulse_period_s
+        p = (
+            profile.pulse_period_s * (1.0 + (random.random() * 2 - 1) * pj)
+            if pj > 0
+            else profile.pulse_period_s
+        )
         periods.append(p)
         if profile.phase_offsets and k < len(profile.phase_offsets):
             offsets.append(profile.phase_offsets[k])
@@ -213,7 +217,7 @@ def emit_for(duration_s: float, profile: Profile) -> Path:
                     "profile": profile.name,
                     "run_id": run_id,
                     "src_n": src_n,
-                    "periods": periods,   # ok to log: defensive provenance
+                    "periods": periods,  # ok to log: defensive provenance
                 },
             }
 
@@ -227,10 +231,10 @@ def emit_for(duration_s: float, profile: Profile) -> Path:
     return out_path
 
 
-
 # -------------------------
 # Main
 # -------------------------
+
 
 def main() -> None:
     import argparse
@@ -247,6 +251,7 @@ def main() -> None:
 
     profile = PROFILES[args.profile]
     emit_for(args.duration, profile)
+
 
 if __name__ == "__main__":
     main()

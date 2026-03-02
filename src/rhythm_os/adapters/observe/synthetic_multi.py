@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import math
-import time
 from typing import List
 from dataclasses import dataclass
 
@@ -64,7 +63,6 @@ def generate_multi_channel_synthetic(
     field = compute_field(t_now)
     field_phase = field.phases[cycle]
 
-
     # Time window
     t_series = np.arange(
         t_now - window_hours * 3600,
@@ -77,9 +75,7 @@ def generate_multi_channel_synthetic(
     for ch in channels:
         offset_rad = math.radians(ch.phase_offset_deg)
 
-        signal = np.sin(
-            TAU * (t_series / period) + offset_rad
-        )
+        signal = np.sin(TAU * (t_series / period) + offset_rad)
 
         if ch.noise_std > 0:
             signal += np.random.normal(0, ch.noise_std, size=len(signal))
@@ -97,11 +93,7 @@ def generate_multi_channel_synthetic(
                 phase_external=phase_ext,
                 phase_field=field_phase,
                 phase_diff=phase_diff,
-                coherence=(
-                    1.0
-                    if ch.noise_std == 0
-                    else max(0.0, 1.0 - ch.noise_std)
-                ),
+                coherence=(1.0 if ch.noise_std == 0 else max(0.0, 1.0 - ch.noise_std)),
                 extractor={
                     "type": "synthetic_multi",
                     "field_cycle": cycle,  # informational only

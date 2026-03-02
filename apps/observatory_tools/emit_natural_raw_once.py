@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import time
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any, Dict, Optional
 
 import requests
@@ -17,23 +16,25 @@ from rhythm_os.runtime.location_resolver import resolve_location
 # ---------------------------------------------------------------------
 
 _OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
-_OPEN_METEO_CURRENT_FIELDS = ",".join([
-    "surface_pressure",
-    "temperature_2m",
-    "relative_humidity_2m",
-    "wind_speed_10m",
-    "wind_direction_10m",
-    "cloud_cover",
-    "weather_code",
-])
+_OPEN_METEO_CURRENT_FIELDS = ",".join(
+    [
+        "surface_pressure",
+        "temperature_2m",
+        "relative_humidity_2m",
+        "wind_speed_10m",
+        "wind_direction_10m",
+        "cloud_cover",
+        "weather_code",
+    ]
+)
 
 # Pressure normalization bounds (mid-latitude surface pressure, hPa)
-_P_LOW:  float = 975.0
+_P_LOW: float = 975.0
 _P_HIGH: float = 1045.0
 _P_SPAN: float = _P_HIGH - _P_LOW
 
 # Temperature normalization bounds (°C, seasonal NH range)
-_T_LOW:  float = -25.0
+_T_LOW: float = -25.0
 _T_HIGH: float = 38.0
 _T_SPAN: float = _T_HIGH - _T_LOW
 
@@ -43,6 +44,7 @@ from rhythm_os.runtime.paths import NATURAL_DIR as OUT_DIR
 # ---------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------
+
 
 def _fetch_weather(lat: float, lon: float) -> Optional[Dict[str, Any]]:
     """
@@ -118,6 +120,7 @@ def _make_record(
 # Main
 # ---------------------------------------------------------------------
 
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -134,35 +137,35 @@ def main() -> None:
     fetch_ok = weather is not None
 
     if fetch_ok:
-        pressure_hpa  = float(weather.get("surface_pressure", 1013.25))
+        pressure_hpa = float(weather.get("surface_pressure", 1013.25))
         temperature_c = float(weather.get("temperature_2m", 10.0))
-        humidity_pct  = float(weather.get("relative_humidity_2m", 60.0))
-        wind_speed    = float(weather.get("wind_speed_10m", 0.0))
-        wind_dir      = float(weather.get("wind_direction_10m", 0.0))
-        cloud_cover   = float(weather.get("cloud_cover", 50.0))
-        weather_code  = int(weather.get("weather_code", 0))
+        humidity_pct = float(weather.get("relative_humidity_2m", 60.0))
+        wind_speed = float(weather.get("wind_speed_10m", 0.0))
+        wind_dir = float(weather.get("wind_direction_10m", 0.0))
+        cloud_cover = float(weather.get("cloud_cover", 50.0))
+        weather_code = int(weather.get("weather_code", 0))
         coherence_pressure = 0.85
-        coherence_thermal  = 0.85
+        coherence_thermal = 0.85
     else:
         # Fallback: write a low-coherence stub so the pipeline doesn't stall
-        pressure_hpa  = 1013.25
+        pressure_hpa = 1013.25
         temperature_c = 0.0
-        humidity_pct  = 60.0
-        wind_speed    = 0.0
-        wind_dir      = 0.0
-        cloud_cover   = 50.0
-        weather_code  = 0
+        humidity_pct = 60.0
+        wind_speed = 0.0
+        wind_dir = 0.0
+        cloud_cover = 50.0
+        weather_code = 0
         coherence_pressure = 0.0
-        coherence_thermal  = 0.0
+        coherence_thermal = 0.0
 
     raw_payload = {
-        "pressure_hpa":  pressure_hpa,
+        "pressure_hpa": pressure_hpa,
         "temperature_c": temperature_c,
-        "humidity_pct":  humidity_pct,
+        "humidity_pct": humidity_pct,
         "wind_speed_kmh": wind_speed,
-        "wind_dir_deg":  wind_dir,
+        "wind_dir_deg": wind_dir,
         "cloud_cover_pct": cloud_cover,
-        "weather_code":  weather_code,
+        "weather_code": weather_code,
     }
 
     # ------------------------------------------------------------------
@@ -212,8 +215,12 @@ def main() -> None:
 
     status = "LIVE" if fetch_ok else "STUB (fetch failed)"
     print(f"OBSERVATORY [{status}]: wrote 2 natural records → {out_path}")
-    print(f"  pressure  {pressure_hpa:.1f} hPa  phase_field={phase_field_pressure:.3f}  semi_diurnal_phase={anchor.semi_diurnal_phase:.3f}")
-    print(f"  temp      {temperature_c:.1f}°C     phase_field={phase_field_thermal:.3f}  diurnal_phase={anchor.diurnal_phase:.3f}")
+    print(
+        f"  pressure  {pressure_hpa:.1f} hPa  phase_field={phase_field_pressure:.3f}  semi_diurnal_phase={anchor.semi_diurnal_phase:.3f}"
+    )
+    print(
+        f"  temp      {temperature_c:.1f}°C     phase_field={phase_field_thermal:.3f}  diurnal_phase={anchor.diurnal_phase:.3f}"
+    )
 
 
 if __name__ == "__main__":

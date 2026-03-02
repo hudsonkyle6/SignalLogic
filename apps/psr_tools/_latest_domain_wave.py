@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Optional, Iterable
 from rhythm_os.psr.domain_wave import DomainWave
 
+
 def latest_wave(
     waves: Iterable[DomainWave],
     *,

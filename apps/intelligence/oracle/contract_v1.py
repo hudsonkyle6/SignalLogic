@@ -1,8 +1,7 @@
 # rhythm_os/oracle/contract_v1.py
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 # ----------------------------
 # Version stamps (filled in Step 5, referenced now)
@@ -93,8 +92,29 @@ RANGES_NON_NEGATIVE: Dict[str, Tuple[float, float]] = {
 # Required outputs per oracle layer (written to oracle_layer*.csv and/or merged)
 L1_OUTPUTS = ["OCI", "RiskIndex", "OracleBand", "OracleBias"]
 L2_OUTPUTS = [
-    "WorldField", "HumanField", "EnvField", "GhostField", "MemoryField",
-    "HCFIndex", "AlignmentBand", "AlignmentBias"
+    "WorldField",
+    "HumanField",
+    "EnvField",
+    "GhostField",
+    "MemoryField",
+    "HCFIndex",
+    "AlignmentBand",
+    "AlignmentBias",
 ]
-L3_OUTPUTS = ["HorizonIndex", "HorizonBand", "HorizonBias", "ShortWindow", "LongWindow", "MacroState"]
-L4_OUTPUTS = ["D_t", "DarkFieldBand", "D_HStab", "D_DriftStab", "D_MemoryField", "D_GhostField", "D_EnvField"]
+L3_OUTPUTS = [
+    "HorizonIndex",
+    "HorizonBand",
+    "HorizonBias",
+    "ShortWindow",
+    "LongWindow",
+    "MacroState",
+]
+L4_OUTPUTS = [
+    "D_t",
+    "DarkFieldBand",
+    "D_HStab",
+    "D_DriftStab",
+    "D_MemoryField",
+    "D_GhostField",
+    "D_EnvField",
+]

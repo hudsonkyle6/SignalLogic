@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import json
-import math
-import cmath
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -31,6 +29,7 @@ FIELD_CYCLE = "cyber_clock_stack_v1"
 # Utilities
 # ---------------------------------------------------------------------
 
+
 def _today_str() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
@@ -40,7 +39,6 @@ def _meters_path_latest() -> Path:
     if not files:
         raise FileNotFoundError("No meter files found")
     return max(files, key=lambda p: p.stat().st_mtime)
-
 
 
 def _domain_path_today() -> Path:
@@ -79,6 +77,7 @@ def _extract_net_samples(pkts: List[Dict[str, Any]]) -> List[Tuple[float, float]
 # Main
 # ---------------------------------------------------------------------
 
+
 def main() -> None:
     meters_path = _meters_path_latest()
     pkts = _read_meter_packets(meters_path)
@@ -112,16 +111,13 @@ def main() -> None:
         domain=DOMAIN,
         channel=CHANNEL,
         field_cycle=FIELD_CYCLE,
-
         # We use "external" to mean observed-domain phase posture (cyber group)
         phase_external=phi_cyber,
         # We use "field" to mean sovereign reference (base composite)
         phase_field=phi_base,
-
         phase_diff=phase_diff,
         # Domain coherence (cyber group coherence)
         coherence=r_cyber,
-
         extractor={
             "source": "emit_cyber_domain",
             "projection": "multi_clock_phasor_stack",
@@ -155,11 +151,7 @@ def main() -> None:
             + "\n"
         )
 
-    print(
-        f"CYBER DOMAIN EMITTED → "
-        f"phase_diff={phase_diff:.3f} "
-        f"coherence={r_cyber:.3f}"
-    )
+    print(f"CYBER DOMAIN EMITTED → phase_diff={phase_diff:.3f} coherence={r_cyber:.3f}")
 
 
 if __name__ == "__main__":

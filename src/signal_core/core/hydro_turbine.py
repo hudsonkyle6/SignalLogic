@@ -23,7 +23,6 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import List
 
 from .hydro_types import HydroPacket
@@ -39,27 +38,30 @@ CONVERGENCE_WINDOW = 0.083
 # Observation record
 # ------------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class TurbineObservation:
     """
     A single turbine observation. Records what was seen, not what was decided.
     """
+
     t: float
     packet_id: str
     domain: str
     lane: str
-    route_reason: str           # D3_TURBINE_EXPLORATORY or D4_SAFE_FALLBACK
+    route_reason: str  # D3_TURBINE_EXPLORATORY or D4_SAFE_FALLBACK
     diurnal_phase: float
     semi_diurnal_phase: float
     long_wave_phase: float
     dominant_hz: float
     aligned_domains: List[str]  # other domains sharing this phase window
-    convergence_note: str       # human-readable pattern summary
+    convergence_note: str  # human-readable pattern summary
 
 
 # ------------------------------------------------------------
 # Phase geometry
 # ------------------------------------------------------------
+
 
 def _circular_distance(a: float, b: float) -> float:
     """
@@ -73,6 +75,7 @@ def _circular_distance(a: float, b: float) -> float:
 # ------------------------------------------------------------
 # History I/O
 # ------------------------------------------------------------
+
 
 def _load_recent_turbine(*, max_records: int = 100) -> List[dict]:
     """
@@ -133,6 +136,7 @@ def _append_observation(obs: TurbineObservation) -> None:
 # Convergence assessment
 # ------------------------------------------------------------
 
+
 def _assess_convergence(
     anchor: TemporalAnchor,
     current_domain: str,
@@ -185,6 +189,7 @@ def _assess_convergence(
 # Public entry point
 # ------------------------------------------------------------
 
+
 def process_turbine(packet: HydroPacket, route_reason: str) -> TurbineObservation:
     """
     Process a TURBINE-routed packet.
@@ -207,13 +212,17 @@ def process_turbine(packet: HydroPacket, route_reason: str) -> TurbineObservatio
             diurnal_phase=packet.diurnal_phase,
             semi_diurnal_phase=packet.semi_diurnal_phase,
             long_wave_phase=packet.long_wave_phase,
-            dominant_hz=compute_anchor(float(packet.t), domain=packet.domain).dominant_hz,
+            dominant_hz=compute_anchor(
+                float(packet.t), domain=packet.domain
+            ).dominant_hz,
         )
     else:
         anchor = compute_anchor(float(packet.t), domain=packet.domain)
 
     history = _load_recent_turbine()
-    aligned_domains, convergence_note = _assess_convergence(anchor, packet.domain, history)
+    aligned_domains, convergence_note = _assess_convergence(
+        anchor, packet.domain, history
+    )
 
     obs = TurbineObservation(
         t=float(packet.t),

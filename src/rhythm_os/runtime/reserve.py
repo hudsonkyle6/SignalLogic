@@ -1,7 +1,8 @@
-#reserve.py
+# reserve.py
 from __future__ import annotations
 
 from rhythm_os.runtime.cycle_id import compute_cycle_id
+
 """
 Reserve Layer Runtime (DRIFT only)
 
@@ -15,7 +16,6 @@ Computes drift and appends a DomainWave packet.
 
 
 from pathlib import Path
-from typing import List
 
 from rhythm_os.domain.antifragile.drift import compute_drift_index
 from rhythm_os.psr.append_domain_wave import append_domain_wave
@@ -38,13 +38,15 @@ def emit_drift_index(
         history_window_sec=history_window_sec,
     )
 
-    src = [w for w in waves if w.domain == source_domain and w.channel == source_channel]
+    src = [
+        w for w in waves if w.domain == source_domain and w.channel == source_channel
+    ]
     if len(src) < 2:
         return  # silence valid
 
     series = [abs(float(w.phase_diff)) for w in src]
     current = series[-1]
-    baseline = series[-(baseline_n + 1):-1]
+    baseline = series[-(baseline_n + 1) : -1]
 
     drift_value = compute_drift_index(current=current, baseline=baseline)
 
@@ -58,7 +60,9 @@ def emit_drift_index(
         phase_diff=float(drift_value),
         coherence=None,
         extractor={
-            "cycle_id": compute_cycle_id(t_ref=t_ref, runner="run_cycle_once", version="v1"),
+            "cycle_id": compute_cycle_id(
+                t_ref=t_ref, runner="run_cycle_once", version="v1"
+            ),
             "source": f"{source_domain}:{source_channel}",
             "method": "compute_drift_index(abs(phase_diff))",
             "version": "v1",

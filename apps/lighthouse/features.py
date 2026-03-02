@@ -98,7 +98,9 @@ def build_supervised_frames() -> Tuple[pd.DataFrame, pd.Series, pd.Series, Dict]
         if col in feature_df.columns:
             col_values = pd.to_numeric(feature_df[col], errors="coerce")
             mean_val = col_values.mean()
-            feature_df[col] = col_values.fillna(mean_val if not np.isnan(mean_val) else 0.0)
+            feature_df[col] = col_values.fillna(
+                mean_val if not np.isnan(mean_val) else 0.0
+            )
 
     # One-hot encode categoricals
     feature_df = pd.get_dummies(feature_df, columns=CATEGORICAL_COLS, dummy_na=False)

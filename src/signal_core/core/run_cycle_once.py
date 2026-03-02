@@ -63,4 +63,3 @@ def run_cycle_once() -> None:
 
 if __name__ == "__main__":
     run_cycle_once()
-

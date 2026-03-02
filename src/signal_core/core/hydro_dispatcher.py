@@ -29,10 +29,8 @@ LANE_TO_PRESSURE_CLASS = {
     "system": "operational",
     "ops": "operational",
     "internal": "operational",
-
     "market": "volatility",
     "finance": "volatility",
-
     "natural": "environmental",
     "project": "workload",
     "narrative": "turbidity",
@@ -47,6 +45,7 @@ MAIN_LANES = {"system"}
 # Helpers
 # ---------------------------------------------------------------------
 
+
 def classify_pressure(packet: HydroPacket) -> str:
     """
     Deterministic, static classification.
@@ -60,8 +59,8 @@ def classify_pressure(packet: HydroPacket) -> str:
 # ---------------------------------------------------------------------
 
 # Forest proximity thresholds (Lighthouse annotation — no authority over gate)
-FOREST_SCOUT_THRESHOLD = 0.70   # ≥ this → Turbine scout only (no penstock commit)
-FOREST_WATCH_THRESHOLD = 0.40   # ≥ this → commit to MAIN but also observe in Turbine
+FOREST_SCOUT_THRESHOLD = 0.70  # ≥ this → Turbine scout only (no penstock commit)
+FOREST_WATCH_THRESHOLD = 0.40  # ≥ this → commit to MAIN but also observe in Turbine
 
 
 def _forest_proximity(packet: HydroPacket) -> float:
@@ -134,8 +133,7 @@ def dispatch(
     # ---------------------------------------------------------------
     if ingress.gate_result == GateResult.PASS and pressure_class == "operational":
         if (
-            packet.rate is not None
-            and float(packet.rate) > float(rate_threshold)
+            packet.rate is not None and float(packet.rate) > float(rate_threshold)
         ) or bool(packet.anomaly_flag):
             return DispatchDecision(
                 Route.SPILLWAY,

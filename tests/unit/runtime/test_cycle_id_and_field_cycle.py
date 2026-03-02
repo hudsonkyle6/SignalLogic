@@ -3,6 +3,7 @@ Tests for:
   - rhythm_os.runtime.cycle_id.compute_cycle_id
   - rhythm_os.runtime.field_cycle (is_valid_field_cycle, find_invalid_field_cycles)
 """
+
 from __future__ import annotations
 
 import pytest
@@ -19,9 +20,12 @@ from rhythm_os.runtime.field_cycle import (
 # compute_cycle_id
 # ---------------------------------------------------------------------------
 
+
 class TestComputeCycleId:
     def test_returns_64_hex_chars(self):
-        cid = compute_cycle_id(t_ref=1_700_000_000.0, runner="run_cycle_once", version="v1")
+        cid = compute_cycle_id(
+            t_ref=1_700_000_000.0, runner="run_cycle_once", version="v1"
+        )
         assert isinstance(cid, str)
         assert len(cid) == 64
         assert all(c in "0123456789abcdef" for c in cid)
@@ -60,6 +64,7 @@ class TestComputeCycleId:
 # is_valid_field_cycle
 # ---------------------------------------------------------------------------
 
+
 class TestIsValidFieldCycle:
     @pytest.mark.parametrize("value", ["init", "bootstrap", "computed"])
     def test_canonical_values_valid(self, value):
@@ -73,6 +78,7 @@ class TestIsValidFieldCycle:
 # ---------------------------------------------------------------------------
 # find_invalid_field_cycles
 # ---------------------------------------------------------------------------
+
 
 class TestFindInvalidFieldCycles:
     def test_all_valid_returns_empty_set(self):

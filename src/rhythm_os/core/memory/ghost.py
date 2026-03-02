@@ -17,9 +17,8 @@ Freeze Record:
 - ghost_freeze_v1.0.yaml
 """
 
-
-
 from __future__ import annotations
+
 try:
     import pandas as pd
     import numpy as np
@@ -33,6 +32,7 @@ except ImportError as _e:
 # =====================================================================
 #  PART 1 — YOUR ORIGINAL GHOST LAYER (kept exactly, untouched)
 # =====================================================================
+
 
 def inject_ghost_layer(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -97,6 +97,7 @@ def inject_ghost_layer(df: pd.DataFrame) -> pd.DataFrame:
 #  PART 2 — FULL GHOST ENGINE (Stability, Drift, Phase, Governor, etc.)
 # =====================================================================
 
+
 def _sigmoid(x, k=1.0):
     x = np.asarray(x, dtype=float)
     return 1 / (1 + np.exp(-k * x))
@@ -153,7 +154,7 @@ def compute_ghost_metrics(df: pd.DataFrame) -> pd.DataFrame:
     if "phi_h" in df.columns and "phi_e" in df.columns:
         delta_phi = _angle_wrap(df["phi_h"] - df["phi_e"])
         sigma_phi = np.pi / 12.0
-        C_phase = np.exp(-(delta_phi ** 2) / (2 * sigma_phi ** 2))
+        C_phase = np.exp(-(delta_phi**2) / (2 * sigma_phi**2))
     else:
         C_phase = pd.Series(0.5, index=df.index)
 
@@ -162,8 +163,9 @@ def compute_ghost_metrics(df: pd.DataFrame) -> pd.DataFrame:
     # -----------------------------------------------------------------
     # VOLATILITY COMPONENT (VIX + WVI + Amplitude delta)
     # -----------------------------------------------------------------
-    vix_norm = _normalize(df.get("VIXClose", pd.Series(20.0, index=df.index)),
-                          10.0, 40.0)
+    vix_norm = _normalize(
+        df.get("VIXClose", pd.Series(20.0, index=df.index)), 10.0, 40.0
+    )
 
     wvi_norm = df.get("WVI", pd.Series(0.0, index=df.index)).clip(0, 1)
 
@@ -231,4 +233,3 @@ def compute_ghost_metrics(df: pd.DataFrame) -> pd.DataFrame:
     df["GhostShadow"] = shadow
 
     return df
-

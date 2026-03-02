@@ -40,6 +40,7 @@ MODEL_DIR.mkdir(parents=True, exist_ok=True)
 # Cleaner — Remove infinities / NaNs / crazy large values
 # ---------------------------------------------------------
 
+
 def clean_journal(df: pd.DataFrame) -> pd.DataFrame:
     """
     Sanitizes the dataset so ML models don't explode.
@@ -62,28 +63,39 @@ def clean_journal(df: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------------------------------------
 
 FEATURE_COLS = [
-    "SP500Close", "VIXClose", "TempAvg", "MoonIllum",
-    "Amplitude", "ResonanceValue",
-
+    "SP500Close",
+    "VIXClose",
+    "TempAvg",
+    "MoonIllum",
+    "Amplitude",
+    "ResonanceValue",
     # HST Fields
-    "A_t", "C_t", "E_t", "H_t",
-    "phi_h", "phi_e", "HSTResDrift",
-    "HSTAmpCorr", "HSTTempCorr", "HSTPhaseDiv",
-
+    "A_t",
+    "C_t",
+    "E_t",
+    "H_t",
+    "phi_h",
+    "phi_e",
+    "HSTResDrift",
+    "HSTAmpCorr",
+    "HSTTempCorr",
+    "HSTPhaseDiv",
     # Coupling metrics
-    "CouplingLag", "CouplingPearson",
-    "AmpCouplingLag", "AmpCouplingPearson",
-
+    "CouplingLag",
+    "CouplingPearson",
+    "AmpCouplingLag",
+    "AmpCouplingPearson",
     # Memory + Ghost (numeric only)
-    "MemoryCharge", "Afterglow",
-    "MemoryDrift", "MemoryPhaseCoherence",
+    "MemoryCharge",
+    "Afterglow",
+    "MemoryDrift",
+    "MemoryPhaseCoherence",
     "GhostStabilityIndex",
-
     # Environmental forcing
-    "WVI", "EnvPressure", "EnvFactor",
+    "WVI",
+    "EnvPressure",
+    "EnvFactor",
 ]
-
-
 
 
 def select_available_features(df: pd.DataFrame):
@@ -98,6 +110,7 @@ def select_available_features(df: pd.DataFrame):
 # ---------------------------------------------------------
 # Train classification model: Predict SignalState
 # ---------------------------------------------------------
+
 
 def train_state_model(df: pd.DataFrame):
 
@@ -120,10 +133,7 @@ def train_state_model(df: pd.DataFrame):
     )
 
     model = RandomForestClassifier(
-        n_estimators=500,
-        max_depth=12,
-        random_state=42,
-        class_weight="balanced"
+        n_estimators=500, max_depth=12, random_state=42, class_weight="balanced"
     )
 
     model.fit(X_train, y_train)
@@ -144,6 +154,7 @@ def train_state_model(df: pd.DataFrame):
 # Train regression model: Predict ResonanceValue
 # ---------------------------------------------------------
 
+
 def train_resonance_model(df: pd.DataFrame):
 
     print("\n📡 Training Resonance Regression Model (RandomForestRegressor)...")
@@ -160,11 +171,7 @@ def train_resonance_model(df: pd.DataFrame):
         X, y, test_size=0.25, shuffle=False
     )
 
-    model = RandomForestRegressor(
-        n_estimators=600,
-        max_depth=12,
-        random_state=42
-    )
+    model = RandomForestRegressor(n_estimators=600, max_depth=12, random_state=42)
 
     model.fit(X_train, y_train)
 
@@ -181,6 +188,7 @@ def train_resonance_model(df: pd.DataFrame):
 # ---------------------------------------------------------
 # Main training runner
 # ---------------------------------------------------------
+
 
 def main():
 

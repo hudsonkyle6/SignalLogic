@@ -34,11 +34,9 @@ def main() -> None:
         packet = HydroPacket(
             t=dw.t,
             packet_id=str(uuid.uuid4()),
-
             lane="cyber",
             domain=dw.domain,
             channel=dw.channel,
-
             # Observational payload (kept for trace)
             value={
                 "phase_external": dw.phase_external,
@@ -47,20 +45,16 @@ def main() -> None:
                 "coherence": dw.coherence,
                 "field_cycle": dw.field_cycle,
             },
-
             provenance={
                 "source": "psr.domain_to_cyber_ingress",
                 "domain_wave_ts": dw.t,
                 "extractor": dw.extractor,
             },
-
             rate=None,
             anomaly_flag=False,
             replay=False,
-
             # Rhythm coupling: use phase_diff as phase transport
             phase=dw.phase_diff,
-
             # Explicit coherence transport
             coherence=dw.coherence,
         )

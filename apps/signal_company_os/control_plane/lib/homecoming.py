@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .policy import Policy
 
+
 def run_homecoming(policy: Policy) -> int:
     """
     v0 homecoming is conservative: it writes a timestamped entry and does NOT delete anything.
@@ -13,7 +14,7 @@ def run_homecoming(policy: Policy) -> int:
     entry = {
         "event": "homecoming",
         "time": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "note": "v0 homecoming: no deletes; indicates daily close of gate + reset of intent."
+        "note": "v0 homecoming: no deletes; indicates daily close of gate + reset of intent.",
     }
     p = Path("apps/signal_company_os/control_plane/audits/homecoming.jsonl")
     p.parent.mkdir(parents=True, exist_ok=True)

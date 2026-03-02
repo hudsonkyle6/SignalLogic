@@ -25,6 +25,7 @@ def main(*, window_days: int = 7) -> int:
     # Natural
     try:
         from rhythm_os.psr.transform.natural_to_domain import project_natural_domain
+
         waves = project_natural_domain(window_days=window_days)
         for w in waves:
             append_domain_wave(bus_path, w)
@@ -36,6 +37,7 @@ def main(*, window_days: int = 7) -> int:
     # Market (optional; only if you have it promoted similarly)
     try:
         from rhythm_os.psr.transform.market_to_domain import project_market_domain
+
         waves = project_market_domain(window_days=window_days)
         for w in waves:
             append_domain_wave(bus_path, w)

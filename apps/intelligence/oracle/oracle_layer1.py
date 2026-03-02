@@ -41,6 +41,7 @@ STABILITY_CONTRACT_PATH = ROOT / "rhythm_os" / "oracle" / "contracts" / "stabili
 # AUD Guardrail — Assist Under Discipline
 # ---------------------------------------------------------------------
 
+
 def _require_aud_guardrail() -> None:
     """
     HARD GUARDRAIL:
@@ -48,7 +49,9 @@ def _require_aud_guardrail() -> None:
     is present, enabled, and authority-limited.
     """
     if not STABILITY_CONTRACT_PATH.exists():
-        raise RuntimeError(f"AUD VIOLATION: stability.yaml missing → {STABILITY_CONTRACT_PATH}")
+        raise RuntimeError(
+            f"AUD VIOLATION: stability.yaml missing → {STABILITY_CONTRACT_PATH}"
+        )
 
     try:
         with open(STABILITY_CONTRACT_PATH, "r", encoding="utf-8") as f:
@@ -65,7 +68,9 @@ def _require_aud_guardrail() -> None:
 
     aud = contract.get("AssistUnderDiscipline")
     if not isinstance(aud, dict):
-        raise RuntimeError("AUD VIOLATION: AssistUnderDiscipline missing from StabilityContract")
+        raise RuntimeError(
+            "AUD VIOLATION: AssistUnderDiscipline missing from StabilityContract"
+        )
 
     if aud.get("Enabled") is not True:
         raise RuntimeError("AUD VIOLATION: AssistUnderDiscipline not enabled")
@@ -81,6 +86,7 @@ def _require_aud_guardrail() -> None:
 # ---------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------
+
 
 def _safe_float(value, default: float = 0.0) -> float:
     try:
@@ -123,6 +129,7 @@ def _passthrough(latest: pd.Series, key: str, default=pd.NA):
 # Oracle Input Loader (CANONICAL)
 # ---------------------------------------------------------------------
 
+
 def _load_merged_for_oracle() -> pd.DataFrame:
     if not MERGED_PATH.exists():
         raise RuntimeError("merged_signal.csv missing")
@@ -143,6 +150,7 @@ def _load_merged_for_oracle() -> pd.DataFrame:
 # ---------------------------------------------------------------------
 # Upsert helper (no validation here)
 # ---------------------------------------------------------------------
+
 
 def _upsert_by_date(path: Path, row: Dict[str, Any], date_col: str = "Date") -> None:
     ORACLE_DIR.mkdir(parents=True, exist_ok=True)
@@ -181,12 +189,15 @@ def _upsert_by_date(path: Path, row: Dict[str, Any], date_col: str = "Date") -> 
 # Core Computation
 # ---------------------------------------------------------------------
 
+
 def compute_oracle_row(df: pd.DataFrame) -> Dict[str, Any]:
     latest = df.iloc[-1]
     window = df.tail(60)
 
     res_today = _safe_float(latest.get("ResonanceValue"))
-    res_series = pd.to_numeric(window.get("ResonanceValue", pd.Series(dtype="float64")), errors="coerce")
+    res_series = pd.to_numeric(
+        window.get("ResonanceValue", pd.Series(dtype="float64")), errors="coerce"
+    )
 
     if res_series.notna().sum() >= 10:
         z = (res_today - res_series.mean()) / max(res_series.std(ddof=0), 1e-6)
@@ -204,23 +215,26 @@ def compute_oracle_row(df: pd.DataFrame) -> Dict[str, Any]:
     phase_score = _clip01(1 / (1 + drift / 0.1))
 
     oci = _clip01(
-        0.35 * res_score +
-        0.30 * stab +
-        0.20 * env_score +
-        0.15 * phase_score
+        0.35 * res_score + 0.30 * stab + 0.20 * env_score + 0.15 * phase_score
     )
 
     band = (
-        "CALM" if oci >= 0.7 else
-        "FOCUSED" if oci >= 0.55 else
-        "CHOPPY" if oci >= 0.4 else
-        "STORM"
+        "CALM"
+        if oci >= 0.7
+        else "FOCUSED"
+        if oci >= 0.55
+        else "CHOPPY"
+        if oci >= 0.4
+        else "STORM"
     )
     bias = (
-        "FAVORABLE" if oci >= 0.7 else
-        "NEUTRAL-POSITIVE" if oci >= 0.55 else
-        "CAUTION" if oci >= 0.4 else
-        "RED"
+        "FAVORABLE"
+        if oci >= 0.7
+        else "NEUTRAL-POSITIVE"
+        if oci >= 0.55
+        else "CAUTION"
+        if oci >= 0.4
+        else "RED"
     )
 
     # Telemetry-preserving row
@@ -232,15 +246,12 @@ def compute_oracle_row(df: pd.DataFrame) -> Dict[str, Any]:
         "Amplitude": _safe_float(latest.get("Amplitude")),
         "H_t": _safe_float(latest.get("H_t")),
         "GhostStabilityIndex": stab,
-
         # ✅ PASS-THROUGH (precomputed upstream)
         "GhostShadow": _passthrough(latest, "GhostShadow", pd.NA),
         "GhostMemoryPressure": _passthrough(latest, "GhostMemoryPressure", pd.NA),
-
         "WVI": wvi,
         "EnvFactor": env_factor,
         "HSTResDrift": _safe_float(latest.get("HSTResDrift")),
-
         "OracleConvergenceIndex": oci,
         "OracleRiskIndex": _clip01(1 - oci),
         "OracleBand": band,
@@ -251,6 +262,7 @@ def compute_oracle_row(df: pd.DataFrame) -> Dict[str, Any]:
 # ---------------------------------------------------------------------
 # Entry
 # ---------------------------------------------------------------------
+
 
 def run_oracle_layer1():
     try:

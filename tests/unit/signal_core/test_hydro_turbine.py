@@ -8,6 +8,7 @@ Invariants:
 - Cross-domain packets within window produce non-empty aligned_domains
 - Convergence note format is consistent
 """
+
 from __future__ import annotations
 
 import pytest
@@ -24,6 +25,7 @@ T_FIXED = 1705320000.0
 # ------------------------------------------------------------------
 # Phase geometry
 # ------------------------------------------------------------------
+
 
 class TestCircularDistance:
     def test_identical_phases(self):
@@ -52,6 +54,7 @@ class TestCircularDistance:
 # ------------------------------------------------------------------
 # Convergence assessment
 # ------------------------------------------------------------------
+
 
 def _rec(domain: str, diurnal_phase: float) -> dict:
     return {"domain": domain, "diurnal_phase": diurnal_phase}

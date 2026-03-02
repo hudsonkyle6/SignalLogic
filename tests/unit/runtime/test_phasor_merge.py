@@ -7,9 +7,9 @@ Covers:
   single clock, multi-clock, group phasor properties, ClockProjection values
 - GroupProjection / ClockProjection dataclass access
 """
+
 from __future__ import annotations
 
-import cmath
 import math
 
 import pytest
@@ -27,6 +27,7 @@ TAU = 2.0 * math.pi
 # ---------------------------------------------------------------------------
 # wrap_angle
 # ---------------------------------------------------------------------------
+
 
 class TestWrapAngle:
     def test_zero(self):
@@ -59,6 +60,7 @@ class TestWrapAngle:
 # ---------------------------------------------------------------------------
 # project_samples_to_clocks — degenerate inputs
 # ---------------------------------------------------------------------------
+
 
 class TestProjectDegenerateInputs:
     def test_empty_samples(self):
@@ -99,6 +101,7 @@ class TestProjectDegenerateInputs:
 # ---------------------------------------------------------------------------
 # project_samples_to_clocks — single clock
 # ---------------------------------------------------------------------------
+
 
 class TestProjectSingleClock:
     def test_clock_projection_fields(self):
@@ -141,6 +144,7 @@ class TestProjectSingleClock:
 # project_samples_to_clocks — multiple clocks
 # ---------------------------------------------------------------------------
 
+
 class TestProjectMultipleClocks:
     def test_group_phasor_is_mean_of_clock_phasors(self):
         clocks = {"a": 100.0, "b": 200.0}
@@ -150,7 +154,11 @@ class TestProjectMultipleClocks:
         assert abs(result.phasor - expected_group) == pytest.approx(0.0, abs=1e-9)
 
     def test_all_clocks_present(self):
-        clocks = {"diurnal": 86400.0, "semi_diurnal": 43200.0, "seasonal": 365.25 * 86400}
+        clocks = {
+            "diurnal": 86400.0,
+            "semi_diurnal": 43200.0,
+            "seasonal": 365.25 * 86400,
+        }
         samples = [(float(i * 3600), 1.0) for i in range(24)]
         result = project_samples_to_clocks(samples, clocks)
         for name in clocks:
@@ -173,9 +181,12 @@ class TestProjectMultipleClocks:
 # Dataclass immutability
 # ---------------------------------------------------------------------------
 
+
 class TestDataclassImmutability:
     def test_clock_projection_frozen(self):
-        cp = ClockProjection(period_s=100.0, omega=0.1, phasor=1+0j, coherence=1.0, phase=0.0)
+        cp = ClockProjection(
+            period_s=100.0, omega=0.1, phasor=1 + 0j, coherence=1.0, phase=0.0
+        )
         with pytest.raises((AttributeError, TypeError)):
             cp.coherence = 0.5  # type: ignore[misc]
 

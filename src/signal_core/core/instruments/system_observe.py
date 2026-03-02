@@ -7,6 +7,7 @@ This module provides the per-cycle system pulse that run_cycle_once() emits.
 
 Falls back to a minimal bootstrap packet when psutil is unavailable.
 """
+
 from __future__ import annotations
 
 import platform
@@ -18,6 +19,7 @@ from signal_core.core.hydro_types import HydroPacket
 
 try:
     import psutil as _psutil
+
     _HAS_PSUTIL = True
 except ImportError:
     _HAS_PSUTIL = False

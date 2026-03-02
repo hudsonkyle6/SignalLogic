@@ -9,10 +9,10 @@ Invariants:
 - append_audit creates parent directories if absent
 - Multiple appends accumulate as separate lines
 """
+
 from __future__ import annotations
 
 import json
-import pytest
 
 import signal_core.core.hydro_audit as audit_mod
 from signal_core.core.hydro_audit import _hash_record, append_audit
@@ -36,6 +36,7 @@ def _packet(packet_id: str = "pkt-audit-001", domain: str = "system") -> HydroPa
 # ------------------------------------------------------------------
 # _hash_record
 # ------------------------------------------------------------------
+
 
 class TestHashRecord:
     def test_deterministic(self):
@@ -68,6 +69,7 @@ class TestHashRecord:
 # append_audit
 # ------------------------------------------------------------------
 
+
 class TestAppendAudit:
     def test_creates_file_with_valid_json(self, tmp_path, monkeypatch):
         audit_path = tmp_path / "audit.jsonl"
@@ -87,8 +89,20 @@ class TestAppendAudit:
         append_audit(_packet(), decision="QUARANTINE", route="TURBINE")
 
         record = json.loads(audit_path.read_text().strip())
-        for field in ["ts", "packet_id", "t", "lane", "domain", "channel",
-                      "route", "decision", "value", "phase", "provenance", "hash"]:
+        for field in [
+            "ts",
+            "packet_id",
+            "t",
+            "lane",
+            "domain",
+            "channel",
+            "route",
+            "decision",
+            "value",
+            "phase",
+            "provenance",
+            "hash",
+        ]:
             assert field in record, f"Missing field: {field}"
 
     def test_record_decision_and_route_match(self, tmp_path, monkeypatch):
@@ -121,7 +135,7 @@ class TestAppendAudit:
 
         lines = audit_path.read_text().strip().splitlines()
         assert len(lines) == 2
-        ids = [json.loads(l)["packet_id"] for l in lines]
+        ids = [json.loads(ln)["packet_id"] for ln in lines]
         assert ids == ["p1", "p2"]
 
     def test_creates_parent_directories(self, tmp_path, monkeypatch):

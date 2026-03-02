@@ -5,6 +5,7 @@ Counts today's baseline records for each signature tier and returns
 a structured ReadinessStatus. The system always runs — readiness is
 informational, not a gate. The dashboard and CycleResult surface it.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -16,18 +17,22 @@ from rhythm_os.runtime.paths import METERS_DIR, NATURAL_DIR
 
 @dataclass
 class ReadinessStatus:
-    system_count: int       # meter records written today
-    natural_count: int      # natural records written today
-    min_meter_cycles: int   # threshold from deployment manifest
+    system_count: int  # meter records written today
+    natural_count: int  # natural records written today
+    min_meter_cycles: int  # threshold from deployment manifest
     min_natural_records: int
     system_ready: bool
     natural_ready: bool
-    overall_ready: bool     # both tiers are warm
+    overall_ready: bool  # both tiers are warm
 
     def summary(self) -> str:
         parts = []
-        parts.append(f"system={'WARM' if self.system_ready else f'cold({self.system_count}/{self.min_meter_cycles})'}")
-        parts.append(f"natural={'WARM' if self.natural_ready else f'cold({self.natural_count}/{self.min_natural_records})'}")
+        parts.append(
+            f"system={'WARM' if self.system_ready else f'cold({self.system_count}/{self.min_meter_cycles})'}"
+        )
+        parts.append(
+            f"natural={'WARM' if self.natural_ready else f'cold({self.natural_count}/{self.min_natural_records})'}"
+        )
         return "  ".join(parts)
 
 

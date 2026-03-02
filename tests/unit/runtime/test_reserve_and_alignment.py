@@ -6,6 +6,7 @@ Tests for:
 Both are thin, append-only emitters that read from the bus and write back to it.
 Tests use a tmp_path bus directory to keep I/O isolated.
 """
+
 from __future__ import annotations
 
 import json
@@ -22,6 +23,7 @@ from rhythm_os.runtime.reserve import emit_drift_index
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _make_wave(
     t: float,
@@ -68,6 +70,7 @@ def _read_bus(bus_dir: Path) -> list[dict]:
 # emit_drift_index
 # ---------------------------------------------------------------------------
 
+
 class TestEmitDriftIndex:
     def test_silence_when_no_waves(self, tmp_path):
         t_ref = 1_700_000_000.0
@@ -99,8 +102,7 @@ class TestEmitDriftIndex:
         t_ref = 1_700_000_000.0
         # Write multiple source waves within window
         waves = [
-            _make_wave(t=t_ref - (i * 60), phase_diff=float(i) * 0.05)
-            for i in range(5)
+            _make_wave(t=t_ref - (i * 60), phase_diff=float(i) * 0.05) for i in range(5)
         ]
         _write_to_bus(tmp_path, t_ref, waves)
 
@@ -112,8 +114,11 @@ class TestEmitDriftIndex:
             source_channel="temperature",
         )
         records = _read_bus(tmp_path)
-        drift_records = [r for r in records if r.get("domain") == "antifragile"
-                         and r.get("channel") == "drift_index"]
+        drift_records = [
+            r
+            for r in records
+            if r.get("domain") == "antifragile" and r.get("channel") == "drift_index"
+        ]
         assert len(drift_records) == 1
 
     def test_drift_wave_t_ref_matches(self, tmp_path):
@@ -129,8 +134,11 @@ class TestEmitDriftIndex:
             source_channel="temperature",
         )
         records = _read_bus(tmp_path)
-        drift_records = [r for r in records if r.get("domain") == "antifragile"
-                         and r.get("channel") == "drift_index"]
+        drift_records = [
+            r
+            for r in records
+            if r.get("domain") == "antifragile" and r.get("channel") == "drift_index"
+        ]
         assert drift_records[0]["t"] == pytest.approx(t_ref)
 
     def test_no_duplicate_emission(self, tmp_path):
@@ -149,14 +157,18 @@ class TestEmitDriftIndex:
         emit_drift_index(**kwargs)  # second call — should be de-duped
 
         records = _read_bus(tmp_path)
-        drift_records = [r for r in records if r.get("domain") == "antifragile"
-                         and r.get("channel") == "drift_index"]
+        drift_records = [
+            r
+            for r in records
+            if r.get("domain") == "antifragile" and r.get("channel") == "drift_index"
+        ]
         assert len(drift_records) == 1
 
 
 # ---------------------------------------------------------------------------
 # emit_convergence_summary
 # ---------------------------------------------------------------------------
+
 
 class TestEmitConvergenceSummary:
     def test_silence_when_no_waves(self, tmp_path):
@@ -183,8 +195,11 @@ class TestEmitConvergenceSummary:
             history_window_sec=86400.0,
         )
         records = _read_bus(tmp_path)
-        oracle_records = [r for r in records if r.get("domain") == "oracle"
-                          and r.get("channel") == "convergence_summary"]
+        oracle_records = [
+            r
+            for r in records
+            if r.get("domain") == "oracle" and r.get("channel") == "convergence_summary"
+        ]
         # May or may not emit depending on alignment descriptors — but should not raise
         assert isinstance(oracle_records, list)
 
@@ -205,6 +220,9 @@ class TestEmitConvergenceSummary:
         emit_convergence_summary(**kwargs)  # second call — de-duped
 
         records = _read_bus(tmp_path)
-        oracle_records = [r for r in records if r.get("domain") == "oracle"
-                          and r.get("channel") == "convergence_summary"]
+        oracle_records = [
+            r
+            for r in records
+            if r.get("domain") == "oracle" and r.get("channel") == "convergence_summary"
+        ]
         assert len(oracle_records) <= 1

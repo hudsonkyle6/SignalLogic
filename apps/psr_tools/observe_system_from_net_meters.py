@@ -34,6 +34,7 @@ FIELD_CYCLE = "windowed_flow"
 # Helpers
 # -----------------------------------------------------------------------------
 
+
 def read_today_meter_packets() -> List[Dict[str, Any]]:
     if not METERS_DIR.exists():
         return []
@@ -68,6 +69,7 @@ def compute_pressure(pkts: List[Dict[str, Any]]) -> Dict[str, float]:
 # -----------------------------------------------------------------------------
 # Main
 # -----------------------------------------------------------------------------
+
 
 def main() -> None:
     packets = read_today_meter_packets()

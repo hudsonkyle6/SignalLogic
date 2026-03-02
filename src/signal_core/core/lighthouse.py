@@ -19,7 +19,7 @@ Two responsibilities:
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional, Dict, Any
+from typing import Dict, Any
 
 from .hydro_types import HydroPacket, DispatchDecision
 from rhythm_os.runtime.seasonal_prior import compute_seasonal_prior
@@ -48,6 +48,7 @@ _HISTORY_FACTOR_RECENTLY_CHANGED = 0.80
 # ---------------------------------------------------------------------------
 # Pre-gate annotation
 # ---------------------------------------------------------------------------
+
 
 def annotate_packet(packet: HydroPacket) -> HydroPacket:
     """
@@ -85,6 +86,7 @@ def annotate_packet(packet: HydroPacket) -> HydroPacket:
 # Scar-based attenuation
 # ---------------------------------------------------------------------------
 
+
 def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
     """
     Reduce forest_proximity for patterns the system has already survived.
@@ -100,7 +102,7 @@ def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
         return packet
 
     try:
-        key  = _pattern_key(packet.seasonal_band, packet.channel)
+        key = _pattern_key(packet.seasonal_band, packet.channel)
         scar = get_scar(packet.domain, key)
     except Exception:
         return packet  # fail-open — scar read is informational only
@@ -108,12 +110,18 @@ def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
     if scar is None:
         return packet  # novel pattern — no attenuation
 
-    raw_attenuation = min(scar.pressure / 2.0, 0.85)  # mirrors MAX_PRESSURE / MAX_ATTENUATION
+    raw_attenuation = min(
+        scar.pressure / 2.0, 0.85
+    )  # mirrors MAX_PRESSURE / MAX_ATTENUATION
 
     # Scale by seasonal confidence.
     # High confidence: trust the scar memory — full attenuation.
     # Low confidence (transition): stay alert on familiar patterns — reduced attenuation.
-    confidence = float(packet.pattern_confidence) if packet.pattern_confidence is not None else 1.0
+    confidence = (
+        float(packet.pattern_confidence)
+        if packet.pattern_confidence is not None
+        else 1.0
+    )
 
     # Scale by change history.
     # ever_changed: this pattern has previously triggered action — hold back some
@@ -138,6 +146,7 @@ def attenuate_with_scars(packet: HydroPacket) -> HydroPacket:
 # ---------------------------------------------------------------------------
 # Post-dispatch illumination
 # ---------------------------------------------------------------------------
+
 
 @dataclass(frozen=True)
 class LighthouseSummary:

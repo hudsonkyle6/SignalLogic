@@ -15,6 +15,7 @@ Invariants:
 - validate_actuation_payload raises ActuationContractError for missing keys
 - mandate_id is deterministic: same dict → same id
 """
+
 from __future__ import annotations
 
 import time
@@ -60,6 +61,7 @@ def _mandate(**overrides) -> Mandate:
 # Mandate construction
 # ------------------------------------------------------------------
 
+
 class TestMandateFromDict:
     def test_returns_mandate(self):
         assert isinstance(_mandate(), Mandate)
@@ -100,13 +102,14 @@ class TestMandateId:
 # validate_mandate_dict
 # ------------------------------------------------------------------
 
+
 class TestValidateMandateDict:
     def test_valid_dict_does_not_raise(self):
         validate_mandate_dict(_mandate_dict())  # no exception
 
-    @pytest.mark.parametrize("key", [
-        "principal", "issued_at", "expires_at", "scope", "nonce", "signature"
-    ])
+    @pytest.mark.parametrize(
+        "key", ["principal", "issued_at", "expires_at", "scope", "nonce", "signature"]
+    )
     def test_missing_key_raises(self, key):
         d = _mandate_dict()
         del d[key]
@@ -137,12 +140,15 @@ class TestValidateMandateDict:
     def test_issued_at_far_future_raises(self):
         far_future = NOW + 600  # > 5-minute tolerance
         with pytest.raises(MandateError, match="issued_at"):
-            validate_mandate_dict(_mandate_dict(issued_at=far_future, expires_at=far_future + 3600))
+            validate_mandate_dict(
+                _mandate_dict(issued_at=far_future, expires_at=far_future + 3600)
+            )
 
 
 # ------------------------------------------------------------------
 # is_fresh
 # ------------------------------------------------------------------
+
 
 class TestIsFresh:
     def test_fresh_mandate_is_fresh(self):
@@ -169,6 +175,7 @@ class TestIsFresh:
 # ------------------------------------------------------------------
 # may_actuate — OBSERVATORY_ONLY always denies
 # ------------------------------------------------------------------
+
 
 class TestMayActuate:
     def test_observatory_only_denies_with_valid_mandate(self):
@@ -201,6 +208,7 @@ class TestMayActuate:
 # validate_actuation_payload
 # ------------------------------------------------------------------
 
+
 class TestValidateActuationPayload:
     def _valid(self, **overrides) -> dict:
         d = {
@@ -216,7 +224,9 @@ class TestValidateActuationPayload:
     def test_valid_payload_does_not_raise(self):
         validate_actuation_payload(self._valid())  # no exception
 
-    @pytest.mark.parametrize("key", ["t", "action", "scope", "mandate_id", "intent_hash"])
+    @pytest.mark.parametrize(
+        "key", ["t", "action", "scope", "mandate_id", "intent_hash"]
+    )
     def test_missing_key_raises(self, key):
         d = self._valid()
         del d[key]

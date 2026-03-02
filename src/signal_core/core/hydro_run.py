@@ -50,6 +50,7 @@ def run_full_cycle() -> CycleResult:
     # Step 1: assess baseline warmth
     from rhythm_os.runtime.readiness import check_readiness
     from rhythm_os.runtime.deploy_config import get_baseline_requirements
+
     readiness = check_readiness(**get_baseline_requirements())
 
     # Step 2: observe and enqueue
@@ -69,6 +70,7 @@ def _health_check() -> int:
     try:
         from rhythm_os.runtime.readiness import check_readiness
         from rhythm_os.runtime.deploy_config import get_baseline_requirements
+
         status = check_readiness(**get_baseline_requirements())
         return 0 if status.overall_ready else 1
     except Exception:
@@ -78,6 +80,7 @@ def _health_check() -> int:
 
 def main() -> None:
     import argparse
+
     ap = argparse.ArgumentParser(description="SignalLogic — full observation cycle")
     ap.add_argument(
         "--health",

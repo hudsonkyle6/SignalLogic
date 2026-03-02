@@ -26,6 +26,7 @@ class Mandate:
       - Validation is purely structural + time freshness.
       - Signature verification (cryptographic) is intentionally NOT implemented here.
     """
+
     principal: str
     issued_at: int
     expires_at: int
@@ -89,6 +90,7 @@ def validate_mandate_dict(d: Dict[str, Any]) -> None:
     now = int(time.time())
     if issued_at > now + 300:
         raise MandateError("issued_at too far in the future")
+
 
 def is_fresh(m: Mandate, now: Optional[int] = None) -> bool:
     """

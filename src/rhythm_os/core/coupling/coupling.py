@@ -25,6 +25,7 @@ Notes:
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
+
 try:
     import numpy as np
     import pandas as pd
@@ -39,6 +40,7 @@ except ImportError as _e:
 # DATA STRUCTURE
 # ======================================================================
 
+
 @dataclass(frozen=True)
 class CouplingStat:
     """
@@ -51,6 +53,7 @@ class CouplingStat:
         pearson    : Pearson correlation coefficient
         note       : optional descriptive note (non-gating)
     """
+
     col: str
     lag_days: int
     n: int
@@ -61,6 +64,7 @@ class CouplingStat:
 # ======================================================================
 # CANONICAL COUPLING COMPUTATION
 # ======================================================================
+
 
 def compute_coupling(
     df: pd.DataFrame,

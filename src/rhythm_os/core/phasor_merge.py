@@ -20,7 +20,7 @@ from __future__ import annotations
 import math
 import cmath
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Tuple, Optional
+from typing import Dict, Iterable, List, Tuple
 
 __all__ = [
     "ClockProjection",
@@ -45,16 +45,16 @@ def wrap_angle(theta: float) -> float:
 class ClockProjection:
     period_s: float
     omega: float
-    phasor: complex     # Z_k (normalized by mag_sum)
-    coherence: float    # r_k = |Z_k|
-    phase: float        # arg(Z_k)
+    phasor: complex  # Z_k (normalized by mag_sum)
+    coherence: float  # r_k = |Z_k|
+    phase: float  # arg(Z_k)
 
 
 @dataclass(frozen=True)
 class GroupProjection:
-    phasor: complex     # Z_group (equal-weight merge of Z_k)
-    coherence: float    # r_group = |Z_group|
-    phase: float        # arg(Z_group)
+    phasor: complex  # Z_group (equal-weight merge of Z_k)
+    coherence: float  # r_group = |Z_group|
+    phase: float  # arg(Z_group)
     clocks: Dict[str, ClockProjection]
 
 

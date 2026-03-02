@@ -12,6 +12,7 @@ In production containers set LOG_FORMAT=json to get newline-delimited JSON
 that log shippers (Fluentd, Logstash, CloudWatch, Datadog) can parse
 directly.
 """
+
 from __future__ import annotations
 
 import json

@@ -19,6 +19,7 @@ from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_ingress_throat import enqueue_if_admitted
 from apps.psr_tools._latest_domain_wave import latest_wave
 
+
 def main() -> None:
     waves = read_today()
     dw = latest_wave(waves, domain="system", channel="net_pressure")
@@ -38,7 +39,6 @@ def main() -> None:
             lane="system",
             domain=dw.domain,
             channel=dw.channel,
-
             # Observational payload (kept for trace)
             value={
                 "phase_external": dw.phase_external,
@@ -47,20 +47,16 @@ def main() -> None:
                 "coherence": dw.coherence,
                 "field_cycle": dw.field_cycle,
             },
-
             provenance={
                 "source": "psr.domain_to_system_ingress",
                 "domain_wave_ts": dw.t,
                 "extractor": dw.extractor,
             },
-
             rate=None,
             anomaly_flag=False,
             replay=False,
-
             # Rhythm coupling
             phase=dw.phase_diff,
-
             # NEW: explicit coherence transport
             coherence=dw.coherence,
         )

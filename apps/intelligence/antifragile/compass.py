@@ -1,16 +1,12 @@
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "data"
 HUMAN_DIR = DATA_DIR / "human"
 HUMAN_LEDGER_PATH = HUMAN_DIR / "human_ledger.csv"
-
-from ...kernel.wave import Wave
-from ...kernel.codex import Codex
 
 
 def ensure_human_dirs():
@@ -20,8 +16,7 @@ def ensure_human_dirs():
 def _latest_row():
     if not HUMAN_LEDGER_PATH.exists():
         raise FileNotFoundError(
-            f"human_ledger.csv not found at {HUMAN_LEDGER_PATH}. "
-            "Run the ledger first."
+            f"human_ledger.csv not found at {HUMAN_LEDGER_PATH}. Run the ledger first."
         )
 
     df = pd.read_csv(HUMAN_LEDGER_PATH)

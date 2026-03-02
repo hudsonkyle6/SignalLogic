@@ -3,10 +3,12 @@
 Canonical CAN Packet Validator
 Read-only. No mutation. No authority.
 """
+
 # add at top
 import datetime as dt
 
 CONTRACT_V1_EFFECTIVE = dt.datetime(2026, 2, 2)
+
 
 def is_pre_contract(packet: dict) -> bool:
     try:
@@ -18,6 +20,7 @@ def is_pre_contract(packet: dict) -> bool:
         return pkt_time < CONTRACT_V1_EFFECTIVE
     except Exception:
         return True
+
 
 REQUIRED_TOP_LEVEL = {
     "t",
@@ -40,6 +43,7 @@ REQUIRED_EXTRACTOR_KEYS = {
     "version",
 }
 
+
 def validate_packet(packet: dict) -> list[str]:
     issues = []
 
@@ -59,4 +63,3 @@ def validate_packet(packet: dict) -> list[str]:
             issues.append(f"missing_extractor:{sorted(missing_ex)}")
 
     return issues
-

@@ -52,11 +52,11 @@ _scar_cache: dict = {}  # Dict[Path, Dict[str, Scar]]
 # Pressure constants
 # ---------------------------------------------------------------------------
 
-DECAY_RATE_DEFAULT = 0.05   # 5 % pressure lost per reference cycle
-PRUNE_THRESHOLD    = 0.01   # prune scars below this pressure
-MAX_PRESSURE       = 2.0    # cap on accumulated pressure
-MAX_ATTENUATION    = 0.85   # maximum forest_proximity reduction
-                            # (never fully suppress — stay alert, not blind)
+DECAY_RATE_DEFAULT = 0.05  # 5 % pressure lost per reference cycle
+PRUNE_THRESHOLD = 0.01  # prune scars below this pressure
+MAX_PRESSURE = 2.0  # cap on accumulated pressure
+MAX_ATTENUATION = 0.85  # maximum forest_proximity reduction
+# (never fully suppress — stay alert, not blind)
 
 # One decay "tick" = one hour of real elapsed time.
 # Keeps decay semantics stable whether the system runs every second or once a day.
@@ -68,20 +68,21 @@ _REFERENCE_CYCLE_SECONDS: float = 3600.0
 # Data shape
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class Scar:
-    scar_id:             str
-    domain:              str
-    pattern_key:         str    # "{seasonal_band}:{channel}"
-    pressure:            float  # [0, MAX_PRESSURE]
-    changed:             bool   # did THIS encounter alter system state?
-    trigger:             str    # "forest_proximity" | "anomaly" | "compound"
-    first_seen:          float  # unix timestamp
-    last_reinforced:     float  # unix timestamp
-    decay_rate:          float
+    scar_id: str
+    domain: str
+    pattern_key: str  # "{seasonal_band}:{channel}"
+    pressure: float  # [0, MAX_PRESSURE]
+    changed: bool  # did THIS encounter alter system state?
+    trigger: str  # "forest_proximity" | "anomaly" | "compound"
+    first_seen: float  # unix timestamp
+    last_reinforced: float  # unix timestamp
+    decay_rate: float
     reinforcement_count: int
-    ever_changed:        bool  = False  # has any encounter ever flagged a change?
-    last_decayed:        float = 0.0   # wall-clock time decay was last applied (0 = never)
+    ever_changed: bool = False  # has any encounter ever flagged a change?
+    last_decayed: float = 0.0  # wall-clock time decay was last applied (0 = never)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -94,6 +95,7 @@ class Scar:
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def pattern_key(seasonal_band: Optional[str], channel: str) -> str:
     """Fingerprint for a pattern: seasonal context + measurement channel."""
@@ -144,6 +146,7 @@ def _save_scars(domain: str, scars: Dict[str, Scar]) -> None:
 # Public API
 # ---------------------------------------------------------------------------
 
+
 def get_scar(domain: str, key: str) -> Optional[Scar]:
     """Return the Scar for (domain, key), or None if no scar exists."""
     scars = _load_scars(domain)
@@ -181,11 +184,11 @@ def _confidence_decay_rate(pattern_confidence: float) -> float:
 
 
 def write_scar(
-    domain:             str,
-    key:                str,
-    pressure_delta:     float,
-    changed:            bool,
-    trigger:            str,
+    domain: str,
+    key: str,
+    pressure_delta: float,
+    changed: bool,
+    trigger: str,
     pattern_confidence: float = 1.0,
 ) -> Scar:
     """
@@ -195,41 +198,41 @@ def write_scar(
     On repeat: adds pressure_delta to existing pressure (capped at MAX_PRESSURE).
     """
     scars = _load_scars(domain)
-    sid   = _scar_id(domain, key)
-    now   = time.time()
+    sid = _scar_id(domain, key)
+    now = time.time()
 
     decay_rate = _confidence_decay_rate(pattern_confidence)
 
     if sid in scars:
         existing = scars[sid]
         scars[sid] = Scar(
-            scar_id             = sid,
-            domain              = domain,
-            pattern_key         = key,
-            pressure            = min(existing.pressure + pressure_delta, MAX_PRESSURE),
-            changed             = changed,                          # current encounter only
-            ever_changed        = changed or existing.ever_changed, # accumulated history
-            trigger             = trigger,
-            first_seen          = existing.first_seen,
-            last_reinforced     = now,
-            last_decayed        = now,  # reset baseline — pressure is accurate as of now
-            decay_rate          = decay_rate,
-            reinforcement_count = existing.reinforcement_count + 1,
+            scar_id=sid,
+            domain=domain,
+            pattern_key=key,
+            pressure=min(existing.pressure + pressure_delta, MAX_PRESSURE),
+            changed=changed,  # current encounter only
+            ever_changed=changed or existing.ever_changed,  # accumulated history
+            trigger=trigger,
+            first_seen=existing.first_seen,
+            last_reinforced=now,
+            last_decayed=now,  # reset baseline — pressure is accurate as of now
+            decay_rate=decay_rate,
+            reinforcement_count=existing.reinforcement_count + 1,
         )
     else:
         scars[sid] = Scar(
-            scar_id             = sid,
-            domain              = domain,
-            pattern_key         = key,
-            pressure            = min(pressure_delta, MAX_PRESSURE),
-            changed             = changed,
-            ever_changed        = changed,
-            trigger             = trigger,
-            first_seen          = now,
-            last_reinforced     = now,
-            last_decayed        = now,
-            decay_rate          = decay_rate,
-            reinforcement_count = 1,
+            scar_id=sid,
+            domain=domain,
+            pattern_key=key,
+            pressure=min(pressure_delta, MAX_PRESSURE),
+            changed=changed,
+            ever_changed=changed,
+            trigger=trigger,
+            first_seen=now,
+            last_reinforced=now,
+            last_decayed=now,
+            decay_rate=decay_rate,
+            reinforcement_count=1,
         )
 
     _save_scars(domain, scars)
@@ -260,7 +263,9 @@ def apply_decay(domain: str) -> int:
 
     for sid, scar in scars.items():
         # Elapsed time since last decay tick (fall back to last_reinforced for old scars)
-        baseline = scar.last_decayed if scar.last_decayed > 0.0 else scar.last_reinforced
+        baseline = (
+            scar.last_decayed if scar.last_decayed > 0.0 else scar.last_reinforced
+        )
         elapsed_s = max(now - baseline, 0.0)
         elapsed_cycles = elapsed_s / _REFERENCE_CYCLE_SECONDS
         new_pressure = scar.pressure * (1.0 - scar.decay_rate) ** elapsed_cycles
@@ -269,18 +274,18 @@ def apply_decay(domain: str) -> int:
             pruned += 1
             continue
         active[sid] = Scar(
-            scar_id             = scar.scar_id,
-            domain              = scar.domain,
-            pattern_key         = scar.pattern_key,
-            pressure            = new_pressure,
-            changed             = scar.changed,
-            ever_changed        = scar.ever_changed,
-            trigger             = scar.trigger,
-            first_seen          = scar.first_seen,
-            last_reinforced     = scar.last_reinforced,
-            last_decayed        = now,
-            decay_rate          = scar.decay_rate,
-            reinforcement_count = scar.reinforcement_count,
+            scar_id=scar.scar_id,
+            domain=scar.domain,
+            pattern_key=scar.pattern_key,
+            pressure=new_pressure,
+            changed=scar.changed,
+            ever_changed=scar.ever_changed,
+            trigger=scar.trigger,
+            first_seen=scar.first_seen,
+            last_reinforced=scar.last_reinforced,
+            last_decayed=now,
+            decay_rate=scar.decay_rate,
+            reinforcement_count=scar.reinforcement_count,
         )
 
     _save_scars(domain, active)

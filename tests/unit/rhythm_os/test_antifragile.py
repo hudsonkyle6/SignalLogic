@@ -14,6 +14,7 @@ Invariants:
 - compute_antifragile_state returns all four keys
 - Pure functions: same input → same output
 """
+
 from __future__ import annotations
 
 import pytest
@@ -33,6 +34,7 @@ from rhythm_os.domain.antifragile.state import compute_antifragile_state
 # ------------------------------------------------------------------
 # clamp01 (shared utility — both brittleness and strain expose one)
 # ------------------------------------------------------------------
+
 
 class TestClamp01:
     @pytest.mark.parametrize("fn", [b_clamp01, s_clamp01])
@@ -59,6 +61,7 @@ class TestClamp01:
 # ------------------------------------------------------------------
 # compute_brittleness_index
 # ------------------------------------------------------------------
+
 
 class TestBrittlenessIndex:
     def test_in_range_for_full_state(self):
@@ -114,6 +117,7 @@ class TestBrittlenessIndex:
 # compute_drift_index
 # ------------------------------------------------------------------
 
+
 class TestDriftIndex:
     def test_empty_baseline_returns_one(self):
         assert compute_drift_index(5.0, []) == 1.0
@@ -150,6 +154,7 @@ class TestDriftIndex:
 # compute_strain_index
 # ------------------------------------------------------------------
 
+
 class TestStrainIndex:
     def test_none_load_returns_one(self):
         assert compute_strain_index(recent_load=None, load_history=[1.0, 2.0]) == 1.0
@@ -170,7 +175,9 @@ class TestStrainIndex:
 
     def test_rest_factor_reduces_strain(self):
         base = compute_strain_index(recent_load=0.8, load_history=[0.8, 0.8])
-        rested = compute_strain_index(recent_load=0.8, load_history=[0.8, 0.8], rest_factor=0.5)
+        rested = compute_strain_index(
+            recent_load=0.8, load_history=[0.8, 0.8], rest_factor=0.5
+        )
         assert rested < base
 
     def test_result_in_range(self):
@@ -191,26 +198,36 @@ class TestStrainIndex:
 # compute_antifragile_state
 # ------------------------------------------------------------------
 
+
 class TestAntifragileState:
     def test_returns_dict_with_all_keys(self):
-        result = compute_antifragile_state({
-            "current_scalar": 5.0,
-            "baseline_window": [4.0, 5.0, 6.0],
-            "recent_load": 0.5,
-            "load_history": [0.4, 0.5, 0.6],
-            "unknowns_index": 0.3,
-        })
-        for key in ("unknowns_index", "drift_index", "strain_index", "brittleness_index"):
+        result = compute_antifragile_state(
+            {
+                "current_scalar": 5.0,
+                "baseline_window": [4.0, 5.0, 6.0],
+                "recent_load": 0.5,
+                "load_history": [0.4, 0.5, 0.6],
+                "unknowns_index": 0.3,
+            }
+        )
+        for key in (
+            "unknowns_index",
+            "drift_index",
+            "strain_index",
+            "brittleness_index",
+        ):
             assert key in result
 
     def test_all_values_in_range(self):
-        result = compute_antifragile_state({
-            "current_scalar": 2.0,
-            "baseline_window": [1.0, 2.0, 3.0],
-            "recent_load": 0.4,
-            "load_history": [0.3, 0.4, 0.5],
-            "unknowns_index": 0.2,
-        })
+        result = compute_antifragile_state(
+            {
+                "current_scalar": 2.0,
+                "baseline_window": [1.0, 2.0, 3.0],
+                "recent_load": 0.4,
+                "load_history": [0.3, 0.4, 0.5],
+                "unknowns_index": 0.2,
+            }
+        )
         for v in result.values():
             assert 0.0 <= v <= 1.0
 
