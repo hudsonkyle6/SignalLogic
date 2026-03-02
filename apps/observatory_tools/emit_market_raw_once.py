@@ -10,8 +10,12 @@ POSTURE:
 - No PSR logic
 - No corrupted signal admitted
 
-Emits one raw market observation per run.
-If data unavailable or incomplete → silent exit.
+Emits one raw market observation per run covering 6 business domains:
+  volatility, capital_cost, energy, maritime, food_cold_chain,
+  infrastructure_materials
+
+If a symbol is unavailable → excluded from record (not a hard failure).
+If no symbols available at all → silent exit.
 """
 
 from __future__ import annotations
@@ -34,13 +38,59 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 # ---------------------------------------------------------------------
+# Ticker → friendly symbol name (used as record keys in dark field)
+# Grouped by business domain for clarity.
+# ---------------------------------------------------------------------
+
+TICKER_NAMES: dict[str, str] = {
+    # Volatility
+    "^GSPC": "SP500",
+    "^VIX":  "VIX",
+
+    # Capital Cost (yield curve + credit quality)
+    "^TNX": "TNX_10Y",
+    "^IRX": "IRX_3M",
+    "HYG":  "HYG",
+
+    # Energy
+    "CL=F": "WTI_CRUDE",
+    "NG=F": "NAT_GAS",
+
+    # Maritime
+    "BDRY": "BDRY",
+    "ZIM":  "ZIM",
+    "MATX": "MATX",
+
+    # Food / Cold Chain
+    "ZC=F": "CORN",
+    "ZW=F": "WHEAT",
+    "ZS=F": "SOYBEANS",
+    "LE=F": "LIVE_CATTLE",
+
+    # Infrastructure Materials
+    "HG=F": "COPPER",
+    "SLX":  "STEEL_ETF",
+    "WOOD": "LUMBER_ETF",
+}
+
+# Minimum symbol pairs required for each domain channel
+_DOMAIN_PAIRS: dict[str, tuple[str, str]] = {
+    "volatility":   ("SP500",     "VIX"),
+    "capital_cost": ("TNX_10Y",   "IRX_3M"),
+    "energy":       ("WTI_CRUDE", "NAT_GAS"),
+    "maritime":     ("BDRY",      "ZIM"),
+    "food":         ("CORN",      "LIVE_CATTLE"),
+    "materials":    ("COPPER",    "STEEL_ETF"),
+}
+
+
+# ---------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------
 
 def main() -> None:
     now = datetime.now(timezone.utc)
-
-    tickers = ["^GSPC", "^VIX"]
+    tickers = list(TICKER_NAMES.keys())
 
     data = yf.download(
         tickers,
@@ -55,26 +105,20 @@ def main() -> None:
         sys.exit(0)
 
     # -----------------------------------------------------------------
-    # Handle multi-index safely
+    # Extract close prices — skip unavailable or NaN tickers gracefully
     # -----------------------------------------------------------------
 
-    try:
-        close_sp = float(data["Close"]["^GSPC"].iloc[-1])
-        close_vix = float(data["Close"]["^VIX"].iloc[-1])
-    except Exception:
-        print("MARKET RAW: incomplete multi-index structure")
-        sys.exit(0)
+    symbols: dict[str, float] = {}
+    for ticker, name in TICKER_NAMES.items():
+        try:
+            val = float(data["Close"][ticker].iloc[-1])
+            if val == val:  # NaN guard
+                symbols[name] = val
+        except (KeyError, IndexError, TypeError):
+            pass  # ticker temporarily unavailable — not a hard failure
 
-    # -----------------------------------------------------------------
-    # Reject NaN (never allow into dark field)
-    # -----------------------------------------------------------------
-
-    if close_sp != close_sp:  # NaN check
-        print("MARKET RAW: SP500 not yet available")
-        sys.exit(0)
-
-    if close_vix != close_vix:
-        print("MARKET RAW: VIX not yet available")
+    if not symbols:
+        print("MARKET RAW: no valid symbols available")
         sys.exit(0)
 
     # -----------------------------------------------------------------
@@ -85,14 +129,11 @@ def main() -> None:
         "t": now.timestamp(),
         "domain": "market_raw",
         "lane": "market",
-        "symbols": {
-            "SP500": close_sp,
-            "VIX": close_vix,
-        },
+        "symbols": symbols,
         "extractor": {
             "source": "yfinance",
             "runner": "emit_market_raw_once",
-            "version": "v2",
+            "version": "v3",
         },
     }
 
@@ -102,10 +143,19 @@ def main() -> None:
         f.write(json.dumps(record, separators=(",", ":")))
         f.write("\n")
 
+    # -----------------------------------------------------------------
+    # Summary: how many domain channels have both required symbols
+    # -----------------------------------------------------------------
+
+    ready = sum(
+        1 for ext, field in _DOMAIN_PAIRS.values()
+        if ext in symbols and field in symbols
+    )
+
     print(
         f"MARKET RAW EMITTED | "
-        f"SP500={close_sp:.2f} "
-        f"VIX={close_vix:.2f}"
+        f"{len(symbols)}/{len(TICKER_NAMES)} symbols | "
+        f"{ready}/{len(_DOMAIN_PAIRS)} domains ready"
     )
 
 
