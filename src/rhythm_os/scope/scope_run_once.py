@@ -15,9 +15,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from signal_core.core.log import configure, get_logger
 from rhythm_os.scope.signal_scope import render_scope
 from rhythm_os.scope.adapters.dark_field_loader import load_penstock
 
+log = get_logger(__name__)
 
 # ---------------------------------------------------------------------
 # Paths (aligned with Hydro)
@@ -26,7 +28,6 @@ from rhythm_os.scope.adapters.dark_field_loader import load_penstock
 PROJECT_ROOT = Path(__file__).resolve().parents[3]  # SignalLogic/
 PENSTOCK_DIR = PROJECT_ROOT / "src" / "rhythm_os" / "data" / "dark_field" / "penstock"
 
-print("FILES FOUND:", list(PENSTOCK_DIR.glob("*.jsonl")))
 
 # ---------------------------------------------------------------------
 # Load Waves (read-only)
@@ -48,9 +49,10 @@ def load_waves():
 # ---------------------------------------------------------------------
 
 def main() -> None:
-    print("SCOPE PENSTOCK DIR:", PENSTOCK_DIR.resolve())
+    configure()
+    log.debug("scope penstock dir: %s", PENSTOCK_DIR.resolve())
     waves = load_waves()
-    print("WAVES LOADED:", len(waves))
+    log.debug("waves loaded: %d", len(waves))
 
     render_scope(
         waves,

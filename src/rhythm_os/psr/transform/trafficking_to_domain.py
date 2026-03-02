@@ -45,7 +45,8 @@ from rhythm_os.psr.domain_wave import DomainWave
 
 # ---------------------------------------------------------------------
 # Dark Field intake
-# TODO: Replace with feed-specific path once data partnership is defined.
+# NOTE: Path will be overridden by feed-specific config once a data
+# partnership (Thorn / NCMEC or equivalent) is established.
 # ---------------------------------------------------------------------
 
 DATA_DIR = Path("src/rhythm_os/data/dark_field/human_trafficking")
