@@ -56,6 +56,7 @@ ORACLE_L2_PATH = ORACLE_DIR / "oracle_layer2.csv"
 # Utilities
 # ---------------------------------------------------------------------
 
+
 def _read_csv_safe(path: Path) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
@@ -77,7 +78,9 @@ def _to_iso_date(val) -> Optional[str]:
         return None
 
 
-def _upsert_by_date(path: Path, row: Dict[str, Any], date_col: str = "Date") -> pd.DataFrame:
+def _upsert_by_date(
+    path: Path, row: Dict[str, Any], date_col: str = "Date"
+) -> pd.DataFrame:
     df = _read_csv_safe(path)
 
     d = _to_iso_date(row.get(date_col))
@@ -100,7 +103,7 @@ def _upsert_by_date(path: Path, row: Dict[str, Any], date_col: str = "Date") -> 
         if k not in df.columns:
             df[k] = pd.NA
 
-    mask = (df[date_col] == d)
+    mask = df[date_col] == d
     if mask.any():
         idx = df.index[mask][0]
         for k, v in row.items():
@@ -164,6 +167,7 @@ def macro_state_score(macro_state: str | None) -> float:
 # ---------------------------------------------------------------------
 # Component builders
 # ---------------------------------------------------------------------
+
 
 def build_world_harmonic_field(row: pd.Series) -> float:
     H_t = clamp01(safe_get(row, "H_t", 0.5))
@@ -243,6 +247,7 @@ def build_macro_tide_field(tide_last: Optional[pd.Series]) -> float:
 # Main
 # ---------------------------------------------------------------------
 
+
 def run_oracle_layer2():
     if not MERGED_PATH.exists():
         print("⚠ ORACLE L2: merged_signal.csv not found.")
@@ -280,7 +285,7 @@ def run_oracle_layer2():
         tide_last = df_tide.iloc[-1] if not df_tide.empty else None
 
     # Component fields
-    world_field = build_world_harmonic_field(latest)   # ✅ canonical field
+    world_field = build_world_harmonic_field(latest)  # ✅ canonical field
     memory = build_memory_field(latest)
     ghost = build_ghost_field(latest)
     env = build_environment_field(latest)
@@ -297,16 +302,18 @@ def run_oracle_layer2():
     w_macro = 0.10
     w_G = 0.05
     total = w_world + w_memory + w_ghost + w_env + w_human + w_macro + w_G
-    w_world, w_memory, w_ghost, w_env, w_human, w_macro, w_G = [w / total for w in (w_world, w_memory, w_ghost, w_env, w_human, w_macro, w_G)]
+    w_world, w_memory, w_ghost, w_env, w_human, w_macro, w_G = [
+        w / total for w in (w_world, w_memory, w_ghost, w_env, w_human, w_macro, w_G)
+    ]
 
     HCF = clamp01(
-        w_world * world_field +
-        w_memory * memory +
-        w_ghost * ghost +
-        w_env * env +
-        w_human * human +
-        w_macro * macro +
-        w_G * G_t
+        w_world * world_field
+        + w_memory * memory
+        + w_ghost * ghost
+        + w_env * env
+        + w_human * human
+        + w_macro * macro
+        + w_G * G_t
     )
 
     # Bands / bias
@@ -333,13 +340,10 @@ def run_oracle_layer2():
         "HCFIndex": HCF,
         "AlignmentBand": band,
         "AlignmentBias": bias,
-
         # ✅ canonical name expected by your tables
         "WorldHarmonicField": world_field,
-
         # ✅ backward-compatible alias (safe to keep)
         "WorldHarmonic": world_field,
-
         "MemoryField": memory,
         "GhostField": ghost,
         "EnvironmentField": env,

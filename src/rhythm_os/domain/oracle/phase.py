@@ -1,4 +1,4 @@
-#phase.py
+# phase.py
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,6 +15,7 @@ from rhythm_os.domain.oracle.descriptors import (
 # ---------------------------------------------------------------------
 # Pattern classification (geometry only)
 # ---------------------------------------------------------------------
+
 
 # Fixed geometric partitions for phase topology.
 # Thresholds are descriptive buckets only:
@@ -51,6 +52,7 @@ def _classify_pattern(
 # ---------------------------------------------------------------------
 # Oracle: Alignment description
 # ---------------------------------------------------------------------
+
 
 def describe_alignment(
     *,
@@ -111,6 +113,7 @@ def describe_alignment(
 # Oracle: Convergence summary (descriptive only)
 # ---------------------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class ConvergenceSummary:
     """
@@ -157,13 +160,9 @@ def summarize_convergence(
             note="no descriptors",
         )
 
-    within_count = sum(
-        1 for d in descriptors if abs(d.phase_diff_deg) <= within_deg
-    )
+    within_count = sum(1 for d in descriptors if abs(d.phase_diff_deg) <= within_deg)
 
-    coherences = [
-        d.coherence_ext for d in descriptors if d.coherence_ext is not None
-    ]
+    coherences = [d.coherence_ext for d in descriptors if d.coherence_ext is not None]
     mean_coh = (sum(coherences) / len(coherences)) if coherences else None
 
     frac = within_count / len(descriptors)
@@ -193,6 +192,7 @@ def summarize_convergence(
 # Legacy stub preserved (inert)
 # ---------------------------------------------------------------------
 
+
 def recognize_phase(*, inputs: object | None = None):
     """
     Legacy placeholder kept for compatibility.
@@ -202,4 +202,3 @@ def recognize_phase(*, inputs: object | None = None):
         - summarize_convergence()
     """
     return None
-

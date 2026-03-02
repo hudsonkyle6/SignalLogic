@@ -55,6 +55,10 @@ packages = ["src/signal_core", "src/rhythm_os"]
 line-length = 88
 target-version = "py311"
 
+[tool.ruff.lint]
+# E402: module-level import not at top — intentional pattern (from __future__ before docstring)
+ignore = ["E402"]
+
 [tool.mypy]
 python_version = "3.11"
 ignore_missing_imports = true

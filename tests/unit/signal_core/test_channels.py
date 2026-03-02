@@ -7,9 +7,9 @@ Invariants:
 - Each channel starts with an empty received list
 - Multiple accepts accumulate in order
 """
+
 from __future__ import annotations
 
-import pytest
 from signal_core.core.channels import ChannelSink, build_channels
 from signal_core.core.hydro_types import HydroPacket
 

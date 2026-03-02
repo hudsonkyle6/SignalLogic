@@ -95,9 +95,8 @@ justification: {mandate.justification}
     )
 
     if decision != "OPEN":
-        print(f"[AUD] EXECUTION CLOSED — readiness criteria not met")
+        print("[AUD] EXECUTION CLOSED — readiness criteria not met")
         return
-
 
     print("[AUD] INTERVAL GRANTED — executing")
 

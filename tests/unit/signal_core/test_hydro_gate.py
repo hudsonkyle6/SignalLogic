@@ -11,10 +11,10 @@ Invariants:
 - Unreadable value → QUARANTINE
 - Replay flag bypasses freshness checks
 """
+
 from __future__ import annotations
 
 import time
-import pytest
 
 from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_types import HydroPacket, GateResult
@@ -44,6 +44,7 @@ def _packet(**overrides) -> HydroPacket:
 # Happy path
 # ------------------------------------------------------------------
 
+
 class TestPass:
     def test_valid_system_packet_passes(self):
         result = hydro_ingress_gate(_packet())
@@ -61,6 +62,7 @@ class TestPass:
 # ------------------------------------------------------------------
 # Schema rejections
 # ------------------------------------------------------------------
+
 
 class TestSchemaReject:
     def test_empty_packet_id_rejected(self):
@@ -88,6 +90,7 @@ class TestSchemaReject:
 # Lane rejections
 # ------------------------------------------------------------------
 
+
 class TestLaneReject:
     def test_unknown_lane_rejected(self):
         result = hydro_ingress_gate(_packet(lane="garbage"))
@@ -98,6 +101,7 @@ class TestLaneReject:
 # ------------------------------------------------------------------
 # Quarantine cases
 # ------------------------------------------------------------------
+
 
 class TestQuarantine:
     def test_missing_provenance_source_quarantined(self):
@@ -128,6 +132,7 @@ class TestQuarantine:
 # Replay flag
 # ------------------------------------------------------------------
 
+
 class TestReplay:
     def test_replay_bypasses_freshness(self):
         old = time.time() - (25 * 3600)
@@ -138,6 +143,7 @@ class TestReplay:
 # ------------------------------------------------------------------
 # Legibility exception branch (_is_legible: str() raises)
 # ------------------------------------------------------------------
+
 
 class TestLegibilityException:
     def test_unrepresentable_value_quarantined(self):

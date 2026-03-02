@@ -9,10 +9,14 @@ Invariants:
 - result is always a SpillwayDecision with a non-empty reason
 - assess_spillway is pure (no side effects)
 """
+
 from __future__ import annotations
 
-import pytest
-from signal_core.core.spillway_lighthouse import assess_spillway, SpillwayDecision, SpillwayRoute
+from signal_core.core.spillway_lighthouse import (
+    assess_spillway,
+    SpillwayDecision,
+    SpillwayRoute,
+)
 from signal_core.core.hydro_types import HydroPacket
 
 T_FIXED = 1705320000.0
@@ -37,6 +41,7 @@ def _packet(**overrides) -> HydroPacket:
 # QUARANTINE — forest edge + anomaly
 # ------------------------------------------------------------------
 
+
 class TestQuarantine:
     def test_forest_edge_plus_anomaly_quarantines(self):
         p = _packet(forest_proximity=0.70, anomaly_flag=True)
@@ -58,6 +63,7 @@ class TestQuarantine:
 # HOLD — forest edge without anomaly
 # ------------------------------------------------------------------
 
+
 class TestHoldForestEdge:
     def test_forest_edge_no_anomaly_holds(self):
         p = _packet(forest_proximity=0.70, anomaly_flag=False)
@@ -74,6 +80,7 @@ class TestHoldForestEdge:
 # HOLD — anomaly flag without forest edge
 # ------------------------------------------------------------------
 
+
 class TestHoldAnomaly:
     def test_anomaly_below_forest_edge_holds(self):
         p = _packet(forest_proximity=0.30, anomaly_flag=True)
@@ -89,6 +96,7 @@ class TestHoldAnomaly:
 # ------------------------------------------------------------------
 # RETURN — low fp, no anomaly
 # ------------------------------------------------------------------
+
 
 class TestReturn:
     def test_low_fp_no_anomaly_returns(self):
@@ -115,6 +123,7 @@ class TestReturn:
 # ------------------------------------------------------------------
 # Threshold boundary conditions
 # ------------------------------------------------------------------
+
 
 class TestBoundary:
     def test_exactly_at_threshold_is_hold(self):

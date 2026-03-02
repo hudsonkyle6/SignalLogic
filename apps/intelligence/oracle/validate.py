@@ -61,19 +61,23 @@ PHYSICAL_TRUTH_COLUMNS: Set[str] = {
 # Errors
 # ============================================================
 
+
 class OracleContractError(RuntimeError):
     """Raised when Oracle contract invariants are violated."""
+
     pass
 
 
 class AUDViolation(RuntimeError):
     """Raised when Assist Under Discipline is violated."""
+
     pass
 
 
 # ============================================================
 # Assist Under Discipline (AUD) enforcement
 # ============================================================
+
 
 def enforce_assist_under_discipline(stability_contract_path: Path) -> None:
     """
@@ -118,6 +122,7 @@ def enforce_assist_under_discipline(stability_contract_path: Path) -> None:
 # ============================================================
 # Invariant checks
 # ============================================================
+
 
 def _ensure_columns(df: pd.DataFrame, cols: List[str], ctx: str) -> None:
     missing = [c for c in cols if c not in df.columns]
@@ -187,9 +192,7 @@ def _ensure_ranges(df: pd.DataFrame, ctx: str) -> None:
                 violations.append((c, fv, f"below {lo}"))
 
     if violations:
-        raise OracleContractError(
-            f"[{ctx}] Today row range violations: {violations}"
-        )
+        raise OracleContractError(f"[{ctx}] Today row range violations: {violations}")
 
 
 def _ensure_physical_truth_not_overwritten(
@@ -201,10 +204,8 @@ def _ensure_physical_truth_not_overwritten(
     Oracle must never overwrite physical truth columns.
     Only governed/derived fields may change.
     """
-    common = (
-        PHYSICAL_TRUTH_COLUMNS
-        .intersection(df_before.columns)
-        .intersection(df_after.columns)
+    common = PHYSICAL_TRUTH_COLUMNS.intersection(df_before.columns).intersection(
+        df_after.columns
     )
 
     diffs = []
@@ -221,6 +222,7 @@ def _ensure_physical_truth_not_overwritten(
 # ============================================================
 # Public validators
 # ============================================================
+
 
 def validate_oracle_inputs(
     df: pd.DataFrame,
@@ -256,4 +258,3 @@ def validate_oracle_output_integrity(
     Call this immediately after any Oracle layer emits a DataFrame.
     """
     _ensure_physical_truth_not_overwritten(df_before, df_after, ctx)
-

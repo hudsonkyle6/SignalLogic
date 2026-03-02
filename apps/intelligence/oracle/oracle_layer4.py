@@ -182,18 +182,24 @@ def _load_merged() -> pd.DataFrame:
     df = pd.read_csv(MERGED_PATH, low_memory=False)
     validate_oracle_inputs(df, ctx="ORACLE_L4_INPUT", layer="L4")
 
-
     if "Date" not in df.columns:
         raise ValueError("merged_signal.csv missing 'Date' column")
 
     # Parse and sort for rolling window
     dt = pd.to_datetime(df["Date"], errors="coerce")
-    df = df.assign(Date_dt=dt).dropna(subset=["Date_dt"]).sort_values("Date_dt").reset_index(drop=True)
+    df = (
+        df.assign(Date_dt=dt)
+        .dropna(subset=["Date_dt"])
+        .sort_values("Date_dt")
+        .reset_index(drop=True)
+    )
 
     return df
 
 
-def _compute_dark_field_timeseries(df: pd.DataFrame, window_size: int = 60) -> pd.DataFrame:
+def _compute_dark_field_timeseries(
+    df: pd.DataFrame, window_size: int = 60
+) -> pd.DataFrame:
     n = len(df)
 
     D_t_list = []
@@ -240,16 +246,18 @@ def _compute_dark_field_timeseries(df: pd.DataFrame, window_size: int = 60) -> p
 
 
 def _export_layer4(df: pd.DataFrame) -> None:
-    out = pd.DataFrame({
-        "Date": df["Date_dt"].dt.strftime("%Y-%m-%d"),
-        "D_t": df["D_t"],
-        "DarkFieldBand": df["DarkFieldBand"],
-        "D_HStab": df["D_HStab"],
-        "D_DriftStab": df["D_DriftStab"],
-        "D_MemoryField": df["D_MemoryField"],
-        "D_GhostField": df["D_GhostField"],
-        "D_EnvField": df["D_EnvField"],
-    })
+    out = pd.DataFrame(
+        {
+            "Date": df["Date_dt"].dt.strftime("%Y-%m-%d"),
+            "D_t": df["D_t"],
+            "DarkFieldBand": df["DarkFieldBand"],
+            "D_HStab": df["D_HStab"],
+            "D_DriftStab": df["D_DriftStab"],
+            "D_MemoryField": df["D_MemoryField"],
+            "D_GhostField": df["D_GhostField"],
+            "D_EnvField": df["D_EnvField"],
+        }
+    )
     out.to_csv(LAYER4_PATH, index=False)
 
 
@@ -308,8 +316,8 @@ def main() -> None:
     # Print latest dashboard
     _print_dashboard(df)
 
-    print(f"\n✅ Oracle Layer 4 updated.")
-    print(f"   → merged_signal.csv with D_t and components")
+    print("\n✅ Oracle Layer 4 updated.")
+    print("   → merged_signal.csv with D_t and components")
     print(f"   → {LAYER4_PATH}")
 
 

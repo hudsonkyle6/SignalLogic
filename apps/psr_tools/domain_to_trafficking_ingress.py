@@ -40,11 +40,9 @@ def main() -> None:
         packet = HydroPacket(
             t=dw.t,
             packet_id=str(uuid.uuid4()),
-
             lane="human_trafficking",
             domain=dw.domain,
             channel=dw.channel,
-
             value={
                 "phase_external": dw.phase_external,
                 "phase_field": dw.phase_field,
@@ -52,17 +50,14 @@ def main() -> None:
                 "coherence": dw.coherence,
                 "field_cycle": dw.field_cycle,
             },
-
             provenance={
                 "source": "psr.domain_to_trafficking_ingress",
                 "domain_wave_ts": dw.t,
                 "extractor": dw.extractor,
             },
-
             rate=None,
             anomaly_flag=False,
             replay=False,
-
             phase=dw.phase_diff,
             coherence=dw.coherence,
         )

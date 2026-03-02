@@ -22,7 +22,7 @@ class AlignmentDescriptor:
     """
 
     t: float
-    field_cycle: str          # diurnal | semi_diurnal | seasonal | longwave
+    field_cycle: str  # diurnal | semi_diurnal | seasonal | longwave
     domain: str
     channel: str
 

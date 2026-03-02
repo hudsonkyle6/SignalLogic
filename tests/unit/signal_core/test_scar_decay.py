@@ -11,6 +11,7 @@ Invariants:
 - write_scar stamps last_decayed = now
 - Old scars without last_decayed (last_decayed == 0) fall back to last_reinforced
 """
+
 from __future__ import annotations
 
 import json
@@ -34,6 +35,7 @@ from rhythm_os.core.memory.scar import (
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _write_raw_scar(tmp_path, domain: str, scar: Scar) -> None:
     """Write a scar directly to the domain file, bypassing the public API."""
@@ -74,6 +76,7 @@ def _make_scar(
 # Time-proportional decay
 # ---------------------------------------------------------------------------
 
+
 class TestTimeProportionalDecay:
     def test_zero_elapsed_no_meaningful_decay(self, tmp_path, monkeypatch):
         """Scars decayed immediately after creation lose negligible pressure."""
@@ -101,7 +104,9 @@ class TestTimeProportionalDecay:
         initial = 1.0
         baseline = time.time() - _REFERENCE_CYCLE_SECONDS  # 1 hour ago
 
-        scar = _make_scar(domain=domain, pressure=initial, decay_rate=rate, last_decayed=baseline)
+        scar = _make_scar(
+            domain=domain, pressure=initial, decay_rate=rate, last_decayed=baseline
+        )
         _write_raw_scar(tmp_path, domain, scar)
 
         apply_decay(domain)
@@ -119,7 +124,9 @@ class TestTimeProportionalDecay:
         initial = 1.0
         baseline = time.time() - 2 * _REFERENCE_CYCLE_SECONDS  # 2 hours ago
 
-        scar = _make_scar(domain=domain, pressure=initial, decay_rate=rate, last_decayed=baseline)
+        scar = _make_scar(
+            domain=domain, pressure=initial, decay_rate=rate, last_decayed=baseline
+        )
         _write_raw_scar(tmp_path, domain, scar)
 
         apply_decay(domain)
@@ -140,7 +147,9 @@ class TestTimeProportionalDecay:
         initial = 1.0
         baseline = time.time() - _REFERENCE_CYCLE_SECONDS  # 1 hour ago
 
-        scar = _make_scar(domain=domain, pressure=initial, decay_rate=rate, last_decayed=baseline)
+        scar = _make_scar(
+            domain=domain, pressure=initial, decay_rate=rate, last_decayed=baseline
+        )
         _write_raw_scar(tmp_path, domain, scar)
 
         apply_decay(domain)  # applies ~1 hour of decay
@@ -221,6 +230,7 @@ class TestTimeProportionalDecay:
 # write_scar stamps last_decayed
 # ---------------------------------------------------------------------------
 
+
 class TestWriteScarTimestamps:
     def test_write_scar_stamps_last_decayed(self, tmp_path, monkeypatch):
         """write_scar sets last_decayed ≈ now on newly created scars."""
@@ -270,6 +280,7 @@ class TestWriteScarTimestamps:
 # apply_all_decay
 # ---------------------------------------------------------------------------
 
+
 class TestApplyAllDecay:
     def test_apply_all_decay_covers_multiple_domains(self, tmp_path, monkeypatch):
         """apply_all_decay processes every domain file in SCARS_DIR."""
@@ -287,4 +298,6 @@ class TestApplyAllDecay:
         for domain in results:
             s = get_scar(domain, _TEST_KEY)
             assert s is not None
-            assert s.pressure == pytest.approx(1.0 * (1.0 - DECAY_RATE_DEFAULT), rel=0.01)
+            assert s.pressure == pytest.approx(
+                1.0 * (1.0 - DECAY_RATE_DEFAULT), rel=0.01
+            )

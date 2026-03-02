@@ -7,6 +7,7 @@ Invariants:
 - Each cycle has the correct period
 - Domain hint selects correct dominant Hz
 """
+
 from __future__ import annotations
 
 import pytest
@@ -27,6 +28,7 @@ T_FIXED = 1705320000.0
 # ------------------------------------------------------------------
 # Phase range
 # ------------------------------------------------------------------
+
 
 class TestPhaseRange:
     def test_diurnal_phase_in_unit_interval(self):
@@ -52,6 +54,7 @@ class TestPhaseRange:
 # Determinism
 # ------------------------------------------------------------------
 
+
 class TestDeterminism:
     def test_same_timestamp_same_phases(self):
         a = compute_anchor(T_FIXED, domain="system")
@@ -69,6 +72,7 @@ class TestDeterminism:
 # ------------------------------------------------------------------
 # Cycle periods
 # ------------------------------------------------------------------
+
 
 class TestCyclePeriods:
     def test_diurnal_full_cycle(self):
@@ -104,6 +108,7 @@ class TestCyclePeriods:
 # Domain dominant frequency
 # ------------------------------------------------------------------
 
+
 class TestDomainDominantHz:
     def test_system_domain_uses_diurnal(self):
         anchor = compute_anchor(T_FIXED, domain="system")
@@ -133,6 +138,7 @@ class TestDomainDominantHz:
 # ------------------------------------------------------------------
 # Immutability
 # ------------------------------------------------------------------
+
 
 class TestImmutability:
     def test_anchor_is_frozen(self):

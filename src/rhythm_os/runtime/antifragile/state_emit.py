@@ -14,7 +14,6 @@ No scheduler. No optimizer. No gate. No controller.
 
 from __future__ import annotations
 
-from dataclasses import asdict
 from pathlib import Path
 from typing import List, Optional
 
@@ -76,11 +75,12 @@ def emit_antifragile_state(
         history_window_sec=history_window_sec,
     )
 
-
     # Extract configured source series
     src = [
-        w for w in waves
-        if getattr(w, "domain", None) == source_domain and getattr(w, "channel", None) == source_channel
+        w
+        for w in waves
+        if getattr(w, "domain", None) == source_domain
+        and getattr(w, "channel", None) == source_channel
     ]
 
     series: List[float] = []
@@ -97,8 +97,8 @@ def emit_antifragile_state(
     # Build conservative run_state
     current_scalar = series[-1]
 
-    baseline_window = series[-(baseline_n + 1):-1]
-    load_history = series[-(strain_window_n + 1):-1]
+    baseline_window = series[-(baseline_n + 1) : -1]
+    load_history = series[-(strain_window_n + 1) : -1]
 
     # Minimum history requirement for strain/brittleness context.
     # If you want stricter silence, raise these thresholds.
@@ -160,7 +160,9 @@ def emit_antifragile_state(
         if ch == "drift_index" and not emit_drift_if_missing:
             continue
 
-        if has_emission_at_time(bus_dir=bus_dir, t_ref=t_ref, domain="antifragile", channel=ch):
+        if has_emission_at_time(
+            bus_dir=bus_dir, t_ref=t_ref, domain="antifragile", channel=ch
+        ):
             continue
 
         val = _safe_float(state.get(ch))

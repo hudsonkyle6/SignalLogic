@@ -14,6 +14,7 @@ import hashlib
 # INTERNAL: canonicalization + deterministic hash
 # ------------------------------------------------------------
 
+
 def _fmt_float(x: float) -> str:
     """
     Canonical float formatting for hashing.
@@ -77,6 +78,7 @@ def _hash_wave_payload(payload: Dict[str, Any]) -> str:
 # WAVE — OS-LEVEL PRIMITIVE
 # ------------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class Wave:
     """
@@ -111,7 +113,9 @@ class Wave:
         # Enforce immutability of couplings
         if isinstance(self.couplings, MappingProxyType):
             return
-        object.__setattr__(self, "couplings", MappingProxyType(dict(self.couplings or {})))
+        object.__setattr__(
+            self, "couplings", MappingProxyType(dict(self.couplings or {}))
+        )
 
     # --------------------------------------------------------
     # FACTORY

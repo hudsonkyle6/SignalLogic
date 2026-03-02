@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import Any, Dict
-from datetime import datetime
 
 
 def project(domain_state: Dict[str, Any], *, started_at) -> Dict[str, Any]:

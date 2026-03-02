@@ -6,8 +6,6 @@ import pandas as pd
 # -----------------------------
 # Paths & config
 # -----------------------------
-from ...kernel.wave import Wave  # three dots for one level up
-from ...kernel.codex import Codex
 ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "data"
 JOURNAL_PATH = DATA_DIR / "journal" / "signal_journal.csv"

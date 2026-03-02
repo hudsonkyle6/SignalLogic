@@ -40,15 +40,15 @@ class WaveView(Protocol):
     The scope may only render what already exists.
     """
 
-    t: float                     # timestamp (addressed, not owned)
-    coherence: float             # [0, 1]
-    phase_spread: float          # radians
-    buffer_margin: float         # [0, 1] where 0 = at envelope edge
-    persistence: int             # recurrence count (non-negative)
+    t: float  # timestamp (addressed, not owned)
+    coherence: float  # [0, 1]
+    phase_spread: float  # radians
+    buffer_margin: float  # [0, 1] where 0 = at envelope edge
+    persistence: int  # recurrence count (non-negative)
 
     # Optional (render only if present)
-    drift: Optional[float]       # signed, unitless
-    afterglow: Optional[float]   # [0, 1]
+    drift: Optional[float]  # signed, unitless
+    afterglow: Optional[float]  # [0, 1]
 
 
 # ---------------------------------------------------------------------
@@ -136,7 +136,9 @@ def render_scope(
     # ---------------------------------------------------------------
     if any(getattr(w, "drift", None) is not None for w in waves):
         _label("DRIFT (ABSOLUTE)")
-        max_d = max((abs(float(w.drift)) for w in waves if w.drift is not None), default=1.0)
+        max_d = max(
+            (abs(float(w.drift)) for w in waves if w.drift is not None), default=1.0
+        )
         max_d = max(max_d, 1e-9)
         for w in waves:
             d = abs(float(w.drift)) if w.drift is not None else 0.0

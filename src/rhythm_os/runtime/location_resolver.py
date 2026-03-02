@@ -13,6 +13,7 @@ Resolution order:
 
 Returns (lat, lon, label) — same signature as deploy_config.get_location().
 """
+
 from __future__ import annotations
 
 import os

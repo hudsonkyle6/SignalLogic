@@ -14,7 +14,9 @@ class InterlockDecision:
     reason: str
 
 
-def may_actuate(mandate: Optional[Mandate], now: Optional[int] = None) -> InterlockDecision:
+def may_actuate(
+    mandate: Optional[Mandate], now: Optional[int] = None
+) -> InterlockDecision:
     """
     The only permissible "permission check" in the system.
 

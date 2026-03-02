@@ -223,8 +223,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--missing-every", type=int, default=71)
     p.add_argument("--extreme-every", type=int, default=157)
 
-    p.add_argument("--lanes", type=str, default="net",
-                   help="Comma-separated lanes to emit into (default: net)")
+    p.add_argument(
+        "--lanes",
+        type=str,
+        default="net",
+        help="Comma-separated lanes to emit into (default: net)",
+    )
     return p
 
 

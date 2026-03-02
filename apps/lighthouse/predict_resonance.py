@@ -75,4 +75,3 @@ def predict_resonance():
 
 if __name__ == "__main__":
     predict_resonance()
-

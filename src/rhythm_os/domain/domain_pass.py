@@ -1,4 +1,4 @@
-#domain_pass.py
+# domain_pass.py
 
 from datetime import datetime
 from typing import List, Dict, Any
@@ -6,7 +6,9 @@ from typing import List, Dict, Any
 from rhythm_os.core.wave.wave import Wave
 
 
-def attach_domain_metadata(waves: List[Wave], context: Dict[str, Any]) -> Dict[str, Any]:
+def attach_domain_metadata(
+    waves: List[Wave], context: Dict[str, Any]
+) -> Dict[str, Any]:
     """
     Attach inert, non-authoritative metadata to newly minted Waves.
 

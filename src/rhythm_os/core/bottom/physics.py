@@ -18,6 +18,7 @@ FORBIDDEN:
 
 This module computes deterministic physical cycles only.
 """
+
 """
 BOTTOM LAYER — PHYSICS ONLY (FROZEN)
 
@@ -81,6 +82,7 @@ def wrap_angle(theta: float) -> float:
 # Data Structures
 # ---------------------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class CycleState:
     period: float
@@ -105,6 +107,7 @@ class OscillatoryField:
 # ---------------------------------------------------------------------
 # Core computation
 # ---------------------------------------------------------------------
+
 
 def compute_field(t: float, t_prev: Optional[float] = None) -> OscillatoryField:
     cycles: Dict[str, CycleState] = {}

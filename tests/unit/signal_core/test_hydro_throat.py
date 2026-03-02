@@ -10,11 +10,10 @@ Invariants:
 - Creates parent directories if they don't exist
 - Multiple admitted packets accumulate as separate lines
 """
+
 from __future__ import annotations
 
 import json
-import time
-import pytest
 
 import signal_core.core.hydro_ingress_throat as throat_mod
 from signal_core.core.hydro_ingress_throat import enqueue_if_admitted
@@ -45,6 +44,7 @@ def _decision(result: GateResult, reason: str = "test") -> IngressDecision:
 # REJECT — drop silently
 # ------------------------------------------------------------------
 
+
 class TestRejectDrop:
     def test_reject_does_not_create_file(self, tmp_path, monkeypatch):
         queue_path = tmp_path / "ingress.jsonl"
@@ -65,6 +65,7 @@ class TestRejectDrop:
 # ------------------------------------------------------------------
 # PASS — enqueue
 # ------------------------------------------------------------------
+
 
 class TestPassEnqueue:
     def test_pass_creates_file(self, tmp_path, monkeypatch):
@@ -113,6 +114,7 @@ class TestPassEnqueue:
 # QUARANTINE — enqueue (not drop)
 # ------------------------------------------------------------------
 
+
 class TestQuarantineEnqueue:
     def test_quarantine_writes_to_queue(self, tmp_path, monkeypatch):
         queue_path = tmp_path / "ingress.jsonl"
@@ -138,6 +140,7 @@ class TestQuarantineEnqueue:
 # Multiple admissions
 # ------------------------------------------------------------------
 
+
 class TestMultipleAdmissions:
     def test_multiple_pass_packets_accumulate(self, tmp_path, monkeypatch):
         queue_path = tmp_path / "ingress.jsonl"
@@ -149,7 +152,7 @@ class TestMultipleAdmissions:
 
         lines = queue_path.read_text().strip().splitlines()
         assert len(lines) == 3
-        ids = [json.loads(l)["packet_id"] for l in lines]
+        ids = [json.loads(ln)["packet_id"] for ln in lines]
         assert ids == ["p1", "p2", "p3"]
 
     def test_reject_interspersed_does_not_add_line(self, tmp_path, monkeypatch):
@@ -162,7 +165,7 @@ class TestMultipleAdmissions:
 
         lines = queue_path.read_text().strip().splitlines()
         assert len(lines) == 2
-        ids = [json.loads(l)["packet_id"] for l in lines]
+        ids = [json.loads(ln)["packet_id"] for ln in lines]
         assert "p-reject" not in ids
 
     def test_creates_parent_directory(self, tmp_path, monkeypatch):

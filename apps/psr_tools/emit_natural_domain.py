@@ -44,7 +44,6 @@ def emit_natural_domain(
     return len(waves)
 
 
-
 if __name__ == "__main__":
     # Silent by default; raise on failure
     emit_natural_domain(window_days=7)

@@ -4,8 +4,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # Canonical imports (post-move, no kernel aliasing)
-from rhythm_os.core.wave.codex import Codex
-from rhythm_os.core.wave.wave import Wave
 
 
 # ------------------------------------------------------------
@@ -13,9 +11,9 @@ from rhythm_os.core.wave.wave import Wave
 # ------------------------------------------------------------
 
 THIS_DIR = Path(__file__).resolve().parent
-WAVE_ROOT = THIS_DIR.parent          # rhythm_os/core/wave
-CORE_ROOT = WAVE_ROOT.parent         # rhythm_os/core
-RHYTHM_OS_ROOT = CORE_ROOT.parent    # rhythm_os
+WAVE_ROOT = THIS_DIR.parent  # rhythm_os/core/wave
+CORE_ROOT = WAVE_ROOT.parent  # rhythm_os/core
+RHYTHM_OS_ROOT = CORE_ROOT.parent  # rhythm_os
 
 DATA_DIR = RHYTHM_OS_ROOT / "data"
 AUDIT_LOG = DATA_DIR / "audit.log"
@@ -27,6 +25,7 @@ POSTURE_DIR = DATA_DIR / "posture"
 # FILESYSTEM HYGIENE
 # ------------------------------------------------------------
 
+
 def _ensure_parent(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -34,6 +33,7 @@ def _ensure_parent(path: Path) -> None:
 # ------------------------------------------------------------
 # LOGGING (COMMAND-LAYER ONLY)
 # ------------------------------------------------------------
+
 
 def log_audit(message: str) -> None:
     """Append to audit log with timestamp."""
@@ -54,6 +54,7 @@ def log_resonance(domain: str, observation: str, resonance: str) -> None:
 # ------------------------------------------------------------
 # DAILY COMMAND (REFUSAL-FIRST)
 # ------------------------------------------------------------
+
 
 def daily_signal() -> None:
     print("=" * 60)

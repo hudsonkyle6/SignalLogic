@@ -1,7 +1,6 @@
 # rhythm_os/core/field_wave.py
 from dataclasses import dataclass
-from typing import Literal, Dict
-import math
+from typing import Literal
 
 FieldCycleName = Literal[
     "diurnal",
@@ -20,6 +19,6 @@ class FieldWave:
 
     t: float
     cycle: FieldCycleName
-    phase: float      # radians
+    phase: float  # radians
     sine: float
     phasor: complex

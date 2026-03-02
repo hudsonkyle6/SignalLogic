@@ -42,7 +42,11 @@ from signal_core.core.hydro_audit import append_audit
 from signal_core.core.hydro_turbine import process_turbine
 from signal_core.core.hydro_turbine_summary import run_turbine_summary
 from signal_core.core.lighthouse import annotate_packet, attenuate_with_scars
-from rhythm_os.core.memory.scar import write_scar, apply_all_decay, pattern_key as _scar_pattern_key
+from rhythm_os.core.memory.scar import (
+    write_scar,
+    apply_all_decay,
+    pattern_key as _scar_pattern_key,
+)
 from signal_core.core.spillway_lighthouse import assess_spillway, SpillwayRoute
 from signal_core.core.control_signal import emit_control_signal
 
@@ -64,6 +68,7 @@ _CONVERGENCE_SCAR_PRESSURE = 0.15
 # Structured cycle result
 # ---------------------------------------------------------------------
 
+
 @dataclass
 class CycleResult:
     """
@@ -72,6 +77,7 @@ class CycleResult:
     All counts are non-negative integers.
     convergence_summary is None when no turbine observations exist this cycle.
     """
+
     cycle_ts: float
     packets_drained: int
     rejected: int
@@ -87,6 +93,7 @@ class CycleResult:
 # ---------------------------------------------------------------------
 # Penstock commit
 # ---------------------------------------------------------------------
+
 
 def commit_packet(packet: HydroPacket) -> None:
     """
@@ -127,7 +134,9 @@ def commit_packet(packet: HydroPacket) -> None:
     }
 
     # Use Lighthouse afterglow_decay if available; fall back to stable default.
-    afterglow_decay = float(packet.afterglow_decay) if packet.afterglow_decay is not None else 0.5
+    afterglow_decay = (
+        float(packet.afterglow_decay) if packet.afterglow_decay is not None else 0.5
+    )
 
     wave = Wave.create(
         text=json.dumps(
@@ -136,9 +145,9 @@ def commit_packet(packet: HydroPacket) -> None:
             separators=(",", ":"),
         ),
         signal_type=f"{packet.domain}::{packet.lane}::{packet.channel}",
-        phase=diurnal_phase,        # position in the dominant daily cycle
-        frequency=dominant_hz,      # anchor frequency for this domain
-        amplitude=amplitude,        # coherence carrier
+        phase=diurnal_phase,  # position in the dominant daily cycle
+        frequency=dominant_hz,  # anchor frequency for this domain
+        amplitude=amplitude,  # coherence carrier
         afterglow_decay=afterglow_decay,
         couplings=couplings,
     )
@@ -149,6 +158,7 @@ def commit_packet(packet: HydroPacket) -> None:
 # ---------------------------------------------------------------------
 # Main hydro cadence
 # ---------------------------------------------------------------------
+
 
 def main() -> CycleResult:
     """
@@ -188,7 +198,9 @@ def main() -> CycleResult:
         packet = attenuate_with_scars(packet)
 
         ingress = hydro_ingress_gate(packet)
-        log.debug("ingress result=%s reason=%s", ingress.gate_result.value, ingress.reason)
+        log.debug(
+            "ingress result=%s reason=%s", ingress.gate_result.value, ingress.reason
+        )
 
         # -------------------------------------------------------------
         # D0 — REJECT
@@ -203,7 +215,8 @@ def main() -> CycleResult:
             decision.route.value,
             decision.rule_id,
             f" band={packet.seasonal_band} fp={packet.forest_proximity:.2f}"
-            if decision.observe and packet.seasonal_band else "",
+            if decision.observe and packet.seasonal_band
+            else "",
         )
 
         # -------------------------------------------------------------
@@ -248,12 +261,12 @@ def main() -> CycleResult:
             if decision.rule_id == "DLH_TURBINE_FOREST_EDGE":
                 fp = float(packet.forest_proximity or 0.0)
                 write_scar(
-                    domain              = packet.domain,
-                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta      = fp,
-                    changed             = True,
-                    trigger             = "forest_proximity",
-                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
+                    domain=packet.domain,
+                    key=_scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta=fp,
+                    changed=True,
+                    trigger="forest_proximity",
+                    pattern_confidence=float(packet.pattern_confidence or 1.0),
                 )
 
             continue
@@ -267,12 +280,12 @@ def main() -> CycleResult:
             # initial dispatch pressure, not the spillway outcome.
             if bool(packet.anomaly_flag):
                 write_scar(
-                    domain              = packet.domain,
-                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta      = 0.5,
-                    changed             = True,
-                    trigger             = "anomaly",
-                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
+                    domain=packet.domain,
+                    key=_scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta=0.5,
+                    changed=True,
+                    trigger="anomaly",
+                    pattern_confidence=float(packet.pattern_confidence or 1.0),
                 )
 
             spill = assess_spillway(packet)
@@ -290,12 +303,12 @@ def main() -> CycleResult:
                 # territory AND detected structural irregularity.
                 fp = float(packet.forest_proximity or 0.0)
                 write_scar(
-                    domain              = packet.domain,
-                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
-                    pressure_delta      = fp + _COMPOUND_SCAR_BASE_PRESSURE,
-                    changed             = True,
-                    trigger             = "compound",
-                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
+                    domain=packet.domain,
+                    key=_scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta=fp + _COMPOUND_SCAR_BASE_PRESSURE,
+                    changed=True,
+                    trigger="compound",
+                    pattern_confidence=float(packet.pattern_confidence or 1.0),
                 )
             elif spill.route == SpillwayRoute.HOLD:
                 spillway_hold += 1
@@ -314,7 +327,9 @@ def main() -> CycleResult:
     if scar_decay:
         pruned_total = sum(scar_decay.values())
         if pruned_total:
-            log.debug("scar decay pruned=%d domains=%s", pruned_total, list(scar_decay.keys()))
+            log.debug(
+                "scar decay pruned=%d domains=%s", pruned_total, list(scar_decay.keys())
+            )
 
     # -----------------------------------------------------------------
     # Post-cycle: turbine convergence summary
@@ -337,16 +352,18 @@ def main() -> CycleResult:
         conv_key = f"convergence:{phase_bucket}"
         for domain in event.get("domains", []):
             write_scar(
-                domain             = domain,
-                key                = conv_key,
-                pressure_delta     = _CONVERGENCE_SCAR_PRESSURE,
-                changed            = False,
-                trigger            = "convergence",
-                pattern_confidence = 1.0,   # convergence is phase-based, not seasonal
+                domain=domain,
+                key=conv_key,
+                pressure_delta=_CONVERGENCE_SCAR_PRESSURE,
+                changed=False,
+                trigger="convergence",
+                pattern_confidence=1.0,  # convergence is phase-based, not seasonal
             )
             log.debug(
                 "convergence scar domain=%s phase_bucket=%d domains=%s",
-                domain, phase_bucket, ",".join(event.get("domains", [])),
+                domain,
+                phase_bucket,
+                ",".join(event.get("domains", [])),
             )
 
     return CycleResult(
@@ -365,9 +382,10 @@ def _persist_cycle_result(result: "CycleResult") -> None:
     """Write CycleResult fields to TURBINE_DIR/last_cycle.json for the dashboard."""
     import dataclasses as _dc
     from rhythm_os.runtime.paths import TURBINE_DIR
+
     TURBINE_DIR.mkdir(parents=True, exist_ok=True)
     data = _dc.asdict(result)
-    data.pop("baseline_status", None)   # ReadinessStatus object — not JSON-serializable
+    data.pop("baseline_status", None)  # ReadinessStatus object — not JSON-serializable
     path = TURBINE_DIR / "last_cycle.json"
     with path.open("w", encoding="utf-8") as f:
         json.dump(data, f)
@@ -375,6 +393,7 @@ def _persist_cycle_result(result: "CycleResult") -> None:
 
 if __name__ == "__main__":
     from signal_core.core.log import configure
+
     configure()
     result = main()
     log.info(

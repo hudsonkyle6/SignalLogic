@@ -11,10 +11,10 @@ Invariants:
 - validate_packet: post-contract packets with incomplete extractor keys → issue reported
 - validate_packet: fully valid post-contract packet → no issues
 """
+
 from __future__ import annotations
 
 import datetime as dt
-import pytest
 
 from rhythm_os.runtime.can_packet_validator import (
     is_pre_contract,
@@ -46,6 +46,7 @@ def _valid_post_contract_packet(**overrides) -> dict:
 # ------------------------------------------------------------------
 # is_pre_contract
 # ------------------------------------------------------------------
+
 
 class TestIsPreContract:
     def test_old_float_timestamp_is_pre_contract(self):
@@ -81,6 +82,7 @@ class TestIsPreContract:
 # ------------------------------------------------------------------
 # validate_packet
 # ------------------------------------------------------------------
+
 
 class TestValidatePacket:
     def test_pre_contract_packet_passes_silently(self):
@@ -127,7 +129,9 @@ class TestValidatePacket:
         assert any("missing_extractor" in i for i in issues)
 
     def test_extractor_missing_version_reported(self):
-        packet = _valid_post_contract_packet(extractor={"source": "x", "method": "direct"})
+        packet = _valid_post_contract_packet(
+            extractor={"source": "x", "method": "direct"}
+        )
         issues = validate_packet(packet)
         assert any("missing_extractor" in i for i in issues)
 

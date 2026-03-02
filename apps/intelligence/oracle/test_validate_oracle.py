@@ -5,6 +5,7 @@ from pathlib import Path
 
 from rhythm_os.oracle.validate import validate_oracle_inputs, OracleContractError
 
+
 def main():
     merged_path = Path("data/merged/merged_signal.csv")
     print("🔍 Oracle Contract v1 — DRY RUN")
@@ -19,6 +20,7 @@ def main():
         print("❌ Oracle Contract v1 FAILED")
         print("Reason:")
         print(e)
+
 
 if __name__ == "__main__":
     main()

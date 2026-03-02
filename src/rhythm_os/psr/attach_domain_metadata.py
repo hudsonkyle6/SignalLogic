@@ -1,4 +1,4 @@
-#attach_domain_metadata.py
+# attach_domain_metadata.py
 from datetime import datetime
 from typing import List, Dict, Any
 
@@ -30,4 +30,3 @@ def domain_pass(waves: List[Wave], context: Dict[str, Any]) -> Dict[str, Any]:
             "domain_version": "v0",
         },
     }
-

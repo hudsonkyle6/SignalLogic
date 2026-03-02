@@ -1,4 +1,4 @@
-#hal.py
+# hal.py
 from __future__ import annotations
 
 import math
@@ -35,8 +35,9 @@ class HALMeasurement:
     Measurement only.
     Grants no authority.
     """
-    phase_diff_rad: float                 # wrapped [-pi, pi]
-    phase_diff_deg: float                 # wrapped [-180, 180]
+
+    phase_diff_rad: float  # wrapped [-pi, pi]
+    phase_diff_deg: float  # wrapped [-180, 180]
     coherence_proxy: Optional[float] = None
 
 

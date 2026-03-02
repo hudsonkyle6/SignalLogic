@@ -7,6 +7,7 @@ Covers:
     malformed lines skipped, sorted output
   - has_emission_at_time: missing dir, no match, exact match, partial match
 """
+
 from __future__ import annotations
 
 import json
@@ -26,6 +27,7 @@ from rhythm_os.runtime.bus import (
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _make_wave(
     t: float = 1_700_000_000.0,
@@ -54,6 +56,7 @@ def _write_wave(path: Path, wave: DomainWave) -> None:
 # today_bus_file
 # ---------------------------------------------------------------------------
 
+
 class TestTodayBusFile:
     def test_returns_path_in_bus_dir(self, tmp_path):
         t_ref = 1_700_000_000.0
@@ -74,13 +77,15 @@ class TestTodayBusFile:
         t2 = t_ref - (t_ref % 86400)
         date2 = time.strftime("%Y-%m-%d", time.localtime(t2))
         if date == date2:
-            assert today_bus_file(bus_dir=tmp_path, t_ref=t_ref) == \
-                   today_bus_file(bus_dir=tmp_path, t_ref=t2)
+            assert today_bus_file(bus_dir=tmp_path, t_ref=t_ref) == today_bus_file(
+                bus_dir=tmp_path, t_ref=t2
+            )
 
 
 # ---------------------------------------------------------------------------
 # load_recent_domain_waves
 # ---------------------------------------------------------------------------
+
 
 class TestLoadRecentDomainWaves:
     def test_missing_dir_returns_empty(self, tmp_path):
@@ -190,22 +195,29 @@ class TestLoadRecentDomainWaves:
 # has_emission_at_time
 # ---------------------------------------------------------------------------
 
+
 class TestHasEmissionAtTime:
     def test_missing_dir_returns_false(self, tmp_path):
-        assert has_emission_at_time(
-            bus_dir=tmp_path / "nonexistent",
-            t_ref=1_000.0,
-            domain="x",
-            channel="y",
-        ) is False
+        assert (
+            has_emission_at_time(
+                bus_dir=tmp_path / "nonexistent",
+                t_ref=1_000.0,
+                domain="x",
+                channel="y",
+            )
+            is False
+        )
 
     def test_empty_dir_returns_false(self, tmp_path):
-        assert has_emission_at_time(
-            bus_dir=tmp_path,
-            t_ref=1_000.0,
-            domain="x",
-            channel="y",
-        ) is False
+        assert (
+            has_emission_at_time(
+                bus_dir=tmp_path,
+                t_ref=1_000.0,
+                domain="x",
+                channel="y",
+            )
+            is False
+        )
 
     def test_exact_match_returns_true(self, tmp_path):
         t_ref = 1_700_000_000.0
@@ -213,12 +225,15 @@ class TestHasEmissionAtTime:
         bus_file = tmp_path / "2023-11-14.jsonl"
         _write_wave(bus_file, wave)
 
-        assert has_emission_at_time(
-            bus_dir=tmp_path,
-            t_ref=t_ref,
-            domain="weather",
-            channel="temperature",
-        ) is True
+        assert (
+            has_emission_at_time(
+                bus_dir=tmp_path,
+                t_ref=t_ref,
+                domain="weather",
+                channel="temperature",
+            )
+            is True
+        )
 
     def test_wrong_domain_returns_false(self, tmp_path):
         t_ref = 1_700_000_000.0
@@ -226,12 +241,15 @@ class TestHasEmissionAtTime:
         bus_file = tmp_path / "2023-11-14.jsonl"
         _write_wave(bus_file, wave)
 
-        assert has_emission_at_time(
-            bus_dir=tmp_path,
-            t_ref=t_ref,
-            domain="energy",
-            channel="temperature",
-        ) is False
+        assert (
+            has_emission_at_time(
+                bus_dir=tmp_path,
+                t_ref=t_ref,
+                domain="energy",
+                channel="temperature",
+            )
+            is False
+        )
 
     def test_wrong_channel_returns_false(self, tmp_path):
         t_ref = 1_700_000_000.0
@@ -239,12 +257,15 @@ class TestHasEmissionAtTime:
         bus_file = tmp_path / "2023-11-14.jsonl"
         _write_wave(bus_file, wave)
 
-        assert has_emission_at_time(
-            bus_dir=tmp_path,
-            t_ref=t_ref,
-            domain="weather",
-            channel="pressure",
-        ) is False
+        assert (
+            has_emission_at_time(
+                bus_dir=tmp_path,
+                t_ref=t_ref,
+                domain="weather",
+                channel="pressure",
+            )
+            is False
+        )
 
     def test_wrong_t_ref_returns_false(self, tmp_path):
         t_ref = 1_700_000_000.0
@@ -252,12 +273,15 @@ class TestHasEmissionAtTime:
         bus_file = tmp_path / "2023-11-14.jsonl"
         _write_wave(bus_file, wave)
 
-        assert has_emission_at_time(
-            bus_dir=tmp_path,
-            t_ref=t_ref + 1.0,
-            domain="weather",
-            channel="temperature",
-        ) is False
+        assert (
+            has_emission_at_time(
+                bus_dir=tmp_path,
+                t_ref=t_ref + 1.0,
+                domain="weather",
+                channel="temperature",
+            )
+            is False
+        )
 
     def test_malformed_lines_do_not_raise(self, tmp_path):
         bus_file = tmp_path / "2023-11-14.jsonl"

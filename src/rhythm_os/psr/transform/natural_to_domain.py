@@ -49,6 +49,7 @@ def _latest_jsonl(dirpath: Path) -> Path:
 # Projection
 # ---------------------------------------------------------------------
 
+
 def project_natural_domain(*, window_days: int = 7) -> List[DomainWave]:
     """
     Project Natural RAW observations into DomainWaves.
@@ -92,7 +93,8 @@ def project_natural_domain(*, window_days: int = 7) -> List[DomainWave]:
                     phase_field=float(data["phase_field"]),
                     phase_diff=float(data["phase_diff"]),
                     coherence=(
-                        None if data.get("coherence") is None
+                        None
+                        if data.get("coherence") is None
                         else float(data["coherence"])
                     ),
                     extractor={

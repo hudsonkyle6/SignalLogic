@@ -26,7 +26,7 @@ from pathlib import Path
 from rhythm_os.psr.domain_wave import DomainWave
 
 
-RAW_DIR    = Path("src/rhythm_os/data/dark_field/market_raw")
+RAW_DIR = Path("src/rhythm_os/data/dark_field/market_raw")
 DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
 
 
@@ -38,12 +38,12 @@ DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
 # ---------------------------------------------------------------------
 
 CHANNELS: list[tuple[str, str, str]] = [
-    ("volatility_pressure",      "VIX",        "SP500"),
-    ("capital_cost",             "TNX_10Y",    "IRX_3M"),
-    ("energy_pressure",          "WTI_CRUDE",  "NAT_GAS"),
-    ("maritime_pressure",        "BDRY",       "ZIM"),
-    ("food_cold_chain",          "CORN",       "LIVE_CATTLE"),
-    ("infrastructure_materials", "COPPER",     "STEEL_ETF"),
+    ("volatility_pressure", "VIX", "SP500"),
+    ("capital_cost", "TNX_10Y", "IRX_3M"),
+    ("energy_pressure", "WTI_CRUDE", "NAT_GAS"),
+    ("maritime_pressure", "BDRY", "ZIM"),
+    ("food_cold_chain", "CORN", "LIVE_CATTLE"),
+    ("infrastructure_materials", "COPPER", "STEEL_ETF"),
 ]
 
 
@@ -89,9 +89,9 @@ def main() -> None:
             continue
 
         phase_external = symbols[ext_key]
-        phase_field    = symbols[field_key]
-        phase_diff     = phase_external - phase_field
-        coherence      = 1.0 / (1.0 + abs(phase_diff))
+        phase_field = symbols[field_key]
+        phase_diff = phase_external - phase_field
+        coherence = 1.0 / (1.0 + abs(phase_diff))
 
         wave = DomainWave(
             t=float(raw["t"]),

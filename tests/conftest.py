@@ -1,4 +1,5 @@
 """Shared pytest configuration and fixtures for SignalLogic tests."""
+
 from __future__ import annotations
 
 import sys

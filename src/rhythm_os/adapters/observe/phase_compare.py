@@ -15,6 +15,7 @@ from rhythm_os.psr.domain_wave import DomainWave
 # Phase wrapping (canonical)
 # ---------------------------------------------------------
 
+
 def wrap_phase(delta: float) -> float:
     """
     Wrap phase difference into [-π, π].
@@ -25,6 +26,7 @@ def wrap_phase(delta: float) -> float:
 # ---------------------------------------------------------
 # Pure DomainWave construction
 # ---------------------------------------------------------
+
 
 def compute_domain_wave(
     *,

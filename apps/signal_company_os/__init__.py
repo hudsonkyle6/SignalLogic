@@ -8,6 +8,7 @@ Authority: Signal Light Press (Kernel)
 Status: Transitional
 Execution: Allowed (compat only)
 """
+
 # apps/signal_company_os/__init__.py
 """
 DEPRECATED — COMPATIBILITY SHELL ONLY

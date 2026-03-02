@@ -6,6 +6,7 @@ or from the path in the SIGNALLOGIC_CONFIG environment variable.
 
 All values have safe defaults so the system runs without any config file.
 """
+
 from __future__ import annotations
 
 import os

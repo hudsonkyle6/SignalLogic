@@ -1,4 +1,5 @@
 import math
+
 try:
     import numpy as np
 except ImportError as _e:
@@ -6,10 +7,11 @@ except ImportError as _e:
         "numpy is required for phase extraction. "
         "Install with: pip install 'signal-logic[analytics]'"
     ) from _e
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict
 
 try:
     from scipy.signal import hilbert
+
     _HILBERT_AVAILABLE = True
 except Exception:
     _HILBERT_AVAILABLE = False
@@ -19,6 +21,7 @@ except Exception:
 # Helpers
 # ---------------------------------------------------------
 
+
 def _wrap_phase(phi: float) -> float:
     """Wrap phase to [0, 2π)."""
     return phi % (2.0 * math.pi)
@@ -27,6 +30,7 @@ def _wrap_phase(phi: float) -> float:
 # ---------------------------------------------------------
 # Hilbert-based extractor
 # ---------------------------------------------------------
+
 
 def extract_phase_hilbert(
     samples: List[Tuple[float, float]],
@@ -57,6 +61,7 @@ def extract_phase_hilbert(
 # ---------------------------------------------------------
 # Zero-crossing extractor (robust fallback)
 # ---------------------------------------------------------
+
 
 def extract_phase_zero_crossing(
     samples: List[Tuple[float, float]],
@@ -102,6 +107,7 @@ def extract_phase_zero_crossing(
 # ---------------------------------------------------------
 # Unified interface
 # ---------------------------------------------------------
+
 
 def extract_external_phase(
     samples: List[Tuple[float, float]],

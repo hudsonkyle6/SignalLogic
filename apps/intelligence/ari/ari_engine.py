@@ -112,21 +112,21 @@ def _norm_res(res):  # [-1,1] -> [0,1]
     return _clip01((r + 1.0) / 2.0)
 
 
-def _norm_amp(a):    # magnitude -> [0,1]
+def _norm_amp(a):  # magnitude -> [0,1]
     if a is None:
         return 0.5
     return _clip01(abs(float(a)))
 
 
-def _norm_dark(d):   # already [0,1]
+def _norm_dark(d):  # already [0,1]
     return _clip01(d)
 
 
-def _norm_wvi(w):    # expected [0,1]
+def _norm_wvi(w):  # expected [0,1]
     return _clip01(w)
 
 
-def _norm_energy(e): # expected [0,1]
+def _norm_energy(e):  # expected [0,1]
     return _clip01(e)
 
 
@@ -142,9 +142,9 @@ def _macro_score(state: Optional[str]) -> float:
         return 0.5
     return {
         "CONTRACTING": 0.30,
-        "TRANSITION":  0.50,
-        "STABLE":      0.60,
-        "EXPANDING":   0.80,
+        "TRANSITION": 0.50,
+        "STABLE": 0.60,
+        "EXPANDING": 0.80,
         "OVEREXTENDED": 0.20,
     }.get(str(state).upper().strip(), 0.5)
 
@@ -159,7 +159,7 @@ def run_ari() -> None:
 
     world = _latest(df_m)
     human = _latest(df_h)
-    tide  = _latest(df_t)
+    tide = _latest(df_t)
 
     if world is None:
         print("⚠ ARI skipped — merged_signal.csv missing/empty")
@@ -181,10 +181,10 @@ def run_ari() -> None:
     ghost = _safe_float(world.get("GhostStabilityIndex"))
 
     clarity = _safe_float(human.get("Clarity")) if human is not None else None
-    stress  = _safe_float(human.get("StressLevel")) if human is not None else None
+    stress = _safe_float(human.get("StressLevel")) if human is not None else None
 
     energy = _safe_float(tide.get("EnergyWindow")) if tide is not None else None
-    macro  = tide.get("MacroState") if tide is not None else None
+    macro = tide.get("MacroState") if tide is not None else None
 
     # --- Normalize ---
     signals: Dict[str, float] = {
@@ -254,7 +254,16 @@ def run_ari() -> None:
         "Quality": quality,
     }
 
-    cols = ["Date", "ARIIndex", "Decision", "BaseDecision", "SignalState", "DarkFieldBand", "D_t", "Quality"]
+    cols = [
+        "Date",
+        "ARIIndex",
+        "Decision",
+        "BaseDecision",
+        "SignalState",
+        "DarkFieldBand",
+        "D_t",
+        "Quality",
+    ]
 
     if ARI_PATH.exists():
         df_existing = pd.read_csv(ARI_PATH, low_memory=False)
@@ -272,7 +281,9 @@ def run_ari() -> None:
 
     # drop existing row for today then append
     df_existing = df_existing[df_existing["Date"] != date].copy()
-    df_new = pd.concat([df_existing, pd.DataFrame([out], columns=cols)], ignore_index=True)
+    df_new = pd.concat(
+        [df_existing, pd.DataFrame([out], columns=cols)], ignore_index=True
+    )
     df_new = df_new[cols].sort_values("Date").reset_index(drop=True)
 
     ARI_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -291,4 +302,3 @@ def run_ari() -> None:
 
 if __name__ == "__main__":
     run_ari()
-

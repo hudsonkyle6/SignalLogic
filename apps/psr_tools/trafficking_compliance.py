@@ -51,6 +51,7 @@ REVIEW_QUEUE = COMPLIANCE_DIR / "review_queue.jsonl"
 # Turbine summary reader
 # ---------------------------------------------------------------------
 
+
 def _load_turbine_summaries() -> List[Dict[str, Any]]:
     """
     Read all turbine convergence summaries from today's cycle.
@@ -76,6 +77,7 @@ def _load_turbine_summaries() -> List[Dict[str, Any]]:
 # Convergence filter
 # ---------------------------------------------------------------------
 
+
 def _extract_trafficking_events(
     summaries: List[Dict[str, Any]],
 ) -> List[Dict[str, Any]]:
@@ -100,16 +102,18 @@ def _extract_trafficking_events(
             if "human_trafficking" not in domains:
                 continue
 
-            observations.append({
-                "ts": now,
-                "convergence_ts": summary.get("ts", ""),
-                "diurnal_phase": event.get("diurnal_phase"),
-                "domains": domains,
-                "domain_count": event.get("domain_count"),
-                "strength": event.get("strength"),
-                "review_required": True,
-                "authorized_report_filed": False,
-            })
+            observations.append(
+                {
+                    "ts": now,
+                    "convergence_ts": summary.get("ts", ""),
+                    "diurnal_phase": event.get("diurnal_phase"),
+                    "domains": domains,
+                    "domain_count": event.get("domain_count"),
+                    "strength": event.get("strength"),
+                    "review_required": True,
+                    "authorized_report_filed": False,
+                }
+            )
 
     return observations
 
@@ -117,6 +121,7 @@ def _extract_trafficking_events(
 # ---------------------------------------------------------------------
 # Compliance log writer
 # ---------------------------------------------------------------------
+
 
 def _append_observations(observations: List[Dict[str, Any]]) -> None:
     """
@@ -148,6 +153,7 @@ def _append_observations(observations: List[Dict[str, Any]]) -> None:
 # ---------------------------------------------------------------------
 # NCMEC CyberTipline reporting stub
 # ---------------------------------------------------------------------
+
 
 def report_to_ncmec(
     observation: Dict[str, Any],
@@ -192,6 +198,7 @@ def report_to_ncmec(
 # ---------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------
+
 
 def run_compliance_check() -> Dict[str, Any]:
     """

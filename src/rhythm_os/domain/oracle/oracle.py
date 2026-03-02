@@ -1,4 +1,4 @@
-#oracle.py
+# oracle.py
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -22,6 +22,7 @@ Pattern = Literal[
 # ---------------------------------------------------------------------
 # Oracle Records (geometry only)
 # ---------------------------------------------------------------------
+
 
 @dataclass(frozen=True)
 class AlignmentDescriptor:
@@ -69,6 +70,7 @@ class ConvergenceSummary:
 # Internal helpers (geometry only)
 # ---------------------------------------------------------------------
 
+
 def _classify_pattern(delta_deg: float, coherence: Optional[float]) -> Pattern:
     """
     Fixed geometric partitions for phase topology.
@@ -94,6 +96,7 @@ def _classify_pattern(delta_deg: float, coherence: Optional[float]) -> Pattern:
 # ---------------------------------------------------------------------
 # Functional Oracle (pure, stateless)
 # ---------------------------------------------------------------------
+
 
 def describe_alignment(
     *,
@@ -164,13 +167,9 @@ def summarize_convergence(
             note="no descriptors",
         )
 
-    within_count = sum(
-        1 for d in descriptors if abs(d.phase_diff_deg) <= within_deg
-    )
+    within_count = sum(1 for d in descriptors if abs(d.phase_diff_deg) <= within_deg)
 
-    coherences = [
-        d.coherence_ext for d in descriptors if d.coherence_ext is not None
-    ]
+    coherences = [d.coherence_ext for d in descriptors if d.coherence_ext is not None]
     mean_coh = (sum(coherences) / len(coherences)) if coherences else None
 
     frac = within_count / len(descriptors)
@@ -197,6 +196,7 @@ def summarize_convergence(
 # ---------------------------------------------------------------------
 # Oracle domain wrapper (canonical boundary)
 # ---------------------------------------------------------------------
+
 
 class Oracle:
     """

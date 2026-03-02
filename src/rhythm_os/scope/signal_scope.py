@@ -36,6 +36,7 @@ class WaveView(Protocol):
     Minimal, read-only view into a sealed Wave.
     The scope may only render what already exists.
     """
+
     t: float
     phase: float
     amplitude: float

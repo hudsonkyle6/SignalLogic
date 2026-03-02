@@ -36,6 +36,7 @@ PENSTOCK_DIR = DARK_FIELD_DIR / "penstock"
 # HELPERS
 # ---------------------------------------------------------------------
 
+
 def _daily_file(anchor_date: date) -> Path:
     """
     Resolve the daily Penstock file path for a given date.
@@ -47,11 +48,8 @@ def _daily_file(anchor_date: date) -> Path:
 # APPEND-ONLY WRITE (activation boundary)
 # ---------------------------------------------------------------------
 
-def append_wave_from_hydro(
-    wave: Wave,
-    *,
-    anchor_date: Optional[date] = None
-) -> Path:
+
+def append_wave_from_hydro(wave: Wave, *, anchor_date: Optional[date] = None) -> Path:
     """
     Append a sealed Wave to the Dark Field.
 

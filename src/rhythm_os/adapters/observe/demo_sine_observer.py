@@ -9,6 +9,7 @@ Purpose:
 
 import time
 import math
+
 try:
     import numpy as np
 except ImportError as _e:
@@ -31,32 +32,25 @@ DOMAIN = "demo"
 CHANNEL = "synthetic_sine"
 FIELD_COMPONENT = "semi_diurnal"
 
-PERIOD_S = 43200.0          # canonical semi-diurnal
-OFFSET_DEG = 22.0           # intentional, controlled offset
-WINDOW_HOURS = 6            # short causal window
-DT = 60.0                   # 60-second sampling
+PERIOD_S = 43200.0  # canonical semi-diurnal
+OFFSET_DEG = 22.0  # intentional, controlled offset
+WINDOW_HOURS = 6  # short causal window
+DT = 60.0  # 60-second sampling
 
-OUTPUT_PATH = Path(
-    "rhythm_os/domain/demo/waves/demo_sine.jsonl"
-)
+OUTPUT_PATH = Path("rhythm_os/domain/demo/waves/demo_sine.jsonl")
 
 
 # ---------------------------------------------------------
 # Synthetic signal generator
 # ---------------------------------------------------------
 
+
 def generate_sine_samples(t_now: float):
     offset_rad = math.radians(OFFSET_DEG)
 
-    times = np.arange(
-        t_now - WINDOW_HOURS * 3600,
-        t_now + DT,
-        DT
-    )
+    times = np.arange(t_now - WINDOW_HOURS * 3600, t_now + DT, DT)
 
-    values = np.sin(
-        2.0 * math.pi * (times - t_now) / PERIOD_S + offset_rad
-    )
+    values = np.sin(2.0 * math.pi * (times - t_now) / PERIOD_S + offset_rad)
 
     return list(zip(times.tolist(), values.tolist()))
 
@@ -100,7 +94,6 @@ if __name__ == "__main__":
         extractor="demo_sine_observer",
     )
 
-
     # 4. Render report with this DomainWave
     field = compute_field(t_now)
 
@@ -108,9 +101,6 @@ if __name__ == "__main__":
     print(wave)
     print("\nField sample:")
     print(field)
-
-
-
 
     print("\nProof complete.")
     print(

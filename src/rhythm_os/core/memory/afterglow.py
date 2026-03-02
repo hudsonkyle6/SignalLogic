@@ -17,10 +17,9 @@ Freeze Record:
 - ghost_freeze_v1.0.yaml
 """
 
-
-
 from __future__ import annotations
 from pathlib import Path
+
 try:
     import pandas as pd
     import numpy as np
@@ -134,12 +133,7 @@ def compute_memory_fields(df: pd.DataFrame) -> pd.DataFrame:
     drift_n = _normalize(drift.abs())
     wvi_n = _normalize(wvi_spike)
 
-    physics_intensity = (
-        0.40 * d_res_n +
-        0.25 * d_amp_n +
-        0.20 * drift_n +
-        0.15 * wvi_n
-    )
+    physics_intensity = 0.40 * d_res_n + 0.25 * d_amp_n + 0.20 * drift_n + 0.15 * wvi_n
 
     # ------------------------------------------------------------------
     # 2. Human side (optional, via ledger)
@@ -159,8 +153,7 @@ def compute_memory_fields(df: pd.DataFrame) -> pd.DataFrame:
 
         # Merge by Date (left join on world signal)
         merged = df[["Date"]].merge(
-            ledger[["Date", "BodyLoad", "Stress", "Clarity"]],
-            on="Date", how="left"
+            ledger[["Date", "BodyLoad", "Stress", "Clarity"]], on="Date", how="left"
         )
 
         body = merged["BodyLoad"].fillna(0.0).astype(float)
@@ -173,11 +166,7 @@ def compute_memory_fields(df: pd.DataFrame) -> pd.DataFrame:
         # lower clarity => higher "event pressure"
         clarity_n = ((5.0 - clarity) / 5.0).clip(0.0, 1.0)
 
-        human_intensity = (
-            0.40 * body_n +
-            0.40 * stress_n +
-            0.20 * clarity_n
-        )
+        human_intensity = 0.40 * body_n + 0.40 * stress_n + 0.20 * clarity_n
 
     # ------------------------------------------------------------------
     # 3. Hybrid EventIntensity
@@ -198,8 +187,8 @@ def compute_memory_fields(df: pd.DataFrame) -> pd.DataFrame:
     # ------------------------------------------------------------------
     memory_charge = []
     charge_prev = 0.0
-    decay = 0.90       # 10% per day decay
-    gain = 0.85        # how strongly new events charge memory
+    decay = 0.90  # 10% per day decay
+    gain = 0.85  # how strongly new events charge memory
 
     for v in event_intensity:
         charge_today = decay * charge_prev + gain * float(v)

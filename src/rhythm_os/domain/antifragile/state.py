@@ -42,4 +42,3 @@ def compute_antifragile_state(run_state: Dict[str, Any]) -> Dict[str, float]:
         "strain_index": strain,
         "brittleness_index": brittleness,
     }
-

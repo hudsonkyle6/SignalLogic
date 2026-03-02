@@ -17,7 +17,6 @@ Design:
 from __future__ import annotations
 
 import json
-import os
 import signal
 import threading
 import time
@@ -51,21 +50,26 @@ from rhythm_os.runtime.paths import METERS_DIR as DEFAULT_OUT_DIR
 # UTIL
 # ==============================================================================
 
+
 def utc_iso(ts: Optional[float] = None) -> str:
     if ts is None:
         ts = time.time()
     return datetime.fromtimestamp(ts, tz=timezone.utc).isoformat(timespec="seconds")
 
+
 def safe_mkdir(p: Path) -> None:
     p.mkdir(parents=True, exist_ok=True)
+
 
 def append_jsonl(path: Path, obj: Dict[str, Any]) -> None:
     # append-only; do not rewrite
     with path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(obj, separators=(",", ":"), ensure_ascii=False) + "\n")
 
+
 def mean(xs: List[float]) -> float:
     return sum(xs) / len(xs) if xs else 0.0
+
 
 def stdev(xs: List[float]) -> float:
     if len(xs) < 2:
@@ -73,6 +77,7 @@ def stdev(xs: List[float]) -> float:
     m = mean(xs)
     v = sum((x - m) ** 2 for x in xs) / (len(xs) - 1)
     return math.sqrt(v)
+
 
 def clamp01(x: float) -> float:
     return max(0.0, min(1.0, x))
@@ -82,11 +87,12 @@ def clamp01(x: float) -> float:
 # PACKET (meter_wave)
 # ==============================================================================
 
+
 @dataclass(frozen=True)
 class MeterPacket:
     t: float
-    lane: str                  # e.g. "net", "proc", "cpu"
-    channel: str               # e.g. "iface:Ethernet", "proc:python", "cpu:freq"
+    lane: str  # e.g. "net", "proc", "cpu"
+    channel: str  # e.g. "iface:Ethernet", "proc:python", "cpu:freq"
     window_s: float
     data: Dict[str, Any]
     extractor: Dict[str, Any]  # provenance; stable fields
@@ -106,6 +112,7 @@ class MeterPacket:
 # ==============================================================================
 # BASE METER
 # ==============================================================================
+
 
 class BaseMeter:
     lane: str
@@ -141,7 +148,9 @@ class BaseMeter:
             return None
         return self._compute_from_points(pts)
 
-    def _compute_from_points(self, pts: List[Tuple[float, Dict[str, float]]]) -> Dict[str, Any]:
+    def _compute_from_points(
+        self, pts: List[Tuple[float, Dict[str, float]]]
+    ) -> Dict[str, Any]:
         raise NotImplementedError
 
 
@@ -149,10 +158,13 @@ class BaseMeter:
 # LANE 1: Network Interface Meter
 # ==============================================================================
 
+
 class NetIfaceMeter(BaseMeter):
     lane = "net"
 
-    def __init__(self, iface: str, interval_s: float, window_s: float, min_points: int) -> None:
+    def __init__(
+        self, iface: str, interval_s: float, window_s: float, min_points: int
+    ) -> None:
         super().__init__(interval_s, window_s, min_points)
         self.iface = iface
         self._last = psutil.net_io_counters(pernic=True).get(iface)
@@ -179,7 +191,9 @@ class NetIfaceMeter(BaseMeter):
         # raw increments; rates computed over window
         return {"dt": dt, "bytes_in": d_in, "bytes_out": d_out}
 
-    def _compute_from_points(self, pts: List[Tuple[float, Dict[str, float]]]) -> Dict[str, Any]:
+    def _compute_from_points(
+        self, pts: List[Tuple[float, Dict[str, float]]]
+    ) -> Dict[str, Any]:
         dts = [r["dt"] for _, r in pts if r.get("dt") is not None]
         ins = [r["bytes_in"] for _, r in pts]
         outs = [r["bytes_out"] for _, r in pts]
@@ -208,10 +222,13 @@ class NetIfaceMeter(BaseMeter):
 # LANE 2: Process Meter (per-process CPU + IO counters)
 # ==============================================================================
 
+
 class ProcMeter(BaseMeter):
     lane = "proc"
 
-    def __init__(self, proc_name: str, interval_s: float, window_s: float, min_points: int) -> None:
+    def __init__(
+        self, proc_name: str, interval_s: float, window_s: float, min_points: int
+    ) -> None:
         super().__init__(interval_s, window_s, min_points)
         self.proc_name = proc_name.lower()
         self._last: Dict[int, Dict[str, float]] = {}  # pid -> last counters
@@ -291,7 +308,9 @@ class ProcMeter(BaseMeter):
             "proc_count": float(len(procs)),
         }
 
-    def _compute_from_points(self, pts: List[Tuple[float, Dict[str, float]]]) -> Dict[str, Any]:
+    def _compute_from_points(
+        self, pts: List[Tuple[float, Dict[str, float]]]
+    ) -> Dict[str, Any]:
         dts = [r["dt"] for _, r in pts]
         total_dt = sum(dts) if dts else self.window_s
 
@@ -301,7 +320,9 @@ class ProcMeter(BaseMeter):
         rss_b = [r["rss_b"] for _, r in pts]
         proc_counts = [r["proc_count"] for _, r in pts]
 
-        cpu_rate = sum(cpu_s) / max(1e-6, total_dt)      # CPU-seconds per second (≈ cores used)
+        cpu_rate = sum(cpu_s) / max(
+            1e-6, total_dt
+        )  # CPU-seconds per second (≈ cores used)
         read_rate = sum(read_b) / max(1e-6, total_dt)
         write_rate = sum(write_b) / max(1e-6, total_dt)
 
@@ -320,6 +341,7 @@ class ProcMeter(BaseMeter):
 # ==============================================================================
 # LANE 3: CPU Frequency Meter (pressure telemetry only)
 # ==============================================================================
+
 
 class CpuFreqMeter(BaseMeter):
     lane = "cpu"
@@ -341,7 +363,9 @@ class CpuFreqMeter(BaseMeter):
             "max_mhz": float(freq.max) if freq.max else 0.0,
         }
 
-    def _compute_from_points(self, pts: List[Tuple[float, Dict[str, float]]]) -> Dict[str, Any]:
+    def _compute_from_points(
+        self, pts: List[Tuple[float, Dict[str, float]]]
+    ) -> Dict[str, Any]:
         cur = [r["cur_mhz"] for _, r in pts]
         mn = [r["min_mhz"] for _, r in pts]
         mx = [r["max_mhz"] for _, r in pts]
@@ -365,9 +389,11 @@ class CpuFreqMeter(BaseMeter):
             "cur_norm_0_1": norm,  # pressure proxy only, not a health score
         }
 
+
 # ==============================================================================
 # LANE 4: CPU Utilization Meter (pressure envelope only)
 # ==============================================================================
+
 
 class CpuUtilMeter(BaseMeter):
     lane = "cpu"
@@ -384,8 +410,7 @@ class CpuUtilMeter(BaseMeter):
         return {"cpu_percent": float(util)}
 
     def _compute_from_points(
-        self,
-        pts: List[Tuple[float, Dict[str, float]]]
+        self, pts: List[Tuple[float, Dict[str, float]]]
     ) -> Dict[str, Any]:
 
         util = [r["cpu_percent"] for _, r in pts]
@@ -401,13 +426,15 @@ class CpuUtilMeter(BaseMeter):
         return {
             "n": len(pts),
             "cpu_percent_mean": util_mean,
-            "cpu_percent_sd": util_sd,          # vibration / turbulence proxy
-            "cpu_envelope_high": util_p95,      # sustained pressure ceiling
+            "cpu_percent_sd": util_sd,  # vibration / turbulence proxy
+            "cpu_envelope_high": util_p95,  # sustained pressure ceiling
         }
+
 
 # ==============================================================================
 # RUNNER
 # ==============================================================================
+
 
 def build_meters(
     interval_s: float,
@@ -420,8 +447,6 @@ def build_meters(
 
     # Network meters
     stats = psutil.net_if_stats()
-    active_ifaces = list(stats.keys())
-
     if ifaces:
         for iface in ifaces:
             if iface in stats:
@@ -461,7 +486,11 @@ def emit_packets(
     host = platform.node() or "unknown_host"
     os_name = platform.system().lower()
 
-    log.info("hydro_meter started out_dir=%s interval=%.1fs", out_dir, meters[0].interval_s if meters else DEFAULT_INTERVAL_S)
+    log.info(
+        "hydro_meter started out_dir=%s interval=%.1fs",
+        out_dir,
+        meters[0].interval_s if meters else DEFAULT_INTERVAL_S,
+    )
 
     while not stop_event.is_set():
         t0 = time.time()
@@ -510,12 +539,39 @@ def main() -> None:
     import argparse
 
     ap = argparse.ArgumentParser(description="Hydro Meter (local flow instrument)")
-    ap.add_argument("--interval", type=float, default=DEFAULT_INTERVAL_S, help="sample interval seconds")
-    ap.add_argument("--window", type=float, default=DEFAULT_WINDOW_S, help="rolling window seconds")
-    ap.add_argument("--min-points", type=int, default=DEFAULT_MIN_POINTS, help="min points before emitting")
-    ap.add_argument("--out", type=str, default=str(DEFAULT_OUT_DIR), help="output directory (append-only)")
-    ap.add_argument("--ifaces", type=str, default="", help="comma list of interfaces (default: all up)")
-    ap.add_argument("--procs", type=str, default="python,git,node", help="comma list of process name substrings")
+    ap.add_argument(
+        "--interval",
+        type=float,
+        default=DEFAULT_INTERVAL_S,
+        help="sample interval seconds",
+    )
+    ap.add_argument(
+        "--window", type=float, default=DEFAULT_WINDOW_S, help="rolling window seconds"
+    )
+    ap.add_argument(
+        "--min-points",
+        type=int,
+        default=DEFAULT_MIN_POINTS,
+        help="min points before emitting",
+    )
+    ap.add_argument(
+        "--out",
+        type=str,
+        default=str(DEFAULT_OUT_DIR),
+        help="output directory (append-only)",
+    )
+    ap.add_argument(
+        "--ifaces",
+        type=str,
+        default="",
+        help="comma list of interfaces (default: all up)",
+    )
+    ap.add_argument(
+        "--procs",
+        type=str,
+        default="python,git,node",
+        help="comma list of process name substrings",
+    )
     args = ap.parse_args()
 
     ifaces = [s.strip() for s in args.ifaces.split(",") if s.strip()] or None

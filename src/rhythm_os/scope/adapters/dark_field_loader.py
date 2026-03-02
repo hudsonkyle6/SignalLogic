@@ -23,6 +23,7 @@ from datetime import datetime
 # WaveView-Compatible Projection
 # ---------------------------------------------------------------------
 
+
 @dataclass(frozen=True)
 class DarkFieldWaveView:
     t: float
@@ -34,10 +35,10 @@ class DarkFieldWaveView:
     afterglow: Optional[float] = None
 
 
-
 # ---------------------------------------------------------------------
 # Public Loader
 # ---------------------------------------------------------------------
+
 
 def load_penstock(penstock_dir: Path) -> Iterator[DarkFieldWaveView]:
     """
@@ -58,6 +59,7 @@ def load_penstock(penstock_dir: Path) -> Iterator[DarkFieldWaveView]:
 # ---------------------------------------------------------------------
 # Internal helpers
 # ---------------------------------------------------------------------
+
 
 def _load_file(path: Path) -> Iterator[DarkFieldWaveView]:
     with path.open("r", encoding="utf-8") as f:
@@ -98,7 +100,6 @@ def _project_wave(record: dict) -> DarkFieldWaveView:
     # Coherence = amplitude (0–1)
     amplitude = float(record.get("amplitude", 0.0))
 
-
     # Afterglow (stored as decay factor)
     afterglow = record.get("afterglow_decay")
     if afterglow is not None:
@@ -112,4 +113,3 @@ def _project_wave(record: dict) -> DarkFieldWaveView:
         persistence=1,
         afterglow=afterglow,
     )
-

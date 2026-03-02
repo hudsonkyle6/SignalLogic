@@ -7,6 +7,7 @@ from pathlib import Path
 METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
 OUT_FILE = METERS_DIR / "simulated_pressure.jsonl"
 
+
 def main():
     METERS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -39,7 +40,7 @@ def main():
                     "in_rate_bps": 0.0,
                     "out_rate_bps": max(pulse, 0.0),
                     "turbidity_out": 0.0,
-                }
+                },
             }
 
             f.write(json.dumps(pkt) + "\n")
@@ -48,6 +49,7 @@ def main():
             time.sleep(0.02)
 
     print("Simulation complete.")
+
 
 if __name__ == "__main__":
     main()

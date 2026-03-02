@@ -45,48 +45,44 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 TICKER_NAMES: dict[str, str] = {
     # Volatility
     "^GSPC": "SP500",
-    "^VIX":  "VIX",
-
+    "^VIX": "VIX",
     # Capital Cost (yield curve + credit quality)
     "^TNX": "TNX_10Y",
     "^IRX": "IRX_3M",
-    "HYG":  "HYG",
-
+    "HYG": "HYG",
     # Energy
     "CL=F": "WTI_CRUDE",
     "NG=F": "NAT_GAS",
-
     # Maritime
     "BDRY": "BDRY",
-    "ZIM":  "ZIM",
+    "ZIM": "ZIM",
     "MATX": "MATX",
-
     # Food / Cold Chain
     "ZC=F": "CORN",
     "ZW=F": "WHEAT",
     "ZS=F": "SOYBEANS",
     "LE=F": "LIVE_CATTLE",
-
     # Infrastructure Materials
     "HG=F": "COPPER",
-    "SLX":  "STEEL_ETF",
+    "SLX": "STEEL_ETF",
     "WOOD": "LUMBER_ETF",
 }
 
 # Minimum symbol pairs required for each domain channel
 _DOMAIN_PAIRS: dict[str, tuple[str, str]] = {
-    "volatility":   ("SP500",     "VIX"),
-    "capital_cost": ("TNX_10Y",   "IRX_3M"),
-    "energy":       ("WTI_CRUDE", "NAT_GAS"),
-    "maritime":     ("BDRY",      "ZIM"),
-    "food":         ("CORN",      "LIVE_CATTLE"),
-    "materials":    ("COPPER",    "STEEL_ETF"),
+    "volatility": ("SP500", "VIX"),
+    "capital_cost": ("TNX_10Y", "IRX_3M"),
+    "energy": ("WTI_CRUDE", "NAT_GAS"),
+    "maritime": ("BDRY", "ZIM"),
+    "food": ("CORN", "LIVE_CATTLE"),
+    "materials": ("COPPER", "STEEL_ETF"),
 }
 
 
 # ---------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------
+
 
 def main() -> None:
     now = datetime.now(timezone.utc)
@@ -148,7 +144,8 @@ def main() -> None:
     # -----------------------------------------------------------------
 
     ready = sum(
-        1 for ext, field in _DOMAIN_PAIRS.values()
+        1
+        for ext, field in _DOMAIN_PAIRS.values()
         if ext in symbols and field in symbols
     )
 

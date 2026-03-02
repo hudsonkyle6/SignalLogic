@@ -1,5 +1,7 @@
 from apps.signal_company_os.adapters.signal_light_press import get_kernel_observables
-from apps.signal_company_os.adapters.rhythm_ingest.ingest_envelope import create_envelope
+from apps.signal_company_os.adapters.rhythm_ingest.ingest_envelope import (
+    create_envelope,
+)
 from apps.signal_company_os.adapters.rhythm_ingest.generate_wave import generate_wave
 
 

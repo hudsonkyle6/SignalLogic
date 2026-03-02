@@ -14,10 +14,10 @@ Invariants:
 - Each DomainWave has correct domain="natural"
 - project_market_domain raises FileNotFoundError when CSV is absent
 """
+
 from __future__ import annotations
 
 import json
-import math
 from pathlib import Path
 
 import pytest
@@ -32,6 +32,7 @@ from rhythm_os.psr.domain_wave import DomainWave
 # ------------------------------------------------------------------
 # Helpers
 # ------------------------------------------------------------------
+
 
 def _natural_record(**overrides) -> dict:
     """Build a minimal valid Natural Dark Field record."""
@@ -62,6 +63,7 @@ def _write_jsonl(path: Path, records: list) -> None:
 # _latest_jsonl
 # ------------------------------------------------------------------
 
+
 class TestLatestJsonl:
     def test_returns_last_file_alphabetically(self, tmp_path):
         for name in ("2025-01-01.jsonl", "2025-06-01.jsonl", "2025-03-01.jsonl"):
@@ -82,6 +84,7 @@ class TestLatestJsonl:
 # ------------------------------------------------------------------
 # project_natural_domain
 # ------------------------------------------------------------------
+
 
 class TestProjectNaturalDomain:
     def test_returns_list(self, tmp_path, monkeypatch):
@@ -122,11 +125,14 @@ class TestProjectNaturalDomain:
 
     def test_non_natural_lane_excluded(self, tmp_path, monkeypatch):
         p = tmp_path / "2025-01-15.jsonl"
-        _write_jsonl(p, [
-            _natural_record(lane="natural"),
-            _natural_record(lane="market"),
-            _natural_record(lane="system"),
-        ])
+        _write_jsonl(
+            p,
+            [
+                _natural_record(lane="natural"),
+                _natural_record(lane="market"),
+                _natural_record(lane="system"),
+            ],
+        )
         monkeypatch.setattr(
             "rhythm_os.psr.transform.natural_to_domain.DATA_DIR", tmp_path
         )

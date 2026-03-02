@@ -33,6 +33,7 @@ PENSTOCK_DIR = PROJECT_ROOT / "src" / "rhythm_os" / "data" / "dark_field" / "pen
 # Load Waves (read-only)
 # ---------------------------------------------------------------------
 
+
 def load_waves():
     """
     Load sealed Waves from the penstock.
@@ -48,6 +49,7 @@ def load_waves():
 # Main
 # ---------------------------------------------------------------------
 
+
 def main() -> None:
     configure()
     log.debug("scope penstock dir: %s", PENSTOCK_DIR.resolve())
@@ -58,7 +60,6 @@ def main() -> None:
         waves,
         window=120,
     )
-
 
 
 if __name__ == "__main__":

@@ -43,7 +43,7 @@ def drain_queue(*, max_items: int | None = None) -> List[HydroPacket]:
         drained = lines
         remaining = []
     else:
-        drained = lines[: max_items]
+        drained = lines[:max_items]
         remaining = lines[max_items:]
 
     # Write back remaining (truncate)

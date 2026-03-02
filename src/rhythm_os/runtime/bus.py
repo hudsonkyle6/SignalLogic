@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Sequence
 
 from rhythm_os.psr.domain_wave import DomainWave
 
@@ -101,6 +101,7 @@ def load_recent_domain_waves(
 
     out.sort(key=lambda w: float(w.t))
     return out
+
 
 def has_emission_at_time(
     *,

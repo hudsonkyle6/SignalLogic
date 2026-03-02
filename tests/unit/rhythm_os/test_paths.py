@@ -7,9 +7,9 @@ Invariants:
 - Paths are consistent with each other (no cross-root references)
 - The module is importable from any working directory
 """
+
 from __future__ import annotations
 
-from pathlib import Path
 
 from rhythm_os.runtime.paths import (
     DATA_DIR,

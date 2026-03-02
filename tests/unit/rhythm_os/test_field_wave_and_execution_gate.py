@@ -3,6 +3,7 @@ Tests for:
   - rhythm_os.core.field_wave.FieldWave
   - rhythm_os.foundations_runtime.execution_gate.ExecutionGateDecision
 """
+
 from __future__ import annotations
 
 import cmath
@@ -17,6 +18,7 @@ from rhythm_os.foundations_runtime.execution_gate import ExecutionGateDecision
 # ---------------------------------------------------------------------------
 # FieldWave
 # ---------------------------------------------------------------------------
+
 
 class TestFieldWave:
     def _wave(self, **overrides):
@@ -40,7 +42,9 @@ class TestFieldWave:
         with pytest.raises((AttributeError, TypeError)):
             w.phase = 1.0  # type: ignore[misc]
 
-    @pytest.mark.parametrize("cycle", ["diurnal", "semi_diurnal", "seasonal", "longwave"])
+    @pytest.mark.parametrize(
+        "cycle", ["diurnal", "semi_diurnal", "seasonal", "longwave"]
+    )
     def test_valid_cycle_names(self, cycle):
         w = self._wave(cycle=cycle)
         assert w.cycle == cycle
@@ -71,6 +75,7 @@ class TestFieldWave:
 # ---------------------------------------------------------------------------
 # ExecutionGateDecision
 # ---------------------------------------------------------------------------
+
 
 class TestExecutionGateDecision:
     def test_open_state(self):

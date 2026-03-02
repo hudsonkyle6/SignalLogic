@@ -9,9 +9,9 @@ Invariants:
 - annotate_packet fails open: if seasonal_prior raises, returns original packet
 - illuminate() still works correctly post-refactor (post-dispatch labeling)
 """
+
 from __future__ import annotations
 
-import pytest
 from signal_core.core.lighthouse import annotate_packet, illuminate
 from signal_core.core.hydro_types import HydroPacket, DispatchDecision, Route
 
@@ -33,12 +33,15 @@ def _packet(**overrides) -> HydroPacket:
 
 
 def _decision(route: Route = Route.MAIN) -> DispatchDecision:
-    return DispatchDecision(route=route, rule_id="D1_MAIN_OPERATIONAL", pressure_class="operational")
+    return DispatchDecision(
+        route=route, rule_id="D1_MAIN_OPERATIONAL", pressure_class="operational"
+    )
 
 
 # ------------------------------------------------------------------
 # annotate_packet
 # ------------------------------------------------------------------
+
 
 class TestAnnotatePacket:
     def test_returns_hydro_packet(self):
@@ -48,7 +51,12 @@ class TestAnnotatePacket:
     def test_stamps_seasonal_band(self):
         result = annotate_packet(_packet())
         assert result.seasonal_band is not None
-        assert result.seasonal_band in ("winter", "spring_transition", "summer", "fall_transition")
+        assert result.seasonal_band in (
+            "winter",
+            "spring_transition",
+            "summer",
+            "fall_transition",
+        )
 
     def test_stamps_pattern_confidence(self):
         result = annotate_packet(_packet())
@@ -90,13 +98,19 @@ class TestAnnotatePacket:
 
     def test_july_ts_produces_summer_band(self):
         from datetime import datetime, timezone
+
         july_ts = datetime(2025, 7, 15, 12, 0, 0, tzinfo=timezone.utc).timestamp()
         result = annotate_packet(_packet(t=july_ts))
         assert result.seasonal_band == "summer"
 
     def test_fail_open_on_bad_timestamp(self, monkeypatch):
         import signal_core.core.lighthouse as lh_mod
-        monkeypatch.setattr(lh_mod, "compute_seasonal_prior", lambda t: (_ for _ in ()).throw(RuntimeError("boom")))
+
+        monkeypatch.setattr(
+            lh_mod,
+            "compute_seasonal_prior",
+            lambda t: (_ for _ in ()).throw(RuntimeError("boom")),
+        )
         original = _packet()
         result = annotate_packet(original)
         # Should return original unchanged (fail-open)
@@ -106,6 +120,7 @@ class TestAnnotatePacket:
 # ------------------------------------------------------------------
 # illuminate (post-dispatch, existing behavior preserved)
 # ------------------------------------------------------------------
+
 
 class TestIlluminate:
     def test_main_route_not_hypothesis(self):

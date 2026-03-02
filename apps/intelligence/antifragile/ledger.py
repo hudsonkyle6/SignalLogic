@@ -15,8 +15,6 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 import pandas as pd
-from ...kernel.wave import Wave  # three dots for one level up
-from ...kernel.codex import Codex
 
 # --------------------------------------------------
 # PATHS
@@ -37,6 +35,7 @@ DECISION_STATES = ["WAIT", "PREPARE", "ACT", "PUSH"]
 # --------------------------------------------------
 # INIT
 # --------------------------------------------------
+
 
 def ensure_dirs():
     HUMAN_DIR.mkdir(parents=True, exist_ok=True)
@@ -69,6 +68,7 @@ def init_ledger_if_missing():
 # --------------------------------------------------
 # LOADERS
 # --------------------------------------------------
+
 
 def load_today_from_journal():
     if not JOURNAL_PATH.exists():
@@ -114,6 +114,7 @@ def load_physics_from_merged(date_str: str):
 # PROMPTS
 # --------------------------------------------------
 
+
 def prompt_int(label: str):
     while True:
         val = input(f"{label} (1–5, blank=0): ").strip()
@@ -146,6 +147,7 @@ def prompt_decision():
 # MAIN ENTRY
 # --------------------------------------------------
 
+
 def log_today_entry():
     ensure_dirs()
     init_ledger_if_missing()
@@ -163,8 +165,16 @@ def log_today_entry():
     print(f"Date:          {date}")
     print(f"Season:        {journal['Season']}")
     print(f"Signal State:  {journal['SignalState']}")
-    print(f"Resonance:     {resonance:.3f}" if pd.notna(resonance) else "Resonance:     N/A")
-    print(f"Amplitude:     {amplitude:.3f}" if pd.notna(amplitude) else "Amplitude:     N/A")
+    print(
+        f"Resonance:     {resonance:.3f}"
+        if pd.notna(resonance)
+        else "Resonance:     N/A"
+    )
+    print(
+        f"Amplitude:     {amplitude:.3f}"
+        if pd.notna(amplitude)
+        else "Amplitude:     N/A"
+    )
     print("──────────────────────────────────────")
     print("Enter human signals (1 = low, 5 = high)")
     print("──────────────────────────────────────")
@@ -196,7 +206,9 @@ def log_today_entry():
     }
 
     ledger = pd.read_csv(LEDGER_PATH, low_memory=False)
-    ledger["Date"] = pd.to_datetime(ledger["Date"], errors="coerce").dt.strftime("%Y-%m-%d")
+    ledger["Date"] = pd.to_datetime(ledger["Date"], errors="coerce").dt.strftime(
+        "%Y-%m-%d"
+    )
 
     # idempotent upsert
     ledger = ledger[ledger["Date"] != date].copy()
@@ -220,4 +232,3 @@ if __name__ == "__main__":
     except Exception as e:
         print("❌ Error:", e)
         sys.exit(1)
-

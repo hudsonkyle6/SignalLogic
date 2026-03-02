@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 ALLOWED_OPS = {"mkdir", "move"}
+
 
 @dataclass
 class Plan:
@@ -13,6 +14,7 @@ class Plan:
     policy: Dict[str, Any]
     notes: List[str]
     ops: List[Dict[str, Any]]
+
 
 def validate_plan_obj(obj: Dict[str, Any]) -> Plan:
     if "root" not in obj or "ops" not in obj:
@@ -25,7 +27,9 @@ def validate_plan_obj(obj: Dict[str, Any]) -> Plan:
 
     for i, op in enumerate(ops):
         if op.get("op") not in ALLOWED_OPS:
-            raise ValueError(f"Invalid op[{i}]: op must be one of {sorted(ALLOWED_OPS)}")
+            raise ValueError(
+                f"Invalid op[{i}]: op must be one of {sorted(ALLOWED_OPS)}"
+            )
         if op["op"] == "mkdir":
             if not op.get("dst"):
                 raise ValueError(f"Invalid mkdir[{i}]: missing dst")
@@ -40,5 +44,5 @@ def validate_plan_obj(obj: Dict[str, Any]) -> Plan:
         created_at=str(obj.get("created_at", "")),
         policy=dict(obj.get("policy", {})),
         notes=list(obj.get("notes", [])),
-        ops=ops
+        ops=ops,
     )

@@ -1,5 +1,6 @@
 from pathlib import Path
 import math
+
 try:
     import pandas as pd
 except ImportError as _e:
@@ -16,6 +17,7 @@ from rhythm_os.domain.oracle.hal import measure_alignment
 
 
 DATA_PATH = Path(__file__).parents[1] / "lanes" / "market" / "data.csv"
+
 
 def project_market_domain(window_days: int = 7) -> List[DomainWave]:
     if not DATA_PATH.exists():

@@ -1,4 +1,4 @@
-#dark_field.py
+# dark_field.py
 """
 POSTURE: PENSTOCK
 Immutable, append-only history.
@@ -8,7 +8,6 @@ See rhythm_os/TWO_WATERS.md
 """
 
 from __future__ import annotations
-
 
 
 import json
@@ -26,10 +25,13 @@ RECORD_LIGHTHOUSE = "lighthouse_summary"
 RECORD_HUMAN = "human_signature"
 
 INGRESS_PATH = Path("src/rhythm_os/data/dark_field/hydro/ingress.jsonl")
+
+
 def append_hydro_ingress_packet(packet: HydroPacket) -> None:
     INGRESS_PATH.parent.mkdir(parents=True, exist_ok=True)
     with INGRESS_PATH.open("a", encoding="utf-8") as f:
         f.write(json.dumps(packet.__dict__, ensure_ascii=False) + "\n")
+
 
 def _utc_date_from_t(t: float) -> str:
     return datetime.fromtimestamp(float(t), tz=timezone.utc).strftime("%Y-%m-%d")
