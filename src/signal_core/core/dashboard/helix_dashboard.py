@@ -330,10 +330,7 @@ def _panel_natural(readiness: ReadinessStatus) -> Panel:
         t.add_row("Temperature", Text("no data yet", style="dim"), Text(""))
 
     t.add_row("", Text(""), Text(""))
-    ready_line = Text()
-    ready_line.append(f"Records today: {readiness.natural_count}  ")
-    ready_line.append_text(_ready_badge(readiness.natural_ready))
-    t.add_row("", ready_line, Text(""))
+    t.add_row("Records", Text(str(readiness.natural_count), style="bold green"), _ready_badge(readiness.natural_ready))
 
     return Panel(t, title="[bold green]TIER II: NATURAL[/]", border_style="green")
 
@@ -388,10 +385,8 @@ def _panel_domain() -> Panel:
             )
 
     t.add_row("", Text(""), Text(""))
-    counts = Text()
-    counts.append(f"Penstock {penstock_count}  ", style="bold cyan")
-    counts.append(f"Turbine {turbine_count}", style="cyan")
-    t.add_row("", counts, Text(""))
+    t.add_row("Penstock", Text(str(penstock_count), style="bold cyan"), Text(""))
+    t.add_row("Turbine",  Text(str(turbine_count),  style="cyan"),      Text(""))
 
     return Panel(t, title="[bold cyan]TIER III: DOMAIN[/]", border_style="cyan")
 
