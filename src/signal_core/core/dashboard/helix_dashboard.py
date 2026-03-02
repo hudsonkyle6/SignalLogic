@@ -232,46 +232,59 @@ def _ready_badge(ready: bool) -> "Text":
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _panel_system(readiness: ReadinessStatus) -> Panel:
-    meter_records = _read_last_n(METERS_DIR, n=1)
-    last = meter_records[0] if meter_records else {}
-    data = last.get("data", {})
+    # Meter records are written per-lane (cpu / proc / net), so read enough
+    # to guarantee we find at least one record from each lane.
+    meter_records = _read_last_n(METERS_DIR, n=20)
+    count = readiness.system_count
 
-    cpu_pct = data.get("cpu_percent_mean", data.get("cur_norm_0_1", None))
-    mem_pct = data.get("mem_percent", None)
-    cpu_mhz = data.get("cur_mhz_mean", None)
-    in_bps  = data.get("in_rate_bps", None)
-    out_bps = data.get("out_rate_bps", None)
-    count   = readiness.system_count
+    cpu_rec  = next((r for r in reversed(meter_records) if r.get("lane") == "cpu"),  None)
+    proc_rec = next((r for r in reversed(meter_records) if r.get("lane") == "proc"), None)
+    net_rec  = next(
+        (r for r in reversed(meter_records)
+         if r.get("lane") == "net" and "lo" not in r.get("channel", "")),
+        None,
+    )
 
     t = Table.grid(padding=(0, 1))
-    t.add_column(width=10, no_wrap=True)
-    t.add_column(width=16, no_wrap=True)
-    t.add_column(no_wrap=True)
+    t.add_column(width=10, no_wrap=True)   # label
+    t.add_column(width=16, no_wrap=True)   # bar / value
+    t.add_column(no_wrap=True)             # right annotation
 
-    if cpu_pct is not None:
-        pct = float(cpu_pct)
-        bar = _bar(pct / 100.0, style_full="yellow", style_empty="grey23")
-        t.add_row("CPU", bar, Text(f"{pct:.1f}%", style="yellow"))
+    # CPU utilisation — from the proc lane (cpu_rate_core_equiv = cores consumed)
+    if proc_rec:
+        d = proc_rec.get("data", {})
+        cpu_rate = d.get("cpu_rate_core_equiv")
+        rss      = d.get("rss_bytes_mean")
+        if cpu_rate is not None:
+            bar = _bar(min(float(cpu_rate), 1.0), style_full="yellow", style_empty="grey23")
+            t.add_row("CPU", bar, Text(f"{float(cpu_rate) * 100:.1f}% core-eq", style="yellow"))
+        if rss is not None:
+            rss_mb = float(rss) / 1_048_576
+            bar = _bar(min(rss_mb / 512.0, 1.0), style_full="yellow", style_empty="grey23")
+            t.add_row("Memory", bar, Text(f"{rss_mb:.0f} MB RSS", style="yellow"))
     else:
         t.add_row("CPU", Text("no data yet", style="dim"), Text(""))
 
-    if mem_pct is not None:
-        pct = float(mem_pct)
-        bar = _bar(pct / 100.0, style_full="yellow", style_empty="grey23")
-        t.add_row("Memory", bar, Text(f"{pct:.1f}%", style="yellow"))
+    # CPU frequency — from the cpu lane
+    if cpu_rec:
+        mhz = cpu_rec.get("data", {}).get("cur_mhz_mean")
+        if mhz is not None:
+            t.add_row("CPU MHz", Text(f"{float(mhz):.0f} MHz", style="dim yellow"), Text(""))
 
-    if cpu_mhz is not None:
-        t.add_row("CPU MHz", Text(f"{cpu_mhz:.0f} MHz", style="dim yellow"), Text(""))
-
-    if in_bps is not None and out_bps is not None:
-        net_text = Text(f"↓ {in_bps/1e6:.2f} MB/s  ↑ {out_bps/1e6:.2f} MB/s", style="dim yellow")
-        t.add_row("Network", net_text, Text(""))
+    # Network — prefer the non-loopback interface
+    if net_rec:
+        d = net_rec.get("data", {})
+        in_bps  = d.get("in_rate_bps")
+        out_bps = d.get("out_rate_bps")
+        if in_bps is not None and out_bps is not None:
+            t.add_row(
+                "Network",
+                Text(f"↓ {float(in_bps)/1e3:.1f} KB/s", style="dim yellow"),
+                Text(f"↑ {float(out_bps)/1e3:.1f} KB/s", style="dim yellow"),
+            )
 
     t.add_row("", Text(""), Text(""))
-    ready_line = Text()
-    ready_line.append(f"Records today: {count}  ")
-    ready_line.append_text(_ready_badge(readiness.system_ready))
-    t.add_row("", ready_line, Text(""))
+    t.add_row("Records", Text(str(count), style="bold yellow"), _ready_badge(readiness.system_ready))
 
     return Panel(t, title="[bold yellow]TIER I: SYSTEM[/]", border_style="yellow")
 
