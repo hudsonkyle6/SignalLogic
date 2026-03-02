@@ -88,10 +88,18 @@ def _count_today(directory: Path) -> int:
         return 0
 
 
-def _load_last_cycle_result(penstock_dir: Path) -> Optional[Dict[str, Any]]:
-    """Read the most recent record from today's penstock for cycle stats."""
-    records = _read_last_n(penstock_dir, n=1)
-    return records[0] if records else None
+def _load_last_cycle_result() -> Optional[Any]:
+    """Read the last CycleResult persisted by hydro_run_cadence."""
+    import types
+    path = TURBINE_DIR / "last_cycle.json"
+    if not path.exists():
+        return None
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return types.SimpleNamespace(**data)
+    except Exception:
+        return None
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -347,7 +355,7 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
             strong = cs.get("strong_events", 0)
             t.add_row("Convergence", Text(f"{ev} events ({strong} strong)", style="magenta"))
 
-        bs = cycle_result.baseline_status
+        bs = getattr(cycle_result, "baseline_status", None)
         if bs:
             line = Text()
             line.append("System: ")
@@ -366,6 +374,7 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
 def _build_display(
     rotation: float = 0.0,
     cycle_result: Optional[Any] = None,
+    status_text: str = "",
 ) -> "Table":
     """Build the full dashboard as a rich Table (two columns: helix + panels)."""
     if not _HAS_RICH:
@@ -421,13 +430,11 @@ def _build_display(
 
     from rich.console import Group
 
-    right = Group(
-        Panel(header, border_style="magenta"),
-        p_domain,
-        p_natural,
-        p_system,
-        p_cycle,
-    )
+    right_items: list = [Panel(header, border_style="magenta")]
+    if status_text:
+        right_items.append(Rule(f"  {status_text}  ", style="bold yellow"))
+    right_items.extend([p_domain, p_natural, p_system, p_cycle])
+    right = Group(*right_items)
 
     outer.add_row(helix_panel, right)
     return outer
@@ -442,6 +449,8 @@ def run_snapshot(cycle_result: Optional[Any] = None) -> None:
     if not _HAS_RICH:
         _fallback_print()
         return
+    if cycle_result is None:
+        cycle_result = _load_last_cycle_result()
     console = Console()
     console.print(_build_display(rotation=0.0, cycle_result=cycle_result))
 
@@ -455,7 +464,7 @@ def run_watch(interval: float = 5.0, cycle_result: Optional[Any] = None) -> None
     rotation = 0.0
     with Live(console=console, refresh_per_second=4, screen=True) as live:
         while True:
-            live.update(_build_display(rotation=rotation, cycle_result=cycle_result))
+            live.update(_build_display(rotation=rotation, cycle_result=cycle_result or _load_last_cycle_result()))
             time.sleep(interval)
             rotation += 0.3  # advance helix rotation each refresh
 

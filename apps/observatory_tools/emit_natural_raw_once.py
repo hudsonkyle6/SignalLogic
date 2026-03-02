@@ -83,6 +83,9 @@ def _make_record(
     coherence: Optional[float],
     raw: Dict[str, Any],
     fetch_ok: bool,
+    lat: float = 0.0,
+    lon: float = 0.0,
+    label: str = "",
 ) -> Dict[str, Any]:
     phase_diff = _circular_diff(phase_external, phase_field)
     return {
@@ -178,6 +181,9 @@ def main() -> None:
         coherence=coherence_pressure,
         raw=raw_payload,
         fetch_ok=fetch_ok,
+        lat=lat,
+        lon=lon,
+        label=label,
     )
 
     # ------------------------------------------------------------------
@@ -195,6 +201,9 @@ def main() -> None:
         coherence=coherence_thermal,
         raw=raw_payload,
         fetch_ok=fetch_ok,
+        lat=lat,
+        lon=lon,
+        label=label,
     )
 
     with out_path.open("a", encoding="utf-8") as f:

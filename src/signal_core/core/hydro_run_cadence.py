@@ -361,6 +361,18 @@ def main() -> CycleResult:
     )
 
 
+def _persist_cycle_result(result: "CycleResult") -> None:
+    """Write CycleResult fields to TURBINE_DIR/last_cycle.json for the dashboard."""
+    import dataclasses as _dc
+    from rhythm_os.runtime.paths import TURBINE_DIR
+    TURBINE_DIR.mkdir(parents=True, exist_ok=True)
+    data = _dc.asdict(result)
+    data.pop("baseline_status", None)   # ReadinessStatus object — not JSON-serializable
+    path = TURBINE_DIR / "last_cycle.json"
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(data, f)
+
+
 if __name__ == "__main__":
     from signal_core.core.log import configure
     configure()
@@ -371,3 +383,4 @@ if __name__ == "__main__":
         result.turbine_obs,
         result.spillway_quarantined,
     )
+    _persist_cycle_result(result)
