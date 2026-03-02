@@ -49,6 +49,8 @@ from rhythm_os.runtime.deploy_config import (
     get_baseline_requirements,
 )
 
+DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Data readers (stateless — reads from today's JSONL files)
@@ -86,6 +88,17 @@ def _count_today(directory: Path) -> int:
             return sum(1 for line in f if line.strip())
     except Exception:
         return 0
+
+
+def _read_market_domain_waves() -> Dict[str, Dict]:
+    """Latest market DomainWave per channel from today's domain JSONL."""
+    latest: Dict[str, Dict] = {}
+    for rec in _read_last_n(DOMAIN_DIR, n=0):
+        if rec.get("domain") == "market":
+            ch = rec.get("channel", "")
+            if ch:
+                latest[ch] = rec  # last record per channel wins
+    return latest
 
 
 def _load_last_cycle_result() -> Optional[Any]:
@@ -312,23 +325,60 @@ def _panel_natural(readiness: ReadinessStatus) -> Panel:
     return Panel(t, title="[bold green]TIER II: NATURAL[/]", border_style="green")
 
 
+# Channel display config: (key, label, ext_name, field_name, bar_lo, bar_hi, ext_fmt, field_fmt)
+# bar_lo / bar_hi define the normalization range for the pressure bar.
+_MARKET_CHANNEL_DISPLAY: List[Tuple] = [
+    ("volatility_pressure",      "Volatility",    "VIX",    "SPX",    10,   40,  "{:.1f}",   "{:,.0f}"),
+    ("capital_cost",             "Capital Cost",  "10Y",    "3M",     2.0,  7.0, "{:.2f}%",  "{:.2f}%"),
+    ("energy_pressure",          "Energy",        "WTI",    "Gas",    40,   120, "${:.1f}",  "${:.2f}"),
+    ("maritime_pressure",        "Maritime",      "BDRY",   "ZIM",    4,    25,  "${:.2f}",  "${:.2f}"),
+    ("food_cold_chain",          "Food / Chain",  "Corn",   "Cattle", 350,  700, "{:.0f}¢",  "{:.0f}¢"),
+    ("infrastructure_materials", "Materials",     "Copper", "Steel",  3.0,  6.0, "${:.2f}",  "${:.2f}"),
+]
+
+
 def _panel_domain() -> Panel:
-    channels = get_domain_channels()
+    waves         = _read_market_domain_waves()
     turbine_count = _count_today(TURBINE_DIR)
     penstock_count = _count_today(PENSTOCK_DIR)
 
     t = Table.grid(padding=(0, 1))
-    t.add_column(width=18, no_wrap=True)
-    t.add_column(no_wrap=True)
+    t.add_column(width=14, no_wrap=True)   # label
+    t.add_column(width=14, no_wrap=True)   # bar
+    t.add_column(no_wrap=True)             # values
 
-    if channels:
-        t.add_row("Channels", Text(", ".join(channels), style="cyan"))
-    else:
-        t.add_row("Channels", Text("none configured", style="dim"))
-        t.add_row("", Text("Add to deployment.yaml → domain.channels", style="dim cyan"))
+    for ch_key, label, ext_name, field_name, lo, hi, ext_fmt, field_fmt in _MARKET_CHANNEL_DISPLAY:
+        rec = waves.get(ch_key)
+        if rec:
+            ext_val   = rec.get("phase_external")
+            field_val = rec.get("phase_field")
+            coherence = rec.get("coherence")
 
-    t.add_row("Penstock today", Text(str(penstock_count), style="bold cyan"))
-    t.add_row("Turbine today",  Text(str(turbine_count),  style="cyan"))
+            bar_norm = (float(ext_val) - lo) / (hi - lo) if ext_val is not None else 0.0
+            bar_norm = max(0.0, min(1.0, bar_norm))
+            bar = _bar(bar_norm, style_full="cyan", style_empty="grey23")
+
+            ext_str   = ext_fmt.format(float(ext_val))   if ext_val   is not None else "—"
+            field_str = field_fmt.format(float(field_val)) if field_val is not None else "—"
+            coh_str   = f"coh={coherence:.2f}" if coherence is not None else ""
+
+            row_text = Text()
+            row_text.append(f"{ext_name}={ext_str}  ", style="cyan")
+            row_text.append(f"{field_name}={field_str}  ", style="dim cyan")
+            row_text.append(coh_str, style="dim")
+            t.add_row(label, bar, row_text)
+        else:
+            t.add_row(
+                Text(label, style="dim"),
+                Text("─" * 12, style="grey23"),
+                Text("pending", style="dim"),
+            )
+
+    t.add_row("", Text(""), Text(""))
+    counts = Text()
+    counts.append(f"Penstock {penstock_count}  ", style="bold cyan")
+    counts.append(f"Turbine {turbine_count}", style="cyan")
+    t.add_row("", counts, Text(""))
 
     return Panel(t, title="[bold cyan]TIER III: DOMAIN[/]", border_style="cyan")
 
