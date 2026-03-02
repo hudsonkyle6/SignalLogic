@@ -17,8 +17,7 @@ from rhythm_os.core.domain_clocks.cyber import CYBER_CYCLES
 # Paths
 # ---------------------------------------------------------------------
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+from rhythm_os.runtime.paths import DOMAIN_DIR, METERS_DIR
 
 DOMAIN = "cyber"
 CHANNEL = "cadence_pressure"

@@ -23,13 +23,12 @@ from pathlib import Path
 from typing import List
 
 from rhythm_os.psr.domain_wave import DomainWave
+from rhythm_os.runtime.paths import NATURAL_DIR as DATA_DIR
 
 
 # ---------------------------------------------------------------------
 # Dark Field intake
 # ---------------------------------------------------------------------
-
-DATA_DIR = Path("src/rhythm_os/data/dark_field/natural")
 
 
 def _latest_jsonl(dirpath: Path) -> Path:

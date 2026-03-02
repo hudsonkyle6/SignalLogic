@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-OUT_DIR = Path("src/rhythm_os/data/dark_field/natural")
+from rhythm_os.runtime.paths import NATURAL_DIR as OUT_DIR
 
 
 def _append_jsonl(path: Path, rec: Dict[str, Any]) -> None:

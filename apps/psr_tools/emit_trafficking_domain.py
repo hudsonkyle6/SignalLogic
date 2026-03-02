@@ -24,10 +24,8 @@ from rhythm_os.psr.transform.trafficking_to_domain import (
     project_trafficking_domain,
 )
 from rhythm_os.psr.append_domain_wave import append_domain_wave
-from pathlib import Path
+from rhythm_os.runtime.paths import DOMAIN_DIR
 from datetime import datetime, timezone
-
-BUS_ROOT = Path("src/rhythm_os/data/dark_field")
 
 
 def emit_trafficking_domain(
@@ -46,7 +44,7 @@ def emit_trafficking_domain(
     waves = project_trafficking_domain(window_days=window_days)
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    bus_path = BUS_ROOT / "domain" / f"{today}.jsonl"
+    bus_path = DOMAIN_DIR / f"{today}.jsonl"
 
     for wave in waves:
         append_domain_wave(bus_path, wave)

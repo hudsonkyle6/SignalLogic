@@ -21,13 +21,11 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
-from pathlib import Path
 
 from rhythm_os.psr.domain_wave import DomainWave
 
 
-RAW_DIR = Path("src/rhythm_os/data/dark_field/market_raw")
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+from rhythm_os.runtime.paths import DOMAIN_DIR, MARKET_RAW_DIR as RAW_DIR
 
 
 # ---------------------------------------------------------------------

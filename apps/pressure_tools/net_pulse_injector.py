@@ -21,7 +21,7 @@ from pathlib import Path
 from uuid import uuid4
 
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
+from rhythm_os.runtime.paths import METERS_DIR
 
 
 # --- add imports at top ---

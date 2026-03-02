@@ -4,9 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from rhythm_os.psr.append_domain_wave import append_domain_wave
-
-BUS_ROOT = Path("src/rhythm_os/data/dark_field")
-DOMAIN_DIR = BUS_ROOT / "domain"
+from rhythm_os.runtime.paths import DOMAIN_DIR
 
 
 def _bus_path_today() -> Path:

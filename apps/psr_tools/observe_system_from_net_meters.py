@@ -8,7 +8,6 @@ POSTURE: PSR (observation → domain)
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from statistics import mean, pstdev
 from typing import List, Dict, Any
 
@@ -21,8 +20,7 @@ from rhythm_os.runtime.bus import today_bus_file
 # CONFIG
 # -----------------------------------------------------------------------------
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
-PSR_DIR = Path("src/rhythm_os/data/psr")
+from rhythm_os.runtime.paths import METERS_DIR, PSR_DIR
 
 LANE = "net"
 DOMAIN = "system"

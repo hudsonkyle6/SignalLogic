@@ -22,7 +22,6 @@ This is NOT an attack tool; it is controlled fault injection for your own pipeli
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 import argparse
 import json
 import math
@@ -32,7 +31,7 @@ import time
 from datetime import datetime, timezone
 
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
+from rhythm_os.runtime.paths import METERS_DIR
 
 
 @dataclass(frozen=True)

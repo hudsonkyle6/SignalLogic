@@ -1,11 +1,10 @@
-from pathlib import Path
 import json
 import math
 
 from rhythm_os.core.phasor_merge import project_samples_to_clocks
 from rhythm_os.core.domain_clocks.cyber import CYBER_CYCLES
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
+from rhythm_os.runtime.paths import METERS_DIR
 
 
 def read_latest_net_samples():

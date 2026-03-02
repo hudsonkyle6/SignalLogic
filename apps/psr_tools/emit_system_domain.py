@@ -24,8 +24,7 @@ OMEGA = 2.0 * math.pi / T_DIURNAL
 # Paths
 # ---------------------------------------------------------------------
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+from rhythm_os.runtime.paths import DOMAIN_DIR, METERS_DIR
 
 DOMAIN = "system"
 FIELD_CYCLE = "diurnal_projection"

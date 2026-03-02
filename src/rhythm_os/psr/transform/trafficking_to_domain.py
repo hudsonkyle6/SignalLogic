@@ -41,6 +41,7 @@ from pathlib import Path
 from typing import List
 
 from rhythm_os.psr.domain_wave import DomainWave
+from rhythm_os.runtime.paths import HUMAN_TRAFFICKING_DIR as DATA_DIR
 
 
 # ---------------------------------------------------------------------
@@ -48,8 +49,6 @@ from rhythm_os.psr.domain_wave import DomainWave
 # NOTE: Path will be overridden by feed-specific config once a data
 # partnership (Thorn / NCMEC or equivalent) is established.
 # ---------------------------------------------------------------------
-
-DATA_DIR = Path("src/rhythm_os/data/dark_field/human_trafficking")
 
 
 def _latest_jsonl(dirpath: Path) -> Path:

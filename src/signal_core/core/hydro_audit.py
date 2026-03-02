@@ -4,13 +4,11 @@ from __future__ import annotations
 
 import json
 import hashlib
-from pathlib import Path
 from datetime import datetime, timezone
 from typing import Literal
 
 from signal_core.core.hydro_types import HydroPacket
-
-AUDIT_PATH = Path("src/rhythm_os/data/dark_field/hydro/audit.jsonl")
+from rhythm_os.runtime.paths import AUDIT_PATH
 
 
 def _hash_record(record: dict) -> str:

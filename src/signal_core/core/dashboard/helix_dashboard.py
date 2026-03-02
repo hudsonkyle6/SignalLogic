@@ -39,7 +39,13 @@ try:
 except ImportError:
     _HAS_RICH = False
 
-from rhythm_os.runtime.paths import METERS_DIR, NATURAL_DIR, PENSTOCK_DIR, TURBINE_DIR
+from rhythm_os.runtime.paths import (
+    DOMAIN_DIR,
+    METERS_DIR,
+    NATURAL_DIR,
+    PENSTOCK_DIR,
+    TURBINE_DIR,
+)
 from rhythm_os.runtime.readiness import check_readiness, ReadinessStatus
 from rhythm_os.runtime.deploy_config import (
     get_deployment_name,
@@ -47,8 +53,6 @@ from rhythm_os.runtime.deploy_config import (
     get_domain_channels,
     get_baseline_requirements,
 )
-
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
