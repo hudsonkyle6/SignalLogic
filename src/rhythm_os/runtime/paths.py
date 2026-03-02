@@ -51,3 +51,10 @@ METERS_DIR = DATA_DIR / "dark_field" / "meters"
 
 # Mandates (human governance files, JSON)
 MANDATES_DIR = DATA_DIR / "mandates"
+
+# Scar store — domain-specific pressure memory (one JSONL per domain)
+SCARS_DIR = DATA_DIR / "scars"
+
+# Control signal channel — real-time dispatch decisions for downstream consumers
+# Daily rotation: signals-YYYY-MM-DD.jsonl written inside this directory.
+CONTROL_DIR = DATA_DIR / "dark_field" / "control"

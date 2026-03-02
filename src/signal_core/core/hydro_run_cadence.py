@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Signal Hydro — Daily Run
+Signal Hydro — Cycle Cadence
 POSTURE: HYDRO (SOLE PENSTOCK AUTHORITY)
 
 Consumes admitted ingress packets and commits
@@ -41,8 +41,23 @@ from signal_core.core.hydro_dispatcher import dispatch
 from signal_core.core.hydro_audit import append_audit
 from signal_core.core.hydro_turbine import process_turbine
 from signal_core.core.hydro_turbine_summary import run_turbine_summary
-from signal_core.core.lighthouse import annotate_packet
+from signal_core.core.lighthouse import annotate_packet, attenuate_with_scars
+from rhythm_os.core.memory.scar import write_scar, apply_all_decay, pattern_key as _scar_pattern_key
 from signal_core.core.spillway_lighthouse import assess_spillway, SpillwayRoute
+from signal_core.core.control_signal import emit_control_signal
+
+# ---------------------------------------------------------------------
+# Scar pressure constants
+# ---------------------------------------------------------------------
+
+# Base pressure added to the compound scar (forest edge + anomaly together).
+# Kept separate from the fp component so the two addends are explicit at the call site.
+_COMPOUND_SCAR_BASE_PRESSURE = 0.30
+
+# Pressure written per strong convergence event per domain.
+# Intentionally small — inert on its own; only meaningful when compounding
+# with an existing forest_proximity scar on the same domain.
+_CONVERGENCE_SCAR_PRESSURE = 0.15
 
 
 # ---------------------------------------------------------------------
@@ -168,6 +183,10 @@ def main() -> CycleResult:
         # ---------------------------------------------------------
         packet = annotate_packet(packet)
 
+        # Scar attenuation — reduce forest_proximity for patterns the system
+        # has already survived.  Novel patterns are unaffected.
+        packet = attenuate_with_scars(packet)
+
         ingress = hydro_ingress_gate(packet)
         log.debug("ingress result=%s reason=%s", ingress.gate_result.value, ingress.reason)
 
@@ -193,6 +212,7 @@ def main() -> CycleResult:
         # -------------------------------------------------------------
         if decision.route.name == "MAIN":
             commit_packet(packet)
+            emit_control_signal(packet, decision)
             append_audit(packet, ingress.gate_result.value, "MAIN")
             committed += 1
             log.info("commit route=MAIN decay=%s", packet.afterglow_decay)
@@ -220,12 +240,41 @@ def main() -> CycleResult:
                 obs.diurnal_phase,
                 decision.rule_id,
             )
+
+            # Scar write — forest edge routing.
+            # The system met this pattern at the margin and diverted rather
+            # than committing.  Record the pressure so future encounters
+            # carry less weight.
+            if decision.rule_id == "DLH_TURBINE_FOREST_EDGE":
+                fp = float(packet.forest_proximity or 0.0)
+                write_scar(
+                    domain              = packet.domain,
+                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta      = fp,
+                    changed             = True,
+                    trigger             = "forest_proximity",
+                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
+                )
+
             continue
 
         # -------------------------------------------------------------
         # SPILLWAY — auxiliary lighthouse second look
         # -------------------------------------------------------------
         if decision.route.name == "SPILLWAY":
+            # Scar write — anomaly routed to spillway.
+            # Write before the second-look so reinforcement reflects the
+            # initial dispatch pressure, not the spillway outcome.
+            if bool(packet.anomaly_flag):
+                write_scar(
+                    domain              = packet.domain,
+                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta      = 0.5,
+                    changed             = True,
+                    trigger             = "anomaly",
+                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
+                )
+
             spill = assess_spillway(packet)
             log.debug("spillway route=%s reason=%s", spill.route.value, spill.reason)
 
@@ -236,6 +285,18 @@ def main() -> CycleResult:
             elif spill.route == SpillwayRoute.QUARANTINE:
                 spillway_quarantined += 1
                 log.warning("quarantine packet_id=%s", packet.packet_id)
+                # Compound scar — forest edge + anomaly together.
+                # Heavier pressure: the system both didn't recognise the
+                # territory AND detected structural irregularity.
+                fp = float(packet.forest_proximity or 0.0)
+                write_scar(
+                    domain              = packet.domain,
+                    key                 = _scar_pattern_key(packet.seasonal_band, packet.channel),
+                    pressure_delta      = fp + _COMPOUND_SCAR_BASE_PRESSURE,
+                    changed             = True,
+                    trigger             = "compound",
+                    pattern_confidence  = float(packet.pattern_confidence or 1.0),
+                )
             elif spill.route == SpillwayRoute.HOLD:
                 spillway_hold += 1
             # HOLD → no further action this cycle; packet stays in spillway basin
@@ -247,10 +308,46 @@ def main() -> CycleResult:
         log.debug("drop packet_id=%s", packet.packet_id)
 
     # -----------------------------------------------------------------
+    # Post-cycle: scar decay — pressure fades unless reinforced each cycle.
+    # -----------------------------------------------------------------
+    scar_decay = apply_all_decay()
+    if scar_decay:
+        pruned_total = sum(scar_decay.values())
+        if pruned_total:
+            log.debug("scar decay pruned=%d domains=%s", pruned_total, list(scar_decay.keys()))
+
+    # -----------------------------------------------------------------
     # Post-cycle: turbine convergence summary
     # Always run — returns empty summary if no turbine observations.
     # -----------------------------------------------------------------
     convergence = run_turbine_summary()
+
+    # -----------------------------------------------------------------
+    # Post-cycle: strong convergence → provisional scar
+    # When 3+ domains phase-align (strong event), write a small convergence
+    # marker to each domain's scar store.  The key is phase-bucketed so
+    # convergences at different times of day accumulate independently.
+    # pressure_delta=0.15 is intentionally small — it only meaningfully
+    # attenuates when compounded with existing forest_proximity scars.
+    # -----------------------------------------------------------------
+    for event in convergence.get("convergence_events", []):
+        if event.get("strength") != "strong":
+            continue
+        phase_bucket = int(float(event.get("diurnal_phase", 0)) * 12)
+        conv_key = f"convergence:{phase_bucket}"
+        for domain in event.get("domains", []):
+            write_scar(
+                domain             = domain,
+                key                = conv_key,
+                pressure_delta     = _CONVERGENCE_SCAR_PRESSURE,
+                changed            = False,
+                trigger            = "convergence",
+                pattern_confidence = 1.0,   # convergence is phase-based, not seasonal
+            )
+            log.debug(
+                "convergence scar domain=%s phase_bucket=%d domains=%s",
+                domain, phase_bucket, ",".join(event.get("domains", [])),
+            )
 
     return CycleResult(
         cycle_ts=cycle_ts,

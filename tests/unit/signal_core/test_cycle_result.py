@@ -1,5 +1,5 @@
 """
-Tests for signal_core.core.hydro_run_daily — CycleResult wiring
+Tests for signal_core.core.hydro_run_cadence — CycleResult wiring
 
 Invariants:
 - main() always returns a CycleResult (not None)
@@ -15,9 +15,9 @@ from __future__ import annotations
 import time
 import pytest
 
-import signal_core.core.hydro_run_daily as daily_mod
+import signal_core.core.hydro_run_cadence as cadence_mod
 import signal_core.core.hydro_run as run_mod
-from signal_core.core.hydro_run_daily import CycleResult, main
+from signal_core.core.hydro_run_cadence import CycleResult, main
 from signal_core.core.hydro_run import run_full_cycle
 
 
@@ -62,44 +62,44 @@ class TestCycleResultStructure:
 
 class TestMainEmptyQueue:
     def test_returns_cycle_result(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {"total_turbine_observations": 0})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {"total_turbine_observations": 0})
         result = main()
         assert isinstance(result, CycleResult)
 
     def test_empty_queue_zero_committed(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {})
         result = main()
         assert result.committed == 0
 
     def test_empty_queue_zero_drained(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {})
         result = main()
         assert result.packets_drained == 0
 
     def test_empty_queue_zero_turbine_obs(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {})
         result = main()
         assert result.turbine_obs == 0
 
     def test_empty_queue_zero_rejected(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {})
         result = main()
         assert result.rejected == 0
 
     def test_cycle_ts_is_float(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {})
         result = main()
         assert isinstance(result.cycle_ts, float)
 
     def test_cycle_ts_is_recent(self, monkeypatch):
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: {})
         before = time.time()
         result = main()
         after = time.time()
@@ -107,15 +107,15 @@ class TestMainEmptyQueue:
 
     def test_turbine_summary_always_called(self, monkeypatch):
         called = []
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: called.append(1) or {})
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: called.append(1) or {})
         main()
         assert len(called) == 1
 
     def test_convergence_summary_stored(self, monkeypatch):
         summary = {"convergence_event_count": 2, "strong_events": 1}
-        monkeypatch.setattr(daily_mod, "drain_queue", lambda: [])
-        monkeypatch.setattr(daily_mod, "run_turbine_summary", lambda: summary)
+        monkeypatch.setattr(cadence_mod, "drain_queue", lambda: [])
+        monkeypatch.setattr(cadence_mod, "run_turbine_summary", lambda: summary)
         result = main()
         assert result.convergence_summary == summary
 

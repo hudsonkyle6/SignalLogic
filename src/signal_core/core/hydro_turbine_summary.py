@@ -182,6 +182,11 @@ def run_turbine_summary() -> Dict[str, Any]:
     Read today's turbine observations, build convergence summary,
     append to summary.jsonl, and print report.
 
+    Always appends — summary.jsonl is a rolling time-series of cycle snapshots,
+    not a once-per-day record.  This is correct for real-time loop operation
+    (--loop N) where the system runs many cycles per day and callers need the
+    most recent convergence state surfaced in the persistent log.
+
     Returns the summary dict for inspection.
     """
     records = _load_today_turbine()

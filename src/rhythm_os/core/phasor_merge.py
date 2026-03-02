@@ -22,6 +22,13 @@ import cmath
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Tuple, Optional
 
+__all__ = [
+    "ClockProjection",
+    "GroupProjection",
+    "project_samples_to_clocks",
+    "wrap_angle",
+]
+
 TAU = 2.0 * math.pi
 
 

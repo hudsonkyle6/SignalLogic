@@ -24,7 +24,7 @@ import sys
 
 from signal_core.core.log import configure, get_logger
 from signal_core.core.run_cycle_once import run_cycle_once
-from signal_core.core.hydro_run_daily import main as _hydro_daily, CycleResult
+from signal_core.core.hydro_run_cadence import main as _hydro_daily, CycleResult
 
 configure()
 log = get_logger(__name__)

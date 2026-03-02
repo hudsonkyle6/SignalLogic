@@ -217,7 +217,7 @@ def main() -> None:
 
     run_module(
         "HYDRO → GATE / DISPATCH / COMMIT",
-        "src.signal_core.core.hydro_run_daily",
+        "src.signal_core.core.hydro_run_cadence",
         required=True
     )
 
