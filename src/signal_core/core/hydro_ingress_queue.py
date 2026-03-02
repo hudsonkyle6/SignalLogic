@@ -28,7 +28,7 @@ def drain_queue(*, max_items: int | None = None) -> List[HydroPacket]:
 
     Assumption (Canon v1):
     - Single writer (run_cycle_once)
-    - Single drainer (hydro_run_daily)
+    - Single drainer (hydro_run_cadence)
     """
     if not QUEUE_PATH.exists():
         return []

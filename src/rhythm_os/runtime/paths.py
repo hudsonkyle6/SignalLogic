@@ -56,4 +56,5 @@ MANDATES_DIR = DATA_DIR / "mandates"
 SCARS_DIR = DATA_DIR / "scars"
 
 # Control signal channel — real-time dispatch decisions for downstream consumers
-CONTROL_PATH = DATA_DIR / "dark_field" / "control" / "signals.jsonl"
+# Daily rotation: signals-YYYY-MM-DD.jsonl written inside this directory.
+CONTROL_DIR = DATA_DIR / "dark_field" / "control"

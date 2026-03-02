@@ -34,6 +34,21 @@ from typing import Dict, Optional
 from rhythm_os.runtime.paths import SCARS_DIR
 
 # ---------------------------------------------------------------------------
+# In-memory write-through cache
+#
+# Keyed by the absolute file path (SCARS_DIR / "{domain}.jsonl") so that:
+#   - Production: constant SCARS_DIR means cache hits across calls in one process.
+#   - Tests: monkeypatched SCARS_DIR produces a different path per test, giving
+#     automatic isolation without any explicit cache clearing.
+#
+# The cache is write-through: _save_scars updates it before writing to disk,
+# so subsequent _load_scars calls within the same process skip file I/O.
+# ---------------------------------------------------------------------------
+
+_scar_cache: dict = {}  # Dict[Path, Dict[str, Scar]]
+
+
+# ---------------------------------------------------------------------------
 # Pressure constants
 # ---------------------------------------------------------------------------
 
@@ -97,25 +112,28 @@ def _domain_file(domain: str) -> Path:
 
 def _load_scars(domain: str) -> Dict[str, Scar]:
     path = _domain_file(domain)
-    if not path.exists():
-        return {}
+    if path in _scar_cache:
+        return _scar_cache[path]
     scars: Dict[str, Scar] = {}
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                scar = Scar.from_dict(json.loads(line))
-                scars[scar.scar_id] = scar
-            except Exception:
-                continue
+    if path.exists():
+        with path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    scar = Scar.from_dict(json.loads(line))
+                    scars[scar.scar_id] = scar
+                except Exception:
+                    continue
+    _scar_cache[path] = scars
     return scars
 
 
 def _save_scars(domain: str, scars: Dict[str, Scar]) -> None:
     """Full rewrite of the domain scar file (scars are small — O(seasons × channels))."""
     path = _domain_file(domain)
+    _scar_cache[path] = scars  # write-through: update cache before disk write
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         for scar in scars.values():

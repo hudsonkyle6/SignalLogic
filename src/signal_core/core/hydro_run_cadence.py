@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Signal Hydro — Daily Run
+Signal Hydro — Cycle Cadence
 POSTURE: HYDRO (SOLE PENSTOCK AUTHORITY)
 
 Consumes admitted ingress packets and commits
