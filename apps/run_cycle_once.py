@@ -1,17 +1,20 @@
-# apps/run_cycle_once.py
+#!/usr/bin/env python3
 """
-ONE FULL SIGNAL CYCLE — BOUNDED OBSERVATION
+SignalLogic — One Full Observation Cycle
 
 Phase 1 Regime:
-    - System pressure primary (REAL vitals)
+    - System pressure primary (real vitals, 75-second window)
     - Cyber cadence projection
-    - Natural LIVE (Open-Meteo, 42.9876°N 71.8126°W)
+    - Natural live (Open-Meteo)
     - Market muted
 
-Temporal integrity preserved.
-Core flow must continue.
-
-Synthetic injectors DISABLED for baseline identity formation.
+Sequence:
+    1. System meter window  — accumulate real vitals
+    2. Natural observation  — weather / pressure / thermal
+    3. Cyber projection     — cadence domain
+    4. System domain        — PSR transform + ingress
+    5. Hydro                — gate / dispatch / commit / turbine
+    6. Helix dashboard      — cycle summary snapshot
 """
 
 from __future__ import annotations
@@ -23,48 +26,35 @@ import time
 from pathlib import Path
 
 
-# ---------------------------------------------------------------------
-# UTF-8 TRANSPORT HARDENING
-# ---------------------------------------------------------------------
+# ─── UTF-8 transport ──────────────────────────────────────────────────────────
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-# ---------------------------------------------------------------------
-# Configuration
-# ---------------------------------------------------------------------
+# ─── Paths and environment ────────────────────────────────────────────────────
 
-ROOT = Path(__file__).resolve().parents[1]  # SignalLogic/
-PY = sys.executable
+ROOT = Path(__file__).resolve().parents[1]
+PY   = sys.executable
 
 BASE_ENV = os.environ.copy()
-BASE_ENV["PYTHONUTF8"] = "1"
+BASE_ENV["PYTHONUTF8"]       = "1"
 BASE_ENV["PYTHONIOENCODING"] = "utf-8"
-# Ensure src/ is on the path so rhythm_os / signal_core are importable
-_existing_pypath = BASE_ENV.get("PYTHONPATH", "")
+
+_existing = BASE_ENV.get("PYTHONPATH", "")
 BASE_ENV["PYTHONPATH"] = os.pathsep.join(
-    p for p in [str(ROOT / "src"), str(ROOT), _existing_pypath] if p
+    p for p in [str(ROOT / "src"), str(ROOT), _existing] if p
 )
 
+# ─── Cycle configuration ──────────────────────────────────────────────────────
+
 SYSTEM_OBS_WINDOW_S = 75
-SCOPE_WINDOW_S = 10
 
 ENABLE_NATURAL = True
-ENABLE_MARKET = False
-ENABLE_CYBER = True
-
-# ---------------------------------------------------------------------
-# Synthetic pressure DISABLED (Phase 1 hardening)
-# ---------------------------------------------------------------------
-
-ENABLE_PRESSURE = False
-PRESSURE_PROFILE = "fragment_5s"
-PRESSURE_MODULE = "apps.pressure_tools.net_pulse_injector"
+ENABLE_MARKET  = False
+ENABLE_CYBER   = True
 
 
-# ---------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------
+# ─── Helpers ──────────────────────────────────────────────────────────────────
 
 def run_module(label: str, module_path: str, required: bool = True) -> bool:
     print("\n" + "=" * 72)
@@ -95,35 +85,14 @@ def countdown(seconds: int, label: str) -> None:
     print(f"\r{label}: DONE{' ' * 24}")
 
 
-def prompt_scope(timeout_sec: int = 60) -> bool:
-    import threading
-
-    answer = {"value": None}
-
-    def _ask():
-        try:
-            answer["value"] = input("\nRun Signal Scope? (Y/N): ").strip().lower()
-        except Exception:
-            pass
-
-    t = threading.Thread(target=_ask, daemon=True)
-    t.start()
-    t.join(timeout_sec)
-    return answer["value"] == "y"
-
-
-# ---------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------
+# ─── Main cycle ───────────────────────────────────────────────────────────────
 
 def main() -> None:
     print("\n" + "=" * 72)
     print("=== BEGIN SIGNAL CYCLE ===")
     print("=" * 72)
 
-    # ---------------------------------------------------------------
-    # 1) SYSTEM OBSERVATION WINDOW (REAL VITALS ONLY)
-    # ---------------------------------------------------------------
+    # ── 1. System meter window ────────────────────────────────────────────────
 
     print("\n--- SYSTEM OBSERVATION WINDOW ---")
 
@@ -133,135 +102,75 @@ def main() -> None:
         env=BASE_ENV,
     )
 
-    pressure_proc = None
-    if ENABLE_PRESSURE:
-        pressure_proc = subprocess.Popen(
-            [
-                PY, "-m", PRESSURE_MODULE,
-                "--duration", str(SYSTEM_OBS_WINDOW_S),
-                "--profile", PRESSURE_PROFILE,
-            ],
-            cwd=str(ROOT),
-            env=BASE_ENV,
-        )
-
     try:
         countdown(SYSTEM_OBS_WINDOW_S, "SYSTEM METER WINDOW")
     finally:
         meter_proc.terminate()
         meter_proc.wait(timeout=10)
 
-        if pressure_proc is not None:
-            pressure_proc.terminate()
-            pressure_proc.wait(timeout=10)
-
     print("--- SYSTEM OBSERVATION WINDOW CLOSED ---")
 
-    # ---------------------------------------------------------------
-    # 2) NATURAL (muted)
-    # ---------------------------------------------------------------
+    # ── 2. Natural observation ────────────────────────────────────────────────
 
     if ENABLE_NATURAL:
         natural_ok = run_module(
             "OBSERVATORY → NATURAL RAW",
             "apps.observatory_tools.emit_natural_raw_once",
-            required=False
+            required=False,
         )
         if natural_ok:
-            run_module("PSR → NATURAL DOMAIN", "apps.psr_tools.emit_natural_domain", required=False)
-            run_module("INGRESS → NATURAL", "apps.psr_tools.domain_to_natural_ingress", required=False)
+            run_module("PSR → NATURAL DOMAIN",  "apps.psr_tools.emit_natural_domain",        required=False)
+            run_module("INGRESS → NATURAL",      "apps.psr_tools.domain_to_natural_ingress",  required=False)
     else:
-        print("\nNATURAL METER: muted")
+        print("\nNATURAL: muted")
 
-    # ---------------------------------------------------------------
-    # 3) MARKET (muted)
-    # ---------------------------------------------------------------
+    # ── 3. Market (muted) ─────────────────────────────────────────────────────
 
     if ENABLE_MARKET:
         market_ok = run_module(
             "OBSERVATORY → MARKET RAW",
             "apps.observatory_tools.emit_market_raw_once",
-            required=False
+            required=False,
         )
         if market_ok:
-            domain_ok = run_module(
-                "PSR → MARKET DOMAIN",
-                "apps.psr_tools.observe_market_daily",
-                required=False
-            )
+            domain_ok = run_module("PSR → MARKET DOMAIN", "apps.psr_tools.observe_market_daily",      required=False)
             if domain_ok:
-                run_module(
-                    "INGRESS → MARKET",
-                    "apps.psr_tools.domain_to_market_ingress",
-                    required=False
-                )
+                run_module("INGRESS → MARKET",             "apps.psr_tools.domain_to_market_ingress", required=False)
     else:
-        print("\nMARKET METER: muted")
+        print("\nMARKET: muted")
 
-    # ---------------------------------------------------------------
-    # 3.5) CYBER
-    # ---------------------------------------------------------------
+    # ── 4. Cyber projection ───────────────────────────────────────────────────
 
     if ENABLE_CYBER:
-        run_module("PSR → CYBER DOMAIN", "apps.psr_tools.emit_cyber_domain", required=False)
-        run_module("INGRESS → CYBER", "apps.psr_tools.domain_to_cyber_ingress", required=False)
+        run_module("PSR → CYBER DOMAIN", "apps.psr_tools.emit_cyber_domain",      required=False)
+        run_module("INGRESS → CYBER",    "apps.psr_tools.domain_to_cyber_ingress", required=False)
     else:
         print("\nCYBER: muted")
 
-    # ---------------------------------------------------------------
-    # 4) SYSTEM DOMAIN + INGRESS
-    # ---------------------------------------------------------------
+    # ── 5. System domain + ingress ────────────────────────────────────────────
 
-    run_module("PSR → SYSTEM DOMAIN", "apps.psr_tools.emit_system_domain", required=True)
-    run_module("INGRESS → SYSTEM", "apps.psr_tools.domain_to_system_ingress", required=True)
+    run_module("PSR → SYSTEM DOMAIN", "apps.psr_tools.emit_system_domain",      required=True)
+    run_module("INGRESS → SYSTEM",    "apps.psr_tools.domain_to_system_ingress", required=True)
 
-    # ---------------------------------------------------------------
-    # 5) HYDRO (REQUIRED)
-    # ---------------------------------------------------------------
+    # ── 6. Hydro: gate / dispatch / commit / turbine ──────────────────────────
 
     run_module(
         "HYDRO → GATE / DISPATCH / COMMIT",
         "src.signal_core.core.hydro_run_cadence",
-        required=True
+        required=True,
     )
 
-    # ---------------------------------------------------------------
-    # 6) TURBINE SUMMARY (READ-ONLY — closes observation loop)
-    # ---------------------------------------------------------------
+    # ── 7. Helix dashboard snapshot ───────────────────────────────────────────
 
     run_module(
-        "TURBINE → CONVERGENCE SUMMARY",
-        "src.signal_core.core.hydro_turbine_summary",
-        required=False
+        "HELIX → CYCLE SUMMARY",
+        "signal_core.core.dashboard.helix_dashboard",
+        required=False,
     )
 
     print("\n" + "=" * 72)
     print("=== END SIGNAL CYCLE ===")
     print("=" * 72)
-
-    # ---------------------------------------------------------------
-    # 7) OPTIONAL SCOPE
-    # ---------------------------------------------------------------
-
-    if prompt_scope(timeout_sec=60):
-        print("\n" + "=" * 72)
-        print("SCOPE → OBSERVATION (READ-ONLY)")
-        print("=" * 72)
-
-        scope_proc = subprocess.Popen(
-            [PY, "src/rhythm_os/scope/scope_run_once.py"],
-            cwd=str(ROOT),
-            env=BASE_ENV,
-        )
-
-        try:
-            countdown(SCOPE_WINDOW_S, "SCOPE WINDOW")
-        finally:
-            scope_proc.wait(timeout=10)
-
-        print("SCOPE: COMPLETE")
-    else:
-        print("\nSCOPE: skipped")
 
 
 if __name__ == "__main__":
