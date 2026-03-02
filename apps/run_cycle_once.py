@@ -30,17 +30,21 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-BASE_ENV = os.environ.copy()
-BASE_ENV["PYTHONUTF8"] = "1"
-BASE_ENV["PYTHONIOENCODING"] = "utf-8"
-
-
 # ---------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------
 
 ROOT = Path(__file__).resolve().parents[1]  # SignalLogic/
 PY = sys.executable
+
+BASE_ENV = os.environ.copy()
+BASE_ENV["PYTHONUTF8"] = "1"
+BASE_ENV["PYTHONIOENCODING"] = "utf-8"
+# Ensure src/ is on the path so rhythm_os / signal_core are importable
+_existing_pypath = BASE_ENV.get("PYTHONPATH", "")
+BASE_ENV["PYTHONPATH"] = os.pathsep.join(
+    p for p in [str(ROOT / "src"), str(ROOT), _existing_pypath] if p
+)
 
 SYSTEM_OBS_WINDOW_S = 75
 SCOPE_WINDOW_S = 10

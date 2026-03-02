@@ -255,7 +255,10 @@ class ProcMeter(BaseMeter):
                 cpu_times = p.cpu_times()
                 cpu_total = float(cpu_times.user + cpu_times.system)
 
-                io = p.io_counters() if hasattr(p, "io_counters") else None
+                try:
+                    io = p.io_counters() if hasattr(p, "io_counters") else None
+                except (ValueError, OSError):
+                    io = None
                 rb = float(getattr(io, "read_bytes", 0.0)) if io else 0.0
                 wb = float(getattr(io, "write_bytes", 0.0)) if io else 0.0
 
