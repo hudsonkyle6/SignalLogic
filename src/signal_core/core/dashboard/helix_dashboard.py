@@ -412,6 +412,18 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
             ev     = cs.get("convergence_event_count", 0)
             strong = cs.get("strong_events", 0)
             t.add_row("Convergence", Text(f"{ev} events ({strong} strong)", style="magenta"))
+            for event in cs.get("convergence_events", []):
+                domains   = event.get("domains", [])
+                phase     = event.get("diurnal_phase")
+                is_strong = event.get("strength") == "strong"
+                line = Text()
+                line.append("● " if is_strong else "○ ", style="bold magenta" if is_strong else "dim magenta")
+                line.append(" + ".join(domains), style="magenta" if is_strong else "dim")
+                if phase is not None:
+                    line.append(f"  φ={phase:.3f}", style="dim")
+                if is_strong:
+                    line.append("  STRONG", style="bold magenta")
+                t.add_row("", line)
 
         bs = getattr(cycle_result, "baseline_status", None)
         if bs:
