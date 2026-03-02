@@ -173,5 +173,51 @@ def main() -> None:
     print("=" * 72)
 
 
+def _run_loop(interval_s: int) -> None:
+    """
+    Run full cycles repeatedly, sleeping `interval_s` between completions.
+    Exits cleanly on SIGINT / SIGTERM.
+    """
+    import signal as _signal
+    import threading
+
+    stop = threading.Event()
+    _signal.signal(_signal.SIGTERM, lambda *_: stop.set())
+    _signal.signal(_signal.SIGINT,  lambda *_: stop.set())
+
+    cycle = 0
+    while not stop.is_set():
+        cycle += 1
+        print(f"\n{'#' * 72}")
+        print(f"# CYCLE {cycle}  (loop interval={interval_s}s)")
+        print(f"{'#' * 72}")
+        try:
+            main()
+        except SystemExit as exc:
+            # A required step failed — log and wait before retrying
+            print(f"\nCYCLE {cycle} FAILED: {exc} — retrying after {interval_s}s")
+
+        if not stop.is_set():
+            print(f"\nWaiting {interval_s}s before next cycle…")
+            stop.wait(timeout=interval_s)
+
+    print("\nSignalLogic loop stopped.")
+
+
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    ap = argparse.ArgumentParser(description="SignalLogic — full observation cycle")
+    ap.add_argument(
+        "--loop",
+        type=int,
+        default=0,
+        metavar="SECONDS",
+        help="run cycles repeatedly, sleeping SECONDS between completions (0 = run once)",
+    )
+    args = ap.parse_args()
+
+    if args.loop > 0:
+        _run_loop(args.loop)
+    else:
+        main()

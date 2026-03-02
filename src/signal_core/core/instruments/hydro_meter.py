@@ -440,6 +440,9 @@ def build_meters(
     # CPU freq meter
     meters.append(CpuFreqMeter(interval_s, window_s, min_points))
 
+    # CPU utilization meter (percent + envelope)
+    meters.append(CpuUtilMeter(interval_s, window_s, min_points))
+
     return meters
 
 
