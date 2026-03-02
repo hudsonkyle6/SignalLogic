@@ -355,7 +355,7 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
             strong = cs.get("strong_events", 0)
             t.add_row("Convergence", Text(f"{ev} events ({strong} strong)", style="magenta"))
 
-        bs = cycle_result.baseline_status
+        bs = getattr(cycle_result, "baseline_status", None)
         if bs:
             line = Text()
             line.append("System: ")
