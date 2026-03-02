@@ -9,37 +9,23 @@ from typing import Any, Dict, Optional
 import requests
 
 from rhythm_os.runtime.temporal_anchor import compute_anchor, SEMI_DIURNAL_PERIOD_S
-from rhythm_os.runtime.deploy_config import get_location
-
-# ---------------------------------------------------------------------
-# Observatory coordinates — loaded from deployment.yaml at startup.
-# Override the file or set SIGNALLOGIC_CONFIG to change location.
-# ---------------------------------------------------------------------
-
-_lat, _lon, _label = get_location()
-LAT: float = _lat
-LON: float = _lon
+from rhythm_os.runtime.location_resolver import resolve_location
 
 # ---------------------------------------------------------------------
 # Open-Meteo (no API key, no rate limit for reasonable use)
+# Location is resolved at call time so the system works anywhere.
 # ---------------------------------------------------------------------
 
 _OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
-_OPEN_METEO_PARAMS = {
-    "latitude": LAT,
-    "longitude": LON,
-    "current": ",".join([
-        "surface_pressure",
-        "temperature_2m",
-        "relative_humidity_2m",
-        "wind_speed_10m",
-        "wind_direction_10m",
-        "cloud_cover",
-        "weather_code",
-    ]),
-    "timezone": "UTC",
-    "forecast_days": 1,
-}
+_OPEN_METEO_CURRENT_FIELDS = ",".join([
+    "surface_pressure",
+    "temperature_2m",
+    "relative_humidity_2m",
+    "wind_speed_10m",
+    "wind_direction_10m",
+    "cloud_cover",
+    "weather_code",
+])
 
 # Pressure normalization bounds (mid-latitude surface pressure, hPa)
 _P_LOW:  float = 975.0
@@ -58,13 +44,20 @@ from rhythm_os.runtime.paths import NATURAL_DIR as OUT_DIR
 # Helpers
 # ---------------------------------------------------------------------
 
-def _fetch_weather() -> Optional[Dict[str, Any]]:
+def _fetch_weather(lat: float, lon: float) -> Optional[Dict[str, Any]]:
     """
-    Fetch current conditions from Open-Meteo.
+    Fetch current conditions from Open-Meteo for the given coordinates.
     Returns the 'current' dict on success, None on any failure.
     """
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current": _OPEN_METEO_CURRENT_FIELDS,
+        "timezone": "UTC",
+        "forecast_days": 1,
+    }
     try:
-        resp = requests.get(_OPEN_METEO_URL, params=_OPEN_METEO_PARAMS, timeout=10)
+        resp = requests.get(_OPEN_METEO_URL, params=params, timeout=10)
         resp.raise_for_status()
         return resp.json().get("current", {})
     except Exception as exc:
@@ -108,8 +101,9 @@ def _make_record(
         "raw": raw,
         "extractor": {
             "source": "open_meteo",
-            "lat": LAT,
-            "lon": LON,
+            "lat": lat,
+            "lon": lon,
+            "location_label": label,
             "runner": "emit_natural_raw_once",
             "version": "v2",
             "fetch_ok": fetch_ok,
@@ -124,12 +118,16 @@ def _make_record(
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Resolve location at runtime so this works anywhere the machine travels.
+    lat, lon, label = resolve_location()
+    print(f"OBSERVATORY: location resolved → {label} ({lat:.4f}, {lon:.4f})")
+
     t_now = float(time.time())
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     out_path = OUT_DIR / f"{today}.jsonl"
 
     anchor = compute_anchor(t_now, domain="natural")
-    weather = _fetch_weather()
+    weather = _fetch_weather(lat, lon)
     fetch_ok = weather is not None
 
     if fetch_ok:
