@@ -21,6 +21,12 @@ baseline:
   min_natural_records: 4      # ~4 emit_natural_raw_once calls
 
 domain:
-  # List domain-specific channel names active for this deployment.
-  # Example: ["cold_storage", "compressor_1", "hvac"]
-  channels: []
+  # Business domain channels active for this deployment.
+  # Regional pressure is Phase 2 (pending data source decision).
+  channels:
+    - "volatility_pressure"
+    - "capital_cost"
+    - "energy_pressure"
+    - "maritime_pressure"
+    - "food_cold_chain"
+    - "infrastructure_materials"
