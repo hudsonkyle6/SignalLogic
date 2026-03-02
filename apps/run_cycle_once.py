@@ -85,6 +85,48 @@ def countdown(seconds: int, label: str) -> None:
     print(f"\r{label}: DONE{' ' * 24}")
 
 
+def _helix_live(seconds: int, label: str, stop_event=None) -> None:
+    """
+    Show the rotating helix for `seconds` seconds with a countdown banner.
+    Falls back to plain text countdown if rich/dashboard is unavailable.
+    Exits early if `stop_event` is set (used during loop inter-cycle wait).
+    """
+    try:
+        from signal_core.core.dashboard.helix_dashboard import (
+            _build_display, _load_last_cycle_result, _HAS_RICH,
+        )
+    except Exception:
+        countdown(seconds, label)
+        return
+
+    if not _HAS_RICH:
+        countdown(seconds, label)
+        return
+
+    from rich.console import Console
+    from rich.live import Live
+
+    console = Console()
+    rotation = 0.0
+    fps = 8.0
+    frame_s = 1.0 / fps
+    end = time.monotonic() + seconds
+    cycle_result = _load_last_cycle_result()
+
+    with Live(console=console, refresh_per_second=fps, screen=True) as live:
+        while True:
+            remaining = end - time.monotonic()
+            if remaining <= 0:
+                break
+            if stop_event is not None and stop_event.is_set():
+                break
+            mins, secs_left = divmod(int(remaining), 60)
+            status = f"{label}  —  {mins:02d}:{secs_left:02d} remaining"
+            live.update(_build_display(rotation=rotation, cycle_result=cycle_result, status_text=status))
+            time.sleep(frame_s)
+            rotation += 0.08
+
+
 # ─── Main cycle ───────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -103,7 +145,7 @@ def main() -> None:
     )
 
     try:
-        countdown(SYSTEM_OBS_WINDOW_S, "SYSTEM METER WINDOW")
+        _helix_live(SYSTEM_OBS_WINDOW_S, "SYSTEM METER WINDOW")
     finally:
         meter_proc.terminate()
         meter_proc.wait(timeout=10)
@@ -198,8 +240,7 @@ def _run_loop(interval_s: int) -> None:
             print(f"\nCYCLE {cycle} FAILED: {exc} — retrying after {interval_s}s")
 
         if not stop.is_set():
-            print(f"\nWaiting {interval_s}s before next cycle…")
-            stop.wait(timeout=interval_s)
+            _helix_live(interval_s, "Next cycle in", stop_event=stop)
 
     print("\nSignalLogic loop stopped.")
 

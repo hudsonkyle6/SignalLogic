@@ -374,6 +374,7 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
 def _build_display(
     rotation: float = 0.0,
     cycle_result: Optional[Any] = None,
+    status_text: str = "",
 ) -> "Table":
     """Build the full dashboard as a rich Table (two columns: helix + panels)."""
     if not _HAS_RICH:
@@ -429,13 +430,11 @@ def _build_display(
 
     from rich.console import Group
 
-    right = Group(
-        Panel(header, border_style="magenta"),
-        p_domain,
-        p_natural,
-        p_system,
-        p_cycle,
-    )
+    right_items: list = [Panel(header, border_style="magenta")]
+    if status_text:
+        right_items.append(Rule(f"  {status_text}  ", style="bold yellow"))
+    right_items.extend([p_domain, p_natural, p_system, p_cycle])
+    right = Group(*right_items)
 
     outer.add_row(helix_panel, right)
     return outer
