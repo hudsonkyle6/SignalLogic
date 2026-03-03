@@ -88,6 +88,9 @@ class CycleResult:
     convergence_summary: Optional[Dict[str, Any]] = field(default=None)
     # ReadinessStatus attached by run_full_cycle(); None when called directly.
     baseline_status: Optional[Any] = field(default=None)
+    # ML prediction attached by run_full_cycle(); None until model is trained.
+    # Keys: predicted_label, confidence, probabilities, model_version, calibrated.
+    ml_prediction: Optional[Dict[str, Any]] = field(default=None)
 
 
 # ---------------------------------------------------------------------
@@ -378,6 +381,94 @@ def main() -> CycleResult:
     )
 
 
+def _run_voice_narration(result: "CycleResult") -> None:
+    """
+    Generate a narrator voice line from the cycle result and persist it.
+
+    Errors are caught — voice never blocks or delays the cycle.
+    Imports are deferred so the module loads even without Ollama installed.
+    """
+    try:
+        from rhythm_os.voice.narrator import narrate
+        from rhythm_os.voice.voice_store import VoiceLine, persist_voice_line
+
+        cs = result.convergence_summary or {}
+        cycle_summary = {
+            "packets_admitted": result.committed,
+            "packets_drained": result.packets_drained,
+            "rejected": result.rejected,
+            "turbine_obs": result.turbine_obs,
+            "spillway_quarantined": result.spillway_quarantined,
+            "domains_seen": sorted(cs.get("domains_observed", {}).keys()),
+            "convergence_events": cs.get("convergence_event_count", 0),
+            "strong_events": cs.get("strong_events", 0),
+        }
+        narration = narrate(cycle_summary)
+        persist_voice_line(
+            VoiceLine(mode="narrator", text=narration.text, raw=narration.raw)
+        )
+        log.info("voice narrator persisted text=%r", narration.text[:60])
+    except Exception as exc:
+        log.debug("voice narration skipped: %s", exc)
+
+
+def _run_voice_interpretation(convergence: "dict") -> None:
+    """
+    For each strong convergence event, record domain-pair observations in
+    ConvergenceMemoryStore and run the LLM interpreter over the resulting
+    history summary.  Only strong events (3+ domains) trigger interpretation.
+
+    Errors are caught — voice never blocks or delays the cycle.
+    """
+    try:
+        from itertools import combinations
+
+        from rhythm_os.domain.convergence.memory_store import ConvergenceMemoryStore
+        from rhythm_os.voice.interpreter import interpret
+        from rhythm_os.voice.voice_store import VoiceLine, persist_voice_line
+
+        strong_events = [
+            e
+            for e in convergence.get("convergence_events", [])
+            if e.get("strength") == "strong"
+        ]
+        if not strong_events:
+            return
+
+        store = ConvergenceMemoryStore()
+
+        for event in strong_events:
+            domains = sorted(event.get("domains", []))
+            phase = float(event.get("diurnal_phase", 0.0))
+            note = "convergence:" + ",".join(domains)
+
+            for domain_a, domain_b in combinations(domains, 2):
+                store.record(
+                    domain_a=domain_a,
+                    domain_b=domain_b,
+                    diurnal_phase=phase,
+                    leading_domain="",  # leading domain not determinable from summary
+                    convergence_note=note,
+                )
+                history = dict(store.pair_summary(domain_a, domain_b))
+                history["domain_pair"] = f"{domain_a}+{domain_b}"
+                interp = interpret(history)
+                vl = VoiceLine(
+                    mode="interpreter",
+                    text=f"{interp.convergence_type}: {interp.rationale}",
+                    raw=interp.raw,
+                )
+                persist_voice_line(vl)
+                log.info(
+                    "voice interpreter persisted pair=%s+%s type=%s",
+                    domain_a,
+                    domain_b,
+                    interp.convergence_type,
+                )
+    except Exception as exc:
+        log.debug("voice interpretation skipped: %s", exc)
+
+
 def _persist_cycle_result(result: "CycleResult") -> None:
     """Write CycleResult fields to TURBINE_DIR/last_cycle.json for the dashboard."""
     import dataclasses as _dc
@@ -403,3 +494,5 @@ if __name__ == "__main__":
         result.spillway_quarantined,
     )
     _persist_cycle_result(result)
+    _run_voice_narration(result)
+    _run_voice_interpretation(result.convergence_summary or {})

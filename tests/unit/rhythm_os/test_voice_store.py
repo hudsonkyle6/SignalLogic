@@ -31,7 +31,11 @@ from pathlib import Path
 
 import pytest
 
-from rhythm_os.voice.voice_store import VoiceLine, load_last_voice_line, persist_voice_line
+from rhythm_os.voice.voice_store import (
+    VoiceLine,
+    load_last_voice_line,
+    persist_voice_line,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -60,7 +64,9 @@ class TestVoiceLine:
         assert "line_id" in d
 
     def test_from_dict_round_trip(self):
-        original = VoiceLine(mode="narrator", text="Some text.", raw="Some text.", t=1.0, line_id="abc")
+        original = VoiceLine(
+            mode="narrator", text="Some text.", raw="Some text.", t=1.0, line_id="abc"
+        )
         restored = VoiceLine.from_dict(original.to_dict())
         assert restored.mode == "narrator"
         assert restored.text == "Some text."
@@ -88,7 +94,9 @@ class TestVoiceLine:
 
 class TestPersistVoiceLine:
     def test_returns_voice_line(self, store_path: Path):
-        vl = VoiceLine(mode="narrator", text="The system observed.", raw="The system observed.")
+        vl = VoiceLine(
+            mode="narrator", text="The system observed.", raw="The system observed."
+        )
         result = persist_voice_line(vl, store_path=store_path)
         assert isinstance(result, VoiceLine)
 
@@ -126,14 +134,14 @@ class TestPersistVoiceLine:
     def test_file_has_one_line(self, store_path: Path):
         vl = VoiceLine(mode="narrator", text="A.", raw="A.")
         persist_voice_line(vl, store_path=store_path)
-        lines = [l for l in store_path.read_text().splitlines() if l.strip()]
+        lines = [ln for ln in store_path.read_text().splitlines() if ln.strip()]
         assert len(lines) == 1
 
     def test_two_persists_append(self, store_path: Path):
         vl = VoiceLine(mode="narrator", text="A.", raw="A.")
         persist_voice_line(vl, store_path=store_path)
         persist_voice_line(vl, store_path=store_path)
-        lines = [l for l in store_path.read_text().splitlines() if l.strip()]
+        lines = [ln for ln in store_path.read_text().splitlines() if ln.strip()]
         assert len(lines) == 2
 
     def test_record_is_valid_json(self, store_path: Path):
@@ -204,9 +212,7 @@ class TestLoadLastVoiceLine:
     def test_skips_corrupt_lines(self, store_path: Path):
         store_path.parent.mkdir(parents=True, exist_ok=True)
         vl = VoiceLine(mode="narrator", text="Good.", raw="Good.", t=5.0, line_id="x")
-        store_path.write_text(
-            "NOT JSON\n" + json.dumps(vl.to_dict()) + "\n"
-        )
+        store_path.write_text("NOT JSON\n" + json.dumps(vl.to_dict()) + "\n")
         result = load_last_voice_line(store_path=store_path)
         assert result is not None
         assert result.text == "Good."
@@ -248,7 +254,11 @@ class TestDashboardNarratorPanel:
     def test_load_narrator_line_returns_text(self, monkeypatch):
         from signal_core.core.dashboard import helix_dashboard
 
-        vl = VoiceLine(mode="narrator", text="Twelve packets were observed.", raw="Twelve packets were observed.")
+        vl = VoiceLine(
+            mode="narrator",
+            text="Twelve packets were observed.",
+            raw="Twelve packets were observed.",
+        )
         monkeypatch.setattr(
             helix_dashboard,
             "load_last_voice_line",

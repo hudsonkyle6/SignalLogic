@@ -87,6 +87,10 @@ class TurbineAction:
     outcome: ActionOutcome
     outcome_reason: str
     acted_at: float
+    # Gate Counselor advisory — present when counsel() ran before authority evaluation.
+    # None when counselor was unavailable (Ollama down, OBSERVATORY_ONLY, etc.).
+    counselor_verdict: Optional[str] = None
+    counselor_justification: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -99,6 +103,8 @@ class TurbineAction:
             "outcome": self.outcome.value,
             "outcome_reason": self.outcome_reason,
             "acted_at": self.acted_at,
+            "counselor_verdict": self.counselor_verdict,
+            "counselor_justification": self.counselor_justification,
         }
 
     @staticmethod
@@ -113,6 +119,8 @@ class TurbineAction:
             outcome=ActionOutcome(d["outcome"]),
             outcome_reason=str(d["outcome_reason"]),
             acted_at=float(d["acted_at"]),
+            counselor_verdict=d.get("counselor_verdict"),
+            counselor_justification=d.get("counselor_justification"),
         )
 
 
@@ -131,6 +139,8 @@ def make_turbine_action(
     outcome_reason: str,
     t: Optional[float] = None,
     acted_at: Optional[float] = None,
+    counselor_verdict: Optional[str] = None,
+    counselor_justification: Optional[str] = None,
 ) -> TurbineAction:
     """
     Construct a TurbineAction with a fresh UUID and timestamps.
@@ -146,6 +156,8 @@ def make_turbine_action(
         outcome=outcome,
         outcome_reason=outcome_reason,
         acted_at=acted_at if acted_at is not None else now,
+        counselor_verdict=counselor_verdict,
+        counselor_justification=counselor_justification,
     )
 
 

@@ -62,7 +62,63 @@ def run_full_cycle() -> CycleResult:
     # Step 4: attach readiness to result
     result = dataclasses.replace(result, baseline_status=readiness)
 
+    # Step 5: extract ML feature vector and append to data/ml/features.jsonl
+    features: dict = {}
+    try:
+        from signal_core.core.ml.feature_builder import extract_and_append
+
+        features = extract_and_append(result)
+    except Exception:
+        log.warning(
+            "ml feature extraction failed — cycle result unaffected", exc_info=True
+        )
+
+    # Step 6: ML inference — predict convergence event label
+    result = _run_ml_inference(result, features)
+
     return result
+
+
+def _run_ml_inference(result: "CycleResult", features: dict) -> "CycleResult":
+    """
+    Run classifier inference on the current cycle's features.
+
+    Returns the result with ml_prediction populated if a trained model
+    is available, or the original result unchanged when:
+      - no model has been trained yet (silent — model is optional)
+      - features dict is empty (feature extraction failed upstream)
+      - any other exception (logged as warning, cycle is never blocked)
+
+    This function is extracted to allow direct unit testing without
+    spinning up the full hydro cycle.
+    """
+    if not features:
+        return result
+    try:
+        from signal_core.core.ml.classifier import load_model, predict
+
+        if load_model() is None:
+            return result
+        pred = predict(features)
+        log.info(
+            "ml prediction label=%s confidence=%.1f%% model=%s",
+            pred.predicted_label,
+            pred.confidence * 100,
+            pred.model_version,
+        )
+        return dataclasses.replace(
+            result,
+            ml_prediction={
+                "predicted_label": pred.predicted_label,
+                "confidence": pred.confidence,
+                "probabilities": pred.probabilities,
+                "model_version": pred.model_version,
+                "calibrated": pred.calibrated,
+            },
+        )
+    except Exception:
+        log.warning("ml inference failed — cycle result unaffected", exc_info=True)
+        return result
 
 
 def _health_check() -> int:
