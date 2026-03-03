@@ -201,10 +201,11 @@ class GateAuthority:
         proposed_payload: Dict[str, Any],
         mandate: Optional[Mandate] = None,
         executor: Optional[Callable[[TurbineAction], None]] = None,
+        counsel_fn: Optional[Callable[[Dict[str, Any]], Any]] = None,
         now: Optional[float] = None,
     ) -> TurbineAction:
         """
-        Full action lifecycle: evaluate → act (if PROCEED) → log → return.
+        Full action lifecycle: counsel (advisory) → evaluate → act → log → return.
 
         Parameters
         ----------
@@ -216,11 +217,51 @@ class GateAuthority:
         executor             Optional callable that carries out the action.
                              Called only when authority says PROCEED.
                              If executor raises, outcome becomes FAILED.
+        counsel_fn           Optional callable (action_context: Dict) -> CounselorResult.
+                             If omitted, the real Gate Counselor (Ollama) is used.
+                             Errors from the counselor are swallowed — advisory only.
         now                  Override clock for testing
 
         Returns a fully-populated TurbineAction with outcome recorded.
         """
         t = now if now is not None else time.time()
+
+        # ------------------------------------------------------------------
+        # Gate Counselor advisory — runs before authority evaluation.
+        # The counselor NEVER blocks; its verdict is logged alongside the
+        # authority's hard decision.  Errors are swallowed silently.
+        # ------------------------------------------------------------------
+        counselor_verdict: Optional[str] = None
+        counselor_justification: Optional[str] = None
+        try:
+            if counsel_fn is None:
+                from rhythm_os.voice.gate_counselor import counsel as _counsel
+
+                def counsel_fn(ctx: Dict[str, Any]) -> Any:
+                    return _counsel(ctx)
+
+            action_context: Dict[str, Any] = {
+                "action_type": action_type.value,
+                "gate_id": gate_id,
+                "convergence_trigger": convergence_trigger,
+                **proposed_payload,
+            }
+            cr = counsel_fn(action_context)
+            counselor_verdict = cr.recommendation
+            counselor_justification = cr.justification
+            # Persist counselor advisory as a voice line for the dashboard
+            from rhythm_os.voice.voice_store import VoiceLine, persist_voice_line
+
+            persist_voice_line(
+                VoiceLine(
+                    mode="counselor",
+                    text=f"{cr.recommendation}: {cr.justification}",
+                    raw=cr.raw,
+                )
+            )
+        except Exception:
+            pass  # advisory only — never raise
+
         result = self.evaluate(
             action_type=action_type,
             gate_id=gate_id,
@@ -239,6 +280,8 @@ class GateAuthority:
                 outcome_reason=result.reason,
                 t=t,
                 acted_at=t,
+                counselor_verdict=counselor_verdict,
+                counselor_justification=counselor_justification,
             )
             # Run executor if provided
             if executor is not None:
@@ -254,6 +297,8 @@ class GateAuthority:
                         outcome_reason=f"executor_error:{exc}",
                         t=t,
                         acted_at=time.time(),
+                        counselor_verdict=counselor_verdict,
+                        counselor_justification=counselor_justification,
                     )
         else:
             action = make_turbine_action(
@@ -265,6 +310,8 @@ class GateAuthority:
                 outcome_reason=result.reason,
                 t=t,
                 acted_at=t,
+                counselor_verdict=counselor_verdict,
+                counselor_justification=counselor_justification,
             )
 
         if self._persist:
