@@ -80,3 +80,6 @@ GATES_DIR = DATA_DIR / "dark_field" / "gates"
 
 # Turbine action log — proposed and resolved TurbineAction records
 GATE_ACTIONS_DIR = DATA_DIR / "dark_field" / "gate_actions"
+
+# Convergence memory — cross-day domain-pair × phase-bucket observations
+CONVERGENCE_MEMORY_PATH = DATA_DIR / "dark_field" / "convergence" / "memory.jsonl"
