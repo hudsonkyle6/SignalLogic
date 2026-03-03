@@ -26,12 +26,9 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
-import os
 import random
 import time
 from datetime import datetime, timezone
-from pathlib import Path
 
 from signal_core.core.log import configure, get_logger
 
@@ -118,11 +115,11 @@ _SCENARIOS: dict[str, dict[str, tuple[float, float]]] = {
 # Organization (coherence) of each attack type at intensity=1.0.
 # Represents how structured/systematic the attack pattern is.
 _ORGANIZATION: dict[str, tuple[float, float]] = {
-    "baseline":    (0.06, 0.03),
-    "port_scan":   (0.82, 0.06),
-    "ddos":        (0.74, 0.08),
+    "baseline": (0.06, 0.03),
+    "port_scan": (0.82, 0.06),
+    "ddos": (0.74, 0.08),
     "brute_force": (0.88, 0.05),
-    "apt":         (0.18, 0.06),
+    "apt": (0.18, 0.06),
 }
 
 
@@ -150,7 +147,9 @@ def generate_record(
     ts         Unix timestamp (defaults to now)
     """
     if scenario not in _SCENARIOS:
-        raise ValueError(f"Unknown scenario '{scenario}'. Choose from: {list(_SCENARIOS)}")
+        raise ValueError(
+            f"Unknown scenario '{scenario}'. Choose from: {list(_SCENARIOS)}"
+        )
     intensity = max(0.0, min(1.0, intensity))
     ts = ts or time.time()
 
@@ -177,12 +176,13 @@ def generate_record(
 
     # Derived anomaly score — weighted combination of attack indicators
     rec["anomaly_score"] = round(
-        min(1.0,
+        min(
+            1.0,
             0.25 * min(1.0, rec["connection_attempt_rate"] / 10_000.0)
             + 0.30 * min(1.0, rec["auth_failure_rate"] / 500.0)
             + 0.20 * min(1.0, rec["inbound_bps"] / 1_000_000_000.0)
             + 0.15 * min(1.0, rec["unique_dst_ports"] / 5_000.0)
-            + 0.10 * rec["geographic_entropy"]
+            + 0.10 * rec["geographic_entropy"],
         ),
         4,
     )

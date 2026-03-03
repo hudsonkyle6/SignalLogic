@@ -63,6 +63,26 @@ def _run_ml_inference(result: "CycleResult", features: dict) -> "CycleResult":
         return result
 
 
+def run_cycle_once() -> None:
+    """Run one observation cycle (observe → gate → enqueue → dispatch)."""
+    from signal_core.core.run_cycle_once import run_cycle_once as _inner
+
+    _inner()
+
+
+def _hydro_daily() -> "CycleResult":
+    """Run the hydro gate/dispatch/commit/turbine/ML pipeline."""
+    from signal_core.core.hydro_run_cadence import main
+
+    return main()
+
+
+def run_full_cycle() -> "CycleResult":
+    """Run a complete SignalLogic cycle: observe then drain/commit."""
+    run_cycle_once()
+    return _hydro_daily()
+
+
 def _health_check() -> int:
     """Return 0 if system is warm/ready, 1 if cold/degraded, 2 on error."""
     try:
