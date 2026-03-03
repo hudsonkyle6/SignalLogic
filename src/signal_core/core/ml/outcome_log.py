@@ -309,7 +309,7 @@ def _print_feature_row(f: dict) -> None:
     )
     print(
         f"    → python -m signal_core.core.ml.outcome_log"
-        f" --ts {ts:.0f} --label NOISE|COUPLING|LAG --outcome ACTED|HELD|MONITORED"
+        f" --ts {ts} --label NOISE|COUPLING|LAG --outcome ACTED|HELD|MONITORED"
     )
 
 
