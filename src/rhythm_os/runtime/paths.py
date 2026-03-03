@@ -74,3 +74,9 @@ AUDIT_PATH = DATA_DIR / "dark_field" / "hydro" / "audit.jsonl"
 
 # PSR intermediate store (pre-domain aggregates, not primary dark field)
 PSR_DIR = DATA_DIR / "psr"
+
+# Gate registry — open/close events, append-only JSONL audit log
+GATES_DIR = DATA_DIR / "dark_field" / "gates"
+
+# Turbine action log — proposed and resolved TurbineAction records
+GATE_ACTIONS_DIR = DATA_DIR / "dark_field" / "gate_actions"
