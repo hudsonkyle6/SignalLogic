@@ -119,7 +119,9 @@ def _all_scar_features() -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-def _convergence_features(convergence_summary: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+def _convergence_features(
+    convergence_summary: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
     """
     Flatten the turbine convergence summary dict into scalar features.
 
@@ -256,13 +258,9 @@ def extract_features(cycle_result: Any) -> Dict[str, Any]:
     features: Dict[str, Any] = {"ts": ts}
     features.update(_temporal_features(ts))
     features.update(
-        _convergence_features(
-            getattr(cycle_result, "convergence_summary", None)
-        )
+        _convergence_features(getattr(cycle_result, "convergence_summary", None))
     )
-    features.update(
-        _readiness_features(getattr(cycle_result, "baseline_status", None))
-    )
+    features.update(_readiness_features(getattr(cycle_result, "baseline_status", None)))
     features.update(_all_scar_features())
 
     # Cycle-level packet statistics

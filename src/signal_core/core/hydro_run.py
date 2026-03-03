@@ -68,7 +68,9 @@ def run_full_cycle() -> CycleResult:
 
         extract_and_append(result)
     except Exception:
-        log.warning("ml feature extraction failed — cycle result unaffected", exc_info=True)
+        log.warning(
+            "ml feature extraction failed — cycle result unaffected", exc_info=True
+        )
 
     return result
 

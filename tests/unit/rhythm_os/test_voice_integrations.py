@@ -32,9 +32,7 @@ Invariants:
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from unittest.mock import MagicMock
 
 import pytest
@@ -215,6 +213,7 @@ class TestGateAuthorityCounselorAdvisory:
     def _isolate_voice_store(self, monkeypatch, tmp_path):
         """Redirect VOICE_LINES_PATH so counselor tests never write to real data."""
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", tmp_path / "voice_lines.jsonl")
 
     def _authority(self, gate_id="g-001", scope=ActionScope.SIGNAL, tmp_path=None):
@@ -225,6 +224,7 @@ class TestGateAuthorityCounselorAdvisory:
         auth = self._authority(tmp_path=tmp_path)
         monkeypatch.setattr("rhythm_os.core.posture.SYSTEM_POSTURE", "ACTIVE")
         import rhythm_os.control_plane.gate_authority as mod
+
         monkeypatch.setattr(mod, "SYSTEM_POSTURE", "ACTIVE")
 
         action = auth.resolve_action(
@@ -237,11 +237,14 @@ class TestGateAuthorityCounselorAdvisory:
         assert action.counselor_verdict == "PROCEED"
         assert action.counselor_justification == "Evidence is strong."
 
-    def test_counselor_defer_does_not_override_authority_proceed(self, monkeypatch, tmp_path):
+    def test_counselor_defer_does_not_override_authority_proceed(
+        self, monkeypatch, tmp_path
+    ):
         """Counselor saying DEFER must not block a PROCEED from the authority."""
         auth = self._authority(tmp_path=tmp_path)
         monkeypatch.setattr("rhythm_os.core.posture.SYSTEM_POSTURE", "ACTIVE")
         import rhythm_os.control_plane.gate_authority as mod
+
         monkeypatch.setattr(mod, "SYSTEM_POSTURE", "ACTIVE")
 
         action = auth.resolve_action(
@@ -262,6 +265,7 @@ class TestGateAuthorityCounselorAdvisory:
         auth = GateAuthority(store, persist_actions=False)
         monkeypatch.setattr("rhythm_os.core.posture.SYSTEM_POSTURE", "ACTIVE")
         import rhythm_os.control_plane.gate_authority as mod
+
         monkeypatch.setattr(mod, "SYSTEM_POSTURE", "ACTIVE")
 
         action = auth.resolve_action(
@@ -279,6 +283,7 @@ class TestGateAuthorityCounselorAdvisory:
         auth = self._authority(tmp_path=tmp_path)
         monkeypatch.setattr("rhythm_os.core.posture.SYSTEM_POSTURE", "ACTIVE")
         import rhythm_os.control_plane.gate_authority as mod
+
         monkeypatch.setattr(mod, "SYSTEM_POSTURE", "ACTIVE")
 
         def _broken(ctx):
@@ -300,6 +305,7 @@ class TestGateAuthorityCounselorAdvisory:
         auth = self._authority(tmp_path=tmp_path)
         monkeypatch.setattr("rhythm_os.core.posture.SYSTEM_POSTURE", "ACTIVE")
         import rhythm_os.control_plane.gate_authority as mod
+
         monkeypatch.setattr(mod, "SYSTEM_POSTURE", "ACTIVE")
 
         captured = []
@@ -328,11 +334,13 @@ class TestGateAuthorityCounselorAdvisory:
 
         store_path = tmp_path / "voice_lines.jsonl"
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", store_path)
 
         auth = self._authority(tmp_path=tmp_path)
         monkeypatch.setattr("rhythm_os.core.posture.SYSTEM_POSTURE", "ACTIVE")
         import rhythm_os.control_plane.gate_authority as mod
+
         monkeypatch.setattr(mod, "SYSTEM_POSTURE", "ACTIVE")
 
         auth.resolve_action(
@@ -359,6 +367,7 @@ class TestRunVoiceNarration:
 
         store_path = tmp_path / "vl.jsonl"
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", store_path)
 
         result = _make_cycle_result(
@@ -374,10 +383,15 @@ class TestRunVoiceNarration:
             return "The cycle completed with activity. Twelve packets were admitted."
 
         from rhythm_os.voice import narrator as nar_mod
-        monkeypatch.setattr(nar_mod, "narrate", lambda cs, **kw: nar_mod.NarratorResult(
-            text="The cycle completed with activity.",
-            raw="The cycle completed with activity. Twelve packets were admitted.",
-        ))
+
+        monkeypatch.setattr(
+            nar_mod,
+            "narrate",
+            lambda cs, **kw: nar_mod.NarratorResult(
+                text="The cycle completed with activity.",
+                raw="The cycle completed with activity. Twelve packets were admitted.",
+            ),
+        )
 
         _run_voice_narration(result)
 
@@ -391,7 +405,12 @@ class TestRunVoiceNarration:
         result = _make_cycle_result()
 
         import rhythm_os.voice.narrator as nar_mod
-        monkeypatch.setattr(nar_mod, "narrate", lambda *a, **kw: (_ for _ in ()).throw(RuntimeError("ollama down")))
+
+        monkeypatch.setattr(
+            nar_mod,
+            "narrate",
+            lambda *a, **kw: (_ for _ in ()).throw(RuntimeError("ollama down")),
+        )
 
         # Must not raise
         _run_voice_narration(result)
@@ -410,6 +429,7 @@ class TestRunVoiceNarration:
 
         monkeypatch.setattr(nar_mod, "narrate", _capturing_narrate)
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", tmp_path / "vl.jsonl")
 
         _run_voice_narration(result)
@@ -418,11 +438,15 @@ class TestRunVoiceNarration:
         assert captured[0]["packets_admitted"] == result.committed
         assert captured[0]["packets_drained"] == result.packets_drained
 
-    def test_domains_seen_extracted_from_convergence_summary(self, monkeypatch, tmp_path):
+    def test_domains_seen_extracted_from_convergence_summary(
+        self, monkeypatch, tmp_path
+    ):
         from signal_core.core.hydro_run_cadence import _run_voice_narration
 
         result = _make_cycle_result(
-            convergence_summary={"domains_observed": {"natural": 10, "system": 5, "market": 2}}
+            convergence_summary={
+                "domains_observed": {"natural": 10, "system": 5, "market": 2}
+            }
         )
         captured = []
 
@@ -434,6 +458,7 @@ class TestRunVoiceNarration:
 
         monkeypatch.setattr(nar_mod, "narrate", _capturing_narrate)
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", tmp_path / "vl.jsonl")
 
         _run_voice_narration(result)
@@ -464,15 +489,19 @@ class TestRunVoiceInterpretation:
 
     def test_no_op_when_no_strong_events(self, monkeypatch, tmp_path):
         from signal_core.core.hydro_run_cadence import _run_voice_interpretation
-        from rhythm_os.voice.voice_store import load_last_voice_line
 
         store_path = tmp_path / "vl.jsonl"
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", store_path)
 
         convergence = {
             "convergence_events": [
-                {"domains": ["natural", "system"], "diurnal_phase": 0.1, "strength": "weak"}
+                {
+                    "domains": ["natural", "system"],
+                    "diurnal_phase": 0.1,
+                    "strength": "weak",
+                }
             ],
             "strong_events": 0,
         }
@@ -481,25 +510,29 @@ class TestRunVoiceInterpretation:
 
     def test_no_op_when_no_convergence_events(self, monkeypatch, tmp_path):
         from signal_core.core.hydro_run_cadence import _run_voice_interpretation
-        from rhythm_os.voice.voice_store import load_last_voice_line
 
         store_path = tmp_path / "vl.jsonl"
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", store_path)
 
         _run_voice_interpretation({})
         assert not store_path.exists()
 
-    def test_persists_interpreter_voice_line_for_strong_event(self, monkeypatch, tmp_path):
+    def test_persists_interpreter_voice_line_for_strong_event(
+        self, monkeypatch, tmp_path
+    ):
         from signal_core.core.hydro_run_cadence import _run_voice_interpretation
         from rhythm_os.voice.voice_store import load_last_voice_line
         from rhythm_os.voice.interpreter import InterpretationResult
 
         store_path = tmp_path / "vl.jsonl"
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", store_path)
 
         import rhythm_os.voice.interpreter as interp_mod
+
         monkeypatch.setattr(
             interp_mod,
             "interpret",
@@ -511,9 +544,12 @@ class TestRunVoiceInterpretation:
         )
         # Also patch ConvergenceMemoryStore to avoid disk writes
         import rhythm_os.domain.convergence.memory_store as ms_mod
+
         fake_store = MagicMock()
         fake_store.pair_summary.return_value = {"total_count": 1}
-        monkeypatch.setattr(ms_mod, "ConvergenceMemoryStore", lambda *a, **kw: fake_store)
+        monkeypatch.setattr(
+            ms_mod, "ConvergenceMemoryStore", lambda *a, **kw: fake_store
+        )
 
         _run_voice_interpretation(self._strong_convergence())
 
@@ -527,9 +563,11 @@ class TestRunVoiceInterpretation:
         from rhythm_os.voice.interpreter import InterpretationResult
 
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", tmp_path / "vl.jsonl")
 
         import rhythm_os.voice.interpreter as interp_mod
+
         monkeypatch.setattr(
             interp_mod,
             "interpret",
@@ -540,15 +578,20 @@ class TestRunVoiceInterpretation:
 
         recorded_pairs = []
         import rhythm_os.domain.convergence.memory_store as ms_mod
+
         fake_store = MagicMock()
         fake_store.record.side_effect = lambda **kw: recorded_pairs.append(
             (kw["domain_a"], kw["domain_b"])
         )
         fake_store.pair_summary.return_value = {"total_count": 1}
-        monkeypatch.setattr(ms_mod, "ConvergenceMemoryStore", lambda *a, **kw: fake_store)
+        monkeypatch.setattr(
+            ms_mod, "ConvergenceMemoryStore", lambda *a, **kw: fake_store
+        )
 
         # 3 domains → 3 pairs: (m,n), (m,s), (n,s)
-        _run_voice_interpretation(self._strong_convergence(["market", "natural", "system"]))
+        _run_voice_interpretation(
+            self._strong_convergence(["market", "natural", "system"])
+        )
 
         assert len(recorded_pairs) == 3
         assert ("market", "natural") in recorded_pairs
@@ -559,17 +602,24 @@ class TestRunVoiceInterpretation:
         from signal_core.core.hydro_run_cadence import _run_voice_interpretation
 
         import rhythm_os.voice.voice_store as vs_mod
+
         monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", tmp_path / "vl.jsonl")
 
         import rhythm_os.voice.interpreter as interp_mod
+
         monkeypatch.setattr(
-            interp_mod, "interpret", lambda *a, **kw: (_ for _ in ()).throw(RuntimeError("ollama down"))
+            interp_mod,
+            "interpret",
+            lambda *a, **kw: (_ for _ in ()).throw(RuntimeError("ollama down")),
         )
 
         import rhythm_os.domain.convergence.memory_store as ms_mod
+
         fake_store = MagicMock()
         fake_store.pair_summary.return_value = {}
-        monkeypatch.setattr(ms_mod, "ConvergenceMemoryStore", lambda *a, **kw: fake_store)
+        monkeypatch.setattr(
+            ms_mod, "ConvergenceMemoryStore", lambda *a, **kw: fake_store
+        )
 
         # Must not raise
         _run_voice_interpretation(self._strong_convergence())
