@@ -15,7 +15,7 @@ import json
 
 import signal_core.core.hydro_ingress_queue as queue_mod
 from signal_core.core.hydro_ingress_queue import drain_queue
-from signal_core.core.hydro_types import HydroPacket, GateResult
+from signal_core.core.hydro_types import HydroPacket
 
 T_FIXED = 1_705_320_000.0
 
@@ -61,9 +61,10 @@ def test_drain_clears_file(tmp_path, monkeypatch):
 
 def test_drain_multiple_packets(tmp_path, monkeypatch):
     q = tmp_path / "queue.jsonl"
-    lines = "\n".join(
-        json.dumps(_packet_dict(packet_id=f"pkt-{i}")) for i in range(3)
-    ) + "\n"
+    lines = (
+        "\n".join(json.dumps(_packet_dict(packet_id=f"pkt-{i}")) for i in range(3))
+        + "\n"
+    )
     q.write_text(lines, encoding="utf-8")
     monkeypatch.setattr(queue_mod, "QUEUE_PATH", q)
 
@@ -74,9 +75,10 @@ def test_drain_multiple_packets(tmp_path, monkeypatch):
 
 def test_drain_max_items_preserves_remainder(tmp_path, monkeypatch):
     q = tmp_path / "queue.jsonl"
-    lines = "\n".join(
-        json.dumps(_packet_dict(packet_id=f"pkt-{i}")) for i in range(5)
-    ) + "\n"
+    lines = (
+        "\n".join(json.dumps(_packet_dict(packet_id=f"pkt-{i}")) for i in range(5))
+        + "\n"
+    )
     q.write_text(lines, encoding="utf-8")
     monkeypatch.setattr(queue_mod, "QUEUE_PATH", q)
 
