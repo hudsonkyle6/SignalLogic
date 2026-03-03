@@ -51,7 +51,7 @@ def generate(
     temperature: float = 0.2,
     top_p: float = 0.9,
     num_ctx: int = 4096,
-    timeout: int = 60,
+    timeout: int = 120,
     base_url: str = OLLAMA_DEFAULT_URL,
 ) -> str:
     """
