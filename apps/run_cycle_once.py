@@ -140,8 +140,8 @@ def _run_cycle_steps(set_status) -> None:
     set_status("INGRESS → SYSTEM")
     _run_step("apps.psr_tools.domain_to_system_ingress", required=True)
 
-    # ── 6. Hydro: gate / dispatch / commit / turbine ──────────────────────────
-    set_status("HYDRO → GATE / DISPATCH / COMMIT")
+    # ── 6. Hydro: gate / dispatch / commit / turbine / ML ─────────────────────
+    set_status("HYDRO → GATE / DISPATCH / COMMIT / ML")
     _run_step("src.signal_core.core.hydro_run_cadence", required=True)
 
     set_status("CYCLE COMPLETE")
