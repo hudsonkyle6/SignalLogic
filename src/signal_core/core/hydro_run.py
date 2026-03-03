@@ -62,6 +62,14 @@ def run_full_cycle() -> CycleResult:
     # Step 4: attach readiness to result
     result = dataclasses.replace(result, baseline_status=readiness)
 
+    # Step 5: extract ML feature vector and append to data/ml/features.jsonl
+    try:
+        from signal_core.core.ml.feature_builder import extract_and_append
+
+        extract_and_append(result)
+    except Exception:
+        log.warning("ml feature extraction failed — cycle result unaffected", exc_info=True)
+
     return result
 
 
