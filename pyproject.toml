@@ -49,6 +49,7 @@ all = [
 #   signallogic-dashboard — helix three-tier dashboard (snapshot/watch/animate)
 #   signallogic-meter     — continuous system telemetry background process
 [project.scripts]
+signallogic-run       = "signal_core.core.run_entrypoint:main"
 signallogic-health    = "signal_core.core.hydro_run:main"
 signallogic-dashboard = "signal_core.core.dashboard.helix_dashboard:main"
 signallogic-meter     = "signal_core.core.instruments.hydro_meter:main"

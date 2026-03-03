@@ -298,7 +298,8 @@ def _run_text_mode(
 
 # ─── Entry point ─────────────────────────────────────────────────────────────
 
-if __name__ == "__main__":
+
+def main() -> None:
     import argparse
 
     ap = argparse.ArgumentParser(description="SignalLogic — full observation cycle")
@@ -322,8 +323,22 @@ if __name__ == "__main__":
         metavar="0.0-1.0",
         help="attack intensity scale factor (default: 1.0)",
     )
+    ap.add_argument(
+        "--health",
+        action="store_true",
+        help="check system readiness and exit 0 (warm), 1 (cold), 2 (error)",
+    )
     args = ap.parse_args()
+
+    if args.health:
+        from signal_core.core.hydro_run import _health_check
+
+        raise SystemExit(_health_check())
 
     _run_with_helix(
         interval_s=args.loop, scenario=args.scenario, intensity=args.intensity
     )
+
+
+if __name__ == "__main__":
+    main()
