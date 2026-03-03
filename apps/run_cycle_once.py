@@ -133,6 +133,10 @@ def _run_cycle_steps(set_status) -> None:
         _run_step("apps.psr_tools.emit_cyber_domain", required=False)
         set_status("INGRESS → CYBER")
         _run_step("apps.psr_tools.domain_to_cyber_ingress", required=False)
+        set_status("PSR → CYBER ATTACK DOMAIN")
+        _run_step("apps.psr_tools.emit_cyber_attack_domain", required=False)
+        set_status("INGRESS → CYBER ATTACK")
+        _run_step("apps.psr_tools.domain_to_cyber_attack_ingress", required=False)
 
     # ── 5. System domain + ingress ────────────────────────────────────────────
     set_status("PSR → SYSTEM DOMAIN")
