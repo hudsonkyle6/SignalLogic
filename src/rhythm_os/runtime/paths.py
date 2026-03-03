@@ -83,3 +83,6 @@ GATE_ACTIONS_DIR = DATA_DIR / "dark_field" / "gate_actions"
 
 # Convergence memory — cross-day domain-pair × phase-bucket observations
 CONVERGENCE_MEMORY_PATH = DATA_DIR / "dark_field" / "convergence" / "memory.jsonl"
+
+# Voice lines — persisted narrator/interpreter/counselor output for the dashboard
+VOICE_LINES_PATH = DATA_DIR / "dark_field" / "voice" / "voice_lines.jsonl"

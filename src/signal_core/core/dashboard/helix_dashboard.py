@@ -46,6 +46,7 @@ from rhythm_os.runtime.paths import (
     PENSTOCK_DIR,
     TURBINE_DIR,
 )
+from rhythm_os.voice.voice_store import load_last_voice_line
 from rhythm_os.runtime.readiness import check_readiness, ReadinessStatus
 from rhythm_os.runtime.deploy_config import (
     get_deployment_name,
@@ -141,19 +142,19 @@ _RUNG = "─"
 class TierZone(NamedTuple):
     """One colour/label zone of the helix, defined as a fraction of its height."""
 
-    lo: float        # y_frac where this zone starts (0.0 = top of screen)
-    hi: float        # y_frac where this zone ends
+    lo: float  # y_frac where this zone starts (0.0 = top of screen)
+    hi: float  # y_frac where this zone ends
     front_style: str  # rich style for strands on the viewer's side
-    back_style: str   # rich style for strands on the far side
-    num: str          # Roman numeral label shown in the gutter ("III", "II", "I")
-    name: str         # Tier name shown in the legend ("DOMAIN", "NATURAL", "SYSTEM")
+    back_style: str  # rich style for strands on the far side
+    num: str  # Roman numeral label shown in the gutter ("III", "II", "I")
+    name: str  # Tier name shown in the legend ("DOMAIN", "NATURAL", "SYSTEM")
 
 
 # Screen y=0 is top, so Domain (III) is drawn first and System (I) last.
 _TIERS: List[TierZone] = [
-    TierZone(0.00, 0.33, "bold cyan",   "dim cyan",   "III", "DOMAIN"),
-    TierZone(0.33, 0.67, "bold green",  "dim green",  "II",  "NATURAL"),
-    TierZone(0.67, 1.00, "bold yellow", "dim yellow", "I",   "SYSTEM"),
+    TierZone(0.00, 0.33, "bold cyan", "dim cyan", "III", "DOMAIN"),
+    TierZone(0.33, 0.67, "bold green", "dim green", "II", "NATURAL"),
+    TierZone(0.67, 1.00, "bold yellow", "dim yellow", "I", "SYSTEM"),
 ]
 
 
@@ -397,7 +398,9 @@ def _panel_system(readiness: ReadinessStatus) -> Panel:
             r = per_clock.get(ck)
             if r is not None:
                 rv = float(r)
-                clk_style = "green" if rv >= 0.70 else ("yellow" if rv >= 0.40 else "red")
+                clk_style = (
+                    "green" if rv >= 0.70 else ("yellow" if rv >= 0.40 else "red")
+                )
                 bar = _bar(rv, width=8, style_full=clk_style, style_empty="grey23")
                 t.add_row(
                     Text(short, style="dim yellow"),
@@ -414,7 +417,9 @@ def _panel_system(readiness: ReadinessStatus) -> Panel:
         _ready_badge(readiness.system_ready),
     )
 
-    return Panel(t, title="[bold yellow]TIER I: SYSTEM  ◈  CYBER[/]", border_style="yellow")
+    return Panel(
+        t, title="[bold yellow]TIER I: SYSTEM  ◈  CYBER[/]", border_style="yellow"
+    )
 
 
 def _panel_natural(readiness: ReadinessStatus) -> Panel:
@@ -494,11 +499,11 @@ def _panel_natural(readiness: ReadinessStatus) -> Panel:
 # Ordered fastest → slowest to mirror the CYBER_CYCLES definition.
 _CYBER_CLOCK_DISPLAY: List[Tuple[str, str]] = [
     ("burst_250ms", "250ms"),
-    ("burst_1s",    "  1s"),
-    ("beat_5s",     "  5s"),
-    ("minute_60s",  " 60s"),
-    ("roll_15m",    " 15m"),
-    ("session_1h",  "  1h"),
+    ("burst_1s", "  1s"),
+    ("beat_5s", "  5s"),
+    ("minute_60s", " 60s"),
+    ("roll_15m", " 15m"),
+    ("session_1h", "  1h"),
 ]
 
 # Market channel display config.
@@ -654,6 +659,25 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
     return Panel(t, title="[bold white]LAST CYCLE[/]", border_style="white")
 
 
+def _load_narrator_line() -> str:
+    """Return the most-recent narrator voice line text, or empty string."""
+    try:
+        vl = load_last_voice_line(mode="narrator")
+        return vl.text if vl else ""
+    except Exception:
+        return ""
+
+
+def _panel_narrator(text: str) -> "Panel":
+    """Render the narrator voice line panel."""
+    body = Text(justify="left")
+    if text:
+        body.append(text, style="italic dim white")
+    else:
+        body.append("No narration recorded yet.", style="dim")
+    return Panel(body, title="[bold magenta]VOICE[/]", border_style="magenta")
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Main layout builder
 # ─────────────────────────────────────────────────────────────────────────────
@@ -724,6 +748,7 @@ def _build_display(
     p_natural = _panel_natural(readiness)
     p_system = _panel_system(readiness)
     p_cycle = _panel_cycle(cycle_result)
+    p_narrator = _panel_narrator(_load_narrator_line())
 
     # ── Outer grid ──────────────────────────────────────────────────────────
     outer = Table.grid(expand=True)
@@ -733,7 +758,7 @@ def _build_display(
     right_items: list = [Panel(header, border_style="magenta")]
     if status_text:
         right_items.append(Rule(f"  {status_text}  ", style="bold yellow"))
-    right_items.extend([p_domain, p_natural, p_system, p_cycle])
+    right_items.extend([p_domain, p_natural, p_system, p_cycle, p_narrator])
     right = Group(*right_items)
 
     outer.add_row(helix_panel, right)
