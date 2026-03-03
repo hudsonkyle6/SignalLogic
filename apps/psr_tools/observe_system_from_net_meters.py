@@ -21,6 +21,9 @@ from rhythm_os.runtime.bus import today_bus_file
 # -----------------------------------------------------------------------------
 
 from rhythm_os.runtime.paths import METERS_DIR, PSR_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 LANE = "net"
 DOMAIN = "system"
@@ -72,7 +75,7 @@ def compute_pressure(pkts: List[Dict[str, Any]]) -> Dict[str, float]:
 def main() -> None:
     packets = read_today_meter_packets()
     if not packets:
-        print("SYSTEM NET OBSERVE → no meter packets")
+        log.info("SYSTEM NET OBSERVE: no meter packets")
         return
 
     pressure = compute_pressure(packets)
@@ -97,13 +100,14 @@ def main() -> None:
     out_path = today_bus_file(bus_dir=PSR_DIR, t_ref=t)
     append_domain_wave(out_path, dw)
 
-    print(
-        f"SYSTEM NET OBSERVED → "
-        f"out_bps={pressure['phase_external']:.1f} "
-        f"imbalance={pressure['phase_diff']:.1f} "
-        f"coherence={pressure['coherence']:.3f}"
+    log.info(
+        "SYSTEM NET OBSERVED out_bps=%.1f imbalance=%.1f coherence=%.3f",
+        pressure["phase_external"],
+        pressure["phase_diff"],
+        pressure["coherence"],
     )
 
 
 if __name__ == "__main__":
+    configure()
     main()

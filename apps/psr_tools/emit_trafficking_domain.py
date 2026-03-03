@@ -25,7 +25,10 @@ from rhythm_os.psr.transform.trafficking_to_domain import (
 )
 from rhythm_os.psr.append_domain_wave import append_domain_wave
 from rhythm_os.runtime.paths import DOMAIN_DIR
+from signal_core.core.log import configure, get_logger
 from datetime import datetime, timezone
+
+log = get_logger(__name__)
 
 
 def emit_trafficking_domain(
@@ -53,6 +56,6 @@ def emit_trafficking_domain(
 
 
 if __name__ == "__main__":
+    configure()
     # Raises FileNotFoundError until data feed is established.
-    count = emit_trafficking_domain(window_days=7)
-    print(f"TRAFFICKING DOMAIN EMITTED → {count} waves")
+    emit_trafficking_domain(window_days=7)

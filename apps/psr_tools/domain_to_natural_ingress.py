@@ -17,12 +17,15 @@ from rhythm_os.psr.read_domain_waves import read_today
 from signal_core.core.hydro_types import HydroPacket
 from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_ingress_throat import enqueue_if_admitted
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 def main() -> None:
     waves = read_today()
     if not waves:
-        print("ADAPTER: no DomainWaves to emit")
+        log.info("ADAPTER: no DomainWaves to emit")
         return
 
     emitted = 0
@@ -61,8 +64,9 @@ def main() -> None:
 
         emitted += 1
 
-    print(f"ADAPTER: emitted {emitted} packets → natural lane ingress")
+    log.info("ADAPTER: emitted %d packets natural lane ingress", emitted)
 
 
 if __name__ == "__main__":
+    configure()
     main()

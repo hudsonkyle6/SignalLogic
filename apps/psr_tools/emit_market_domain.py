@@ -18,6 +18,7 @@ from rhythm_os.psr.transform.market_to_domain import (
 
 from rhythm_os.psr.append_domain_wave import append_domain_wave
 from rhythm_os.runtime.paths import DOMAIN_DIR
+from signal_core.core.log import configure
 from datetime import datetime, timezone
 
 
@@ -43,4 +44,5 @@ def emit_market_domain(
 
 
 if __name__ == "__main__":
+    configure()
     emit_market_domain(window_days=7)

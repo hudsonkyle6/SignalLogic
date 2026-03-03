@@ -39,6 +39,9 @@ _T_HIGH: float = 38.0
 _T_SPAN: float = _T_HIGH - _T_LOW
 
 from rhythm_os.runtime.paths import NATURAL_DIR as OUT_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------
@@ -63,7 +66,7 @@ def _fetch_weather(lat: float, lon: float) -> Optional[Dict[str, Any]]:
         resp.raise_for_status()
         return resp.json().get("current", {})
     except Exception as exc:
-        print(f"OBSERVATORY: weather fetch failed — {exc}")
+        log.warning("OBSERVATORY: weather fetch failed: %s", exc)
         return None
 
 
@@ -126,7 +129,9 @@ def main() -> None:
 
     # Resolve location at runtime so this works anywhere the machine travels.
     lat, lon, label = resolve_location()
-    print(f"OBSERVATORY: location resolved → {label} ({lat:.4f}, {lon:.4f})")
+    log.info(
+        "OBSERVATORY: location resolved label=%s lat=%.4f lon=%.4f", label, lat, lon
+    )
 
     t_now = float(time.time())
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -213,15 +218,16 @@ def main() -> None:
         f.write(json.dumps(rec_pressure, ensure_ascii=False) + "\n")
         f.write(json.dumps(rec_thermal, ensure_ascii=False) + "\n")
 
-    status = "LIVE" if fetch_ok else "STUB (fetch failed)"
-    print(f"OBSERVATORY [{status}]: wrote 2 natural records → {out_path}")
-    print(
-        f"  pressure  {pressure_hpa:.1f} hPa  phase_field={phase_field_pressure:.3f}  semi_diurnal_phase={anchor.semi_diurnal_phase:.3f}"
-    )
-    print(
-        f"  temp      {temperature_c:.1f}°C     phase_field={phase_field_thermal:.3f}  diurnal_phase={anchor.diurnal_phase:.3f}"
+    status = "LIVE" if fetch_ok else "STUB"
+    log.info(
+        "OBSERVATORY [%s]: wrote 2 natural records path=%s pressure_hpa=%.1f temp_c=%.1f",
+        status,
+        out_path,
+        pressure_hpa,
+        temperature_c,
     )
 
 
 if __name__ == "__main__":
+    configure()
     main()

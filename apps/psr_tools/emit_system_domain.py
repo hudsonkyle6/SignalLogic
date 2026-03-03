@@ -25,6 +25,9 @@ OMEGA = 2.0 * math.pi / T_DIURNAL
 # ---------------------------------------------------------------------
 
 from rhythm_os.runtime.paths import DOMAIN_DIR, METERS_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 DOMAIN = "system"
 FIELD_CYCLE = "diurnal_projection"
@@ -46,8 +49,8 @@ def _meters_path_today() -> Path:
     if not path.exists():
         raise FileNotFoundError(f"No sovereign meter file for today: {path}")
 
-    print("SYSTEM DOMAIN reading sovereign meters file:", path)
-    print("SYSTEM DOMAIN mtime:", path.stat().st_mtime)
+    log.debug("SYSTEM DOMAIN reading sovereign meters file: %s", path)
+    log.debug("SYSTEM DOMAIN mtime: %s", path.stat().st_mtime)
 
     return path
 
@@ -223,20 +226,23 @@ def main() -> None:
 
     emitted = 0
     for channel, samples, src in channels:
-        print(f"SYSTEM DOMAIN [{channel}] sample count: {len(samples)}")
+        log.debug("SYSTEM DOMAIN [%s] sample count: %d", channel, len(samples))
         dw = _project(samples, channel=channel, extractor_source=src)
         if dw is None:
-            print(f"SYSTEM DOMAIN [{channel}] skipped (insufficient samples)")
+            log.warning("SYSTEM DOMAIN [%s] skipped (insufficient samples)", channel)
             continue
         _emit_wave(dw, out_path)
-        print(
-            f"SYSTEM DOMAIN [{channel}] → "
-            f"phase_diff={dw.phase_diff:.3f} coherence={dw.coherence:.3f}"
+        log.info(
+            "SYSTEM DOMAIN [%s] phase_diff=%.3f coherence=%.3f",
+            channel,
+            dw.phase_diff,
+            dw.coherence,
         )
         emitted += 1
 
-    print(f"SYSTEM DOMAIN EMITTED → {emitted} channels")
+    log.info("SYSTEM DOMAIN EMITTED: %d channels", emitted)
 
 
 if __name__ == "__main__":
+    configure()
     main()
