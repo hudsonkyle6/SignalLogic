@@ -483,6 +483,8 @@ def _persist_cycle_result(result: "CycleResult") -> None:
 
 
 if __name__ == "__main__":
+    import dataclasses as _dc
+
     from signal_core.core.log import configure
 
     configure()
@@ -493,6 +495,42 @@ if __name__ == "__main__":
         result.turbine_obs,
         result.spillway_quarantined,
     )
+
+    # ML step 1: extract features from cycle result → data/ml/features.jsonl
+    _features: dict = {}
+    try:
+        from signal_core.core.ml.feature_builder import extract_and_append
+
+        _features = extract_and_append(result)
+    except Exception:
+        log.warning("ml feature extraction failed — cycle result unaffected", exc_info=True)
+
+    # ML step 2: inference — predict convergence event label
+    if _features:
+        try:
+            from signal_core.core.ml.classifier import load_model, predict
+
+            if load_model() is not None:
+                _pred = predict(_features)
+                log.info(
+                    "ml prediction label=%s confidence=%.1f%% model=%s",
+                    _pred.predicted_label,
+                    _pred.confidence * 100,
+                    _pred.model_version,
+                )
+                result = _dc.replace(
+                    result,
+                    ml_prediction={
+                        "predicted_label": _pred.predicted_label,
+                        "confidence": _pred.confidence,
+                        "probabilities": _pred.probabilities,
+                        "model_version": _pred.model_version,
+                        "calibrated": _pred.calibrated,
+                    },
+                )
+        except Exception:
+            log.warning("ml inference failed — cycle result unaffected", exc_info=True)
+
     _persist_cycle_result(result)
     _run_voice_narration(result)
     _run_voice_interpretation(result.convergence_summary or {})
