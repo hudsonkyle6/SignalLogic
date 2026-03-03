@@ -59,7 +59,9 @@ class _CycleFailed(Exception):
 # ─── Silent step runner ───────────────────────────────────────────────────────
 
 
-def _run_step(module_path: str, required: bool = True, args: list | None = None) -> bool:
+def _run_step(
+    module_path: str, required: bool = True, args: list | None = None
+) -> bool:
     """Run a Python module as a subprocess. All output suppressed."""
     p = subprocess.run(
         [PY, "-m", module_path] + (args or []),
@@ -78,7 +80,9 @@ def _run_step(module_path: str, required: bool = True, args: list | None = None)
 # ─── Cycle steps (runs in background thread) ─────────────────────────────────
 
 
-def _run_cycle_steps(set_status, scenario: str = "baseline", intensity: float = 1.0) -> None:
+def _run_cycle_steps(
+    set_status, scenario: str = "baseline", intensity: float = 1.0
+) -> None:
     """
     Execute the full observation cycle. Calls set_status(text) before each step
     so the helix display can show progress. Raises _CycleFailed on required failure.
@@ -160,7 +164,9 @@ def _run_cycle_steps(set_status, scenario: str = "baseline", intensity: float = 
 # ─── Helix live driver (main entry point) ────────────────────────────────────
 
 
-def _run_with_helix(interval_s: int = 0, scenario: str = "baseline", intensity: float = 1.0) -> None:
+def _run_with_helix(
+    interval_s: int = 0, scenario: str = "baseline", intensity: float = 1.0
+) -> None:
     """
     Run observation cycles under the rotating helix display.
     The cycle steps run in a background thread; the helix Live context
@@ -268,7 +274,9 @@ def _run_with_helix(interval_s: int = 0, scenario: str = "baseline", intensity: 
                 rotation += 0.08
 
 
-def _run_text_mode(interval_s: int = 0, scenario: str = "baseline", intensity: float = 1.0) -> None:
+def _run_text_mode(
+    interval_s: int = 0, scenario: str = "baseline", intensity: float = 1.0
+) -> None:
     """Fallback when rich is unavailable."""
     stop = threading.Event()
     _signal.signal(_signal.SIGTERM, lambda *_: stop.set())
@@ -316,4 +324,6 @@ if __name__ == "__main__":
     )
     args = ap.parse_args()
 
-    _run_with_helix(interval_s=args.loop, scenario=args.scenario, intensity=args.intensity)
+    _run_with_helix(
+        interval_s=args.loop, scenario=args.scenario, intensity=args.intensity
+    )
