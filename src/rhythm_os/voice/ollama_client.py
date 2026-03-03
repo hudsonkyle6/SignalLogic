@@ -18,9 +18,11 @@ Default temperature: 0.2 (deterministic enough for structured output).
 
 from __future__ import annotations
 
+import os
 import requests
 
-OLLAMA_DEFAULT_URL = "http://localhost:11434/api/generate"
+_OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434").rstrip("/")
+OLLAMA_DEFAULT_URL = f"{_OLLAMA_HOST}/api/generate"
 DEFAULT_MODEL = "qwen2.5:7b"
 
 
