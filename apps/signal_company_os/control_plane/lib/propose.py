@@ -6,6 +6,9 @@ from pathlib import Path
 from typing import Optional, Dict, Any, List
 
 from .policy import Policy
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
 
 
 def _now() -> str:
@@ -66,5 +69,5 @@ def run_propose(
 
     plan_path = out_dir / f"proposal_{mode}_{int(time.time())}.json"
     plan_path.write_text(json.dumps(plan, indent=2), encoding="utf-8")
-    print(f"WROTE: {plan_path}")
+    log.info("WROTE: %s", plan_path)
     return 0

@@ -5,6 +5,9 @@ import time
 from pathlib import Path
 
 from .policy import Policy
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
 
 
 def run_homecoming(policy: Policy) -> int:
@@ -20,5 +23,5 @@ def run_homecoming(policy: Policy) -> int:
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open("a", encoding="utf-8") as f:
         f.write(json.dumps(entry) + "\n")
-    print(f"WROTE: {p}")
+    log.info("WROTE: %s", p)
     return 0

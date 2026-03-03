@@ -105,6 +105,14 @@ def _read_market_domain_waves() -> Dict[str, Dict]:
     return latest
 
 
+def _read_cyber_domain_wave() -> Optional[Dict[str, Any]]:
+    """Latest cyber cadence DomainWave from today's domain JSONL."""
+    for rec in reversed(_read_last_n(DOMAIN_DIR, n=100)):
+        if rec.get("domain") == "cyber":
+            return rec
+    return None
+
+
 def _load_last_cycle_result() -> Optional[Any]:
     """Read the last CycleResult persisted by hydro_run_cadence."""
     import types
@@ -310,6 +318,65 @@ def _panel_system(readiness: ReadinessStatus) -> Panel:
                 Text(f"↑ {float(out_bps) / 1e3:.1f} KB/s", style="dim yellow"),
             )
 
+    # ── Cyber cadence section ──────────────────────────────────────────────
+    cyber_rec = _read_cyber_domain_wave()
+    t.add_row("", Text(""), Text(""))
+    t.add_row(
+        Text("─ Cyber ─", style="bold yellow"),
+        Text("", style=""),
+        Text("", style=""),
+    )
+
+    if cyber_rec:
+        coherence = cyber_rec.get("coherence")
+        phase_diff = cyber_rec.get("phase_diff")
+        extractor = cyber_rec.get("extractor") or {}
+        per_clock: Dict[str, Any] = extractor.get("per_clock_coherence") or {}
+
+        if coherence is not None:
+            coh_val = float(coherence)
+            if coh_val >= 0.70:
+                coh_style, status_label = "green", "NOMINAL"
+            elif coh_val >= 0.40:
+                coh_style, status_label = "yellow", "ELEVATED"
+            else:
+                coh_style, status_label = "red", "PRESSURE"
+            bar = _bar(coh_val, style_full=coh_style, style_empty="grey23")
+            t.add_row(
+                "Cadence",
+                bar,
+                Text(status_label, style=f"bold {coh_style}"),
+            )
+
+        if phase_diff is not None:
+            t.add_row(
+                "Phase Δ",
+                Text(f"φ={float(phase_diff):.3f} rad", style="dim yellow"),
+                Text(""),
+            )
+
+        _CLOCK_LABELS = [
+            ("burst_250ms", "250ms"),
+            ("burst_1s", "  1s"),
+            ("beat_5s", "  5s"),
+            ("minute_60s", " 60s"),
+            ("roll_15m", " 15m"),
+            ("session_1h", "  1h"),
+        ]
+        for ck, short in _CLOCK_LABELS:
+            r = per_clock.get(ck)
+            if r is not None:
+                rv = float(r)
+                clk_style = "green" if rv >= 0.70 else ("yellow" if rv >= 0.40 else "red")
+                bar = _bar(rv, width=8, style_full=clk_style, style_empty="grey23")
+                t.add_row(
+                    Text(short, style="dim yellow"),
+                    bar,
+                    Text(f"{rv:.2f}", style=f"dim {clk_style}"),
+                )
+    else:
+        t.add_row("Cadence", Text("no data yet", style="dim"), Text(""))
+
     t.add_row("", Text(""), Text(""))
     t.add_row(
         "Records",
@@ -317,7 +384,7 @@ def _panel_system(readiness: ReadinessStatus) -> Panel:
         _ready_badge(readiness.system_ready),
     )
 
-    return Panel(t, title="[bold yellow]TIER I: SYSTEM[/]", border_style="yellow")
+    return Panel(t, title="[bold yellow]TIER I: SYSTEM  ◈  CYBER[/]", border_style="yellow")
 
 
 def _panel_natural(readiness: ReadinessStatus) -> Panel:
@@ -571,10 +638,34 @@ def _build_display(
     header.append(f"  ●  {now_utc}", style="dim white")
 
     # ── Helix ───────────────────────────────────────────────────────────────
-    helix_rows = render_helix(height=36, width=26, turns=3.0, rotation=rotation)
+    # Width=23 leaves 3 chars for the tier-zone gutter on the left.
+    helix_rows = render_helix(height=36, width=23, turns=3.0, rotation=rotation)
+
+    # Tier zone gutter: label appears on the first row of each zone,
+    # blank (with dim bar) on subsequent rows.
+    _ZONE_LABELS = [
+        (0.00, 0.33, "III", "bold cyan"),
+        (0.33, 0.67, " II", "bold green"),
+        (0.67, 1.00, "  I", "bold yellow"),
+    ]
+
+    def _zone_for(y_frac: float) -> Tuple[str, str]:
+        for lo, hi, lbl, style in _ZONE_LABELS:
+            if lo <= y_frac < hi:
+                return lbl, style
+        return "  I", "bold yellow"
 
     helix_col = Text()
-    for row in helix_rows:
+    prev_zone: Optional[str] = None
+    n_rows = len(helix_rows)
+    for i, row in enumerate(helix_rows):
+        y_frac = i / max(1, n_rows - 1)
+        lbl, style = _zone_for(y_frac)
+        if lbl != prev_zone:
+            helix_col.append(lbl, style=style)
+            prev_zone = lbl
+        else:
+            helix_col.append("   ", style="")
         helix_col.append_text(row)
         helix_col.append("\n")
 
