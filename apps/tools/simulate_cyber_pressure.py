@@ -2,9 +2,9 @@ import time
 import math
 import json
 import random
-from pathlib import Path
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
+from rhythm_os.runtime.paths import METERS_DIR
+
 OUT_FILE = METERS_DIR / "simulated_pressure.jsonl"
 
 

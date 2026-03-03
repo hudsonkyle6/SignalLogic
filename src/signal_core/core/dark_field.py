@@ -17,14 +17,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
 from .hydro_types import HydroPacket
+from rhythm_os.runtime.paths import QUEUE_PATH as INGRESS_PATH
 
 # Allowed record types (Hydro boundary)
 RECORD_INGRESS = "ingress_record"
 RECORD_DISPATCH = "dispatch_record"
 RECORD_LIGHTHOUSE = "lighthouse_summary"
 RECORD_HUMAN = "human_signature"
-
-INGRESS_PATH = Path("src/rhythm_os/data/dark_field/hydro/ingress.jsonl")
 
 
 def append_hydro_ingress_packet(packet: HydroPacket) -> None:

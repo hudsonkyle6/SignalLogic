@@ -1,4 +1,3 @@
-# C:\Users\SignalADmin\Signal Archive\SignalLogic\rhythm_os\control_plane/actuation_validate.py
 from __future__ import annotations
 
 from typing import Dict, Any

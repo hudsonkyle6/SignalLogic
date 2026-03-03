@@ -7,6 +7,9 @@ from typing import Optional
 from .policy import Policy
 from .doctrine import compile_slp
 from .git_inspect import inspect_git
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
 
 
 def _get_root(policy: Policy, mode: str, root_override: Optional[str]) -> Path:
@@ -44,7 +47,7 @@ def run_observe(
     (out_dir / "observe_summary.json").write_text(
         json.dumps(summary, indent=2), encoding="utf-8"
     )
-    print(f"WROTE: {out_dir / 'observe_summary.json'}")
-    print(f"WROTE: {out_dir / 'doctrine_report.md'}")
-    print(f"WROTE: {out_dir / 'git_report.md'}")
+    log.info("WROTE: %s", out_dir / "observe_summary.json")
+    log.info("WROTE: %s", out_dir / "doctrine_report.md")
+    log.info("WROTE: %s", out_dir / "git_report.md")
     return 0

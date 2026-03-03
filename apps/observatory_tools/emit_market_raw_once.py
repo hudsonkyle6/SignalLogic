@@ -23,18 +23,13 @@ from __future__ import annotations
 import json
 import sys
 from datetime import datetime, timezone
-from pathlib import Path
 
 import yfinance as yf
 
+from rhythm_os.runtime.paths import MARKET_RAW_DIR as OUT_DIR
+from signal_core.core.log import configure, get_logger
 
-# ---------------------------------------------------------------------
-# Root-safe path resolution (never relative to CWD)
-# ---------------------------------------------------------------------
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT_DIR = ROOT / "src/rhythm_os/data/dark_field/market_raw"
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+log = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------
@@ -85,6 +80,7 @@ _DOMAIN_PAIRS: dict[str, tuple[str, str]] = {
 
 
 def main() -> None:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc)
     tickers = list(TICKER_NAMES.keys())
 
@@ -97,7 +93,7 @@ def main() -> None:
     )
 
     if data.empty:
-        print("MARKET RAW: no data returned")
+        log.warning("MARKET RAW: no data returned")
         sys.exit(0)
 
     # -----------------------------------------------------------------
@@ -114,7 +110,7 @@ def main() -> None:
             pass  # ticker temporarily unavailable — not a hard failure
 
     if not symbols:
-        print("MARKET RAW: no valid symbols available")
+        log.warning("MARKET RAW: no valid symbols available")
         sys.exit(0)
 
     # -----------------------------------------------------------------
@@ -149,12 +145,15 @@ def main() -> None:
         if ext in symbols and field in symbols
     )
 
-    print(
-        f"MARKET RAW EMITTED | "
-        f"{len(symbols)}/{len(TICKER_NAMES)} symbols | "
-        f"{ready}/{len(_DOMAIN_PAIRS)} domains ready"
+    log.info(
+        "MARKET RAW EMITTED: %d/%d symbols %d/%d domains ready",
+        len(symbols),
+        len(TICKER_NAMES),
+        ready,
+        len(_DOMAIN_PAIRS),
     )
 
 
 if __name__ == "__main__":
+    configure()
     main()

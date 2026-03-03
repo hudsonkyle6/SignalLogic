@@ -59,3 +59,30 @@ SCARS_DIR = DATA_DIR / "scars"
 # Control signal channel — real-time dispatch decisions for downstream consumers
 # Daily rotation: signals-YYYY-MM-DD.jsonl written inside this directory.
 CONTROL_DIR = DATA_DIR / "dark_field" / "control"
+
+# Domain wave bus — DomainWave JSONL written by PSR emitters (one file per day)
+DOMAIN_DIR = DATA_DIR / "dark_field" / "domain"
+
+# Raw market observations — written by observatory tools before PSR projection
+MARKET_RAW_DIR = DATA_DIR / "dark_field" / "market_raw"
+
+# Human trafficking signal observations (stub — awaiting data feed partnership)
+HUMAN_TRAFFICKING_DIR = DATA_DIR / "dark_field" / "human_trafficking"
+
+# Hydro audit log — append-only record of every gate decision
+AUDIT_PATH = DATA_DIR / "dark_field" / "hydro" / "audit.jsonl"
+
+# PSR intermediate store (pre-domain aggregates, not primary dark field)
+PSR_DIR = DATA_DIR / "psr"
+
+# Gate registry — open/close events, append-only JSONL audit log
+GATES_DIR = DATA_DIR / "dark_field" / "gates"
+
+# Turbine action log — proposed and resolved TurbineAction records
+GATE_ACTIONS_DIR = DATA_DIR / "dark_field" / "gate_actions"
+
+# Convergence memory — cross-day domain-pair × phase-bucket observations
+CONVERGENCE_MEMORY_PATH = DATA_DIR / "dark_field" / "convergence" / "memory.jsonl"
+
+# Voice lines — persisted narrator/interpreter/counselor output for the dashboard
+VOICE_LINES_PATH = DATA_DIR / "dark_field" / "voice" / "voice_lines.jsonl"

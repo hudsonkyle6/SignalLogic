@@ -21,7 +21,10 @@ from pathlib import Path
 from uuid import uuid4
 
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
+from rhythm_os.runtime.paths import METERS_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 # --- add imports at top ---
@@ -227,7 +230,7 @@ def emit_for(duration_s: float, profile: Profile) -> Path:
             n += 1
             time.sleep(profile.interval_s)
 
-    print(f"PRESSURE: emitted {n} synthetic net packets -> {out_path}")
+    log.info("PRESSURE: emitted %d synthetic net packets path=%s", n, out_path)
     return out_path
 
 
@@ -254,4 +257,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    configure()
     main()

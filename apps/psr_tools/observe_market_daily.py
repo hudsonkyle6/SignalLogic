@@ -21,13 +21,14 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
-from pathlib import Path
 
 from rhythm_os.psr.domain_wave import DomainWave
 
 
-RAW_DIR = Path("src/rhythm_os/data/dark_field/market_raw")
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+from rhythm_os.runtime.paths import DOMAIN_DIR, MARKET_RAW_DIR as RAW_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------
@@ -55,7 +56,7 @@ def _read_latest_raw() -> dict | None:
     path = RAW_DIR / f"{_today()}.jsonl"
 
     if not path.exists():
-        print("MARKET DOMAIN: no raw file for today (skipping)")
+        log.info("MARKET DOMAIN: no raw file for today (skipping)")
         return None
 
     last = None
@@ -65,7 +66,7 @@ def _read_latest_raw() -> dict | None:
                 last = json.loads(line)
 
     if last is None:
-        print("MARKET DOMAIN: raw file empty (skipping)")
+        log.info("MARKET DOMAIN: raw file empty (skipping)")
 
     return last
 
@@ -85,7 +86,7 @@ def main() -> None:
 
     for channel, ext_key, field_key in CHANNELS:
         if ext_key not in symbols or field_key not in symbols:
-            print(f"MARKET DOMAIN: {channel} — missing symbols, skipping")
+            log.info("MARKET DOMAIN: %s — missing symbols, skipping", channel)
             continue
 
         phase_external = symbols[ext_key]
@@ -118,8 +119,9 @@ def main() -> None:
 
         emitted += 1
 
-    print(f"MARKET DOMAIN EMITTED | {emitted}/{len(CHANNELS)} channels")
+    log.info("MARKET DOMAIN EMITTED: %d/%d channels", emitted, len(CHANNELS))
 
 
 if __name__ == "__main__":
+    configure()
     main()

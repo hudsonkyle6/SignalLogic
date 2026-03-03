@@ -24,6 +24,9 @@ import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from signal_core.core.log import get_logger
+
+log = get_logger(__name__)
 
 # -------------------------------------------------
 # Observability window configuration (AUD-safe)
@@ -84,7 +87,7 @@ def _safe_read_csv(path: Path) -> pd.DataFrame:
     try:
         return pd.read_csv(path, low_memory=False)
     except Exception as e:
-        print(f"⚠ Could not read {path}: {e}", file=sys.stderr)
+        log.warning("Could not read %s: %s", path, e)
         return pd.DataFrame()
 
 
@@ -281,8 +284,7 @@ def build_weekly_signatures() -> None:
 
     # Idempotent canonical write
     out.to_csv(WEEKLY_PATH, index=False)
-    print(f"📘 Weekly Signatures rebuilt → {WEEKLY_PATH}")
-    print(f"   Weeks: {len(out)}")
+    log.info("Weekly Signatures rebuilt → %s  weeks=%d", WEEKLY_PATH, len(out))
 
 
 # -------------------------------------------------

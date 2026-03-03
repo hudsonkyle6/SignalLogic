@@ -6,7 +6,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-OUT_DIR = Path("src/rhythm_os/data/dark_field/natural")
+from rhythm_os.runtime.paths import NATURAL_DIR as OUT_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 def _append_jsonl(path: Path, rec: Dict[str, Any]) -> None:
@@ -97,8 +100,9 @@ def main(*, window_days: int = 7) -> None:
     }
 
     _append_jsonl(out_path, rec)
-    print(f"OBSERVATORY: wrote 1 natural raw record -> {out_path}")
+    log.info("OBSERVATORY: wrote 1 natural raw record path=%s", out_path)
 
 
 if __name__ == "__main__":
+    configure()
     main(window_days=7)

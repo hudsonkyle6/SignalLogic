@@ -17,10 +17,9 @@ from rhythm_os.psr.transform.natural_to_domain import (
 )
 
 from rhythm_os.psr.append_domain_wave import append_domain_wave
-from pathlib import Path
+from rhythm_os.runtime.paths import DOMAIN_DIR
+from signal_core.core.log import configure
 from datetime import datetime, timezone
-
-BUS_ROOT = Path("src/rhythm_os/data/dark_field")
 
 
 def emit_natural_domain(
@@ -36,7 +35,7 @@ def emit_natural_domain(
     waves = project_natural_domain(window_days=window_days)
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    bus_path = BUS_ROOT / "domain" / f"{today}.jsonl"
+    bus_path = DOMAIN_DIR / f"{today}.jsonl"
 
     for wave in waves:
         append_domain_wave(bus_path, wave)
@@ -45,5 +44,5 @@ def emit_natural_domain(
 
 
 if __name__ == "__main__":
-    # Silent by default; raise on failure
+    configure()
     emit_natural_domain(window_days=7)

@@ -1,4 +1,3 @@
-# C:\Users\SignalADmin\Signal Archive\SignalLogic\src\signal_core\core\basins\antifragile_dry_run.py
 """
 ANTIFRAGILE DRY RUN — HYDRO BASINS (READ-ONLY)
 
@@ -19,7 +18,6 @@ DOCTRINAL GUARANTEES:
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from collections import defaultdict
 from statistics import mean
 
@@ -38,13 +36,12 @@ from rhythm_os.domain.antifragile.drift import compute_drift_index
 from rhythm_os.core.memory.afterglow import compute_memory_fields
 
 # ---- Canonical oracle (DESCRIPTIVE ONLY) ----
+from rhythm_os.runtime.paths import METERS_DIR as DARK_FIELD_METERS
 
 
 # ---------------------------------------------------------------------
 # CONFIG
 # ---------------------------------------------------------------------
-
-DARK_FIELD_METERS = Path("src/rhythm_os/data/dark_field/meters")
 MAX_FILES = 2  # last N daily files (adjust freely)
 MIN_POINTS = 10
 

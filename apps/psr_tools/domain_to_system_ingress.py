@@ -18,13 +18,16 @@ from signal_core.core.hydro_types import HydroPacket
 from signal_core.core.hydro_ingress_gate import hydro_ingress_gate
 from signal_core.core.hydro_ingress_throat import enqueue_if_admitted
 from apps.psr_tools._latest_domain_wave import latest_wave
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 def main() -> None:
     waves = read_today()
     dw = latest_wave(waves, domain="system", channel="net_pressure")
     if not dw:
-        print("ADAPTER: no latest system DomainWave")
+        log.info("ADAPTER: no latest system DomainWave")
         return
 
     emitted = 0
@@ -65,8 +68,9 @@ def main() -> None:
         enqueue_if_admitted(packet, decision)
         emitted += 1
 
-    print(f"SYSTEM INGRESS → emitted {emitted} packets")
+    log.info("SYSTEM INGRESS: emitted %d packets", emitted)
 
 
 if __name__ == "__main__":
+    configure()
     main()

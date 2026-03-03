@@ -6,9 +6,7 @@ from pathlib import Path
 from typing import List
 
 from rhythm_os.psr.domain_wave import DomainWave
-
-
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+from rhythm_os.runtime.paths import DOMAIN_DIR
 
 
 def _today_path() -> Path:

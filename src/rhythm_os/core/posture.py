@@ -1,4 +1,3 @@
-# C:\Users\SignalADmin\Signal Archive\SignalLogic\src\rhythm_os\core\posture.py
 """
 SYSTEM POSTURE — single source of truth.
 

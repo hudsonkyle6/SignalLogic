@@ -17,8 +17,10 @@ from rhythm_os.core.domain_clocks.cyber import CYBER_CYCLES
 # Paths
 # ---------------------------------------------------------------------
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
+from rhythm_os.runtime.paths import DOMAIN_DIR, METERS_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 DOMAIN = "cyber"
 CHANNEL = "cadence_pressure"
@@ -151,8 +153,9 @@ def main() -> None:
             + "\n"
         )
 
-    print(f"CYBER DOMAIN EMITTED → phase_diff={phase_diff:.3f} coherence={r_cyber:.3f}")
+    log.info("CYBER DOMAIN EMITTED phase_diff=%.3f coherence=%.3f", phase_diff, r_cyber)
 
 
 if __name__ == "__main__":
+    configure()
     main()

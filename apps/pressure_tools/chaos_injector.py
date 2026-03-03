@@ -22,7 +22,6 @@ This is NOT an attack tool; it is controlled fault injection for your own pipeli
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 import argparse
 import json
 import math
@@ -32,7 +31,10 @@ import time
 from datetime import datetime, timezone
 
 
-METERS_DIR = Path("src/rhythm_os/data/dark_field/meters")
+from rhythm_os.runtime.paths import METERS_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 @dataclass(frozen=True)
@@ -118,7 +120,7 @@ def run_all_profiles(cfg: ChaosConfig) -> int:
     METERS_DIR.mkdir(parents=True, exist_ok=True)
 
     out_path = METERS_DIR / f"chaos_{_utc_tag()}.jsonl"
-    print(f"CHAOS: writing → {out_path}")
+    log.info("CHAOS: writing path=%s", out_path)
 
     dt = 1.0 / max(cfg.rate_hz, 0.1)
     start = time.time()
@@ -202,7 +204,7 @@ def run_all_profiles(cfg: ChaosConfig) -> int:
             lines += 1
             time.sleep(dt)
 
-    print(f"CHAOS: complete (lines={lines})")
+    log.info("CHAOS: complete lines=%d", lines)
     return lines
 
 
@@ -254,4 +256,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    configure()
     main()

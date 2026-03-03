@@ -4,9 +4,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from rhythm_os.psr.append_domain_wave import append_domain_wave
+from rhythm_os.runtime.paths import DOMAIN_DIR
+from signal_core.core.log import configure, get_logger
 
-BUS_ROOT = Path("src/rhythm_os/data/dark_field")
-DOMAIN_DIR = BUS_ROOT / "domain"
+log = get_logger(__name__)
 
 
 def _bus_path_today() -> Path:
@@ -30,9 +31,9 @@ def main(*, window_days: int = 7) -> int:
         for w in waves:
             append_domain_wave(bus_path, w)
         total += len(waves)
-        print(f"PSR: natural -> {len(waves)} waves")
+        log.info("PSR: natural emitted %d waves", len(waves))
     except Exception as e:
-        print(f"PSR: natural skipped ({e})")
+        log.warning("PSR: natural skipped: %s", e)
 
     # Market (optional; only if you have it promoted similarly)
     try:
@@ -42,13 +43,14 @@ def main(*, window_days: int = 7) -> int:
         for w in waves:
             append_domain_wave(bus_path, w)
         total += len(waves)
-        print(f"PSR: market -> {len(waves)} waves")
+        log.info("PSR: market emitted %d waves", len(waves))
     except Exception as e:
-        print(f"PSR: market skipped ({e})")
+        log.warning("PSR: market skipped: %s", e)
 
-    print(f"PSR: total emitted -> {total} waves @ {bus_path}")
+    log.info("PSR: total emitted %d waves path=%s", total, bus_path)
     return total
 
 
 if __name__ == "__main__":
+    configure()
     main(window_days=7)

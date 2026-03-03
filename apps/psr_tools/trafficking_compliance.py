@@ -36,6 +36,9 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from rhythm_os.runtime.paths import TURBINE_DIR, MANDATES_DIR
+from signal_core.core.log import configure, get_logger
+
+log = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------
@@ -224,18 +227,20 @@ def run_compliance_check() -> Dict[str, Any]:
     }
 
     if observations:
-        print(
-            f"COMPLIANCE: {len(observations)} trafficking convergence observation(s) "
-            f"logged → review required at {REVIEW_QUEUE}"
+        log.info(
+            "COMPLIANCE: %d trafficking convergence observation(s) logged, review required at %s",
+            len(observations),
+            REVIEW_QUEUE,
         )
     else:
-        print(
-            f"COMPLIANCE: no trafficking convergence events in "
-            f"{len(summaries)} turbine summaries"
+        log.info(
+            "COMPLIANCE: no trafficking convergence events in %d turbine summaries",
+            len(summaries),
         )
 
     return result
 
 
 if __name__ == "__main__":
+    configure()
     run_compliance_check()

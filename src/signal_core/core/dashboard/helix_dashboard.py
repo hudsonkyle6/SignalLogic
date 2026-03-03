@@ -25,10 +25,10 @@ import math
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
 try:
-    from rich.console import Console
+    from rich.console import Console, Group
     from rich.live import Live
     from rich.panel import Panel
     from rich.table import Table
@@ -39,7 +39,14 @@ try:
 except ImportError:
     _HAS_RICH = False
 
-from rhythm_os.runtime.paths import METERS_DIR, NATURAL_DIR, PENSTOCK_DIR, TURBINE_DIR
+from rhythm_os.runtime.paths import (
+    DOMAIN_DIR,
+    METERS_DIR,
+    NATURAL_DIR,
+    PENSTOCK_DIR,
+    TURBINE_DIR,
+)
+from rhythm_os.voice.voice_store import load_last_voice_line
 from rhythm_os.runtime.readiness import check_readiness, ReadinessStatus
 from rhythm_os.runtime.deploy_config import (
     get_deployment_name,
@@ -47,8 +54,6 @@ from rhythm_os.runtime.deploy_config import (
     get_domain_channels,
     get_baseline_requirements,
 )
-
-DOMAIN_DIR = Path("src/rhythm_os/data/dark_field/domain")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -101,6 +106,14 @@ def _read_market_domain_waves() -> Dict[str, Dict]:
     return latest
 
 
+def _read_cyber_domain_wave() -> Optional[Dict[str, Any]]:
+    """Latest cyber cadence DomainWave from today's domain JSONL."""
+    for rec in reversed(_read_last_n(DOMAIN_DIR, n=100)):
+        if rec.get("domain") == "cyber":
+            return rec
+    return None
+
+
 def _load_last_cycle_result() -> Optional[Any]:
     """Read the last CycleResult persisted by hydro_run_cadence."""
     import types
@@ -120,27 +133,51 @@ def _load_last_cycle_result() -> Optional[Any]:
 # Helix renderer
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Characters for helix strand depth
+# Characters for helix strand depth (● = near, ○ = far, ─ = rung connector)
 _FRONT = "●"
 _BACK = "○"
 _RUNG = "─"
-_CROSS = "◆"
 
-# Tier zones (fraction of total height, top-to-bottom on screen)
-# Screen y=0 is top → Domain is drawn first (top), System last (bottom)
-_TIERS = [
-    (0.00, 0.33, "bold cyan", "dim cyan", "III", "DOMAIN"),
-    (0.33, 0.67, "bold green", "dim green", "II", "NATURAL"),
-    (0.67, 1.00, "bold yellow", "dim yellow", "I", "SYSTEM"),
+
+class TierZone(NamedTuple):
+    """One colour/label zone of the helix, defined as a fraction of its height."""
+
+    lo: float  # y_frac where this zone starts (0.0 = top of screen)
+    hi: float  # y_frac where this zone ends
+    front_style: str  # rich style for strands on the viewer's side
+    back_style: str  # rich style for strands on the far side
+    num: str  # Roman numeral label shown in the gutter ("III", "II", "I")
+    name: str  # Tier name shown in the legend ("DOMAIN", "NATURAL", "SYSTEM")
+
+
+# Screen y=0 is top, so Domain (III) is drawn first and System (I) last.
+_TIERS: List[TierZone] = [
+    TierZone(0.00, 0.33, "bold cyan", "dim cyan", "III", "DOMAIN"),
+    TierZone(0.33, 0.67, "bold green", "dim green", "II", "NATURAL"),
+    TierZone(0.67, 1.00, "bold yellow", "dim yellow", "I", "SYSTEM"),
 ]
 
 
 def _tier_style(y_frac: float) -> Tuple[str, str]:
     """Return (front_style, back_style) for a given vertical fraction."""
-    for lo, hi, front, back, *_ in _TIERS:
-        if lo <= y_frac < hi:
-            return front, back
-    return "bold yellow", "dim yellow"
+    for zone in _TIERS:
+        if zone.lo <= y_frac < zone.hi:
+            return zone.front_style, zone.back_style
+    return _TIERS[-1].front_style, _TIERS[-1].back_style
+
+
+def _zone_label(y_frac: float) -> Tuple[str, str]:
+    """Return (gutter_label, front_style) for the helix left margin.
+
+    Labels are right-justified to 3 chars so they align vertically:
+    "III" / " II" / "  I".  Only the first row of each zone shows the
+    label; callers should show blank space for subsequent rows in that zone.
+    """
+    for zone in _TIERS:
+        if zone.lo <= y_frac < zone.hi:
+            return zone.num.rjust(3), zone.front_style
+    last = _TIERS[-1]
+    return last.num.rjust(3), last.front_style
 
 
 def render_helix(
@@ -149,9 +186,23 @@ def render_helix(
     turns: float = 3.0,
     rotation: float = 0.0,
 ) -> List["Text"]:
-    """
-    Render one frame of the double helix.
-    Returns a list of rich Text objects (one per row, exactly `width` wide).
+    """Render one frame of the double helix.
+
+    Returns a list of rich Text objects, one per row, each exactly `width` chars.
+
+    Geometry
+    --------
+    Each row maps to an angle:  theta = (row / height) * turns * 2π + rotation
+
+    Strand A follows  x = centre + radius * sin(theta)   — right side at theta=0
+    Strand B follows  x = centre - radius * sin(theta)   — π offset, always opposite
+
+    Depth (z) uses the cosine of the same angle:
+      z_a = cos(theta)   positive → strand A is closer to the viewer (draw ●)
+      z_b = -z_a         because B is exactly π ahead, its depth is always inverted
+
+    Rungs (─) connect A to B at every half-turn to give the ladder-like look.
+    Colour zones (cyan / green / yellow) map to the three tiers by row position.
     """
     if not _HAS_RICH:
         return []
@@ -306,6 +357,59 @@ def _panel_system(readiness: ReadinessStatus) -> Panel:
                 Text(f"↑ {float(out_bps) / 1e3:.1f} KB/s", style="dim yellow"),
             )
 
+    # ── Cyber cadence section ──────────────────────────────────────────────
+    cyber_rec = _read_cyber_domain_wave()
+    t.add_row("", Text(""), Text(""))
+    t.add_row(
+        Text("─ Cyber ─", style="bold yellow"),
+        Text("", style=""),
+        Text("", style=""),
+    )
+
+    if cyber_rec:
+        coherence = cyber_rec.get("coherence")
+        phase_diff = cyber_rec.get("phase_diff")
+        extractor = cyber_rec.get("extractor") or {}
+        per_clock: Dict[str, Any] = extractor.get("per_clock_coherence") or {}
+
+        if coherence is not None:
+            coh_val = float(coherence)
+            if coh_val >= 0.70:
+                coh_style, status_label = "green", "NOMINAL"
+            elif coh_val >= 0.40:
+                coh_style, status_label = "yellow", "ELEVATED"
+            else:
+                coh_style, status_label = "red", "PRESSURE"
+            bar = _bar(coh_val, style_full=coh_style, style_empty="grey23")
+            t.add_row(
+                "Cadence",
+                bar,
+                Text(status_label, style=f"bold {coh_style}"),
+            )
+
+        if phase_diff is not None:
+            t.add_row(
+                "Phase Δ",
+                Text(f"φ={float(phase_diff):.3f} rad", style="dim yellow"),
+                Text(""),
+            )
+
+        for ck, short in _CYBER_CLOCK_DISPLAY:
+            r = per_clock.get(ck)
+            if r is not None:
+                rv = float(r)
+                clk_style = (
+                    "green" if rv >= 0.70 else ("yellow" if rv >= 0.40 else "red")
+                )
+                bar = _bar(rv, width=8, style_full=clk_style, style_empty="grey23")
+                t.add_row(
+                    Text(short, style="dim yellow"),
+                    bar,
+                    Text(f"{rv:.2f}", style=f"dim {clk_style}"),
+                )
+    else:
+        t.add_row("Cadence", Text("no data yet", style="dim"), Text(""))
+
     t.add_row("", Text(""), Text(""))
     t.add_row(
         "Records",
@@ -313,7 +417,9 @@ def _panel_system(readiness: ReadinessStatus) -> Panel:
         _ready_badge(readiness.system_ready),
     )
 
-    return Panel(t, title="[bold yellow]TIER I: SYSTEM[/]", border_style="yellow")
+    return Panel(
+        t, title="[bold yellow]TIER I: SYSTEM  ◈  CYBER[/]", border_style="yellow"
+    )
 
 
 def _panel_natural(readiness: ReadinessStatus) -> Panel:
@@ -385,8 +491,24 @@ def _panel_natural(readiness: ReadinessStatus) -> Panel:
     return Panel(t, title="[bold green]TIER II: NATURAL[/]", border_style="green")
 
 
-# Channel display config: (key, label, ext_name, field_name, bar_lo, bar_hi, ext_fmt, field_fmt)
-# bar_lo / bar_hi define the normalization range for the pressure bar.
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel display config tables
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Cyber cadence bands (key → short display label for the per-clock coherence rows).
+# Ordered fastest → slowest to mirror the CYBER_CYCLES definition.
+_CYBER_CLOCK_DISPLAY: List[Tuple[str, str]] = [
+    ("burst_250ms", "250ms"),
+    ("burst_1s", "  1s"),
+    ("beat_5s", "  5s"),
+    ("minute_60s", " 60s"),
+    ("roll_15m", " 15m"),
+    ("session_1h", "  1h"),
+]
+
+# Market channel display config.
+# Columns: (domain_key, label, ext_ticker, field_ticker, bar_lo, bar_hi, ext_fmt, field_fmt)
+# bar_lo / bar_hi define the raw-value range that maps to [0, 1] on the bar.
 _MARKET_CHANNEL_DISPLAY: List[Tuple] = [
     ("volatility_pressure", "Volatility", "VIX", "SPX", 10, 40, "{:.1f}", "{:,.0f}"),
     ("capital_cost", "Capital Cost", "10Y", "3M", 2.0, 7.0, "{:.2f}%", "{:.2f}%"),
@@ -537,6 +659,25 @@ def _panel_cycle(cycle_result: Optional[Any] = None) -> Panel:
     return Panel(t, title="[bold white]LAST CYCLE[/]", border_style="white")
 
 
+def _load_narrator_line() -> str:
+    """Return the most-recent narrator voice line text, or empty string."""
+    try:
+        vl = load_last_voice_line(mode="narrator")
+        return vl.text if vl else ""
+    except Exception:
+        return ""
+
+
+def _panel_narrator(text: str) -> "Panel":
+    """Render the narrator voice line panel."""
+    body = Text(justify="left")
+    if text:
+        body.append(text, style="italic dim white")
+    else:
+        body.append("No narration recorded yet.", style="dim")
+    return Panel(body, title="[bold magenta]VOICE[/]", border_style="magenta")
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Main layout builder
 # ─────────────────────────────────────────────────────────────────────────────
@@ -567,20 +708,32 @@ def _build_display(
     header.append(f"  ●  {now_utc}", style="dim white")
 
     # ── Helix ───────────────────────────────────────────────────────────────
-    helix_rows = render_helix(height=36, width=26, turns=3.0, rotation=rotation)
+    # width=23 reserves 3 chars on the left for the tier-zone gutter.
+    helix_rows = render_helix(height=36, width=23, turns=3.0, rotation=rotation)
 
+    # Left gutter: show the tier label (III / II / I) only on the first row of
+    # each zone; blank space on all subsequent rows within that zone.
     helix_col = Text()
-    for row in helix_rows:
+    prev_label: Optional[str] = None
+    n_rows = len(helix_rows)
+    for i, row in enumerate(helix_rows):
+        y_frac = i / max(1, n_rows - 1)
+        lbl, style = _zone_label(y_frac)
+        if lbl != prev_label:
+            helix_col.append(lbl, style=style)
+            prev_label = lbl
+        else:
+            helix_col.append("   ")
         helix_col.append_text(row)
         helix_col.append("\n")
 
     # Tier legend below helix
     legend = Text(justify="left")
     legend.append("\n")
-    for _, _, front, _, num, name_tier in _TIERS:
-        legend.append(f"  {_FRONT} ", style=front)
-        legend.append(f"Tier {num}: ", style="dim")
-        legend.append(f"{name_tier}\n", style=front)
+    for zone in _TIERS:
+        legend.append(f"  {_FRONT} ", style=zone.front_style)
+        legend.append(f"Tier {zone.num}: ", style="dim")
+        legend.append(f"{zone.name}\n", style=zone.front_style)
 
     helix_text = Text()
     helix_text.append_text(helix_col)
@@ -595,18 +748,17 @@ def _build_display(
     p_natural = _panel_natural(readiness)
     p_system = _panel_system(readiness)
     p_cycle = _panel_cycle(cycle_result)
+    p_narrator = _panel_narrator(_load_narrator_line())
 
     # ── Outer grid ──────────────────────────────────────────────────────────
     outer = Table.grid(expand=True)
     outer.add_column(width=30, no_wrap=False)
     outer.add_column(ratio=1)
 
-    from rich.console import Group
-
     right_items: list = [Panel(header, border_style="magenta")]
     if status_text:
         right_items.append(Rule(f"  {status_text}  ", style="bold yellow"))
-    right_items.extend([p_domain, p_natural, p_system, p_cycle])
+    right_items.extend([p_domain, p_natural, p_system, p_cycle, p_narrator])
     right = Group(*right_items)
 
     outer.add_row(helix_panel, right)
