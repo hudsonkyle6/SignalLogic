@@ -211,6 +211,12 @@ class TestTurbineActionCounselorFields:
 
 
 class TestGateAuthorityCounselorAdvisory:
+    @pytest.fixture(autouse=True)
+    def _isolate_voice_store(self, monkeypatch, tmp_path):
+        """Redirect VOICE_LINES_PATH so counselor tests never write to real data."""
+        import rhythm_os.voice.voice_store as vs_mod
+        monkeypatch.setattr(vs_mod, "VOICE_LINES_PATH", tmp_path / "voice_lines.jsonl")
+
     def _authority(self, gate_id="g-001", scope=ActionScope.SIGNAL, tmp_path=None):
         store = _make_open_gate_store(gate_id, scope)
         return GateAuthority(store, persist_actions=False, store_dir=tmp_path)
