@@ -8,9 +8,9 @@ deployment:
   version: "1"
 
 location:
-  lat: 42.9876
-  lon: -71.8126
-  label: "Southern NH"
+  lat: 34.0522
+  lon: -118.2437
+  label: "Los Angeles, CA"
   timezone: "UTC"
 
 baseline:
