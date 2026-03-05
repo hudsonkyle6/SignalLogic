@@ -503,7 +503,9 @@ if __name__ == "__main__":
 
         _features = extract_and_append(result)
     except Exception:
-        log.warning("ml feature extraction failed — cycle result unaffected", exc_info=True)
+        log.warning(
+            "ml feature extraction failed — cycle result unaffected", exc_info=True
+        )
 
     # ML step 2: inference — predict convergence event label
     if _features:

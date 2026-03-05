@@ -144,7 +144,7 @@ def compute_ghost_metrics(df: pd.DataFrame) -> pd.DataFrame:
     sigma = roll.std().replace(0, np.nan).fillna(1.0)
 
     drift_z = (drift - mu) / sigma
-    drift_z = drift_z.clip(lower=0.0)
+    drift_z = drift_z.fillna(0.0).clip(lower=0.0)
     D_ghost = _sigmoid(drift_z, k=1.0)
     df["GhostDriftComponent"] = D_ghost
 

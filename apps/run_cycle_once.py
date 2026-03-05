@@ -59,10 +59,12 @@ class _CycleFailed(Exception):
 # ─── Silent step runner ───────────────────────────────────────────────────────
 
 
-def _run_step(module_path: str, required: bool = True) -> bool:
+def _run_step(
+    module_path: str, required: bool = True, args: list | None = None
+) -> bool:
     """Run a Python module as a subprocess. All output suppressed."""
     p = subprocess.run(
-        [PY, "-m", module_path],
+        [PY, "-m", module_path] + (args or []),
         cwd=str(ROOT),
         env=BASE_ENV,
         stdout=subprocess.DEVNULL,
@@ -78,7 +80,9 @@ def _run_step(module_path: str, required: bool = True) -> bool:
 # ─── Cycle steps (runs in background thread) ─────────────────────────────────
 
 
-def _run_cycle_steps(set_status) -> None:
+def _run_cycle_steps(
+    set_status, scenario: str = "baseline", intensity: float = 1.0
+) -> None:
     """
     Execute the full observation cycle. Calls set_status(text) before each step
     so the helix display can show progress. Raises _CycleFailed on required failure.
@@ -133,6 +137,12 @@ def _run_cycle_steps(set_status) -> None:
         _run_step("apps.psr_tools.emit_cyber_domain", required=False)
         set_status("INGRESS → CYBER")
         _run_step("apps.psr_tools.domain_to_cyber_ingress", required=False)
+        set_status(f"OBSERVATORY → CYBER ATTACK RAW  [{scenario} @ {intensity:.2f}]")
+        _run_step(
+            "apps.observatory_tools.emit_cyber_attack_raw",
+            required=False,
+            args=["--scenario", scenario, "--intensity", str(intensity)],
+        )
         set_status("PSR → CYBER ATTACK DOMAIN")
         _run_step("apps.psr_tools.emit_cyber_attack_domain", required=False)
         set_status("INGRESS → CYBER ATTACK")
@@ -154,7 +164,9 @@ def _run_cycle_steps(set_status) -> None:
 # ─── Helix live driver (main entry point) ────────────────────────────────────
 
 
-def _run_with_helix(interval_s: int = 0) -> None:
+def _run_with_helix(
+    interval_s: int = 0, scenario: str = "baseline", intensity: float = 1.0
+) -> None:
     """
     Run observation cycles under the rotating helix display.
     The cycle steps run in a background thread; the helix Live context
@@ -170,11 +182,11 @@ def _run_with_helix(interval_s: int = 0) -> None:
             _HAS_RICH,
         )
     except Exception:
-        _run_text_mode(interval_s)
+        _run_text_mode(interval_s, scenario, intensity)
         return
 
     if not _HAS_RICH:
-        _run_text_mode(interval_s)
+        _run_text_mode(interval_s, scenario, intensity)
         return
 
     from rich.console import Console
@@ -193,7 +205,7 @@ def _run_with_helix(interval_s: int = 0) -> None:
 
     def cycle_worker() -> None:
         try:
-            _run_cycle_steps(set_status)
+            _run_cycle_steps(set_status, scenario, intensity)
         except _CycleFailed as exc:
             failed_ref[0] = str(exc)
             set_status(f"FAILED: {exc}")
@@ -262,7 +274,9 @@ def _run_with_helix(interval_s: int = 0) -> None:
                 rotation += 0.08
 
 
-def _run_text_mode(interval_s: int = 0) -> None:
+def _run_text_mode(
+    interval_s: int = 0, scenario: str = "baseline", intensity: float = 1.0
+) -> None:
     """Fallback when rich is unavailable."""
     stop = threading.Event()
     _signal.signal(_signal.SIGTERM, lambda *_: stop.set())
@@ -273,7 +287,7 @@ def _run_text_mode(interval_s: int = 0) -> None:
         cycle += 1
         print(f"\n=== CYCLE {cycle} ===")
         try:
-            _run_cycle_steps(lambda s: print(f"  {s}"))
+            _run_cycle_steps(lambda s: print(f"  {s}"), scenario, intensity)
         except _CycleFailed as exc:
             print(f"CYCLE {cycle} FAILED: {exc}")
         if interval_s <= 0 or stop.is_set():
@@ -284,7 +298,8 @@ def _run_text_mode(interval_s: int = 0) -> None:
 
 # ─── Entry point ─────────────────────────────────────────────────────────────
 
-if __name__ == "__main__":
+
+def main() -> None:
     import argparse
 
     ap = argparse.ArgumentParser(description="SignalLogic — full observation cycle")
@@ -295,6 +310,35 @@ if __name__ == "__main__":
         metavar="SECONDS",
         help="loop continuously, sleeping SECONDS between cycle completions (0 = run once)",
     )
+    ap.add_argument(
+        "--scenario",
+        choices=["baseline", "port_scan", "ddos", "brute_force", "apt"],
+        default="baseline",
+        help="cyber attack scenario to emit each cycle (default: baseline)",
+    )
+    ap.add_argument(
+        "--intensity",
+        type=float,
+        default=1.0,
+        metavar="0.0-1.0",
+        help="attack intensity scale factor (default: 1.0)",
+    )
+    ap.add_argument(
+        "--health",
+        action="store_true",
+        help="check system readiness and exit 0 (warm), 1 (cold), 2 (error)",
+    )
     args = ap.parse_args()
 
-    _run_with_helix(interval_s=args.loop)
+    if args.health:
+        from signal_core.core.hydro_run import _health_check
+
+        raise SystemExit(_health_check())
+
+    _run_with_helix(
+        interval_s=args.loop, scenario=args.scenario, intensity=args.intensity
+    )
+
+
+if __name__ == "__main__":
+    main()
