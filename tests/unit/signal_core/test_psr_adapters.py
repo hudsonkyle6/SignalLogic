@@ -87,7 +87,9 @@ class TestLatestWave:
     def test_channel_and_field_cycle_combined(self):
         w1 = _dw(domain="cyber", channel="a", field_cycle="diurnal", t=3000.0)
         w2 = _dw(domain="cyber", channel="b", field_cycle="diurnal", t=4000.0)
-        result = self._call([w1, w2], domain="cyber", channel="a", field_cycle="diurnal")
+        result = self._call(
+            [w1, w2], domain="cyber", channel="a", field_cycle="diurnal"
+        )
         assert result is w1
 
     def test_no_match_returns_none(self):
@@ -131,7 +133,9 @@ class TestComputeDomainWave:
     # DomainWave.__init__(), so the function always raises TypeError.
     # These tests document the bug; they are xfail until the bug is fixed.
 
-    @pytest.mark.xfail(reason="BUG: compute_domain_wave omits field_cycle arg to DomainWave")
+    @pytest.mark.xfail(
+        reason="BUG: compute_domain_wave omits field_cycle arg to DomainWave"
+    )
     def test_returns_domain_wave(self):
         from rhythm_os.adapters.observe.phase_compare import compute_domain_wave
 
@@ -163,7 +167,9 @@ class TestComputeDomainWave:
                 extractor_meta={},
             )
 
-    @pytest.mark.xfail(reason="BUG: compute_domain_wave omits field_cycle arg to DomainWave")
+    @pytest.mark.xfail(
+        reason="BUG: compute_domain_wave omits field_cycle arg to DomainWave"
+    )
     def test_none_coherence_propagated(self):
         from rhythm_os.adapters.observe.phase_compare import compute_domain_wave
 
@@ -194,7 +200,9 @@ class TestWrapPhaseExtractor:
 
 class TestExtractPhaseZeroCrossing:
     def _call(self, samples):
-        from rhythm_os.adapters.observe.phase_extractor import extract_phase_zero_crossing
+        from rhythm_os.adapters.observe.phase_extractor import (
+            extract_phase_zero_crossing,
+        )
 
         return extract_phase_zero_crossing(samples)
 
@@ -245,7 +253,6 @@ class TestGenerateMultiChannelSynthetic:
     def _call(self, channels):
         from rhythm_os.adapters.observe.synthetic_multi import (
             generate_multi_channel_synthetic,
-            SyntheticChannelSpec,
         )
 
         return generate_multi_channel_synthetic(
@@ -329,7 +336,6 @@ class TestComputeCoupling:
 
     def test_perfect_correlation(self):
         from rhythm_os.core.coupling.coupling import compute_coupling
-        import pandas as pd
 
         n = 30
         df = self._df({"x": list(range(n)), "y": list(range(n))})
@@ -358,7 +364,9 @@ class TestComputeCoupling:
                 "y": [random.gauss(0, 10) for _ in range(n)],
             }
         )
-        stat = compute_coupling(df, "x", "y", max_lag=2, min_points=5, weak_abs_threshold=0.99)
+        stat = compute_coupling(
+            df, "x", "y", max_lag=2, min_points=5, weak_abs_threshold=0.99
+        )
         if stat is not None:
             assert stat.note == "weak coupling"
 
@@ -463,11 +471,15 @@ class TestDomainToNaturalIngress:
 
 class TestDomainToSystemIngress:
     def test_emits_packet_for_system_domain(self):
-        count = _run_ingress_main("domain_to_system_ingress", "system", channel="net_pressure")
+        count = _run_ingress_main(
+            "domain_to_system_ingress", "system", channel="net_pressure"
+        )
         assert count == 1
 
     def test_skips_non_system_domain(self):
-        count = _run_ingress_main("domain_to_system_ingress", "market", channel="net_pressure")
+        count = _run_ingress_main(
+            "domain_to_system_ingress", "market", channel="net_pressure"
+        )
         assert count == 0
 
     def test_empty_waves_no_emit(self):
@@ -489,15 +501,21 @@ class TestDomainToTraffickingIngress:
 
 class TestDomainToCyberAttackIngress:
     def test_emits_packet_for_cyber_attack_domain(self):
-        count = _run_ingress_main("domain_to_cyber_attack_ingress", "cyber", channel="attack_pressure")
+        count = _run_ingress_main(
+            "domain_to_cyber_attack_ingress", "cyber", channel="attack_pressure"
+        )
         assert count == 1
 
     def test_skips_wrong_channel(self):
-        count = _run_ingress_main("domain_to_cyber_attack_ingress", "cyber", channel="other")
+        count = _run_ingress_main(
+            "domain_to_cyber_attack_ingress", "cyber", channel="other"
+        )
         assert count == 0
 
     def test_skips_non_cyber_domain(self):
-        count = _run_ingress_main("domain_to_cyber_attack_ingress", "market", channel="attack_pressure")
+        count = _run_ingress_main(
+            "domain_to_cyber_attack_ingress", "market", channel="attack_pressure"
+        )
         assert count == 0
 
     def test_empty_waves_no_emit(self):

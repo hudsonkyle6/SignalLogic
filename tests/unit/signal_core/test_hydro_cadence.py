@@ -16,7 +16,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from signal_core.core.hydro_types import GateResult, HydroPacket, Route
+from signal_core.core.hydro_types import GateResult, HydroPacket
 
 
 # ---------------------------------------------------------------------------
@@ -204,18 +204,36 @@ def _run_main(
 
     with (
         patch("signal_core.core.hydro_run_cadence.drain_queue", return_value=processed),
-        patch("signal_core.core.hydro_run_cadence.annotate_packet", side_effect=lambda p: p),
-        patch("signal_core.core.hydro_run_cadence.attenuate_with_scars", side_effect=lambda p: p),
-        patch("signal_core.core.hydro_run_cadence.hydro_ingress_gate", return_value=ingress),
+        patch(
+            "signal_core.core.hydro_run_cadence.annotate_packet",
+            side_effect=lambda p: p,
+        ),
+        patch(
+            "signal_core.core.hydro_run_cadence.attenuate_with_scars",
+            side_effect=lambda p: p,
+        ),
+        patch(
+            "signal_core.core.hydro_run_cadence.hydro_ingress_gate",
+            return_value=ingress,
+        ),
         patch("signal_core.core.hydro_run_cadence.dispatch", return_value=decision),
         patch("signal_core.core.hydro_run_cadence.commit_packet"),
         patch("signal_core.core.hydro_run_cadence.append_audit"),
-        patch("signal_core.core.hydro_run_cadence.process_turbine", return_value=MagicMock(convergence_note="ok", diurnal_phase=0.5)),
+        patch(
+            "signal_core.core.hydro_run_cadence.process_turbine",
+            return_value=MagicMock(convergence_note="ok", diurnal_phase=0.5),
+        ),
         patch("signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}),
-        patch("signal_core.core.hydro_run_cadence.run_turbine_summary", return_value=convergence or {}),
+        patch(
+            "signal_core.core.hydro_run_cadence.run_turbine_summary",
+            return_value=convergence or {},
+        ),
         patch("signal_core.core.hydro_run_cadence.write_scar"),
         patch("signal_core.core.hydro_run_cadence.emit_control_signal"),
-        patch("signal_core.core.hydro_run_cadence.assess_spillway", return_value=spill_mock),
+        patch(
+            "signal_core.core.hydro_run_cadence.assess_spillway",
+            return_value=spill_mock,
+        ),
     ):
         return main()
 
@@ -226,8 +244,13 @@ class TestMainEmpty:
 
         with (
             patch("signal_core.core.hydro_run_cadence.drain_queue", return_value=[]),
-            patch("signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}),
-            patch("signal_core.core.hydro_run_cadence.run_turbine_summary", return_value={}),
+            patch(
+                "signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.run_turbine_summary",
+                return_value={},
+            ),
         ):
             result = main()
         assert result.packets_drained == 0
@@ -259,15 +282,37 @@ class TestMainRoute:
 
     def test_turbine_forest_edge_calls_write_scar(self):
         with (
-            patch("signal_core.core.hydro_run_cadence.drain_queue", return_value=[_pkt()]),
-            patch("signal_core.core.hydro_run_cadence.annotate_packet", side_effect=lambda p: p),
-            patch("signal_core.core.hydro_run_cadence.attenuate_with_scars", side_effect=lambda p: p),
-            patch("signal_core.core.hydro_run_cadence.hydro_ingress_gate", return_value=_ingress()),
-            patch("signal_core.core.hydro_run_cadence.dispatch", return_value=_dispatch_decision("TURBINE")),
+            patch(
+                "signal_core.core.hydro_run_cadence.drain_queue", return_value=[_pkt()]
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.annotate_packet",
+                side_effect=lambda p: p,
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.attenuate_with_scars",
+                side_effect=lambda p: p,
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.hydro_ingress_gate",
+                return_value=_ingress(),
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.dispatch",
+                return_value=_dispatch_decision("TURBINE"),
+            ),
             patch("signal_core.core.hydro_run_cadence.append_audit"),
-            patch("signal_core.core.hydro_run_cadence.process_turbine", return_value=MagicMock(convergence_note="ok", diurnal_phase=0.5)),
-            patch("signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}),
-            patch("signal_core.core.hydro_run_cadence.run_turbine_summary", return_value={}),
+            patch(
+                "signal_core.core.hydro_run_cadence.process_turbine",
+                return_value=MagicMock(convergence_note="ok", diurnal_phase=0.5),
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.run_turbine_summary",
+                return_value={},
+            ),
             patch("signal_core.core.hydro_run_cadence.write_scar") as mock_scar,
             patch("signal_core.core.hydro_run_cadence.emit_control_signal"),
         ):
@@ -284,7 +329,12 @@ class TestMainRoute:
         assert result.turbine_obs == 1
 
     def test_spillway_quarantine_increments_counter(self):
-        result = _run_main([1], route_name="SPILLWAY", spillway_route_name="QUARANTINE", anomaly_flag=True)
+        result = _run_main(
+            [1],
+            route_name="SPILLWAY",
+            spillway_route_name="QUARANTINE",
+            anomaly_flag=True,
+        )
         assert result.spillway_quarantined == 1
 
     def test_spillway_hold_increments_counter(self):
@@ -310,8 +360,13 @@ class TestMainConvergenceScar:
         }
         with (
             patch("signal_core.core.hydro_run_cadence.drain_queue", return_value=[]),
-            patch("signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}),
-            patch("signal_core.core.hydro_run_cadence.run_turbine_summary", return_value=convergence),
+            patch(
+                "signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.run_turbine_summary",
+                return_value=convergence,
+            ),
             patch("signal_core.core.hydro_run_cadence.write_scar") as mock_scar,
         ):
             from signal_core.core.hydro_run_cadence import main
@@ -332,8 +387,13 @@ class TestMainConvergenceScar:
         }
         with (
             patch("signal_core.core.hydro_run_cadence.drain_queue", return_value=[]),
-            patch("signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}),
-            patch("signal_core.core.hydro_run_cadence.run_turbine_summary", return_value=convergence),
+            patch(
+                "signal_core.core.hydro_run_cadence.apply_all_decay", return_value={}
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.run_turbine_summary",
+                return_value=convergence,
+            ),
             patch("signal_core.core.hydro_run_cadence.write_scar") as mock_scar,
         ):
             from signal_core.core.hydro_run_cadence import main
@@ -347,8 +407,14 @@ class TestMainScarDecay:
         # Just ensure scar decay branch with non-empty result doesn't raise
         with (
             patch("signal_core.core.hydro_run_cadence.drain_queue", return_value=[]),
-            patch("signal_core.core.hydro_run_cadence.apply_all_decay", return_value={"system": 2}),
-            patch("signal_core.core.hydro_run_cadence.run_turbine_summary", return_value={}),
+            patch(
+                "signal_core.core.hydro_run_cadence.apply_all_decay",
+                return_value={"system": 2},
+            ),
+            patch(
+                "signal_core.core.hydro_run_cadence.run_turbine_summary",
+                return_value={},
+            ),
         ):
             from signal_core.core.hydro_run_cadence import main
 
@@ -363,8 +429,10 @@ class TestMainScarDecay:
 
 class TestPersistCycleResult:
     def test_writes_last_cycle_json(self, tmp_path):
-        from signal_core.core.hydro_run_cadence import CycleResult, _persist_cycle_result
-        import signal_core.core.hydro_run_cadence as mod
+        from signal_core.core.hydro_run_cadence import (
+            CycleResult,
+            _persist_cycle_result,
+        )
 
         result = CycleResult(
             cycle_ts=_T,
@@ -378,7 +446,9 @@ class TestPersistCycleResult:
 
         turbine_dir = tmp_path / "turbine"
 
-        with patch("signal_core.core.hydro_run_cadence.TURBINE_DIR", turbine_dir, create=True):
+        with patch(
+            "signal_core.core.hydro_run_cadence.TURBINE_DIR", turbine_dir, create=True
+        ):
             # Patch the import inside the function
             import rhythm_os.runtime.paths as paths_mod
 
@@ -437,7 +507,11 @@ class TestRunVoiceNarration:
             turbine_obs=0,
             spillway_quarantined=0,
             spillway_hold=0,
-            convergence_summary={"domains_observed": {}, "convergence_event_count": 0, "strong_events": 0},
+            convergence_summary={
+                "domains_observed": {},
+                "convergence_event_count": 0,
+                "strong_events": 0,
+            },
         )
         mock_narration = MagicMock()
         mock_narration.text = "test narration"
@@ -458,7 +532,9 @@ class TestRunVoiceInterpretation:
     def test_no_strong_events_returns_early(self):
         from signal_core.core.hydro_run_cadence import _run_voice_interpretation
 
-        convergence = {"convergence_events": [{"strength": "weak", "domains": ["a", "b"]}]}
+        convergence = {
+            "convergence_events": [{"strength": "weak", "domains": ["a", "b"]}]
+        }
         # Should not raise, should return without calling interpret
         with patch("rhythm_os.voice.interpreter.interpret") as mock_interp:
             _run_voice_interpretation(convergence)

@@ -55,7 +55,12 @@ class TestOutcomeRecord:
         from signal_core.core.ml.outcome_log import OutcomeRecord
 
         defaults = dict(
-            ts=_TS1, label="NOISE", outcome="HELD", notes="", labelled_at=0.0, weight=1.0
+            ts=_TS1,
+            label="NOISE",
+            outcome="HELD",
+            notes="",
+            labelled_at=0.0,
+            weight=1.0,
         )
         defaults.update(kw)
         return OutcomeRecord(**defaults)
@@ -80,7 +85,9 @@ class TestOutcomeRecord:
     def test_from_dict_defaults(self):
         from signal_core.core.ml.outcome_log import OutcomeRecord
 
-        rec = OutcomeRecord.from_dict({"ts": "1000.0", "label": "LAG", "outcome": "MONITORED"})
+        rec = OutcomeRecord.from_dict(
+            {"ts": "1000.0", "label": "LAG", "outcome": "MONITORED"}
+        )
         assert rec.notes == ""
         assert rec.weight == 1.0
         assert rec.labelled_at == 0.0
@@ -137,7 +144,14 @@ class TestLoadSaveLabels:
         from signal_core.core.ml.outcome_log import OutcomeRecord
 
         lp = tmp_path / "labels.jsonl"
-        rec = OutcomeRecord(ts=_TS1, label="NOISE", outcome="HELD", notes="x", labelled_at=0.0, weight=1.0)
+        rec = OutcomeRecord(
+            ts=_TS1,
+            label="NOISE",
+            outcome="HELD",
+            notes="x",
+            labelled_at=0.0,
+            weight=1.0,
+        )
 
         with (
             patch.object(mod, "_LABELS_PATH", lp),
@@ -153,7 +167,9 @@ class TestLoadSaveLabels:
         import signal_core.core.ml.outcome_log as mod
 
         lp = tmp_path / "labels.jsonl"
-        lp.write_text("corrupt\n{\"ts\":1000.0,\"label\":\"NOISE\",\"outcome\":\"HELD\",\"notes\":\"\",\"labelled_at\":0.0,\"weight\":1.0}\n")
+        lp.write_text(
+            'corrupt\n{"ts":1000.0,"label":"NOISE","outcome":"HELD","notes":"","labelled_at":0.0,"weight":1.0}\n'
+        )
 
         with patch.object(mod, "_LABELS_PATH", lp):
             result = mod._load_labels()
@@ -164,8 +180,17 @@ class TestLoadSaveLabels:
         from signal_core.core.ml.outcome_log import OutcomeRecord
 
         lp = tmp_path / "labels.jsonl"
-        r1 = OutcomeRecord(ts=_TS2, label="NOISE", outcome="HELD", notes="", labelled_at=0.0, weight=1.0)
-        r2 = OutcomeRecord(ts=_TS1, label="LAG", outcome="ACTED", notes="", labelled_at=0.0, weight=1.0)
+        r1 = OutcomeRecord(
+            ts=_TS2,
+            label="NOISE",
+            outcome="HELD",
+            notes="",
+            labelled_at=0.0,
+            weight=1.0,
+        )
+        r2 = OutcomeRecord(
+            ts=_TS1, label="LAG", outcome="ACTED", notes="", labelled_at=0.0, weight=1.0
+        )
 
         with (
             patch.object(mod, "_LABELS_PATH", lp),
@@ -295,7 +320,14 @@ class TestGetLabel:
         from signal_core.core.ml.outcome_log import OutcomeRecord
 
         lp = tmp_path / "labels.jsonl"
-        rec = OutcomeRecord(ts=_TS1, label="LAG", outcome="MONITORED", notes="", labelled_at=0.0, weight=1.0)
+        rec = OutcomeRecord(
+            ts=_TS1,
+            label="LAG",
+            outcome="MONITORED",
+            notes="",
+            labelled_at=0.0,
+            weight=1.0,
+        )
         with (
             patch.object(mod, "_LABELS_PATH", lp),
             patch.object(mod, "ML_DIR", tmp_path),
@@ -316,9 +348,7 @@ class TestListUnlabelled:
         import signal_core.core.ml.outcome_log as mod
 
         fp = tmp_path / "features.jsonl"
-        fp.write_text(
-            json.dumps({"ts": _TS1}) + "\n" + json.dumps({"ts": _TS2}) + "\n"
-        )
+        fp.write_text(json.dumps({"ts": _TS1}) + "\n" + json.dumps({"ts": _TS2}) + "\n")
         with (
             patch.object(mod, "_FEATURES_PATH", fp),
             patch.object(mod, "_LABELS_PATH", tmp_path / "empty.jsonl"),
@@ -333,7 +363,14 @@ class TestListUnlabelled:
         fp = tmp_path / "features.jsonl"
         fp.write_text(json.dumps({"ts": _TS1}) + "\n" + json.dumps({"ts": _TS2}) + "\n")
         lp = tmp_path / "labels.jsonl"
-        rec = OutcomeRecord(ts=_TS1, label="NOISE", outcome="HELD", notes="", labelled_at=0.0, weight=1.0)
+        rec = OutcomeRecord(
+            ts=_TS1,
+            label="NOISE",
+            outcome="HELD",
+            notes="",
+            labelled_at=0.0,
+            weight=1.0,
+        )
         with (
             patch.object(mod, "_FEATURES_PATH", fp),
             patch.object(mod, "_LABELS_PATH", lp),
@@ -397,7 +434,14 @@ class TestLabelStats:
         fp = tmp_path / "features.jsonl"
         fp.write_text(json.dumps({"ts": _TS1}) + "\n" + json.dumps({"ts": _TS2}) + "\n")
         lp = tmp_path / "labels.jsonl"
-        rec = OutcomeRecord(ts=_TS1, label="NOISE", outcome="HELD", notes="", labelled_at=0.0, weight=1.0)
+        rec = OutcomeRecord(
+            ts=_TS1,
+            label="NOISE",
+            outcome="HELD",
+            notes="",
+            labelled_at=0.0,
+            weight=1.0,
+        )
 
         with (
             patch.object(mod, "_FEATURES_PATH", fp),

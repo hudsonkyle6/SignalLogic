@@ -9,11 +9,7 @@ Modules covered:
 from __future__ import annotations
 
 import json
-import subprocess
-from pathlib import Path
 from unittest.mock import MagicMock, patch
-
-import pytest
 
 
 # ===========================================================================
@@ -56,7 +52,9 @@ class TestSha256File:
         f.write_bytes(b"")
         result = sha256_file(f)
         # SHA256 of empty string is well-known
-        assert result == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        assert (
+            result == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        )
 
 
 # ===========================================================================

@@ -8,7 +8,7 @@ observe, propose, apply, homecoming.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -37,14 +37,14 @@ slp:
 
 def _run_main_with_args(args: list[str], tmp_path: Path):
     """Invoke control_plane.__main__.main() with sys.argv patched."""
-    import sys
     import signal_company_os.control_plane.__main__ as cp_main
 
     policy = _make_policy(tmp_path)
-    out = str(tmp_path / "reports")
 
     with (
-        patch("signal_company_os.control_plane.__main__.load_policy", return_value=policy),
+        patch(
+            "signal_company_os.control_plane.__main__.load_policy", return_value=policy
+        ),
         patch("sys.argv", ["signal_control_plane", *args]),
     ):
         return cp_main.main()
@@ -63,10 +63,16 @@ class TestControlPlaneCLI:
             ),
             patch(
                 "sys.argv",
-                ["signal_control_plane", "observe",
-                 "--root", str(tmp_path),
-                 "--policy", str(tmp_path / "policy.yaml"),
-                 "--out", str(tmp_path / "reports")],
+                [
+                    "signal_control_plane",
+                    "observe",
+                    "--root",
+                    str(tmp_path),
+                    "--policy",
+                    str(tmp_path / "policy.yaml"),
+                    "--out",
+                    str(tmp_path / "reports"),
+                ],
             ),
         ):
             import signal_company_os.control_plane.__main__ as cp_main
@@ -87,11 +93,18 @@ class TestControlPlaneCLI:
             ),
             patch(
                 "sys.argv",
-                ["signal_control_plane", "propose",
-                 "--root", str(tmp_path),
-                 "--policy", str(tmp_path / "policy.yaml"),
-                 "--out", str(tmp_path / "reports"),
-                 "--scope", "slp+git"],
+                [
+                    "signal_control_plane",
+                    "propose",
+                    "--root",
+                    str(tmp_path),
+                    "--policy",
+                    str(tmp_path / "policy.yaml"),
+                    "--out",
+                    str(tmp_path / "reports"),
+                    "--scope",
+                    "slp+git",
+                ],
             ),
         ):
             import signal_company_os.control_plane.__main__ as cp_main
@@ -114,10 +127,16 @@ class TestControlPlaneCLI:
             ),
             patch(
                 "sys.argv",
-                ["signal_control_plane", "apply",
-                 "--root", str(tmp_path),
-                 "--policy", str(tmp_path / "policy.yaml"),
-                 "--plan", str(plan_file)],
+                [
+                    "signal_control_plane",
+                    "apply",
+                    "--root",
+                    str(tmp_path),
+                    "--policy",
+                    str(tmp_path / "policy.yaml"),
+                    "--plan",
+                    str(plan_file),
+                ],
             ),
         ):
             import signal_company_os.control_plane.__main__ as cp_main
@@ -134,8 +153,12 @@ class TestControlPlaneCLI:
             ),
             patch(
                 "sys.argv",
-                ["signal_control_plane", "apply",
-                 "--policy", str(tmp_path / "policy.yaml")],
+                [
+                    "signal_control_plane",
+                    "apply",
+                    "--policy",
+                    str(tmp_path / "policy.yaml"),
+                ],
             ),
         ):
             import signal_company_os.control_plane.__main__ as cp_main
@@ -155,8 +178,12 @@ class TestControlPlaneCLI:
             ),
             patch(
                 "sys.argv",
-                ["signal_control_plane", "homecoming",
-                 "--policy", str(tmp_path / "policy.yaml")],
+                [
+                    "signal_control_plane",
+                    "homecoming",
+                    "--policy",
+                    str(tmp_path / "policy.yaml"),
+                ],
             ),
         ):
             import signal_company_os.control_plane.__main__ as cp_main
@@ -177,10 +204,16 @@ class TestControlPlaneCLI:
             ),
             patch(
                 "sys.argv",
-                ["signal_control_plane", "propose",
-                 "--mode", "lab",
-                 "--policy", str(tmp_path / "policy.yaml"),
-                 "--out", str(tmp_path / "reports")],
+                [
+                    "signal_control_plane",
+                    "propose",
+                    "--mode",
+                    "lab",
+                    "--policy",
+                    str(tmp_path / "policy.yaml"),
+                    "--out",
+                    str(tmp_path / "reports"),
+                ],
             ),
         ):
             import signal_company_os.control_plane.__main__ as cp_main
@@ -188,4 +221,6 @@ class TestControlPlaneCLI:
             ret = cp_main.main()
         assert ret == 0
         _, kwargs = mock_propose.call_args
-        assert kwargs.get("mode") == "lab" or mock_propose.call_args[0][2] == "lab" or True
+        assert (
+            kwargs.get("mode") == "lab" or mock_propose.call_args[0][2] == "lab" or True
+        )

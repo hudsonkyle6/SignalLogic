@@ -14,17 +14,16 @@ import pytest
 
 
 import sys
-from unittest.mock import patch
 
 
 def _load(text: str) -> dict:
     from signal_company_os.control_plane.lib.policy import _load_yaml_minimal
+
     return _load_yaml_minimal(text)
 
 
 def _load_custom(text: str) -> dict:
     """Force the custom minimal YAML parser by blocking yaml import (None sentinel)."""
-    import sys
     from signal_company_os.control_plane.lib.policy import _load_yaml_minimal
 
     saved = sys.modules.get("yaml", ...)  # ... = sentinel "not set"
