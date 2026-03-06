@@ -381,6 +381,20 @@ def main() -> CycleResult:
     )
 
 
+def _phase_to_period(phase: float) -> str:
+    """Convert a diurnal phase [0, 1] to a human-readable time-of-day label."""
+    hour = int(float(phase) * 24)
+    if hour < 6:
+        return "early morning"
+    if hour < 12:
+        return "morning"
+    if hour < 17:
+        return "afternoon"
+    if hour < 21:
+        return "evening"
+    return "night"
+
+
 def _run_voice_narration(result: "CycleResult") -> None:
     """
     Generate a narrator voice line from the cycle result and persist it.
@@ -393,15 +407,33 @@ def _run_voice_narration(result: "CycleResult") -> None:
         from rhythm_os.voice.voice_store import VoiceLine, persist_voice_line
 
         cs = result.convergence_summary or {}
+
+        # Build human-readable convergence event descriptions.
+        convergence_detail = []
+        for ev in cs.get("convergence_events", []):
+            domains = sorted(ev.get("domains", []))
+            strength = ev.get("strength", "weak")
+            phase = ev.get("diurnal_phase", 0.0)
+            period = _phase_to_period(phase)
+            domain_str = " + ".join(domains)
+            convergence_detail.append(
+                f"{strength}: {domain_str} aligned during {period} (φ={phase:.3f})"
+            )
+
+        drained = result.packets_drained or 1
+        admission_pct = f"{result.committed / drained * 100:.0f}%"
+
         cycle_summary = {
             "packets_admitted": result.committed,
             "packets_drained": result.packets_drained,
             "rejected": result.rejected,
             "turbine_obs": result.turbine_obs,
             "spillway_quarantined": result.spillway_quarantined,
+            "admission_pct": admission_pct,
             "domains_seen": sorted(cs.get("domains_observed", {}).keys()),
             "convergence_events": cs.get("convergence_event_count", 0),
             "strong_events": cs.get("strong_events", 0),
+            "convergence_detail": convergence_detail,
         }
         narration = narrate(cycle_summary)
         persist_voice_line(

@@ -725,11 +725,54 @@ def _load_narrator_line() -> str:
         return ""
 
 
-def _panel_narrator(text: str) -> "Panel":
-    """Render the narrator voice line panel."""
+def _compute_state_line(cycle_result: Optional[Any]) -> tuple:
+    """
+    Derive a (label, rich_style) state summary from the last cycle result.
+
+    Deterministic — no LLM. Reads convergence_summary and routing stats.
+    """
+    if cycle_result is None:
+        return "NO DATA", "dim"
+
+    cs = getattr(cycle_result, "convergence_summary", None) or {}
+    strong = cs.get("strong_events", 0)
+    event_count = cs.get("convergence_event_count", 0)
+    events = cs.get("convergence_events", [])
+
+    if strong > 0:
+        strong_ev = next(
+            (e for e in events if e.get("strength") == "strong"), None
+        )
+        if strong_ev:
+            domains = sorted(strong_ev.get("domains", []))
+            domain_str = "  ·  ".join(d.upper() for d in domains)
+            return f"CONVERGING  ·  {domain_str}  ·  STRONG", "bold magenta"
+        return "CONVERGING  ·  STRONG", "bold magenta"
+
+    if event_count > 0:
+        noun = "event" if event_count == 1 else "events"
+        return f"CONVERGING  ·  {event_count} {noun}  ·  WEAK", "bold cyan"
+
+    drained = getattr(cycle_result, "packets_drained", 0) or 1
+    committed = getattr(cycle_result, "committed", 0)
+    rate = committed / drained
+    if rate > 0.8:
+        return "STABLE  ·  HIGH ADMISSION  ·  NOMINAL", "bold green"
+    if rate > 0.5:
+        return "STABLE  ·  NOMINAL", "green"
+    return "STABLE  ·  LOW ADMISSION", "yellow"
+
+
+def _panel_narrator(text: str, cycle_result: Optional[Any] = None) -> "Panel":
+    """Render the narrator voice panel: deterministic state line + LLM narrative."""
+    state_label, state_style = _compute_state_line(cycle_result)
+
     body = Text(justify="left")
+    body.append("◈  ", style="bold magenta")
+    body.append(state_label, style=state_style)
+    body.append("\n\n")
     if text:
-        body.append(text, style="italic dim white")
+        body.append(text, style="white")
     else:
         body.append("No narration recorded yet.", style="dim")
     return Panel(body, title="[bold magenta]VOICE[/]", border_style="magenta")
@@ -805,7 +848,7 @@ def _build_display(
     p_natural = _panel_natural(readiness)
     p_system = _panel_system(readiness)
     p_cycle = _panel_cycle(cycle_result)
-    p_narrator = _panel_narrator(_load_narrator_line())
+    p_narrator = _panel_narrator(_load_narrator_line(), cycle_result=cycle_result)
 
     # ── Outer grid ──────────────────────────────────────────────────────────
     outer = Table.grid(expand=True)

@@ -34,14 +34,22 @@ from rhythm_os.voice.guards import truncate_to_sentences
 DEFAULT_MODEL = "qwen2.5:7b"
 
 _NARRATOR_INSTRUCTION = """\
-You are the system Narrator.
+You are the Narrator for a rhythmic signal observatory.
+
+SignalLogic observes oscillatory phase alignment across physical domains —
+market, natural environment, system, and cyber. When two or more domains
+reach the same oscillatory phase simultaneously, a convergence event is
+recorded. Strong convergence involves three or more domains aligning.
 
 Rules:
-- Write exactly 2 sentences. No more, no fewer.
+- Write exactly 3 sentences.
 - Use plain past tense. No present or future tense.
 - No predictions, recommendations, or speculation.
 - No markdown, no lists, no headers, no bullet points.
-- State only what the data shows. Nothing else.
+- Lead with the most significant observation. If convergence events occurred,
+  name the domains involved and the time of day they aligned.
+- If no convergence occurred, describe the system's dominant condition plainly.
+- Write for a non-technical reader. State only what the data shows.
 """
 
 
@@ -72,18 +80,42 @@ def build_narrator_prompt(cycle_summary: Dict[str, Any]) -> str:
     """
     Build the full prompt for the Narrator from a cycle summary dict.
 
-    The dict may contain any keys the caller finds relevant. Typical keys:
-      packets_admitted    int
-      domains_seen        list[str]
-      convergence_notes   list[str]
-      gate_actions_taken  int
-      system_count        int
-      natural_count       int
+    Organises the summary by significance so the LLM leads with
+    convergence events when present, then routing health, then domains.
     """
-    lines = [_NARRATOR_INSTRUCTION, "", "Cycle summary:"]
-    for key, value in cycle_summary.items():
-        lines.append(f"  {key}: {value}")
-    lines.append("\nWrite your 2-sentence narration:")
+    lines = [_NARRATOR_INSTRUCTION, "", "Observation report:"]
+
+    # Convergence section — most significant
+    strong = cycle_summary.get("strong_events", 0)
+    event_count = cycle_summary.get("convergence_events", 0)
+    detail = cycle_summary.get("convergence_detail", [])
+    if strong or event_count:
+        lines.append(
+            f"  Convergence: {event_count} event(s), {strong} strong (3+ domains)"
+        )
+        for d in detail:
+            lines.append(f"    · {d}")
+    else:
+        lines.append("  Convergence: none detected this cycle")
+
+    # Routing health
+    admitted = cycle_summary.get("packets_admitted", 0)
+    drained = cycle_summary.get("packets_drained", 0)
+    rejected = cycle_summary.get("rejected", 0)
+    anomalies = cycle_summary.get("spillway_quarantined", 0)
+    pct = cycle_summary.get("admission_pct", "")
+    lines.append(
+        f"  Routing: drained={drained}  admitted={admitted} ({pct})"
+        f"  rejected={rejected}  anomalies={anomalies}"
+    )
+
+    # Domains
+    domains = cycle_summary.get("domains_seen", [])
+    lines.append(
+        f"  Domains observed: {', '.join(domains) if domains else 'none'}"
+    )
+
+    lines.append("\nWrite your 3-sentence narration:")
     return "\n".join(lines)
 
 
@@ -126,5 +158,5 @@ def narrate(
 
     prompt = build_narrator_prompt(cycle_summary)
     raw = generate_fn(prompt)
-    text = truncate_to_sentences(raw, max_sentences=2)
+    text = truncate_to_sentences(raw, max_sentences=3)
     return NarratorResult(text=text, raw=raw)
