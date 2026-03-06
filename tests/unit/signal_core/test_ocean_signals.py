@@ -580,3 +580,294 @@ class TestMergeSignalsCompatibility:
     def test_wind_vector_columns_present(self):
         assert "natural_wind_vector_x" in EXPECTED_NATURAL_OCEAN_COLUMNS
         assert "natural_wind_vector_y" in EXPECTED_NATURAL_OCEAN_COLUMNS
+
+
+# ===========================================================================
+# normalize_cumulus_df — CUMULUS API response normalization
+# ===========================================================================
+
+# Representative sample from the live SPOT-32724C API response
+_CUMULUS_SAMPLE_RECORDS = [
+    {
+        "index": 6885,
+        "spotterID": "SPOT-32724C",
+        "payloadType": "full",
+        "batteryVoltage": "3.95",
+        "solarVoltage": "5.36",
+        "humidity": "13.50",
+        "latitude": "42.0960535",
+        "longitude": "-70.7172978",
+        "timestamp": "2025-07-24 12:05:00",
+        "waveSignHeight": "0.04",
+        "wavePeakPeriod": "11.378",
+        "waveMeanPeriod": "7.777",
+        "wavePeakDirection": "194.627",
+        "wavePeakDirectionalSpread": "73.028",
+        "windSpeed": "0.00",
+        "windDirection": 88,
+        "surfaceTemp": None,
+        "barometerData": "1020.81",
+        "barometerUnits": "hPa",
+    },
+    {
+        "index": 6886,
+        "spotterID": "SPOT-32724C",
+        "payloadType": "waves",
+        "batteryVoltage": "3.96",
+        "solarVoltage": "5.33",
+        "humidity": "13.60",
+        "latitude": "42.0960833",
+        "longitude": "-70.7172667",
+        "timestamp": "2025-07-24 12:15:00",
+        "waveSignHeight": "0.04",
+        "wavePeakPeriod": "11.380",
+        "waveMeanPeriod": "8.040",
+        "wavePeakDirection": "170.897",
+        "wavePeakDirectionalSpread": "73.411",
+        "windSpeed": "0.00",
+        "windDirection": 102,
+        "surfaceTemp": None,
+        "barometerData": "1020.80",
+        "barometerUnits": "hPa",
+    },
+    {
+        "index": 6897,
+        "spotterID": "SPOT-32724C",
+        "payloadType": "full",
+        "batteryVoltage": "3.95",
+        "solarVoltage": "5.37",
+        "humidity": "12.95",
+        "latitude": "42.0960262",
+        "longitude": "-70.7173113",
+        "timestamp": "2025-07-24 12:35:00",
+        "waveSignHeight": "0.07",
+        "wavePeakPeriod": "7.314",
+        "waveMeanPeriod": "5.669",
+        "wavePeakDirection": "180.249",
+        "wavePeakDirectionalSpread": "76.382",
+        "windSpeed": "0.04",
+        "windDirection": 284,
+        "surfaceTemp": None,
+        "barometerData": "1020.75",
+        "barometerUnits": "hPa",
+    },
+]
+
+
+class TestNormalizeCumulusDf:
+    def _norm(self, records=None):
+        from observatory_tools.emit_ocean_raw_once import normalize_cumulus_df
+        return normalize_cumulus_df(records or _CUMULUS_SAMPLE_RECORDS)
+
+    def test_empty_records_raises(self):
+        from observatory_tools.emit_ocean_raw_once import normalize_cumulus_df
+        with pytest.raises(ValueError, match="No records"):
+            normalize_cumulus_df([])
+
+    def test_wavesignheight_renamed(self):
+        df = self._norm()
+        assert "waveSignificantHeight" in df.columns
+        assert "waveSignHeight" not in df.columns
+
+    def test_wavesignificant_height_is_float(self):
+        df = self._norm()
+        assert df["waveSignificantHeight"].dtype == float
+        assert df["waveSignificantHeight"].iloc[0] == pytest.approx(0.04)
+
+    def test_wind_direction_coerced_to_float(self):
+        df = self._norm()
+        assert df["windDirection"].dtype == float
+        assert df["windDirection"].iloc[0] == pytest.approx(88.0)
+
+    def test_null_surface_temp_filled_with_default(self):
+        from observatory_tools.emit_ocean_raw_once import _SURFACE_TEMP_DEFAULT
+        df = self._norm()
+        assert "surfaceTemp" in df.columns
+        assert df["surfaceTemp"].notna().all()
+        assert df["surfaceTemp"].iloc[0] == pytest.approx(_SURFACE_TEMP_DEFAULT)
+
+    def test_barometer_data_is_float(self):
+        df = self._norm()
+        assert df["barometerData"].dtype == float
+        assert df["barometerData"].iloc[0] == pytest.approx(1020.81)
+
+    def test_index_is_utc_datetimeindex(self):
+        df = self._norm()
+        assert df.index.tz is not None
+        assert str(df.index.tz) == "UTC"
+
+    def test_sorted_ascending(self):
+        # Feed records in reverse order to verify sorting
+        reversed_records = list(reversed(_CUMULUS_SAMPLE_RECORDS))
+        from observatory_tools.emit_ocean_raw_once import normalize_cumulus_df
+        df = normalize_cumulus_df(reversed_records)
+        assert df.index[0] < df.index[-1]
+
+    def test_wavepeak_period_is_float(self):
+        df = self._norm()
+        assert df["wavePeakPeriod"].dtype == float
+
+
+class TestFetchCumulusDataDateFilter:
+    """
+    Unit tests for the client-side date filtering logic inside fetch_cumulus_data.
+    Uses requests mock to avoid real network calls.
+    """
+
+    def _make_api_response(self, timestamps):
+        """Build a minimal CUMULUS-style API response for given timestamp strings."""
+        records = []
+        for i, ts in enumerate(timestamps):
+            records.append({
+                "index": i,
+                "spotterID": "SPOT-32724C",
+                "timestamp": ts,
+                "waveSignHeight": "0.10",
+                "wavePeakPeriod": "10.0",
+                "windSpeed": "2.0",
+                "windDirection": 90,
+                "barometerData": "1013.25",
+                "surfaceTemp": None,
+            })
+        return {"data": records, "count": len(records)}
+
+    def test_client_side_filter_excludes_old_records(self, monkeypatch):
+        from datetime import datetime, timezone
+        import observatory_tools.emit_ocean_raw_once as mod
+
+        response_data = self._make_api_response([
+            "2025-01-01 00:00:00",  # outside window
+            "2025-06-01 12:00:00",  # inside window
+            "2025-06-01 18:00:00",  # inside window
+        ])
+
+        class FakeResp:
+            status_code = 200
+            def raise_for_status(self): pass
+            def json(self): return response_data
+
+        monkeypatch.setattr(
+            "requests.get",
+            lambda *a, **kw: FakeResp(),
+        )
+
+        start = datetime(2025, 6, 1, 0, 0, 0, tzinfo=timezone.utc)
+        end = datetime(2025, 6, 2, 0, 0, 0, tzinfo=timezone.utc)
+        records = mod.fetch_cumulus_data("SPOT-32724C", "token", start_dt=start, end_dt=end)
+        assert len(records) == 2
+
+    def test_all_records_included_when_all_in_window(self, monkeypatch):
+        from datetime import datetime, timezone
+        import observatory_tools.emit_ocean_raw_once as mod
+
+        response_data = self._make_api_response([
+            "2025-06-01 06:00:00",
+            "2025-06-01 12:00:00",
+        ])
+
+        class FakeResp:
+            status_code = 200
+            def raise_for_status(self): pass
+            def json(self): return response_data
+
+        monkeypatch.setattr("requests.get", lambda *a, **kw: FakeResp())
+
+        start = datetime(2025, 6, 1, 0, 0, 0, tzinfo=timezone.utc)
+        end = datetime(2025, 6, 2, 0, 0, 0, tzinfo=timezone.utc)
+        records = mod.fetch_cumulus_data("SPOT-32724C", "token", start_dt=start, end_dt=end)
+        assert len(records) == 2
+
+    def test_empty_data_array_returns_empty_list(self, monkeypatch):
+        from datetime import datetime, timezone
+        import observatory_tools.emit_ocean_raw_once as mod
+
+        class FakeResp:
+            status_code = 200
+            def raise_for_status(self): pass
+            def json(self): return {"data": []}
+
+        monkeypatch.setattr("requests.get", lambda *a, **kw: FakeResp())
+
+        start = datetime(2025, 6, 1, 0, 0, tzinfo=timezone.utc)
+        end = datetime(2025, 6, 2, 0, 0, tzinfo=timezone.utc)
+        records = mod.fetch_cumulus_data("SPOT-32724C", "token", start_dt=start, end_dt=end)
+        assert records == []
+
+    def test_http_error_raises_runtime_error(self, monkeypatch):
+        import requests as req
+        import observatory_tools.emit_ocean_raw_once as mod
+        from datetime import datetime, timezone
+
+        class FakeResp:
+            status_code = 403
+            text = "Forbidden"
+            def raise_for_status(self):
+                raise req.HTTPError(response=self)
+
+        monkeypatch.setattr("requests.get", lambda *a, **kw: FakeResp())
+
+        with pytest.raises(RuntimeError, match="CUMULUS API request failed"):
+            mod.fetch_cumulus_data(
+                "SPOT-32724C", "bad-token",
+                start_dt=datetime(2025, 6, 1, tzinfo=timezone.utc),
+                end_dt=datetime(2025, 6, 2, tzinfo=timezone.utc),
+            )
+
+
+class TestNormalizeCumulusDfFullPipeline:
+    """
+    Verify the full CUMULUS → derived signals → resample pipeline
+    using the actual sample records from Plum Island SPOT-32724C.
+    """
+
+    def test_pipeline_produces_hourly_output(self):
+        from observatory_tools.emit_ocean_raw_once import (
+            normalize_cumulus_df,
+            compute_derived_signals,
+            resample_to_hourly,
+        )
+        df = normalize_cumulus_df(_CUMULUS_SAMPLE_RECORDS)
+        df = compute_derived_signals(df)
+        hourly = resample_to_hourly(df)
+        assert len(hourly) >= 1
+
+    def test_pipeline_wave_energy_is_non_negative(self):
+        from observatory_tools.emit_ocean_raw_once import (
+            normalize_cumulus_df,
+            compute_derived_signals,
+            resample_to_hourly,
+        )
+        df = normalize_cumulus_df(_CUMULUS_SAMPLE_RECORDS)
+        df = compute_derived_signals(df)
+        hourly = resample_to_hourly(df)
+        assert (hourly["wave_energy_J_m2"] >= 0).all()
+
+    def test_extractor_source_set_to_cumulus_api(self, tmp_path):
+        from observatory_tools.emit_ocean_raw_once import (
+            normalize_cumulus_df,
+            compute_derived_signals,
+            resample_to_hourly,
+            emit_ocean_raw,
+        )
+        df = normalize_cumulus_df(_CUMULUS_SAMPLE_RECORDS)
+        df = compute_derived_signals(df)
+        hourly = resample_to_hourly(df)
+        out = tmp_path / "out.jsonl"
+        emit_ocean_raw(hourly, out, source="cumulus_api")
+        recs = [json.loads(l) for l in out.read_text().splitlines() if l.strip()]
+        assert all(r["extractor"]["source"] == "cumulus_api" for r in recs)
+
+    def test_extractor_version_v2(self, tmp_path):
+        from observatory_tools.emit_ocean_raw_once import (
+            normalize_cumulus_df,
+            compute_derived_signals,
+            resample_to_hourly,
+            emit_ocean_raw,
+        )
+        df = normalize_cumulus_df(_CUMULUS_SAMPLE_RECORDS)
+        df = compute_derived_signals(df)
+        hourly = resample_to_hourly(df)
+        out = tmp_path / "out.jsonl"
+        emit_ocean_raw(hourly, out, source="cumulus_api")
+        recs = [json.loads(l) for l in out.read_text().splitlines() if l.strip()]
+        assert all(r["extractor"]["version"] == "v2" for r in recs)
