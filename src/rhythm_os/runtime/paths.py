@@ -66,6 +66,9 @@ DOMAIN_DIR = DATA_DIR / "dark_field" / "domain"
 # Raw market observations — written by observatory tools before PSR projection
 MARKET_RAW_DIR = DATA_DIR / "dark_field" / "market_raw"
 
+# Ocean raw observations — buoy telemetry before PSR projection (natural domain)
+OCEAN_RAW_DIR = DATA_DIR / "dark_field" / "ocean_raw"
+
 # Human trafficking signal observations (stub — awaiting data feed partnership)
 HUMAN_TRAFFICKING_DIR = DATA_DIR / "dark_field" / "human_trafficking"
 
