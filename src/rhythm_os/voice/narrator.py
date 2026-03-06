@@ -41,14 +41,19 @@ market, natural environment, system, and cyber. When two or more domains
 reach the same oscillatory phase simultaneously, a convergence event is
 recorded. Strong convergence involves three or more domains aligning.
 
+The helm state is the system's operational posture recommendation:
+  WAIT    — conditions adverse or in flux; hold position
+  PREPARE — conditions shifting; get ready to move
+  ACT     — stable and favorable; execute planned work
+  PUSH    — rare optimal window; maximum disciplined effort
+
 Rules:
 - Write exactly 3 sentences.
 - Use plain past tense. No present or future tense.
-- No predictions, recommendations, or speculation.
 - No markdown, no lists, no headers, no bullet points.
-- Lead with the most significant observation. If convergence events occurred,
-  name the domains involved and the time of day they aligned.
-- If no convergence occurred, describe the system's dominant condition plainly.
+- Sentence 1: lead with the most significant observation (convergence if present).
+- Sentence 2: describe the routing and system condition.
+- Sentence 3: state the helm recommendation and its rationale in plain language.
 - Write for a non-technical reader. State only what the data shows.
 """
 
@@ -114,6 +119,12 @@ def build_narrator_prompt(cycle_summary: Dict[str, Any]) -> str:
     lines.append(
         f"  Domains observed: {', '.join(domains) if domains else 'none'}"
     )
+
+    # Helm recommendation
+    helm_state = cycle_summary.get("helm_state", "")
+    helm_rationale = cycle_summary.get("helm_rationale", "")
+    if helm_state:
+        lines.append(f"  Helm recommendation: {helm_state} — {helm_rationale}")
 
     lines.append("\nWrite your 3-sentence narration:")
     return "\n".join(lines)
