@@ -200,7 +200,9 @@ class TestValidatePlanObj:
     def test_unknown_op_raises(self):
         from signal_company_os.control_plane.lib.plan_schema import validate_plan_obj
 
-        obj = self._valid_plan(ops=[{"op": "delete", "dst": "/tmp/x", "reason": "bad"}])
+        obj = self._valid_plan(
+            ops=[{"op": "delete", "dst": "/tmp/x", "reason": "bad"}]
+        )
         with pytest.raises(ValueError, match="op must be one of"):
             validate_plan_obj(obj)
 
@@ -244,9 +246,7 @@ class TestAppendGate:
         from signal_company_os.control_plane.lib.gate_ledger import append_gate
 
         ledger = tmp_path / "sub" / "gate.jsonl"
-        entry = append_gate(
-            ledger, purpose="Apply plan", scope="ops=3", signature="Alice"
-        )
+        entry = append_gate(ledger, purpose="Apply plan", scope="ops=3", signature="Alice")
         assert ledger.exists()
         assert entry.signed == "Alice"
 
@@ -290,18 +290,14 @@ class TestApplyOps:
 
     def test_mkdir_creates_directory(self, tmp_path):
         dst = tmp_path / "new_dir"
-        logs = self._call(
-            tmp_path, [{"op": "mkdir", "dst": str(dst), "reason": "scaffold"}]
-        )
+        logs = self._call(tmp_path, [{"op": "mkdir", "dst": str(dst), "reason": "scaffold"}])
         assert dst.is_dir()
         assert any("OK mkdir" in ln for ln in logs)
 
     def test_mkdir_skips_existing(self, tmp_path):
         dst = tmp_path / "existing"
         dst.mkdir()
-        logs = self._call(
-            tmp_path, [{"op": "mkdir", "dst": str(dst), "reason": "scaffold"}]
-        )
+        logs = self._call(tmp_path, [{"op": "mkdir", "dst": str(dst), "reason": "scaffold"}])
         assert any("SKIP mkdir" in ln for ln in logs)
 
     def test_move_renames_file(self, tmp_path):
@@ -319,14 +315,7 @@ class TestApplyOps:
     def test_move_skips_missing_src(self, tmp_path):
         logs = self._call(
             tmp_path,
-            [
-                {
-                    "op": "move",
-                    "src": str(tmp_path / "ghost.txt"),
-                    "dst": str(tmp_path / "d.txt"),
-                    "reason": "r",
-                }
-            ],
+            [{"op": "move", "src": str(tmp_path / "ghost.txt"), "dst": str(tmp_path / "d.txt"), "reason": "r"}],
         )
         assert any("SKIP move" in ln for ln in logs)
 
@@ -371,13 +360,7 @@ class TestRunPropose:
 
         policy = _make_policy(tmp_path)
         out = tmp_path / "reports"
-        ret = run_propose(
-            policy,
-            out_dir=out,
-            mode="production",
-            root_override=str(tmp_path),
-            scope="slp+git",
-        )
+        ret = run_propose(policy, out_dir=out, mode="production", root_override=str(tmp_path), scope="slp+git")
         assert ret == 0
         proposals = list(out.glob("proposal_*.json"))
         assert len(proposals) == 1
@@ -387,13 +370,7 @@ class TestRunPropose:
 
         policy = _make_policy(tmp_path)
         out = tmp_path / "reports"
-        run_propose(
-            policy,
-            out_dir=out,
-            mode="production",
-            root_override=str(tmp_path),
-            scope="slp+git",
-        )
+        run_propose(policy, out_dir=out, mode="production", root_override=str(tmp_path), scope="slp+git")
         plan = json.loads(list(out.glob("proposal_*.json"))[0].read_text())
         assert plan["ops"] == []
 
@@ -402,13 +379,7 @@ class TestRunPropose:
 
         policy = _make_policy(tmp_path)
         out = tmp_path / "reports"
-        run_propose(
-            policy,
-            out_dir=out,
-            mode="production",
-            root_override=str(tmp_path),
-            scope="slp",
-        )
+        run_propose(policy, out_dir=out, mode="production", root_override=str(tmp_path), scope="slp")
         plan = json.loads(list(out.glob("proposal_*.json"))[0].read_text())
         items = [w["item"] for w in plan["worklist"]]
         assert any("doctrine_report" in i for i in items)
@@ -418,13 +389,7 @@ class TestRunPropose:
 
         policy = _make_policy(tmp_path)
         out = tmp_path / "reports"
-        run_propose(
-            policy,
-            out_dir=out,
-            mode="production",
-            root_override=str(tmp_path),
-            scope="git",
-        )
+        run_propose(policy, out_dir=out, mode="production", root_override=str(tmp_path), scope="git")
         plan = json.loads(list(out.glob("proposal_*.json"))[0].read_text())
         items = [w["item"] for w in plan["worklist"]]
         assert any("git_report" in i for i in items)
@@ -434,13 +399,7 @@ class TestRunPropose:
 
         policy = _make_policy(tmp_path)
         out = tmp_path / "reports"
-        run_propose(
-            policy,
-            out_dir=out,
-            mode="production",
-            root_override=str(tmp_path),
-            scope="slp+git",
-        )
+        run_propose(policy, out_dir=out, mode="production", root_override=str(tmp_path), scope="slp+git")
         plan = json.loads(list(out.glob("proposal_*.json"))[0].read_text())
         assert "*.lock" in plan["policy"]["never_touch"]
 
@@ -452,6 +411,7 @@ class TestRunPropose:
 
 class TestRunHomecoming:
     def test_creates_audit_file(self, tmp_path):
+        from signal_company_os.control_plane.lib.homecoming import run_homecoming
 
         policy = _make_policy(tmp_path)
         audit_path = tmp_path / "audits" / "homecoming.jsonl"
@@ -461,11 +421,12 @@ class TestRunHomecoming:
             return_value=audit_path,
         ):
             # Patch the hardcoded path inside homecoming.run_homecoming
+            import signal_company_os.control_plane.lib.homecoming as hm_mod
+
+            original = hm_mod.run_homecoming
 
             def _patched_homecoming(policy):
-                import json
-                import time
-
+                import json, time
                 entry = {
                     "event": "homecoming",
                     "time": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -543,15 +504,10 @@ class TestRunObserve:
             ),
             patch(
                 "signal_company_os.control_plane.lib.observe.inspect_git",
-                return_value={
-                    "branch": "feature",
-                    "status_porcelain": " M somefile.py",
-                },
+                return_value={"branch": "feature", "status_porcelain": " M somefile.py"},
             ),
         ):
-            run_observe(
-                policy, out_dir=out, mode="production", root_override=str(tmp_path)
-            )
+            run_observe(policy, out_dir=out, mode="production", root_override=str(tmp_path))
 
         summary = json.loads((out / "observe_summary.json").read_text())
         assert summary["dirty"] is True
@@ -576,11 +532,7 @@ class TestExtractTraffickingEvents:
             {
                 "ts": "2025-01-01T00:00:00Z",
                 "convergence_events": [
-                    {
-                        "domains": ["system", "market"],
-                        "diurnal_phase": "day",
-                        "strength": "strong",
-                    }
+                    {"domains": ["system", "market"], "diurnal_phase": "day", "strength": "strong"}
                 ],
             }
         ]
@@ -611,17 +563,8 @@ class TestExtractTraffickingEvents:
             {
                 "ts": "2025-01-01T00:00:00Z",
                 "convergence_events": [
-                    {
-                        "domains": ["system", "market"],
-                        "diurnal_phase": "day",
-                        "strength": "strong",
-                    },
-                    {
-                        "domains": ["human_trafficking", "cyber"],
-                        "diurnal_phase": "night",
-                        "strength": "weak",
-                        "domain_count": 2,
-                    },
+                    {"domains": ["system", "market"], "diurnal_phase": "day", "strength": "strong"},
+                    {"domains": ["human_trafficking", "cyber"], "diurnal_phase": "night", "strength": "weak", "domain_count": 2},
                 ],
             }
         ]
@@ -654,13 +597,10 @@ class TestRunComplianceCheck:
         turbine_dir.mkdir()
         summary_file = turbine_dir / "summary.jsonl"
         summary_file.write_text(
-            json.dumps(
-                {
-                    "ts": "2025-01-01T00:00:00Z",
-                    "convergence_events": [{"domains": ["system", "market"]}],
-                }
-            )
-            + "\n"
+            json.dumps({
+                "ts": "2025-01-01T00:00:00Z",
+                "convergence_events": [{"domains": ["system", "market"]}],
+            }) + "\n"
         )
         monkeypatch.setattr(tc, "TURBINE_DIR", turbine_dir)
         result = tc.run_compliance_check()
@@ -677,26 +617,16 @@ class TestRunComplianceCheck:
         compliance_dir.mkdir()
         summary_file = turbine_dir / "summary.jsonl"
         summary_file.write_text(
-            json.dumps(
-                {
-                    "ts": "2025-01-01T00:00:00Z",
-                    "convergence_events": [
-                        {
-                            "domains": ["human_trafficking", "system"],
-                            "strength": "weak",
-                            "diurnal_phase": "night",
-                            "domain_count": 2,
-                        }
-                    ],
-                }
-            )
-            + "\n"
+            json.dumps({
+                "ts": "2025-01-01T00:00:00Z",
+                "convergence_events": [
+                    {"domains": ["human_trafficking", "system"], "strength": "weak", "diurnal_phase": "night", "domain_count": 2}
+                ],
+            }) + "\n"
         )
         monkeypatch.setattr(tc, "TURBINE_DIR", turbine_dir)
         monkeypatch.setattr(tc, "COMPLIANCE_DIR", compliance_dir)
-        monkeypatch.setattr(
-            tc, "COMPLIANCE_LOG", compliance_dir / "compliance_observations.jsonl"
-        )
+        monkeypatch.setattr(tc, "COMPLIANCE_LOG", compliance_dir / "compliance_observations.jsonl")
         monkeypatch.setattr(tc, "REVIEW_QUEUE", compliance_dir / "review_queue.jsonl")
 
         result = tc.run_compliance_check()
