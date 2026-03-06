@@ -92,3 +92,6 @@ VOICE_LINES_PATH = DATA_DIR / "dark_field" / "voice" / "voice_lines.jsonl"
 
 # ML artifacts — feature vectors, labels, and model metadata
 ML_DIR = DATA_DIR / "ml"
+
+# Helm trust ledger — append-only JSONL of helm recommendations per cycle
+HELM_LOG_PATH = DATA_DIR / "dark_field" / "helm" / "helm_log.jsonl"

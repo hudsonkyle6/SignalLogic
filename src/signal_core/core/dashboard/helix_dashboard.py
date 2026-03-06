@@ -47,6 +47,13 @@ from rhythm_os.runtime.paths import (
     TURBINE_DIR,
 )
 from rhythm_os.voice.voice_store import load_last_voice_line
+from rhythm_os.domain.helm.engine import (
+    HELM_GUIDANCE,
+    HELM_STYLES,
+    HelmResult,
+    compute_helm,
+)
+from rhythm_os.domain.helm.ledger import load_helm_records
 from rhythm_os.runtime.readiness import check_readiness, ReadinessStatus
 from rhythm_os.runtime.deploy_config import (
     get_deployment_name,
@@ -763,91 +770,33 @@ def _compute_state_line(cycle_result: Optional[Any]) -> tuple:
     return "STABLE  ·  LOW ADMISSION", "yellow"
 
 
-_HELM_STYLES = {
-    "WAIT":    ("bold red",    "◼"),
-    "PREPARE": ("bold yellow", "◆"),
-    "ACT":     ("bold green",  "●"),
-    "PUSH":    ("bold white",  "★"),
-}
-
-_HELM_GUIDANCE = {
-    "WAIT":    "Contract. Clear backlog. Protect position.",
-    "PREPARE": "Align. Set foundations. Be ready to move.",
-    "ACT":     "Move. Execute planned work. Normal output.",
-    "PUSH":    "Rare window. Take the big swing — with discipline.",
-}
-
-
 def _compute_helm_state(cycle_result: Optional[Any]) -> tuple:
     """
-    Derive a (state, rationale) helm recommendation from operational domain signals.
+    Return (state, rationale) for the helm recommendation.
 
-    Reads the persisted helm field from last_cycle.json when available;
-    otherwise derives it from convergence and routing data.
-
-    WAIT    — adverse or high-pressure conditions; hold position
-    PREPARE — conditions shifting; get ready to move
-    ACT     — stable and favorable; execute
-    PUSH    — rare optimal window; maximum disciplined effort
-
-    Deterministic — no LLM. Returns (state: str, rationale: str).
+    Reads the persisted helm field from last_cycle.json when available
+    (fast path — no recomputation); otherwise derives from the engine.
+    Returns (str, str).
     """
     if cycle_result is None:
         return "PREPARE", "awaiting first full cycle — establish baseline"
 
-    # Use persisted helm if the cycle already computed it.
+    # Fast path: the cycle already computed and persisted the helm.
     helm = getattr(cycle_result, "helm", None)
     if isinstance(helm, dict) and helm.get("state"):
         return helm["state"], helm.get("rationale", "")
 
-    cs = getattr(cycle_result, "convergence_summary", None) or {}
-    strong = cs.get("strong_events", 0)
-    event_count = cs.get("convergence_event_count", 0)
-    events = cs.get("convergence_events", [])
-
-    drained = getattr(cycle_result, "packets_drained", 0) or 1
-    committed = getattr(cycle_result, "committed", 0)
-    quarantined = getattr(cycle_result, "spillway_quarantined", 0)
-
-    admission_rate = committed / drained
-    anomaly_rate = quarantined / drained
-
-    # System under structural stress — protect first
-    if anomaly_rate > 0.10:
-        return "WAIT", f"elevated anomalies ({quarantined} quarantined) — investigate before committing"
-    if admission_rate < 0.50:
-        return "WAIT", f"low admission rate ({admission_rate:.0%}) — routing under pressure"
-
-    # Strong cross-domain convergence — high-pressure moment, hold position
-    if strong > 0:
-        strong_ev = next((e for e in events if e.get("strength") == "strong"), None)
-        if strong_ev:
-            domains = " + ".join(sorted(strong_ev.get("domains", [])))
-            return "WAIT", f"{domains} converging at strong alignment — conditions in flux, hold position"
-        return "WAIT", "strong cross-domain convergence — hold position"
-
-    # Weak convergence — conditions are shifting, prepare to move
-    if event_count > 0:
-        weak_ev = events[0] if events else {}
-        domains = " + ".join(sorted(weak_ev.get("domains", [])))
-        if domains:
-            return "PREPARE", f"{domains} beginning to align — conditions shifting, set your stance"
-        return "PREPARE", "domains beginning to align — conditions shifting"
-
-    # Clean, high-admission, no convergence pressure — rare open window
-    if admission_rate > 0.88 and anomaly_rate == 0:
-        return "PUSH", f"all domains clear, clean routing ({admission_rate:.0%} admitted) — favorable window"
-
-    # Stable, nominal — execute planned work
-    return "ACT", f"stable conditions, nominal routing ({admission_rate:.0%} admitted)"
+    # Fallback: derive via canonical engine.
+    h = compute_helm(cycle_result)
+    return h.state, h.rationale
 
 
 def _panel_narrator(text: str, cycle_result: Optional[Any] = None) -> "Panel":
-    """Render the voice panel: convergence state + helm recommendation + narrative."""
+    """Render the voice panel: convergence state + helm + track history + narrative."""
     state_label, state_style = _compute_state_line(cycle_result)
     helm_state, helm_rationale = _compute_helm_state(cycle_result)
-    helm_style, helm_icon = _HELM_STYLES.get(helm_state, ("dim", "·"))
-    guidance = _HELM_GUIDANCE.get(helm_state, "")
+    helm_style, helm_icon = HELM_STYLES.get(helm_state, ("dim", "·"))
+    guidance = HELM_GUIDANCE.get(helm_state, "")
 
     body = Text(justify="left")
 
@@ -864,7 +813,22 @@ def _panel_narrator(text: str, cycle_result: Optional[Any] = None) -> "Panel":
     body.append("\n")
     body.append("       ", style="")
     body.append(guidance, style=f"italic {helm_style}")
-    body.append("\n\n")
+    body.append("\n")
+
+    # Helm track — last 5 states as a temporal progression
+    records = load_helm_records(n=5)
+    if records:
+        body.append("   ", style="")
+        for i, rec in enumerate(records):
+            r_style, r_icon = HELM_STYLES.get(rec.state, ("dim", "·"))
+            is_current = i == len(records) - 1
+            body.append(f"{r_icon} ", style="bold " + r_style if is_current else "dim")
+            body.append(rec.state, style=r_style if is_current else "dim")
+            if i < len(records) - 1:
+                body.append("  →  ", style="dim")
+        body.append("\n")
+
+    body.append("\n")
 
     # LLM narrative
     if text:

@@ -422,33 +422,17 @@ def _run_voice_narration(result: "CycleResult") -> None:
                 f"{strength}: {domain_str} aligned during {period} (φ={phase:.3f})"
             )
 
-        drained = result.packets_drained or 1
-        committed = result.committed
-        quarantined = result.spillway_quarantined
-        admission_pct = f"{committed / drained * 100:.0f}%"
-        anomaly_rate = quarantined / drained
-        strong_events = cs.get("strong_events", 0)
-        event_count = cs.get("convergence_event_count", 0)
+        from rhythm_os.domain.helm.engine import compute_helm
 
-        # Derive helm state using same logic as the dashboard.
-        if anomaly_rate > 0.10:
-            helm_state = "WAIT"
-            helm_rationale = f"elevated anomalies ({quarantined} quarantined)"
-        elif committed / drained < 0.50:
-            helm_state = "WAIT"
-            helm_rationale = f"low admission rate ({admission_pct})"
-        elif strong_events > 0:
-            helm_state = "WAIT"
-            helm_rationale = "strong cross-domain convergence — conditions in flux"
-        elif event_count > 0:
-            helm_state = "PREPARE"
-            helm_rationale = "domains beginning to align — conditions shifting"
-        elif committed / drained > 0.88 and quarantined == 0:
-            helm_state = "PUSH"
-            helm_rationale = f"all domains clear ({admission_pct} admitted) — favorable window"
-        else:
-            helm_state = "ACT"
-            helm_rationale = f"stable, nominal routing ({admission_pct} admitted)"
+        drained       = result.packets_drained or 1
+        committed     = result.committed
+        quarantined   = result.spillway_quarantined
+        admission_pct = f"{committed / drained * 100:.0f}%"
+        strong_events = cs.get("strong_events", 0)
+        event_count   = cs.get("convergence_event_count", 0)
+
+        # Helm state via canonical engine — single source of truth.
+        _helm = compute_helm(result)
 
         cycle_summary = {
             "packets_admitted": committed,
@@ -461,8 +445,8 @@ def _run_voice_narration(result: "CycleResult") -> None:
             "convergence_events": event_count,
             "strong_events": strong_events,
             "convergence_detail": convergence_detail,
-            "helm_state": helm_state,
-            "helm_rationale": helm_rationale,
+            "helm_state": _helm.state,
+            "helm_rationale": _helm.rationale,
         }
         narration = narrate(cycle_summary)
         persist_voice_line(
@@ -594,40 +578,19 @@ if __name__ == "__main__":
         except Exception:
             log.warning("ml inference failed — cycle result unaffected", exc_info=True)
 
-    # Helm step: derive operational posture recommendation and attach to result.
+    # Helm step: derive operational posture via canonical engine, attach to result.
     try:
         import dataclasses as _dc2
+        from rhythm_os.domain.helm.engine import compute_helm
+        from rhythm_os.domain.helm.ledger import append_helm_record, record_from_helm_result
 
-        cs_ = result.convergence_summary or {}
-        _drained = result.packets_drained or 1
-        _anom_rate = result.spillway_quarantined / _drained
-        _adm_rate = result.committed / _drained
-        _strong = cs_.get("strong_events", 0)
-        _events = cs_.get("convergence_event_count", 0)
-        _evlist = cs_.get("convergence_events", [])
-
-        if _anom_rate > 0.10:
-            _hstate, _hrat = "WAIT", f"elevated anomalies ({result.spillway_quarantined} quarantined)"
-        elif _adm_rate < 0.50:
-            _hstate, _hrat = "WAIT", f"low admission rate ({_adm_rate:.0%})"
-        elif _strong > 0:
-            _ev0 = next((e for e in _evlist if e.get("strength") == "strong"), {})
-            _doms = " + ".join(sorted(_ev0.get("domains", [])))
-            _hstate, _hrat = "WAIT", f"{_doms} converging strongly — conditions in flux"
-        elif _events > 0:
-            _ev0 = _evlist[0] if _evlist else {}
-            _doms = " + ".join(sorted(_ev0.get("domains", [])))
-            _hstate, _hrat = "PREPARE", f"{_doms} aligning — conditions shifting"
-        elif _adm_rate > 0.88 and result.spillway_quarantined == 0:
-            _hstate, _hrat = "PUSH", f"all domains clear ({_adm_rate:.0%} admitted)"
-        else:
-            _hstate, _hrat = "ACT", f"stable, nominal routing ({_adm_rate:.0%} admitted)"
-
+        _helm = compute_helm(result)
         result = _dc2.replace(
             result,
-            helm={"state": _hstate, "rationale": _hrat, "ts": result.cycle_ts},
+            helm={"state": _helm.state, "rationale": _helm.rationale, "ts": _helm.ts},
         )
-        log.info("helm recommendation state=%s", _hstate)
+        append_helm_record(record_from_helm_result(_helm, cycle_ts=result.cycle_ts))
+        log.info("helm recommendation state=%s", _helm.state)
     except Exception:
         log.debug("helm recommendation skipped", exc_info=True)
 
