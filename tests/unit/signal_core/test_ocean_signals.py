@@ -793,6 +793,34 @@ class TestFetchCumulusDataDateFilter:
         records = mod.fetch_cumulus_data("SPOT-32724C", "token", start_dt=start, end_dt=end)
         assert records == []
 
+    def test_limit_warning_logged_when_response_hits_ceiling(self, monkeypatch, caplog):
+        import logging
+        from datetime import datetime, timezone
+        import observatory_tools.emit_ocean_raw_once as mod
+
+        # Build exactly _FETCH_LIMIT records to trigger the warning
+        timestamps = [f"2025-06-01 {h:02d}:00:00" for h in range(24)]
+        # Pad to _FETCH_LIMIT
+        while len(timestamps) < mod._FETCH_LIMIT:
+            timestamps.append("2025-06-01 23:59:00")
+        response_data = self._make_api_response(timestamps[:mod._FETCH_LIMIT])
+
+        class FakeResp:
+            status_code = 200
+            def raise_for_status(self): pass
+            def json(self): return response_data
+
+        monkeypatch.setattr("requests.get", lambda *a, **kw: FakeResp())
+
+        with caplog.at_level(logging.WARNING):
+            mod.fetch_cumulus_data(
+                "SPOT-32724C", "token",
+                start_dt=datetime(2025, 6, 1, tzinfo=timezone.utc),
+                end_dt=datetime(2025, 6, 2, tzinfo=timezone.utc),
+            )
+
+        assert any("hit limit" in msg for msg in caplog.messages)
+
     def test_http_error_raises_runtime_error(self, monkeypatch):
         import requests as req
         import observatory_tools.emit_ocean_raw_once as mod

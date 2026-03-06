@@ -65,6 +65,10 @@ _CUMULUS_SPOTTER_PATH = "/api/sensors/spotter/{spotter_id}"
 _DEFAULT_SPOTTER_ID = "SPOT-32724C"
 _DEFAULT_LOOKBACK_HOURS = 25  # slightly more than 24h to avoid boundary gaps
 
+# Request limit: 4 obs/hour × 25h × 2× headroom = 200.
+# If the API returns exactly this many, we may have been truncated.
+_FETCH_LIMIT = 200
+
 # Default surface temp when buoy doesn't report it (°C)
 _SURFACE_TEMP_DEFAULT = 15.0
 
@@ -176,13 +180,15 @@ def fetch_cumulus_data(
     params = {
         "start_date": start_dt.strftime("%Y-%m-%d %H:%M:%S"),
         "end_date": end_dt.strftime("%Y-%m-%d %H:%M:%S"),
+        "limit": _FETCH_LIMIT,
     }
 
     log.info(
-        "OCEAN OBSERVATORY: fetching spotter=%s start=%s end=%s",
+        "OCEAN OBSERVATORY: fetching spotter=%s start=%s end=%s limit=%d",
         spotter_id,
         params["start_date"],
         params["end_date"],
+        _FETCH_LIMIT,
     )
 
     try:
@@ -197,6 +203,14 @@ def fetch_cumulus_data(
 
     payload = resp.json()
     records: List[Dict[str, Any]] = payload.get("data", [])
+
+    if len(records) >= _FETCH_LIMIT:
+        log.warning(
+            "OCEAN OBSERVATORY: response hit limit=%d — some records may be missing. "
+            "Increase _FETCH_LIMIT or narrow the lookback window. spotter=%s",
+            _FETCH_LIMIT,
+            spotter_id,
+        )
 
     # Client-side date filter as fallback if the API ignores the params
     filtered = []
