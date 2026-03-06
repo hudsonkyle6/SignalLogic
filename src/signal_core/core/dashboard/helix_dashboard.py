@@ -106,6 +106,22 @@ def _read_market_domain_waves() -> Dict[str, Dict]:
     return latest
 
 
+def _read_ocean_domain_waves() -> Dict[str, Dict]:
+    """Latest ocean DomainWave per channel from today's domain JSONL."""
+    ocean_channels = {
+        "wave_energy", "wave_period",
+        "wind_vector_x", "wind_vector_y",
+        "pressure_gradient", "surface_temp",
+    }
+    latest: Dict[str, Dict] = {}
+    for rec in _read_last_n(DOMAIN_DIR, n=0):
+        if rec.get("domain") == "natural":
+            ch = rec.get("channel", "")
+            if ch in ocean_channels:
+                latest[ch] = rec
+    return latest
+
+
 def _read_cyber_domain_wave() -> Optional[Dict[str, Any]]:
     """Latest cyber cadence DomainWave from today's domain JSONL."""
     for rec in reversed(_read_last_n(DOMAIN_DIR, n=100)):
@@ -481,6 +497,37 @@ def _panel_natural(readiness: ReadinessStatus) -> Panel:
     else:
         t.add_row("Temperature", Text("no data yet", style="dim"), Text(""))
 
+    # ── Ocean section ─────────────────────────────────────────────────────
+    ocean_waves = _read_ocean_domain_waves()
+    t.add_row("", Text(""), Text(""))
+    t.add_row(
+        Text("─ Ocean ─", style="bold green"),
+        Text("", style=""),
+        Text("", style=""),
+    )
+    for ch_key, ch_label in _OCEAN_CHANNEL_DISPLAY:
+        rec = ocean_waves.get(ch_key)
+        if rec:
+            pf = rec.get("phase_field")
+            coherence = rec.get("coherence")
+            bar = _bar(
+                float(pf) if pf is not None else 0.0,
+                style_full="green",
+                style_empty="grey23",
+            )
+            ann = Text(style="green")
+            if pf is not None:
+                ann.append(f"phase={float(pf):.3f}")
+            if coherence is not None:
+                ann.append(f"  coh={float(coherence):.2f}", style="dim green")
+            t.add_row(ch_label, bar, ann)
+        else:
+            t.add_row(
+                Text(ch_label, style="dim"),
+                Text("─" * 12, style="grey23"),
+                Text("pending", style="dim"),
+            )
+
     t.add_row("", Text(""), Text(""))
     t.add_row(
         "Records",
@@ -504,6 +551,16 @@ _CYBER_CLOCK_DISPLAY: List[Tuple[str, str]] = [
     ("minute_60s", " 60s"),
     ("roll_15m", " 15m"),
     ("session_1h", "  1h"),
+]
+
+# Ocean channel display config (channel key → display label).
+_OCEAN_CHANNEL_DISPLAY: List[Tuple[str, str]] = [
+    ("wave_energy",       "Wave Energy"),
+    ("wave_period",       "Wave Period"),
+    ("wind_vector_x",     "Wind X"),
+    ("wind_vector_y",     "Wind Y"),
+    ("pressure_gradient", "Press Grad"),
+    ("surface_temp",      "Sea Temp"),
 ]
 
 # Market channel display config.
