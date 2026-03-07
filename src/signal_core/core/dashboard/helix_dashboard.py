@@ -91,6 +91,35 @@ def _read_last_n(directory: Path, n: int = 5) -> List[Dict[str, Any]]:
     return records[-n:] if n > 0 else records
 
 
+def _tail_read_jsonl(path: Path, tail_bytes: int = 131072) -> List[Dict[str, Any]]:
+    """Read the last `tail_bytes` of a JSONL file without loading the whole file.
+
+    Seeks to (file_size - tail_bytes), then reads to the end, discarding any
+    partial first line. This keeps dashboard reads O(tail_bytes) regardless of
+    how many cycles have accumulated in the day's file.
+    """
+    if not path.exists():
+        return []
+    records: List[Dict[str, Any]] = []
+    try:
+        size = path.stat().st_size
+        with path.open("rb") as f:
+            if size > tail_bytes:
+                f.seek(size - tail_bytes)
+                f.readline()  # discard partial first line
+            raw = f.read()
+        for line in raw.decode("utf-8", errors="replace").splitlines():
+            line = line.strip()
+            if line:
+                try:
+                    records.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+    except Exception:
+        pass
+    return records
+
+
 def _count_today(directory: Path) -> int:
     path = directory / f"{_today()}.jsonl"
     if not path.exists():
@@ -103,9 +132,14 @@ def _count_today(directory: Path) -> int:
 
 
 def _read_market_domain_waves() -> Dict[str, Dict]:
-    """Latest market DomainWave per channel from today's domain JSONL."""
+    """Latest market DomainWave per channel from today's domain JSONL.
+
+    Uses tail-read (last 128 KB) to avoid scanning the entire day's file
+    on each dashboard refresh.
+    """
+    path = DOMAIN_DIR / f"{_today()}.jsonl"
     latest: Dict[str, Dict] = {}
-    for rec in _read_last_n(DOMAIN_DIR, n=0):
+    for rec in _tail_read_jsonl(path):
         if rec.get("domain") == "market":
             ch = rec.get("channel", "")
             if ch:
@@ -114,14 +148,18 @@ def _read_market_domain_waves() -> Dict[str, Dict]:
 
 
 def _read_ocean_domain_waves() -> Dict[str, Dict]:
-    """Latest ocean DomainWave per channel from today's domain JSONL."""
+    """Latest ocean DomainWave per channel from today's domain JSONL.
+
+    Uses tail-read (last 128 KB) to avoid scanning the entire day's file.
+    """
     ocean_channels = {
         "wave_energy", "wave_period",
         "wind_vector_x", "wind_vector_y",
         "pressure_gradient", "surface_temp",
     }
+    path = DOMAIN_DIR / f"{_today()}.jsonl"
     latest: Dict[str, Dict] = {}
-    for rec in _read_last_n(DOMAIN_DIR, n=0):
+    for rec in _tail_read_jsonl(path):
         if rec.get("domain") == "natural":
             ch = rec.get("channel", "")
             if ch in ocean_channels:
@@ -131,7 +169,8 @@ def _read_ocean_domain_waves() -> Dict[str, Dict]:
 
 def _read_cyber_domain_wave() -> Optional[Dict[str, Any]]:
     """Latest cyber cadence DomainWave from today's domain JSONL."""
-    for rec in reversed(_read_last_n(DOMAIN_DIR, n=100)):
+    path = DOMAIN_DIR / f"{_today()}.jsonl"
+    for rec in reversed(_tail_read_jsonl(path)):
         if rec.get("domain") == "cyber":
             return rec
     return None

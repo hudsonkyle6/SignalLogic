@@ -154,3 +154,59 @@ class TestLegibilityException:
         result = hydro_ingress_gate(_packet(value=BadStr()))
         assert result.gate_result == GateResult.QUARANTINE
         assert "LEGIBILITY" in result.reason
+
+
+# ------------------------------------------------------------------
+# API key validation
+# ------------------------------------------------------------------
+
+
+class TestApiKeyValidation:
+    def test_no_key_required_by_default(self):
+        """Without allowed_keys and no env var, gate does not check keys."""
+        result = hydro_ingress_gate(_packet(), _use_env_keys=False)
+        assert result.gate_result == GateResult.PASS
+
+    def test_valid_key_in_provenance_passes(self):
+        keys = frozenset({"secret-123"})
+        pkt = _packet(provenance={"source": "test", "api_key": "secret-123"})
+        result = hydro_ingress_gate(pkt, allowed_keys=keys, _use_env_keys=False)
+        assert result.gate_result == GateResult.PASS
+
+    def test_wrong_key_rejected(self):
+        keys = frozenset({"secret-123"})
+        pkt = _packet(provenance={"source": "test", "api_key": "wrong-key"})
+        result = hydro_ingress_gate(pkt, allowed_keys=keys, _use_env_keys=False)
+        assert result.gate_result == GateResult.REJECT
+        assert "AUTH" in result.reason
+
+    def test_missing_key_in_provenance_rejected(self):
+        keys = frozenset({"secret-123"})
+        pkt = _packet(provenance={"source": "test"})
+        result = hydro_ingress_gate(pkt, allowed_keys=keys, _use_env_keys=False)
+        assert result.gate_result == GateResult.REJECT
+        assert "AUTH" in result.reason
+
+    def test_multiple_allowed_keys(self):
+        keys = frozenset({"key-a", "key-b", "key-c"})
+        for k in keys:
+            pkt = _packet(provenance={"source": "test", "api_key": k})
+            result = hydro_ingress_gate(pkt, allowed_keys=keys, _use_env_keys=False)
+            assert result.gate_result == GateResult.PASS
+
+    def test_env_var_key_accepted(self, monkeypatch):
+        monkeypatch.setenv("SIGNALLOGIC_INGRESS_API_KEY", "env-key-xyz")
+        pkt = _packet(provenance={"source": "test", "api_key": "env-key-xyz"})
+        result = hydro_ingress_gate(pkt)
+        assert result.gate_result == GateResult.PASS
+
+    def test_env_var_wrong_key_rejected(self, monkeypatch):
+        monkeypatch.setenv("SIGNALLOGIC_INGRESS_API_KEY", "env-key-xyz")
+        pkt = _packet(provenance={"source": "test", "api_key": "not-the-key"})
+        result = hydro_ingress_gate(pkt)
+        assert result.gate_result == GateResult.REJECT
+
+    def test_env_var_not_set_skips_check(self, monkeypatch):
+        monkeypatch.delenv("SIGNALLOGIC_INGRESS_API_KEY", raising=False)
+        result = hydro_ingress_gate(_packet())
+        assert result.gate_result == GateResult.PASS

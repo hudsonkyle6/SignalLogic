@@ -26,6 +26,7 @@ The generate_fn parameter allows tests to inject a mock without Ollama running.
 
 from __future__ import annotations
 
+import concurrent.futures
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, Optional
 
@@ -135,14 +136,23 @@ def build_narrator_prompt(cycle_summary: Dict[str, Any]) -> str:
 # ---------------------------------------------------------------------------
 
 
+_NARRATOR_TIMEOUT = 30  # seconds — hard cap on LLM call to protect main cycle
+_NARRATOR_FALLBACK = "No narration available — voice timeout."
+
+
 def narrate(
     cycle_summary: Dict[str, Any],
     *,
     model: str = DEFAULT_MODEL,
     generate_fn: Optional[Callable[[str], str]] = None,
+    timeout: float = _NARRATOR_TIMEOUT,
 ) -> NarratorResult:
     """
     Generate a 2-sentence cycle narration.
+
+    The LLM call runs in a background thread and is capped at `timeout` seconds.
+    On timeout or any LLM error a safe fallback string is returned so the caller
+    (dashboard, cycle runner) is never blocked.
 
     Parameters
     ----------
@@ -151,15 +161,12 @@ def narrate(
     generate_fn     Optional callable (prompt: str) -> str.
                     If provided, used instead of the real Ollama client.
                     Useful for testing without a running Ollama server.
+    timeout         Maximum seconds to wait for the LLM response.
 
     Returns
     -------
     NarratorResult  with .text (truncated narration) and .raw (raw output).
-
-    Raises
-    ------
-    OllamaUnavailable  If Ollama cannot be reached and no generate_fn given.
-    OllamaError        If Ollama returns a non-200 status.
+    On timeout or error, .text is the fallback string and .raw is empty.
     """
     if generate_fn is None:
         from rhythm_os.voice.ollama_client import generate as _gen
@@ -168,6 +175,15 @@ def narrate(
             return _gen(p, model=model)
 
     prompt = build_narrator_prompt(cycle_summary)
-    raw = generate_fn(prompt)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(generate_fn, prompt)
+        try:
+            raw = future.result(timeout=timeout)
+        except concurrent.futures.TimeoutError:
+            return NarratorResult(text=_NARRATOR_FALLBACK, raw="")
+        except Exception:
+            return NarratorResult(text=_NARRATOR_FALLBACK, raw="")
+
     text = truncate_to_sentences(raw, max_sentences=3)
     return NarratorResult(text=text, raw=raw)
