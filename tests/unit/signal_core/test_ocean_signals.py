@@ -899,3 +899,104 @@ class TestNormalizeCumulusDfFullPipeline:
         emit_ocean_raw(hourly, out, source="cumulus_api")
         recs = [json.loads(l) for l in out.read_text().splitlines() if l.strip()]
         assert all(r["extractor"]["version"] == "v2" for r in recs)
+
+
+# ===========================================================================
+# main() — integration paths
+# ===========================================================================
+
+
+class TestMain:
+    """
+    Tests for the main() entry point in emit_ocean_raw_once.
+
+    Covers:
+    - CSV mode: full pipeline from CSV path
+    - Live API mode: no records returned (wave data drought)
+    - Live API mode: missing token exits cleanly
+    """
+
+    def _make_csv(self, tmp_path):
+        """Write a minimal buoy CSV and return its path."""
+        import pandas as pd
+        idx = pd.date_range("2025-06-01 00:00", periods=4, freq="15min", tz="UTC")
+        df = pd.DataFrame(
+            {
+                "waveSignificantHeight": [1.0, 1.1, 1.2, 1.3],
+                "wavePeakPeriod": [10.0] * 4,
+                "windSpeed": [5.0] * 4,
+                "windDirection": [90.0] * 4,
+                "barometerData": [1013.0] * 4,
+                "surfaceTemp": [15.0] * 4,
+            },
+            index=idx,
+        )
+        df.index.name = "timestamp"
+        p = tmp_path / "buoy.csv"
+        df.to_csv(p)
+        return p
+
+    def test_csv_mode_writes_records(self, tmp_path, monkeypatch):
+        import observatory_tools.emit_ocean_raw_once as mod
+        csv_path = self._make_csv(tmp_path)
+        out_dir = tmp_path / "ocean_raw"
+        out_dir.mkdir()
+        monkeypatch.setattr(mod, "OUT_DIR", out_dir)
+        mod.main(buoy_csv=csv_path)
+        jsonl_files = list(out_dir.glob("*.jsonl"))
+        assert jsonl_files, "Expected at least one JSONL file in ocean_raw"
+        lines = [l for l in jsonl_files[0].read_text().splitlines() if l.strip()]
+        assert len(lines) > 0
+
+    def test_csv_mode_records_have_natural_lane(self, tmp_path, monkeypatch):
+        import observatory_tools.emit_ocean_raw_once as mod
+        csv_path = self._make_csv(tmp_path)
+        out_dir = tmp_path / "ocean_raw"
+        out_dir.mkdir()
+        monkeypatch.setattr(mod, "OUT_DIR", out_dir)
+        mod.main(buoy_csv=csv_path)
+        lines = [
+            json.loads(l)
+            for f in out_dir.glob("*.jsonl")
+            for l in f.read_text().splitlines()
+            if l.strip()
+        ]
+        assert all(r["lane"] == "natural" for r in lines)
+
+    def test_live_mode_no_records_returns_without_writing(self, tmp_path, monkeypatch):
+        """Simulates wave data drought: CUMULUS returns no records."""
+        import observatory_tools.emit_ocean_raw_once as mod
+        out_dir = tmp_path / "ocean_raw"
+        out_dir.mkdir()
+        monkeypatch.setattr(mod, "OUT_DIR", out_dir)
+        monkeypatch.setattr(mod, "fetch_cumulus_data", lambda *a, **kw: [])
+        mod.main(api_token="fake-token")
+        # No records → no file written
+        assert list(out_dir.glob("*.jsonl")) == []
+
+    def test_live_mode_missing_token_returns_without_writing(self, tmp_path, monkeypatch):
+        """No token and no env var → exits early, no file created."""
+        import os
+        import observatory_tools.emit_ocean_raw_once as mod
+        out_dir = tmp_path / "ocean_raw"
+        out_dir.mkdir()
+        monkeypatch.setattr(mod, "OUT_DIR", out_dir)
+        monkeypatch.delenv("CUMULUS_API_TOKEN", raising=False)
+        mod.main(api_token=None)
+        assert list(out_dir.glob("*.jsonl")) == []
+
+    def test_live_mode_writes_records_when_data_available(self, tmp_path, monkeypatch):
+        import observatory_tools.emit_ocean_raw_once as mod
+        out_dir = tmp_path / "ocean_raw"
+        out_dir.mkdir()
+        monkeypatch.setattr(mod, "OUT_DIR", out_dir)
+        # Inject sample CUMULUS records via fetch_cumulus_data mock
+        monkeypatch.setattr(mod, "fetch_cumulus_data", lambda *a, **kw: _CUMULUS_SAMPLE_RECORDS)
+        mod.main(api_token="fake-token")
+        lines = [
+            l
+            for f in out_dir.glob("*.jsonl")
+            for l in f.read_text().splitlines()
+            if l.strip()
+        ]
+        assert len(lines) > 0
