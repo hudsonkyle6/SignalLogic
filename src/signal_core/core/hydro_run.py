@@ -78,9 +78,29 @@ def _hydro_daily() -> "CycleResult":
 
 
 def run_full_cycle() -> "CycleResult":
-    """Run a complete SignalLogic cycle: observe then drain/commit."""
+    """
+    Run a complete SignalLogic cycle: observe → drain/commit → helm.
+
+    Attaches the helm recommendation to the returned CycleResult and
+    appends one record to the trust ledger.  Helm errors never block
+    the cycle — result is returned regardless.
+    """
     run_cycle_once()
-    return _hydro_daily()
+    result = _hydro_daily()
+    try:
+        from rhythm_os.domain.helm.engine import compute_helm
+        from rhythm_os.domain.helm.ledger import append_helm_record, record_from_helm_result
+
+        h = compute_helm(result)
+        result = dataclasses.replace(
+            result,
+            helm={"state": h.state, "rationale": h.rationale, "ts": h.ts},
+        )
+        append_helm_record(record_from_helm_result(h, cycle_ts=result.cycle_ts))
+        log.info("helm recommendation state=%s", h.state)
+    except Exception:
+        log.warning("helm attachment failed in run_full_cycle", exc_info=True)
+    return result
 
 
 def _health_check() -> int:

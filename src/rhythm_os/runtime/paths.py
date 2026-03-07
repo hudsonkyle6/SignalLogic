@@ -66,6 +66,9 @@ DOMAIN_DIR = DATA_DIR / "dark_field" / "domain"
 # Raw market observations — written by observatory tools before PSR projection
 MARKET_RAW_DIR = DATA_DIR / "dark_field" / "market_raw"
 
+# Ocean raw observations — buoy telemetry before PSR projection (natural domain)
+OCEAN_RAW_DIR = DATA_DIR / "dark_field" / "ocean_raw"
+
 # Human trafficking signal observations (stub — awaiting data feed partnership)
 HUMAN_TRAFFICKING_DIR = DATA_DIR / "dark_field" / "human_trafficking"
 
@@ -89,3 +92,6 @@ VOICE_LINES_PATH = DATA_DIR / "dark_field" / "voice" / "voice_lines.jsonl"
 
 # ML artifacts — feature vectors, labels, and model metadata
 ML_DIR = DATA_DIR / "ml"
+
+# Helm trust ledger — append-only JSONL of helm recommendations per cycle
+HELM_LOG_PATH = DATA_DIR / "dark_field" / "helm" / "helm_log.jsonl"

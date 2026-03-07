@@ -10,9 +10,10 @@ Modules covered:
 
 Invariants:
 - narrate returns NarratorResult with .text and .raw
-- narrate passes prompt containing cycle_summary keys to generate_fn
-- narrate truncates .text to <= 2 sentences (soft guard)
+- narrate passes prompt containing known cycle_summary keys to generate_fn
+- narrate truncates .text to <= 3 sentences (soft guard)
 - narrate preserves raw LLM output in .raw unchanged
+- build_narrator_prompt includes structured observation keys (not arbitrary keys)
 - interpret returns InterpretationResult with .convergence_type and .rationale
 - interpret raises VoiceGuardViolation when generate_fn returns non-NOISE/COUPLING/LAG
 - interpret is case-insensitive on the verdict word
@@ -73,30 +74,41 @@ class TestNarrator:
         result = narrate({}, generate_fn=_gen(raw))
         assert result.raw == raw
 
-    def test_text_truncated_to_two_sentences(self):
+    def test_text_truncated_to_three_sentences(self):
+        # Narrator contract is exactly 3 sentences; a 4th is soft-truncated.
+        raw = "First. Second. Third. Fourth."
+        result = narrate({}, generate_fn=_gen(raw))
+        assert "Fourth" not in result.text
+
+    def test_text_within_three_sentences_unchanged(self):
         raw = "First. Second. Third."
         result = narrate({}, generate_fn=_gen(raw))
-        assert "Third" not in result.text
+        assert result.text == raw
 
     def test_text_with_one_sentence_unchanged(self):
         result = narrate({}, generate_fn=_gen("Just one sentence."))
         assert result.text == "Just one sentence."
 
-    def test_prompt_contains_summary_keys(self):
+    def test_prompt_contains_known_routing_keys(self):
+        # The structured prompt builder includes routing stats and domains.
         captured = []
         narrate(
-            {"packets_admitted": 10, "domains_seen": ["natural"]},
-            generate_fn=lambda p: captured.append(p) or "One. Two.",
+            {"packets_admitted": 10, "domains_seen": ["natural"],
+             "packets_drained": 12, "rejected": 2, "spillway_quarantined": 0},
+            generate_fn=lambda p: captured.append(p) or "One. Two. Three.",
         )
-        assert any("packets_admitted" in p for p in captured)
-        assert any("domains_seen" in p for p in captured)
+        assert any("admitted" in p for p in captured)
+        assert any("natural" in p for p in captured)
 
-    def test_build_narrator_prompt_contains_keys(self):
-        prompt = build_narrator_prompt({"key_a": 1, "key_b": "hello"})
-        assert "key_a" in prompt
-        assert "key_b" in prompt
-        assert "1" in prompt
-        assert "hello" in prompt
+    def test_build_narrator_prompt_contains_routing_info(self):
+        # Prompt includes structured routing section; arbitrary keys are not
+        # passed through verbatim (prompt builder is structured, not a dump).
+        prompt = build_narrator_prompt({
+            "packets_admitted": 42, "packets_drained": 50,
+            "domains_seen": ["market", "natural"],
+        })
+        assert "42" in prompt
+        assert "market" in prompt
 
 
 # ---------------------------------------------------------------------------

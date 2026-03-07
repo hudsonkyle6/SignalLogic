@@ -47,6 +47,13 @@ from rhythm_os.runtime.paths import (
     TURBINE_DIR,
 )
 from rhythm_os.voice.voice_store import load_last_voice_line
+from rhythm_os.domain.helm.engine import (
+    HELM_GUIDANCE,
+    HELM_STYLES,
+    HelmResult,
+    compute_helm,
+)
+from rhythm_os.domain.helm.ledger import load_helm_records
 from rhythm_os.runtime.readiness import check_readiness, ReadinessStatus
 from rhythm_os.runtime.deploy_config import (
     get_deployment_name,
@@ -84,6 +91,35 @@ def _read_last_n(directory: Path, n: int = 5) -> List[Dict[str, Any]]:
     return records[-n:] if n > 0 else records
 
 
+def _tail_read_jsonl(path: Path, tail_bytes: int = 131072) -> List[Dict[str, Any]]:
+    """Read the last `tail_bytes` of a JSONL file without loading the whole file.
+
+    Seeks to (file_size - tail_bytes), then reads to the end, discarding any
+    partial first line. This keeps dashboard reads O(tail_bytes) regardless of
+    how many cycles have accumulated in the day's file.
+    """
+    if not path.exists():
+        return []
+    records: List[Dict[str, Any]] = []
+    try:
+        size = path.stat().st_size
+        with path.open("rb") as f:
+            if size > tail_bytes:
+                f.seek(size - tail_bytes)
+                f.readline()  # discard partial first line
+            raw = f.read()
+        for line in raw.decode("utf-8", errors="replace").splitlines():
+            line = line.strip()
+            if line:
+                try:
+                    records.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+    except Exception:
+        pass
+    return records
+
+
 def _count_today(directory: Path) -> int:
     path = directory / f"{_today()}.jsonl"
     if not path.exists():
@@ -96,9 +132,14 @@ def _count_today(directory: Path) -> int:
 
 
 def _read_market_domain_waves() -> Dict[str, Dict]:
-    """Latest market DomainWave per channel from today's domain JSONL."""
+    """Latest market DomainWave per channel from today's domain JSONL.
+
+    Uses tail-read (last 128 KB) to avoid scanning the entire day's file
+    on each dashboard refresh.
+    """
+    path = DOMAIN_DIR / f"{_today()}.jsonl"
     latest: Dict[str, Dict] = {}
-    for rec in _read_last_n(DOMAIN_DIR, n=0):
+    for rec in _tail_read_jsonl(path):
         if rec.get("domain") == "market":
             ch = rec.get("channel", "")
             if ch:
@@ -106,9 +147,30 @@ def _read_market_domain_waves() -> Dict[str, Dict]:
     return latest
 
 
+def _read_ocean_domain_waves() -> Dict[str, Dict]:
+    """Latest ocean DomainWave per channel from today's domain JSONL.
+
+    Uses tail-read (last 128 KB) to avoid scanning the entire day's file.
+    """
+    ocean_channels = {
+        "wave_energy", "wave_period",
+        "wind_vector_x", "wind_vector_y",
+        "pressure_gradient", "surface_temp",
+    }
+    path = DOMAIN_DIR / f"{_today()}.jsonl"
+    latest: Dict[str, Dict] = {}
+    for rec in _tail_read_jsonl(path):
+        if rec.get("domain") == "natural":
+            ch = rec.get("channel", "")
+            if ch in ocean_channels:
+                latest[ch] = rec
+    return latest
+
+
 def _read_cyber_domain_wave() -> Optional[Dict[str, Any]]:
     """Latest cyber cadence DomainWave from today's domain JSONL."""
-    for rec in reversed(_read_last_n(DOMAIN_DIR, n=100)):
+    path = DOMAIN_DIR / f"{_today()}.jsonl"
+    for rec in reversed(_tail_read_jsonl(path)):
         if rec.get("domain") == "cyber":
             return rec
     return None
@@ -481,6 +543,37 @@ def _panel_natural(readiness: ReadinessStatus) -> Panel:
     else:
         t.add_row("Temperature", Text("no data yet", style="dim"), Text(""))
 
+    # ── Ocean section ─────────────────────────────────────────────────────
+    ocean_waves = _read_ocean_domain_waves()
+    t.add_row("", Text(""), Text(""))
+    t.add_row(
+        Text("─ Ocean ─", style="bold green"),
+        Text("", style=""),
+        Text("", style=""),
+    )
+    for ch_key, ch_label in _OCEAN_CHANNEL_DISPLAY:
+        rec = ocean_waves.get(ch_key)
+        if rec:
+            pf = rec.get("phase_field")
+            coherence = rec.get("coherence")
+            bar = _bar(
+                float(pf) if pf is not None else 0.0,
+                style_full="green",
+                style_empty="grey23",
+            )
+            ann = Text(style="green")
+            if pf is not None:
+                ann.append(f"phase={float(pf):.3f}")
+            if coherence is not None:
+                ann.append(f"  coh={float(coherence):.2f}", style="dim green")
+            t.add_row(ch_label, bar, ann)
+        else:
+            t.add_row(
+                Text(ch_label, style="dim"),
+                Text("─" * 12, style="grey23"),
+                Text("pending", style="dim"),
+            )
+
     t.add_row("", Text(""), Text(""))
     t.add_row(
         "Records",
@@ -504,6 +597,16 @@ _CYBER_CLOCK_DISPLAY: List[Tuple[str, str]] = [
     ("minute_60s", " 60s"),
     ("roll_15m", " 15m"),
     ("session_1h", "  1h"),
+]
+
+# Ocean channel display config (channel key → display label).
+_OCEAN_CHANNEL_DISPLAY: List[Tuple[str, str]] = [
+    ("wave_energy",       "Wave Energy"),
+    ("wave_period",       "Wave Period"),
+    ("wind_vector_x",     "Wind X"),
+    ("wind_vector_y",     "Wind Y"),
+    ("pressure_gradient", "Press Grad"),
+    ("surface_temp",      "Sea Temp"),
 ]
 
 # Market channel display config.
@@ -668,13 +771,110 @@ def _load_narrator_line() -> str:
         return ""
 
 
-def _panel_narrator(text: str) -> "Panel":
-    """Render the narrator voice line panel."""
+def _compute_state_line(cycle_result: Optional[Any]) -> tuple:
+    """
+    Derive a (label, rich_style) state summary from the last cycle result.
+
+    Deterministic — no LLM. Reads convergence_summary and routing stats.
+    """
+    if cycle_result is None:
+        return "NO DATA", "dim"
+
+    cs = getattr(cycle_result, "convergence_summary", None) or {}
+    strong = cs.get("strong_events", 0)
+    event_count = cs.get("convergence_event_count", 0)
+    events = cs.get("convergence_events", [])
+
+    if strong > 0:
+        strong_ev = next(
+            (e for e in events if e.get("strength") == "strong"), None
+        )
+        if strong_ev:
+            domains = sorted(strong_ev.get("domains", []))
+            domain_str = "  ·  ".join(d.upper() for d in domains)
+            return f"CONVERGING  ·  {domain_str}  ·  STRONG", "bold magenta"
+        return "CONVERGING  ·  STRONG", "bold magenta"
+
+    if event_count > 0:
+        noun = "event" if event_count == 1 else "events"
+        return f"CONVERGING  ·  {event_count} {noun}  ·  WEAK", "bold cyan"
+
+    drained = getattr(cycle_result, "packets_drained", 0) or 1
+    committed = getattr(cycle_result, "committed", 0)
+    rate = committed / drained
+    if rate > 0.8:
+        return "STABLE  ·  HIGH ADMISSION  ·  NOMINAL", "bold green"
+    if rate > 0.5:
+        return "STABLE  ·  NOMINAL", "green"
+    return "STABLE  ·  LOW ADMISSION", "yellow"
+
+
+def _compute_helm_state(cycle_result: Optional[Any]) -> tuple:
+    """
+    Return (state, rationale) for the helm recommendation.
+
+    Reads the persisted helm field from last_cycle.json when available
+    (fast path — no recomputation); otherwise derives from the engine.
+    Returns (str, str).
+    """
+    if cycle_result is None:
+        return "PREPARE", "awaiting first full cycle — establish baseline"
+
+    # Fast path: the cycle already computed and persisted the helm.
+    helm = getattr(cycle_result, "helm", None)
+    if isinstance(helm, dict) and helm.get("state"):
+        return helm["state"], helm.get("rationale", "")
+
+    # Fallback: derive via canonical engine.
+    h = compute_helm(cycle_result)
+    return h.state, h.rationale
+
+
+def _panel_narrator(text: str, cycle_result: Optional[Any] = None) -> "Panel":
+    """Render the voice panel: convergence state + helm + track history + narrative."""
+    state_label, state_style = _compute_state_line(cycle_result)
+    helm_state, helm_rationale = _compute_helm_state(cycle_result)
+    helm_style, helm_icon = HELM_STYLES.get(helm_state, ("dim", "·"))
+    guidance = HELM_GUIDANCE.get(helm_state, "")
+
     body = Text(justify="left")
+
+    # Convergence state line
+    body.append("◈  ", style="bold magenta")
+    body.append(state_label, style=state_style)
+    body.append("\n")
+
+    # Helm recommendation line
+    body.append(f"{helm_icon}  HELM  ", style=helm_style)
+    body.append(helm_state, style=helm_style)
+    body.append("  ·  ", style="dim")
+    body.append(helm_rationale, style="dim white")
+    body.append("\n")
+    body.append("       ", style="")
+    body.append(guidance, style=f"italic {helm_style}")
+    body.append("\n")
+
+    # Helm track — last 5 states as a temporal progression
+    records = load_helm_records(n=5)
+    if records:
+        body.append("   ", style="")
+        for i, rec in enumerate(records):
+            r_style, r_icon = HELM_STYLES.get(rec.state, ("dim", "·"))
+            is_current = i == len(records) - 1
+            body.append(f"{r_icon} ", style="bold " + r_style if is_current else "dim")
+            body.append(rec.state, style=r_style if is_current else "dim")
+            if i < len(records) - 1:
+                body.append("  →  ", style="dim")
+        body.append("\n")
+
+    body.append("\n")
+
+    # LLM narrative
     if text:
-        body.append(text, style="italic dim white")
+        body.append(text, style="white")
     else:
         body.append("No narration recorded yet.", style="dim")
+
     return Panel(body, title="[bold magenta]VOICE[/]", border_style="magenta")
 
 
@@ -748,7 +948,7 @@ def _build_display(
     p_natural = _panel_natural(readiness)
     p_system = _panel_system(readiness)
     p_cycle = _panel_cycle(cycle_result)
-    p_narrator = _panel_narrator(_load_narrator_line())
+    p_narrator = _panel_narrator(_load_narrator_line(), cycle_result=cycle_result)
 
     # ── Outer grid ──────────────────────────────────────────────────────────
     outer = Table.grid(expand=True)

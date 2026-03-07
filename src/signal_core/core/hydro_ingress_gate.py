@@ -12,8 +12,9 @@ See rhythm_os/TWO_WATERS.md
 
 from __future__ import annotations
 
+import os
 import time
-from typing import Iterable
+from typing import Iterable, Optional, FrozenSet
 
 from .hydro_types import HydroPacket, IngressDecision, GateResult
 
@@ -28,6 +29,26 @@ DEFAULT_ALLOWED_LANES = {
     "project",
     "narrative",
 }
+
+# ---------------------------------------------------------------------------
+# API key helpers
+# ---------------------------------------------------------------------------
+
+_ENV_API_KEY = "SIGNALLOGIC_INGRESS_API_KEY"
+
+
+def _load_env_allowed_keys() -> Optional[FrozenSet[str]]:
+    """
+    Load allowed API keys from the environment.
+
+    If SIGNALLOGIC_INGRESS_API_KEY is set, returns a frozenset containing
+    that key (supports a single key; extend as needed for multi-tenant).
+    Returns None if the env var is not set, meaning key validation is disabled.
+    """
+    raw = os.environ.get(_ENV_API_KEY, "").strip()
+    if not raw:
+        return None
+    return frozenset(raw.split(","))
 
 
 def _is_legible(value) -> bool:
@@ -49,11 +70,15 @@ def hydro_ingress_gate(
     allowed_lanes: Iterable[str] = DEFAULT_ALLOWED_LANES,
     max_age_seconds: float = 24 * 3600,
     now: float | None = None,
+    allowed_keys: Optional[FrozenSet[str]] = None,
+    _use_env_keys: bool = True,
 ) -> IngressDecision:
     """
     Structural admission only.
 
     Checks:
+      - api_key: if SIGNALLOGIC_INGRESS_API_KEY is set (or allowed_keys provided),
+                 the packet's provenance must contain a matching 'api_key'
       - schema: critical fields exist and are typed
       - lane admissibility
       - provenance presence (minimal identity)
@@ -69,6 +94,18 @@ def hydro_ingress_gate(
     """
 
     now = time.time() if now is None else float(now)
+
+    # ---------------- API Key ----------------
+    # Resolve which key set to validate against.  Explicit argument wins;
+    # fall back to env var; if neither is set, skip key validation entirely.
+    effective_keys = allowed_keys
+    if effective_keys is None and _use_env_keys:
+        effective_keys = _load_env_allowed_keys()
+
+    if effective_keys is not None:
+        pkt_key = packet.provenance.get("api_key", "") if isinstance(packet.provenance, dict) else ""
+        if pkt_key not in effective_keys:
+            return IngressDecision(GateResult.REJECT, "G0_AUTH_invalid_api_key")
 
     # ---------------- Schema ----------------
     if not packet.packet_id or not isinstance(packet.packet_id, str):
